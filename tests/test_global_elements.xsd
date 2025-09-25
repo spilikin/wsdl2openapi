@@ -1,0 +1,44 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://example.org/schema"
+           targetNamespace="http://example.org/schema"
+           elementFormDefault="qualified">
+
+<xsd:element name="Value1" type="tns:Value1"/>
+
+<xsd:complexType name="Value1">
+    <xsd:attribute name="value1" type="xsd:boolean"/>
+</xsd:complexType>
+
+<xsd:element name="Value2" type="tns:Value2Type"/>
+
+<xsd:complexType name="Value2Type">
+    <xsd:attribute name="value2" type="xsd:string"/>
+</xsd:complexType>
+
+<xsd:element name="Value3">
+    <xsd:complexType>
+        <xsd:attribute name="value3" type="xsd:string"/>
+    </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="Value4" type="tns:Value4Type"/>
+
+<xsd:simpleType name="Value4Type">
+    <xsd:restriction base="xsd:string">
+        <xsd:pattern value="\d{4}"/>
+    </xsd:restriction>
+</xsd:simpleType>
+
+<xsd:element name="Value5">
+    <xsd:simpleType>
+      <xsd:restriction base="xsd:string">
+        <xsd:enumeration value="Red"/>
+        <xsd:enumeration value="Green"/>
+        <xsd:enumeration value="Blue"/>
+      </xsd:restriction>
+    </xsd:simpleType>
+</xsd:element>
+
+<xsd:element name="Value6" type="xsd:anyType"/>
+
+</xsd:schema>

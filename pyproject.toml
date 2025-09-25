@@ -1,0 +1,27 @@
+[project]
+name = "wsdl2openapi"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Sergej Suskov", email = "108782+spilikin@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "msgspec>=0.19.0",
+    "pyaml>=25.7.0",
+    "zeep>=4.3.1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-cov>=6.2.1",
+]
+
+[tool.pytest.ini_options]
+addopts = "--maxfail=1 -s"

@@ -1,0 +1,30 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.org/schema" xmlns:tns="http://example.org/schema" elementFormDefault="qualified">
+    <xs:element name="SimpleElementWithEnum">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="OptionA"/>
+                <xs:enumeration value="OptionB"/>
+                <xs:enumeration value="OptionC"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="SimpleElementWithPattern">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:pattern value="[A-Z]{3}\d{4}"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+
+    <xs:element name="ComplexElementInlineType">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="sub-element1" type="xs:string"/>
+                <xs:element name="sub-element2" type="xs:int"/>
+            </xs:sequence>
+            <xs:attribute name="attribute1" type="xs:boolean"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

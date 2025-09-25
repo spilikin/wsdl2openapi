@@ -1,0 +1,21 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://example.com/wsdl" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://example.com/test">
+    <wsdl:types>
+        <xsd:schema targetNamespace="http://example.org/schema/wsdl" xmlns:tns-schema="http://example.org/schema/wsdl" elementFormDefault="qualified">
+            <xsd:import namespace="http://example.org/schema" schemaLocation="test_facets.xsd"/>
+            <xsd:element name="WsdlMessage">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="enum" type="tns-schema:SimpleTypeWithEnum"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:simpleType name="SimpleTypeWithEnum">
+                <xsd:restriction base="xsd:string">
+                    <xsd:enumeration value="Value1"/>
+                    <xsd:enumeration value="Value2"/>
+                    <xsd:enumeration value="Value3"/>
+                </xsd:restriction>
+            </xsd:simpleType>
+        </xsd:schema>
+    </wsdl:types>
+</wsdl:definitions>

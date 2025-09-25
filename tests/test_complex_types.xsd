@@ -1,0 +1,66 @@
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+           xmlns:tns="http://example.org/schema"
+           targetNamespace="http://example.org/schema"
+           elementFormDefault="qualified">
+
+
+<xsd:complexType name="NestedType">
+    <xsd:sequence>
+        <xsd:element name="nested-element" type="xsd:string"/>
+    </xsd:sequence>
+    <xsd:attribute name="nested-attribute" type="xsd:int"/>
+</xsd:complexType>
+
+<xsd:complexType name="ComplexType">
+    <xsd:sequence>
+        <xsd:element name="element-string" type="xsd:string"/>
+        <xsd:element name="element-nested" type="tns:NestedType" minOccurs="0" maxOccurs="1"/>
+        <xsd:element name="element-int-list" type="xsd:int" minOccurs="0" maxOccurs="unbounded"/>
+        <xsd:element name="metadata">
+            <xsd:complexType>
+                <xsd:sequence>
+                    <xsd:element name="meta" minOccurs="0" maxOccurs="unbounded">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="key" type="xsd:string"/>
+                                <xsd:element name="value" type="xsd:string"/>
+                            </xsd:sequence>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:element>
+    </xsd:sequence>
+    <xsd:attribute name="attribute-boolean" type="xsd:boolean"/>
+    <xsd:attribute name="attribute-date" type="xsd:date"/>
+</xsd:complexType>
+
+<xsd:element name="ComplexElement" type="tns:ComplexType"/>
+
+<xsd:element name="StringWithAttribute">
+    <xsd:complexType>
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="lang" type="xsd:string"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="ChoiceElement">
+    <xsd:complexType>
+        <xsd:choice>
+            <xsd:element name="option1" type="xsd:string"/>
+            <xsd:element name="option2" type="xsd:int"/>
+            <xsd:element name="option3" type="tns:NestedType" maxOccurs="unbounded"/>
+            <xsd:element name="option4" type="xsd:anyType"/>
+        </xsd:choice>
+        <xsd:attribute name="choice-attribute" type="xsd:string"/>
+    </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="AnyElement">
+    
+</xsd:element>
+
+</xsd:schema>
