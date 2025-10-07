@@ -5,9 +5,16 @@ from dataclasses import dataclass, field
 from functools import singledispatchmethod
 from typing import List, Tuple
 
+import msgspec
 from lxml.etree import QName
 from zeep.xsd.elements import Any as XsdAny
-from zeep.xsd.elements import Choice, Element, Sequence
+from zeep.xsd.elements import (
+    AnyAttribute,
+    Choice,
+    Element,
+    Sequence,
+)
+from zeep.xsd.elements.indicators import OrderIndicator
 from zeep.xsd.schema import Schema
 from zeep.xsd.types import AnySimpleType, AnyType, ComplexType
 
@@ -36,6 +43,7 @@ class XmlSchemaVisitor:
     stack: List[TypeObject] = field(default_factory=list)
     components: List[Tuple[QName, Type]] = field(default_factory=list)
     global_types: dict = field(default_factory=dict)
+    base_type_qnames: set = field(default_factory=set)
 
     # --- Stack management for current type being processed
     @contextmanager
@@ -55,16 +63,21 @@ class XmlSchemaVisitor:
 
     def visit_schema(self, schema: Schema):
         self.components.clear()
-        for element in schema.elements:
-            if isinstance(element, Element):
-                self.visit_global_element(element.type, element)
+
         for type in schema.types:
             if (
                 type.qname is not None
                 and type.qname.namespace != "http://www.w3.org/2001/XMLSchema"
             ):
-                self.visit_global_type(type)
-                self.global_types[type.qname] = type
+                self.global_types[str(type.qname)] = True
+
+        for element in schema.elements:
+            if isinstance(element, Element):
+                self.visit_global_element(element.type, element)
+
+        for global_type in schema.types:
+            if str(global_type.qname) in self.global_types:
+                self.visit_global_type(global_type)
 
         for qname, type_declaration in self.components:
             id = self.naming_strategy.namespace_identifier(self.ctx, qname.namespace)
@@ -81,6 +94,16 @@ class XmlSchemaVisitor:
             schema_dict[self.naming_strategy.format_type_name(qname.localname)] = (
                 type_declaration
             )
+
+        for base_qname in self.base_type_qnames:
+            id = self.naming_strategy.namespace_identifier(
+                self.ctx, base_qname.namespace
+            )
+            schema_dict = create_schema_dict(self.api.components, [id])
+            type_name = self.naming_strategy.format_type_name(base_qname.localname)
+            if type_name in schema_dict:
+                xml_ext = self.get_xml_ext_for_type(schema_dict[type_name])
+                xml_ext.is_base = True
 
     @singledispatchmethod
     def visit_global_type(self, type: any):
@@ -108,20 +131,15 @@ class XmlSchemaVisitor:
     @visit_global_element.register
     def _(self, element_type: AnySimpleType, element: Element):
         """Visit a global element of simple type."""
-        if (
-            element_type.is_global
-            and element_type.qname.namespace == "http://www.w3.org/2001/XMLSchema"
-        ):
-            type_declaration = infere_primitive_type(element_type)
-            type_declaration.xml = create_xml_extension(element.qname)
-        elif element_type.is_global:
-            type_declaration = infere_primitive_type(element_type)
-            type_declaration.xml = create_xml_extension(element.qname)
-        else:
+        if self.is_simple_type_global(element_type):
             type_declaration = ReferenceObject(
                 self.naming_strategy.reference_to_type(self.ctx, element_type.qname),
                 xml=create_xml_extension(element.qname),
             )
+        else:
+            type_declaration = infere_primitive_type(element_type)
+            type_declaration.xml = create_xml_extension(element.qname)
+
         self.components.append((element.qname, type_declaration))
 
     @visit_global_element.register
@@ -132,11 +150,16 @@ class XmlSchemaVisitor:
             # ugly workaround: if type is global and has the same name as the element (grr)
             # add "Type" to the type name to avoid name clashes
             if element_type.qname == element.qname:
+                del self.global_types[str(element_type.qname)]
                 element_type.qname = QName(str(element_type.qname) + "ElementType")
+                self.global_types[str(element_type.qname)] = True
+
             type_declaration = ReferenceObject(
                 self.naming_strategy.reference_to_type(self.ctx, element_type.qname),
                 xml=create_xml_extension(element.qname),
             )
+
+            self.base_type_qnames.add(element_type.qname)
             self.components.append((element.qname, type_declaration))
         else:
             type_declaration = TypeObject(xml=create_xml_extension(element.qname))
@@ -160,15 +183,12 @@ class XmlSchemaVisitor:
 
     @build_type.register
     def _(self, simple_type: AnySimpleType) -> Type:
-        if (
-            simple_type.qname.namespace == "http://www.w3.org/2001/XMLSchema"
-            or not self.is_simple_type_global(simple_type)
-        ):
-            return infere_primitive_type(simple_type)
-        else:
+        if self.is_simple_type_global(simple_type):
             return ReferenceObject(
                 self.naming_strategy.reference_to_type(self.ctx, simple_type.qname)
             )
+        else:
+            return infere_primitive_type(simple_type)
 
     @build_type.register
     def _(self, complex_type: ComplexType) -> Type:
@@ -194,27 +214,54 @@ class XmlSchemaVisitor:
         raise TypeError(f"Unsupported particle type: {type(particle)}")
 
     @visit_particle.register
-    def _(self, sequence: Sequence):
-        self.visit_particle_group(sequence.elements_nested)
-
-    @visit_particle.register
-    def _(self, choice: Choice):
-        self.visit_particle_group(choice.elements_nested)
+    def _(self, particle: OrderIndicator):
+        self.visit_particle_group(particle)
 
     @visit_particle.register
     def _(self, element: Element):
         if element.qname == "_value_1":
             property_name = self.naming_strategy.char_data_property_name()
-            self.set_property_declaration(property_name, TypeString())
+            property_type = self.build_type(element.type)
+            if isinstance(property_type, ReferenceObject):
+                property_type = TypeString()
+            property_type.format = "chardata"
+            self.set_property_declaration(property_name, property_type)
         else:
             logging.error(
                 "Unsupported element in Element: %s",
                 element.type,
             )
 
+    def visit_extensions(self, complex_type: ComplexType, type_declaration: Type):
+        if len(complex_type._extension_types) > 0:
+            extensions = []
+            for ext_type in complex_type._extension_types:
+                if "_xsd_type" in dir(ext_type):
+                    extensions.append(
+                        self.naming_strategy.reference_to_type(
+                            self.ctx, ext_type._xsd_type.qname
+                        )
+                    )
+                    self.base_type_qnames.add(ext_type._xsd_type.qname)
+            self.get_xml_ext_for_type(type_declaration).extends = extensions
+
     def visit_complex_type(self, complex_type: ComplexType):
+        self.visit_extensions(complex_type, self.current_type())
         # collect properties from attributes
         for _, attr in complex_type.attributes:
+            if isinstance(attr, AnyAttribute):
+                property_declaration = TypeString(
+                    format="xml",
+                    description="This field can contain any XML attributes (xsd:anyAttribute).",
+                    nullable=True,
+                )
+                property_name = self.naming_strategy.unknown_attribute_property_name()
+                property_declaration.xml = XmlExtension(
+                    name="anyAttribute",
+                    attribute=True,
+                )
+                self.set_property_declaration(property_name, property_declaration)
+                continue
             property_name = self.naming_strategy.format_property_name(
                 attr.qname.localname
             )
@@ -250,13 +297,21 @@ class XmlSchemaVisitor:
             str(element.qname.localname)
         )
 
-        element_type = self.build_type(element.type)
-        element_type.xml = create_xml_extension(element.qname)
+        if element.is_global:
+            # reference to a global element
+            property_type = ReferenceObject(
+                self.naming_strategy.reference_to_type(self.ctx, element.qname),
+            )
+        else:
+            element_type = self.build_type(element.type)
+            element_type.xml = create_xml_extension(element.qname)
+            property_type = element_type
 
         if is_multi_occurs(element.max_occurs):
-            property_type = TypeArray(items=element_type)
-        else:
-            property_type = element_type
+            property_type = TypeArray(items=property_type)
+
+        if element.min_occurs == 0:
+            property_type.nullable = True
 
         return property_name, property_type
 
@@ -272,13 +327,19 @@ class XmlSchemaVisitor:
             return
         type_declaration.properties[property_name] = property_type
 
-    def visit_particle_group(self, nested_elements: list):
-        for _, el in nested_elements:
+    def visit_particle_group(self, particle: OrderIndicator):
+        for _, el in particle.elements_nested:
             if isinstance(el, Element):
                 logging.debug(
                     "Visiting element: %s, maxOccurs: %s", el.qname, el.max_occurs
                 )
                 property_name, property_type = self.build_property_declaration(el)
+                if is_multi_occurs(particle.max_occurs) and not is_multi_occurs(
+                    el.max_occurs
+                ):
+                    property_type = TypeArray(items=property_type)
+                if el.min_occurs == 0:
+                    property_type.nullable = True
                 self.set_property_declaration(property_name, property_type)
             elif isinstance(el, Sequence):
                 self.visit_particle(el)
@@ -303,7 +364,13 @@ class XmlSchemaVisitor:
         if not simple_type.is_global:
             return False
 
-        return simple_type.qname in self.global_types
+        return str(simple_type.qname) in self.global_types
+
+    def get_xml_ext_for_type(self, type_declaration: Type) -> XmlExtension:
+        if type_declaration.xml is None or type_declaration.xml == msgspec.UNSET:
+            type_declaration.xml = XmlExtension()
+
+        return type_declaration.xml
 
 
 def create_schema_dict(components: Components, path: List[str]) -> OrderedDict:

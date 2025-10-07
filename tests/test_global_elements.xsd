@@ -1,6 +1,6 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-           xmlns:tns="http://example.org/schema"
-           targetNamespace="http://example.org/schema"
+           xmlns:tns="http://example.org/global-elements"
+           targetNamespace="http://example.org/global-elements"
            elementFormDefault="qualified">
 
 <xsd:element name="Value1" type="tns:Value1"/>
@@ -40,5 +40,36 @@
 </xsd:element>
 
 <xsd:element name="Value6" type="xsd:anyType"/>
+
+<xsd:element name="Slot" type="tns:SlotType"/>
+
+<xsd:complexType name="SlotType">
+    <xsd:attribute name="slot" type="xsd:string"/>
+    <xsd:attribute name="value" type="xsd:string"/>
+</xsd:complexType>
+
+<xsd:element name="Slots">
+    <xsd:complexType>
+        <xsd:sequence>
+            <xsd:element ref="tns:Slot" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:element>
+
+<xsd:element name="Name" type="tns:InternationalStringType"/>
+ 
+<xsd:complexType name="InternationalStringType">
+    <xsd:sequence minOccurs="0" maxOccurs="unbounded">
+        <xsd:element ref="tns:LocalizedString"/>
+    </xsd:sequence>
+</xsd:complexType>
+
+<xsd:element name="LocalizedString">
+    <xsd:complexType>
+        <xsd:attribute name="value" type="xsd:string" use="required"/>
+        <xsd:attribute name="lang" type="xsd:language" use="required"/>
+    </xsd:complexType>
+</xsd:element>
+
 
 </xsd:schema>

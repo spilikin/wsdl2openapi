@@ -23,68 +23,67 @@ class NamespaceNamingStrategy(ABC):
 
 class DefaultNamespaceNaming(NamespaceNamingStrategy):
     def namespace_identifier(self, ctx: Context, target_namespace: str) -> str:
-        """Return the unique identifier for a given target namespace to be used in the OpenAPI document.
-        By default the following rules are applied:
-        - if namespace is a URL
-            - the host FQDN is inverted (e.g. gematik.de becomes de.gematik)
-            - remove non-informative parts like "www"
-            - in the path / is replaced by . and concatenated with the inverted FQDN
-            - if path element contains "." replace it with underscore _
-        - if namespace is URN
-            - split into urn parts by ":"
-            - replace "." in each urn part by underscore _
-        - if last path element matches the semantic version (with or without v, the version is appended to the previous part with underscore separator
-        - if the target namespace matches the connector service or types namespace, the version is replaced with the connector service version
-        - if connector conventions are used:
-            - the version is taken from the connector service version including patch version
-            - WSDL and Types namespaces get the same identifiers (WSDL is removed from the identifier)
-        """
-
-        result = None
-
         if not target_namespace:
             return "default"
 
+        parts = []
+
         if target_namespace.startswith("http"):
+            # R1 inverse fqdn in URLs
             url = urllib.parse.urlparse(target_namespace)
-            reversed_parts = reversed(url.netloc.split("."))
-            reversed_parts = (part for part in reversed_parts if part.lower() != "www")
-            inverted_fqdn = ".".join(reversed_parts)
-
-            path_elements = url.path.split("/")
-            path = ".".join(elem.replace(".", "_") for elem in path_elements if elem)
-            if path:
-                result = f"{inverted_fqdn}.{path}"
-            else:
-                result = inverted_fqdn
+            reversed_fqdn_parts = list(reversed(url.netloc.split(".")))
+            # R2 add all paths as list
+            parts = reversed_fqdn_parts + url.path.split("/")
         elif target_namespace.startswith("urn:"):
-            urn_parts = target_namespace.split(":")[1:]
-            result = ".".join(part.replace(".", "_") for part in urn_parts if part)
+            # R3 split urn parts by ":"
+            parts = target_namespace.split(":")[1:]
         else:
-            result = target_namespace.replace("/", ".").replace(":", ".")
+            parts = [target_namespace]
 
-        # Check if the last path element matches a semantic version pattern
-        version_pattern = re.compile(r"(?:\.|^)(v?\d+(_\d+)*)(?:\.|$)$")
-        if version_pattern.search(result):
-            match = version_pattern.search(result)
-            if match:
-                version = match.group(1)
-                result = result.replace(f".{version}", f"_{version}")
+        # R4 remove trivial parts
+        trivial_parts = {"www", "WSDL", "schema", "uri", "xsd"}
+        parts = list(
+            filter(lambda p: re.sub(r"[^\w]", "", p) not in trivial_parts, parts)
+        )
 
-        if ctx.use_connector_conventions:
-            result = result.replace(".WSDL", "")
-            # If the target namespace matches the connector service or types namespace, replace the version with the connector service version
-            if ctx.connector_service_version is not None and (
+        # R6 is connector convention, replace version in last part with connector service version
+        if (
+            ctx.use_connector_conventions
+            and ctx.connector_service_version is not None
+            and (
                 target_namespace == ctx.connector_service_namespace
                 or target_namespace == ctx.connector_service_types_namespace
-            ):
-                result = result.replace(
-                    f"_{version}",
-                    f"_v{ctx.connector_service_version.replace('.', '_')}",
-                )
-            # Remove "WSDL" from the identifier if present
+            )
+        ):
+            parts[-1] = "v" + ctx.connector_service_version.replace(".", "")
 
-        return result
+        # R7 if any part matches the version pattern, remove "v" and dots and append to previous part
+        version_pattern = re.compile(r"^v?\d+(\.\d+)*$")
+        for i in range(1, len(parts)):
+            if version_pattern.match(parts[i]) is not None:
+                version = parts[i]
+                parts[i - 1] = parts[i - 1] + version.replace("v", "").replace(".", "")
+                parts[i] = ""
+        parts = [part for part in parts if part]
+
+        # R8 remove punctuation characters or underscores
+        parts = [re.sub(r"[^\w]", "", part) for part in parts]
+        parts = [part.replace("_", "") for part in parts]
+
+        # R9 is part starts with digit, append it to the previous part
+        i = 1
+        while i < len(parts):
+            if parts[i] and parts[i][0].isdigit():
+                parts[i - 1] = parts[i - 1] + parts[i]
+                parts.pop(i)
+            else:
+                i += 1
+        parts = [part for part in parts if part]
+        # R9.1 if part 0 starts with digit, prepend "n"
+        if parts[0][0].isdigit():
+            parts[0] = "n" + parts[0]
+
+        return ".".join(parts)
 
 
 @dataclass
@@ -130,6 +129,10 @@ class NamingStrategy:
     def unknown_content_property_name(self) -> str:
         """Return the property name for unknown XML attributes or elements."""
         return "unknownContent"
+
+    def unknown_attribute_property_name(self) -> str:
+        """Return the property name for unknown XML attributes."""
+        return "unknownAttributes"
 
 
 _xml_cache = dict()

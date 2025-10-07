@@ -1,6 +1,6 @@
 <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-           xmlns:tns="http://example.org/schema"
-           targetNamespace="http://example.org/schema"
+           xmlns:tns="http://example.org/complex-types"
+           targetNamespace="http://example.org/complex-types"
            elementFormDefault="qualified">
 
 

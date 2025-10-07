@@ -48,9 +48,9 @@ class WebServicePort(msgspec.Struct):
 
 
 class WebService(msgspec.Struct):
-    id: str
     name: str
     targetNamespace: str
+    targetNamespaceId: str
     ports: List[WebServicePort] = msgspec.field(default_factory=list)
 
 
@@ -118,6 +118,10 @@ class XmlExtension(msgspec.Struct):
     prefix: Optional[str] = msgspec.field(default=msgspec.UNSET)
     attribute: Optional[bool] = msgspec.field(default=msgspec.UNSET)
     wrapped: Optional[bool] = msgspec.field(default=msgspec.UNSET)
+    extends: Optional[List[str]] = msgspec.field(
+        name="x-extends", default=msgspec.UNSET
+    )
+    is_base: Optional[bool] = msgspec.field(default=msgspec.UNSET, name="x-is-base")
 
 
 class ReferenceObject(msgspec.Struct):

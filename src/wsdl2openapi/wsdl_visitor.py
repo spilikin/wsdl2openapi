@@ -1,6 +1,7 @@
 import logging
 from dataclasses import dataclass
 from functools import singledispatchmethod
+from typing import OrderedDict
 
 import msgspec
 from zeep.wsdl.bindings.http import HttpGetBinding, HttpPostBinding
@@ -33,6 +34,9 @@ class WsdlVisitor:
     naming_strategy: NamingStrategy
     api: Api
     ctx: Context
+    operations: OrderedDict[str, OperationDefinition] = msgspec.field(
+        default_factory=OrderedDict
+    )
 
     def visit_definition(self, definition: Definition):
         if self.api.wsdl_services is msgspec.UNSET:
@@ -41,13 +45,13 @@ class WsdlVisitor:
             self.visit_service(definition, service)
 
     def visit_service(self, definition: Definition, service: Service):
-        id = self.naming_strategy.namespace_identifier(
+        namespace_id = self.naming_strategy.namespace_identifier(
             self.ctx, definition.target_namespace
         )
         wsdl_service = WebService(
-            id=id,
             name=service.name,
             targetNamespace=definition.target_namespace,
+            targetNamespaceId=namespace_id,
         )
         self.api.wsdl_services.append(wsdl_service)
         for port in service.ports.values():

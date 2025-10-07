@@ -16,10 +16,10 @@ def test_simple_types():
 
     base_dir = os.path.dirname(__file__)
     builder.add_xsd(os.path.join(base_dir, "test_simple_types.xsd"))
-    print(to_yaml(builder.api))
+    # print(to_yaml(builder.api))
 
-    assert "org.example.schema" in builder.api.components.schemas
-    components = builder.api.components.schemas["org.example.schema"]
+    assert "org.example.simple" in builder.api.components.schemas
+    components = builder.api.components.schemas["org.example.simple"]
     assert "StringType" in components
     string_type = components["StringType"]
     assert isinstance(string_type, TypeString)
@@ -61,5 +61,9 @@ def test_simple_types():
     assert "string" in values_ref.properties
     string_property = values_ref.properties["string"]
     assert isinstance(string_property, ReferenceObject)
-    assert string_property.ref == "#/components/schemas/org.example.schema/StringType"
-    assert "http://example.org/schema" == string_property.xml.namespace
+    assert string_property.ref == "#/components/schemas/org.example.simple/StringType"
+    assert "http://example.org/simple" == string_property.xml.namespace
+
+    access_header_element = components["AccessHeaderElement"]
+    assert isinstance(access_header_element, TypeObject)
+    assert "code" in access_header_element.properties

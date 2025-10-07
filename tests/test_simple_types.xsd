@@ -22,8 +22,8 @@ https://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes
     3.2.19 NOTATION
 -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-           xmlns:tns="http://example.org/schema"
-           targetNamespace="http://example.org/schema"
+           xmlns:tns="http://example.org/simple"
+           targetNamespace="http://example.org/simple"
            elementFormDefault="qualified">
 
 
@@ -195,5 +195,19 @@ https://www.w3.org/TR/xmlschema-2/#built-in-primitive-datatypes
         </xs:complexType>
     </xs:element>
 
+
+    <xs:simpleType name="codeType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z0-9]{1,10}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:element name="AccessHeaderElement">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="code" type="tns:codeType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>
