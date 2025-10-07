@@ -101,7 +101,7 @@ func (g *Generator) renderGlobalObject(jenFile *jen.File, typePtr *TypePointer, 
 		}
 	}
 
-	if typeDef.Xml != nil && typeDef.Xml.IsBase {
+	if typePtr.IsBase {
 		interfaceName := g.NamingStrategy.BaseTypeInterfaceName(typeName)
 		funcName := g.NamingStrategy.BaseTypeFuncName(fmt.Sprintf("#/components/schemas/%s/%s", typePtr.NamespaceId, typeName))
 		jenFile.Line()
@@ -109,6 +109,9 @@ func (g *Generator) renderGlobalObject(jenFile *jen.File, typePtr *TypePointer, 
 		jenFile.Type().Id(interfaceName).Interface(
 			jen.Id(funcName).Params(),
 		)
+		jenFile.Line()
+		jenFile.Comment("The type itself implements " + interfaceName)
+		jenFile.Func().Params(jen.Id(typeName)).Id(funcName).Params().Block()
 	}
 
 	return nil
@@ -274,17 +277,22 @@ func (g *Generator) parseRef(raw json.RawMessage) (*TypePointer, error) {
 		return nil, err
 	}
 
-	// TODO: may produce circular refs
 	pointer, err := g.parseType(qual.NamespaceId, *rawType)
 	if err != nil {
 		return nil, err
 	}
+
 	pointer.NamespaceId = qual.NamespaceId
 	pointer.Qual = qual
 	pointer.Ref = refObj
 	// XML extension from the reference overrides the type definition
 	if refObj.Xml != nil {
 		pointer.Xml = refObj.Xml
+		if refObj.Xml.IsBase {
+			pointer.IsBase = true
+		} else {
+			pointer.IsBase = false
+		}
 	}
 	if refObj.Nullable != nil {
 		pointer.Nullable = *refObj.Nullable

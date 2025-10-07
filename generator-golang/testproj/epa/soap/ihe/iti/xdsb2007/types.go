@@ -13,35 +13,25 @@ type RetrieveDocumentSetRequest struct {
 	XMLName         xml.Name `xml:"urn:ihe:iti:xds-b:2007 RetrieveDocumentSetRequest"`
 	DocumentRequest []struct {
 		XMLName            xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentRequest"`
+		HomeCommunityId    *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId   rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
-		HomeCommunityId    *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentRequest"`
 }
 
-// Interface for types that extend RetrieveDocumentSetRequest
-type IRetrieveDocumentSetRequest interface {
-	IsXdsb2007RetrieveDocumentSetRequest()
-}
-
 type RetrieveDocumentSetResponse struct {
-	XMLName          xml.Name               `xml:"urn:ihe:iti:xds-b:2007 RetrieveDocumentSetResponse"`
-	RegistryResponse rs30.IRegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
+	XMLName          xml.Name              `xml:"urn:ihe:iti:xds-b:2007 RetrieveDocumentSetResponse"`
+	RegistryResponse rs30.RegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	DocumentResponse []struct {
 		XMLName               xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
-		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId      rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
 		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
 		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
 		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
+		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
-}
-
-// Interface for types that extend RetrieveDocumentSetResponse
-type IRetrieveDocumentSetResponse interface {
-	IsXdsb2007RetrieveDocumentSetResponse()
 }
 
 type ProvideAndRegisterDocumentSetRequest struct {
@@ -52,11 +42,6 @@ type ProvideAndRegisterDocumentSetRequest struct {
 		Id       string   `xml:"id,attr"`
 		CharData string   `xml:"chardata"`
 	} `xml:"urn:ihe:iti:xds-b:2007 Document"`
-}
-
-// Interface for types that extend ProvideAndRegisterDocumentSetRequest
-type IProvideAndRegisterDocumentSetRequest interface {
-	IsXdsb2007ProvideAndRegisterDocumentSetRequest()
 }
 
 type RetrieveDocumentSetRequestType struct {
@@ -73,18 +58,21 @@ type IRetrieveDocumentSetRequestType interface {
 	IsXdsb2007RetrieveDocumentSetRequestType()
 }
 
+// The type itself implements IRetrieveDocumentSetRequestType
+func (RetrieveDocumentSetRequestType) IsXdsb2007RetrieveDocumentSetRequestType() {}
+
 type RetrieveDocumentSetResponseType struct {
-	RegistryResponse rs30.IRegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	DocumentResponse []struct {
 		XMLName               xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
+		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
 		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
 		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId      rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
-		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
+	RegistryResponse rs30.RegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 }
 
 // Interface for types that extend RetrieveDocumentSetResponseType
@@ -92,16 +80,23 @@ type IRetrieveDocumentSetResponseType interface {
 	IsXdsb2007RetrieveDocumentSetResponseType()
 }
 
+// The type itself implements IRetrieveDocumentSetResponseType
+func (RetrieveDocumentSetResponseType) IsXdsb2007RetrieveDocumentSetResponseType() {}
+
 type ProvideAndRegisterDocumentSetRequestType struct {
-	SubmitObjectsRequest lcm30.SubmitObjectsRequest `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
-	Document             []struct {
+	Document []struct {
 		XMLName  xml.Name `xml:"urn:ihe:iti:xds-b:2007 Document"`
 		Id       string   `xml:"id,attr"`
 		CharData string   `xml:"chardata"`
 	} `xml:"urn:ihe:iti:xds-b:2007 Document"`
+	SubmitObjectsRequest lcm30.SubmitObjectsRequest `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
 }
 
 // Interface for types that extend ProvideAndRegisterDocumentSetRequestType
 type IProvideAndRegisterDocumentSetRequestType interface {
 	IsXdsb2007ProvideAndRegisterDocumentSetRequestType()
+}
+
+// The type itself implements IProvideAndRegisterDocumentSetRequestType
+func (ProvideAndRegisterDocumentSetRequestType) IsXdsb2007ProvideAndRegisterDocumentSetRequestType() {
 }

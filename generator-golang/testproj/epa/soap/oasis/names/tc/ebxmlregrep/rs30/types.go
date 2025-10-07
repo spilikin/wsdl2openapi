@@ -7,16 +7,40 @@ import (
 	rim30 "github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/rim30"
 )
 
-type RegistryRequest struct {
-	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryRequest"`
+type RegistryRequestType struct {
 	Id              string              `xml:"id,attr,omitempty"`
 	Comment         string              `xml:"comment,attr,omitempty"`
-	RequestSlotList rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
+	RequestSlotList *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
 }
 
-// Interface for types that extend RegistryRequest
-type IRegistryRequest interface {
-	IsRs30RegistryRequest()
+// Interface for types that extend RegistryRequestType
+type IRegistryRequestType interface {
+	IsRs30RegistryRequestType()
+}
+
+// The type itself implements IRegistryRequestType
+func (RegistryRequestType) IsRs30RegistryRequestType() {}
+
+type RegistryResponseType struct {
+	Status            rim30.ReferenceURI  `xml:"status,attr"`
+	RequestId         string              `xml:"requestId,attr,omitempty"`
+	ResponseSlotList  *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
+	RegistryErrorList *RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
+}
+
+// Interface for types that extend RegistryResponseType
+type IRegistryResponseType interface {
+	IsRs30RegistryResponseType()
+}
+
+// The type itself implements IRegistryResponseType
+func (RegistryResponseType) IsRs30RegistryResponseType() {}
+
+type RegistryRequest struct {
+	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryRequest"`
+	Comment         string              `xml:"comment,attr,omitempty"`
+	RequestSlotList *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	Id              string              `xml:"id,attr,omitempty"`
 }
 
 type RegistryErrorList struct {
@@ -36,36 +60,8 @@ type RegistryError struct {
 
 type RegistryResponse struct {
 	XMLName           xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
-	RequestId         string              `xml:"requestId,attr,omitempty"`
-	ResponseSlotList  rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList"`
-	RegistryErrorList *RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
-	Status            rim30.ReferenceURI  `xml:"status,attr"`
-}
-
-// Interface for types that extend RegistryResponse
-type IRegistryResponse interface {
-	IsRs30RegistryResponse()
-}
-
-type RegistryRequestType struct {
-	Comment         string              `xml:"comment,attr,omitempty"`
-	RequestSlotList rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
-	Id              string              `xml:"id,attr,omitempty"`
-}
-
-// Interface for types that extend RegistryRequestType
-type IRegistryRequestType interface {
-	IsRs30RegistryRequestType()
-}
-
-type RegistryResponseType struct {
 	Status            rim30.ReferenceURI  `xml:"status,attr"`
 	RequestId         string              `xml:"requestId,attr,omitempty"`
-	ResponseSlotList  rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList"`
+	ResponseSlotList  *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
 	RegistryErrorList *RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
-}
-
-// Interface for types that extend RegistryResponseType
-type IRegistryResponseType interface {
-	IsRs30RegistryResponseType()
 }

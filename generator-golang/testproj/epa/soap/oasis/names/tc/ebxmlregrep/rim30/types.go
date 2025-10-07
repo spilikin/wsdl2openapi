@@ -4,111 +4,37 @@ package rim30
 
 import "encoding/xml"
 
-type ObjectRef struct {
-	XMLName       xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
-	Id            string   `xml:"id,attr"`
-	Home          string   `xml:"home,attr,omitempty"`
-	CreateReplica bool     `xml:"createReplica,attr"`
-	Slot          []ISlot  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+type Name struct {
+	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
+	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
 }
 
-// Interface for types that extend ObjectRef
-type IObjectRef interface {
-	IsRim30ObjectRef()
+type RegistryObject struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObject"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
 }
 
-type TelephoneNumber struct {
-	XMLName     xml.Name  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	PhoneType   *String32 `xml:"phoneType,attr,omitempty"`
-	AreaCode    *String8  `xml:"areaCode,attr,omitempty"`
-	CountryCode *String8  `xml:"countryCode,attr,omitempty"`
-	Extension   *String8  `xml:"extension,attr,omitempty"`
-	Number      *String16 `xml:"number,attr,omitempty"`
+type EmailAddress struct {
+	XMLName xml.Name  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Address ShortName `xml:"address,attr"`
+	Type    *String32 `xml:"type,attr,omitempty"`
 }
-
-// Interface for types that extend TelephoneNumber
-type ITelephoneNumber interface {
-	IsRim30TelephoneNumber()
-}
-
-type NotifyAction struct {
-	XMLName            xml.Name      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 NotifyAction"`
-	CharData           string        `xml:"chardata"`
-	NotificationOption *ReferenceURI `xml:"notificationOption,attr,omitempty"`
-	EndPoint           string        `xml:"endPoint,attr"`
-}
-
-// Interface for types that extend NotifyAction
-type INotifyAction interface {
-	IsRim30NotifyAction()
-}
-
-type String4 string
-
-type InternationalStringType struct {
-	LocalizedString []ILocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
-}
-
-// Interface for types that extend InternationalStringType
-type IInternationalStringType interface {
-	IsRim30InternationalStringType()
-}
-
-type ServiceType struct {
-	ServiceBinding     []IServiceBinding     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ServiceType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (ServiceType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend ServiceType
-type IServiceType interface {
-	IsRim30ServiceType()
-}
-
-type ValueList struct {
-	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
-	Value   []Value  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Value"`
-}
-
-// Interface for types that extend ValueList
-type IValueList interface {
-	IsRim30ValueList()
-}
-
-type ObjectRefList struct {
-	XMLName   xml.Name     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
-	ObjectRef []IObjectRef `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
-}
-
-// Interface for types that extend ObjectRefList
-type IObjectRefList interface {
-	IsRim30ObjectRefList()
-}
-
-type ShortName string
-
-type LongName string
 
 type ObjectRefType struct {
-	Id            string  `xml:"id,attr"`
-	Home          string  `xml:"home,attr,omitempty"`
-	CreateReplica bool    `xml:"createReplica,attr"`
-	Slot          []ISlot `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Home          string `xml:"home,attr,omitempty"`
+	CreateReplica bool   `xml:"createReplica,attr"`
+	Slot          []Slot `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Id            string `xml:"id,attr"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
@@ -119,149 +45,373 @@ type IObjectRefType interface {
 	IsRim30ObjectRefType()
 }
 
-type ClassificationNodeType struct {
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Parent             *ReferenceURI         `xml:"parent,attr,omitempty"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Path               string                `xml:"path,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ClassificationNode []IClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
-	Id                 string                `xml:"id,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Code               *LongName             `xml:"code,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
+// The type itself implements IObjectRefType
+func (ObjectRefType) IsRim30ObjectRefType() {}
+
+type ObjectRefListType struct {
+	ObjectRef []ObjectRef `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
+}
+
+// Interface for types that extend ObjectRefListType
+type IObjectRefListType interface {
+	IsRim30ObjectRefListType()
+}
+
+// The type itself implements IObjectRefListType
+func (ObjectRefListType) IsRim30ObjectRefListType() {}
+
+type Description struct {
+	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
+	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+}
+
+type LocalizedString struct {
+	XMLName xml.Name     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+	Lang    string       `xml:"http://www.w3.org/XML/1998/namespace lang,attr,omitempty"`
+	Charset string       `xml:"charset,attr,omitempty"`
+	Value   FreeFormText `xml:"value,attr"`
+}
+
+type RegistryObjectList struct {
+	XMLName      xml.Name       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
+	Identifiable []Identifiable `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
+}
+
+type ExternalIdentifier struct {
+	XMLName              xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ObjectType           *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status               *ReferenceURI        `xml:"status,attr,omitempty"`
+	Value                LongName             `xml:"value,attr"`
+	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Lid                  string               `xml:"lid,attr,omitempty"`
+	RegistryObject       ReferenceURI         `xml:"registryObject,attr"`
+	IdentificationScheme ReferenceURI         `xml:"identificationScheme,attr"`
+	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+}
+
+type ExtrinsicObject struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExtrinsicObject"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	MimeType           *LongName            `xml:"mimeType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ContentVersionInfo *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ContentVersionInfo,omitempty"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	IsOpaque           bool                 `xml:"isOpaque,attr"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+}
+
+type Person struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Person"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+	Home               string               `xml:"home,attr,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	PersonName         *PersonName          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName,omitempty"`
+	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+}
+
+type VersionInfoType struct {
+	VersionName *String16 `xml:"versionName,attr,omitempty"`
+	Comment     string    `xml:"comment,attr,omitempty"`
+}
+
+type RegistryType struct {
+	Classification         []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                     string               `xml:"id,attr"`
+	Name                   *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description            *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo            *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier     []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ObjectType             *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	ConformanceProfile     string               `xml:"conformanceProfile,attr,omitempty"`
+	Home                   string               `xml:"home,attr,omitempty"`
+	Lid                    string               `xml:"lid,attr,omitempty"`
+	CatalogingLatency      string               `xml:"catalogingLatency,attr,omitempty"`
+	Status                 *ReferenceURI        `xml:"status,attr,omitempty"`
+	Operator               ReferenceURI         `xml:"operator,attr"`
+	SpecificationVersion   string               `xml:"specificationVersion,attr"`
+	ReplicationSyncLatency string               `xml:"replicationSyncLatency,attr,omitempty"`
+	Slot                   []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ClassificationNodeType) IsRim30RegistryObjectType() {}
+func (RegistryType) IsRim30RegistryObjectType() {}
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (ClassificationNodeType) IsRim30IdentifiableType() {}
+func (RegistryType) IsRim30IdentifiableType() {}
 
-// Interface for types that extend ClassificationNodeType
-type IClassificationNodeType interface {
-	IsRim30ClassificationNodeType()
+// Interface for types that extend RegistryType
+type IRegistryType interface {
+	IsRim30RegistryType()
 }
 
-type PersonNameType struct {
-	MiddleName *ShortName `xml:"middleName,attr,omitempty"`
-	LastName   *ShortName `xml:"lastName,attr,omitempty"`
-	FirstName  *ShortName `xml:"firstName,attr,omitempty"`
-}
-
-// Interface for types that extend PersonNameType
-type IPersonNameType interface {
-	IsRim30PersonNameType()
-}
-
-type SlotListType struct {
-	Slot []ISlot `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-}
-
-// Interface for types that extend SlotListType
-type ISlotListType interface {
-	IsRim30SlotListType()
-}
+// The type itself implements IRegistryType
+func (RegistryType) IsRim30RegistryType() {}
 
 type InternationalString struct {
-	XMLName         xml.Name           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 InternationalString"`
-	LocalizedString []ILocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 InternationalString"`
+	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
 }
 
-// Interface for types that extend InternationalString
-type IInternationalString interface {
-	IsRim30InternationalString()
-}
-
-type RegistryObject struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObject"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-}
-
-// Interface for types that extend RegistryObject
-type IRegistryObject interface {
-	IsRim30RegistryObject()
+type SlotList struct {
+	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SlotList"`
+	Slot    []Slot   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
 }
 
 type Classification struct {
-	XMLName              xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ClassificationScheme *ReferenceURI         `xml:"classificationScheme,attr,omitempty"`
-	ClassificationNode   *ReferenceURI         `xml:"classificationNode,attr,omitempty"`
-	ClassifiedObject     ReferenceURI          `xml:"classifiedObject,attr"`
-	NodeRepresentation   *LongName             `xml:"nodeRepresentation,attr,omitempty"`
-	Name                 IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description          IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo          *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier   []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                  string                `xml:"lid,attr,omitempty"`
-	ObjectType           *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status               *ReferenceURI         `xml:"status,attr,omitempty"`
+	XMLName              xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ClassificationScheme *ReferenceURI        `xml:"classificationScheme,attr,omitempty"`
+	ClassificationNode   *ReferenceURI        `xml:"classificationNode,attr,omitempty"`
+	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Status               *ReferenceURI        `xml:"status,attr,omitempty"`
+	ClassifiedObject     ReferenceURI         `xml:"classifiedObject,attr"`
+	NodeRepresentation   *LongName            `xml:"nodeRepresentation,attr,omitempty"`
+	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Lid                  string               `xml:"lid,attr,omitempty"`
+	ObjectType           *ReferenceURI        `xml:"objectType,attr,omitempty"`
 }
 
-// Interface for types that extend Classification
-type IClassification interface {
-	IsRim30Classification()
-}
-
-type PersonName struct {
-	XMLName    xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName"`
-	MiddleName *ShortName `xml:"middleName,attr,omitempty"`
-	LastName   *ShortName `xml:"lastName,attr,omitempty"`
-	FirstName  *ShortName `xml:"firstName,attr,omitempty"`
-}
-
-// Interface for types that extend PersonName
-type IPersonName interface {
-	IsRim30PersonName()
+type ClassificationScheme struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationScheme"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ClassificationNode []ClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	NodeType           ReferenceURI         `xml:"nodeType,attr"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	IsInternal         bool                 `xml:"isInternal,attr"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
 }
 
 type UsageParameter string
 
-type Description struct {
-	XMLName         xml.Name           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	LocalizedString []ILocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+type Notification struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Notification"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Subscription       ReferenceURI         `xml:"subscription,attr"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	RegistryObjectList RegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
+	Id                 string               `xml:"id,attr"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
 }
 
-// Interface for types that extend Description
-type IDescription interface {
-	IsRim30Description()
+type Action struct {
+	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
 }
 
-type EmailAddress struct {
-	XMLName xml.Name  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-	Type    *String32 `xml:"type,attr,omitempty"`
-	Address ShortName `xml:"address,attr"`
+type ObjectRefList struct {
+	XMLName   xml.Name    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
+	ObjectRef []ObjectRef `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
 }
 
-// Interface for types that extend EmailAddress
-type IEmailAddress interface {
-	IsRim30EmailAddress()
+type ServiceBinding struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	TargetBinding      *ReferenceURI        `xml:"targetBinding,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	SpecificationLink  []SpecificationLink  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	AccessURI          string               `xml:"accessURI,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Service            ReferenceURI         `xml:"service,attr"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
 }
 
-type UsageDescription struct {
-	XMLName         xml.Name           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription"`
-	LocalizedString []ILocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+type FreeFormText string
+
+type AssociationType1 struct {
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	AssociationType    ReferenceURI         `xml:"associationType,attr"`
+	SourceObject       ReferenceURI         `xml:"sourceObject,attr"`
+	TargetObject       ReferenceURI         `xml:"targetObject,attr"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
 }
 
-// Interface for types that extend UsageDescription
-type IUsageDescription interface {
-	IsRim30UsageDescription()
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (AssociationType1) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (AssociationType1) IsRim30IdentifiableType() {}
+
+// Interface for types that extend AssociationType1
+type IAssociationType1 interface {
+	IsRim30AssociationType1()
+}
+
+// The type itself implements IAssociationType1
+func (AssociationType1) IsRim30AssociationType1() {}
+
+type ValueList struct {
+	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
+	Value   []Value  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Value"`
+}
+
+type Organization struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Organization"`
+	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	PrimaryContact     *ReferenceURI        `xml:"primaryContact,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Parent             *ReferenceURI        `xml:"parent,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	Id                 string               `xml:"id,attr"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+}
+
+type RegistryPackage struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryPackage"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	RegistryObjectList *RegistryObjectList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+}
+
+type AuditableEventType struct {
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	AffectedObjects    ObjectRefListType    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 affectedObjects"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Home               string               `xml:"home,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	EventType          ReferenceURI         `xml:"eventType,attr"`
+	User               ReferenceURI         `xml:"user,attr"`
+	RequestId          ReferenceURI         `xml:"requestId,attr"`
+	Timestamp          string               `xml:"timestamp,attr"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (AuditableEventType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (AuditableEventType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend AuditableEventType
+type IAuditableEventType interface {
+	IsRim30AuditableEventType()
+}
+
+// The type itself implements IAuditableEventType
+func (AuditableEventType) IsRim30AuditableEventType() {}
+
+type RegistryPackageType struct {
+	Id                 string               `xml:"id,attr"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	RegistryObjectList *RegistryObjectList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (RegistryPackageType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (RegistryPackageType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend RegistryPackageType
+type IRegistryPackageType interface {
+	IsRim30RegistryPackageType()
+}
+
+// The type itself implements IRegistryPackageType
+func (RegistryPackageType) IsRim30RegistryPackageType() {}
+
+type Address struct {
+	XMLName         xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	StateOrProvince *ShortName `xml:"stateOrProvince,attr,omitempty"`
+	Street          *ShortName `xml:"street,attr,omitempty"`
+	StreetNumber    *String32  `xml:"streetNumber,attr,omitempty"`
+	City            *ShortName `xml:"city,attr,omitempty"`
+	Country         *ShortName `xml:"country,attr,omitempty"`
+	PostalCode      *ShortName `xml:"postalCode,attr,omitempty"`
+}
+
+type PostalAddress struct {
+	XMLName         xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PostalAddress"`
+	City            *ShortName `xml:"city,attr,omitempty"`
+	Country         *ShortName `xml:"country,attr,omitempty"`
+	PostalCode      *ShortName `xml:"postalCode,attr,omitempty"`
+	StateOrProvince *ShortName `xml:"stateOrProvince,attr,omitempty"`
+	Street          *ShortName `xml:"street,attr,omitempty"`
+	StreetNumber    *String32  `xml:"streetNumber,attr,omitempty"`
 }
 
 type QueryExpression struct {
@@ -270,40 +420,39 @@ type QueryExpression struct {
 	UnknownContent string
 }
 
-// Interface for types that extend QueryExpression
-type IQueryExpression interface {
-	IsRim30QueryExpression()
+type Subscription struct {
+	XMLName              xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Subscription"`
+	Status               *ReferenceURI        `xml:"status,attr,omitempty"`
+	EndTime              string               `xml:"endTime,attr,omitempty"`
+	NotificationInterval string               `xml:"notificationInterval,attr,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Selector             ReferenceURI         `xml:"selector,attr"`
+	StartTime            string               `xml:"startTime,attr,omitempty"`
+	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                   string               `xml:"id,attr"`
+	Lid                  string               `xml:"lid,attr,omitempty"`
+	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Action               []Action             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
+	Home                 string               `xml:"home,attr,omitempty"`
+	ObjectType           *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot                 []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
 }
 
 type ReferenceURI string
 
-type ExtrinsicObjectType struct {
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ContentVersionInfo *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ContentVersionInfo,omitempty"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	MimeType           *LongName             `xml:"mimeType,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Id                 string                `xml:"id,attr"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	IsOpaque           bool                  `xml:"isOpaque,attr"`
+type ValueListType struct {
+	Value []Value `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Value"`
 }
 
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ExtrinsicObjectType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (ExtrinsicObjectType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend ExtrinsicObjectType
-type IExtrinsicObjectType interface {
-	IsRim30ExtrinsicObjectType()
+// Interface for types that extend ValueListType
+type IValueListType interface {
+	IsRim30ValueListType()
 }
+
+// The type itself implements IValueListType
+func (ValueListType) IsRim30ValueListType() {}
 
 type TelephoneNumberType struct {
 	AreaCode    *String8  `xml:"areaCode,attr,omitempty"`
@@ -318,876 +467,8 @@ type ITelephoneNumberType interface {
 	IsRim30TelephoneNumberType()
 }
 
-type NotificationType struct {
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Subscription       ReferenceURI          `xml:"subscription,attr"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	RegistryObjectList IRegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (NotificationType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (NotificationType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend NotificationType
-type INotificationType interface {
-	IsRim30NotificationType()
-}
-
-type Organization struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Organization"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Parent             *ReferenceURI         `xml:"parent,attr,omitempty"`
-	PrimaryContact     *ReferenceURI         `xml:"primaryContact,attr,omitempty"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	TelephoneNumber    []ITelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Address            []IAddress            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	EmailAddress       []IEmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-}
-
-// Interface for types that extend Organization
-type IOrganization interface {
-	IsRim30Organization()
-}
-
-type ExternalLinkType struct {
-	Home               string                `xml:"home,attr,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	ExternalURI        string                `xml:"externalURI,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ExternalLinkType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (ExternalLinkType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend ExternalLinkType
-type IExternalLinkType interface {
-	IsRim30ExternalLinkType()
-}
-
-type SubscriptionType struct {
-	Lid                  string                `xml:"lid,attr,omitempty"`
-	Selector             ReferenceURI          `xml:"selector,attr"`
-	Slot                 []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Action               []IAction             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
-	ObjectType           *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status               *ReferenceURI         `xml:"status,attr,omitempty"`
-	Description          IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo          *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Home                 string                `xml:"home,attr,omitempty"`
-	StartTime            string                `xml:"startTime,attr,omitempty"`
-	EndTime              string                `xml:"endTime,attr,omitempty"`
-	NotificationInterval string                `xml:"notificationInterval,attr,omitempty"`
-	Name                 IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Id                   string                `xml:"id,attr"`
-	ExternalIdentifier   []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (SubscriptionType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (SubscriptionType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend SubscriptionType
-type ISubscriptionType interface {
-	IsRim30SubscriptionType()
-}
-
-type AuditableEvent struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AuditableEvent"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Id                 string                `xml:"id,attr"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	RequestId          ReferenceURI          `xml:"requestId,attr"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Home               string                `xml:"home,attr,omitempty"`
-	EventType          ReferenceURI          `xml:"eventType,attr"`
-	Timestamp          string                `xml:"timestamp,attr"`
-	User               ReferenceURI          `xml:"user,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	AffectedObjects    IObjectRefListType    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 affectedObjects"`
-}
-
-// Interface for types that extend AuditableEvent
-type IAuditableEvent interface {
-	IsRim30AuditableEvent()
-}
-
-type ClassificationScheme struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationScheme"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ClassificationNode []IClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	IsInternal         bool                  `xml:"isInternal,attr"`
-	NodeType           ReferenceURI          `xml:"nodeType,attr"`
-}
-
-// Interface for types that extend ClassificationScheme
-type IClassificationScheme interface {
-	IsRim30ClassificationScheme()
-}
-
-type User struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 User"`
-	EmailAddress       []IEmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Address            []IAddress            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	Id                 string                `xml:"id,attr"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	PersonName         IPersonName           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	TelephoneNumber    []ITelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-}
-
-// Interface for types that extend User
-type IUser interface {
-	IsRim30User()
-}
-
-type FederationType struct {
-	ObjectType             *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status                 *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot                   []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                   IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo            *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Id                     string                `xml:"id,attr"`
-	Lid                    string                `xml:"lid,attr,omitempty"`
-	ReplicationSyncLatency string                `xml:"replicationSyncLatency,attr,omitempty"`
-	Description            IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification         []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier     []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Home                   string                `xml:"home,attr,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (FederationType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (FederationType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend FederationType
-type IFederationType interface {
-	IsRim30FederationType()
-}
-
-type AdhocQueryType struct {
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	QueryExpression    IQueryExpression      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 QueryExpression"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (AdhocQueryType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (AdhocQueryType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend AdhocQueryType
-type IAdhocQueryType interface {
-	IsRim30AdhocQueryType()
-}
-
-type SlotList struct {
-	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SlotList"`
-	Slot    []ISlot  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-}
-
-// Interface for types that extend SlotList
-type ISlotList interface {
-	IsRim30SlotList()
-}
-
-type Notification struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Notification"`
-	Id                 string                `xml:"id,attr"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Subscription       ReferenceURI          `xml:"subscription,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	RegistryObjectList IRegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-}
-
-// Interface for types that extend Notification
-type INotification interface {
-	IsRim30Notification()
-}
-
-type ClassificationSchemeType struct {
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	NodeType           ReferenceURI          `xml:"nodeType,attr"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ClassificationNode []IClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	IsInternal         bool                  `xml:"isInternal,attr"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ClassificationSchemeType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (ClassificationSchemeType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend ClassificationSchemeType
-type IClassificationSchemeType interface {
-	IsRim30ClassificationSchemeType()
-}
-
-type RegistryPackage struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryPackage"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	RegistryObjectList IRegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-}
-
-// Interface for types that extend RegistryPackage
-type IRegistryPackage interface {
-	IsRim30RegistryPackage()
-}
-
-type FreeFormText string
-
-type AssociationType1 struct {
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Id                 string                `xml:"id,attr"`
-	TargetObject       ReferenceURI          `xml:"targetObject,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	AssociationType    ReferenceURI          `xml:"associationType,attr"`
-	SourceObject       ReferenceURI          `xml:"sourceObject,attr"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (AssociationType1) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (AssociationType1) IsRim30IdentifiableType() {}
-
-// Interface for types that extend AssociationType1
-type IAssociationType1 interface {
-	IsRim30AssociationType1()
-}
-
-type EmailAddressType struct {
-	Address ShortName `xml:"address,attr"`
-	Type    *String32 `xml:"type,attr,omitempty"`
-}
-
-// Interface for types that extend EmailAddressType
-type IEmailAddressType interface {
-	IsRim30EmailAddressType()
-}
-
-type TelephoneNumberListType struct {
-	TelephoneNumber []ITelephoneNumber `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-}
-
-type NotifyActionType struct {
-	NotificationOption *ReferenceURI `xml:"notificationOption,attr,omitempty"`
-	EndPoint           string        `xml:"endPoint,attr"`
-	CharData           string        `xml:"chardata"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ActionType
-func (NotifyActionType) IsRim30ActionType() {}
-
-// Interface for types that extend NotifyActionType
-type INotifyActionType interface {
-	IsRim30NotifyActionType()
-}
-
-type PostalAddress struct {
-	XMLName         xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PostalAddress"`
-	Country         *ShortName `xml:"country,attr,omitempty"`
-	PostalCode      *ShortName `xml:"postalCode,attr,omitempty"`
-	StateOrProvince *ShortName `xml:"stateOrProvince,attr,omitempty"`
-	Street          *ShortName `xml:"street,attr,omitempty"`
-	StreetNumber    *String32  `xml:"streetNumber,attr,omitempty"`
-	City            *ShortName `xml:"city,attr,omitempty"`
-}
-
-// Interface for types that extend PostalAddress
-type IPostalAddress interface {
-	IsRim30PostalAddress()
-}
-
-type Service struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Service"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ServiceBinding     []IServiceBinding     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
-}
-
-// Interface for types that extend Service
-type IService interface {
-	IsRim30Service()
-}
-
-type ExternalIdentifier struct {
-	XMLName              xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	RegistryObject       ReferenceURI          `xml:"registryObject,attr"`
-	IdentificationScheme ReferenceURI          `xml:"identificationScheme,attr"`
-	Value                LongName              `xml:"value,attr"`
-	Description          IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Lid                  string                `xml:"lid,attr,omitempty"`
-	ObjectType           *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status               *ReferenceURI         `xml:"status,attr,omitempty"`
-	Name                 IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo          *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier   []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-}
-
-// Interface for types that extend ExternalIdentifier
-type IExternalIdentifier interface {
-	IsRim30ExternalIdentifier()
-}
-
-type Subscription struct {
-	XMLName              xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Subscription"`
-	NotificationInterval string                `xml:"notificationInterval,attr,omitempty"`
-	Slot                 []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Lid                  string                `xml:"lid,attr,omitempty"`
-	EndTime              string                `xml:"endTime,attr,omitempty"`
-	VersionInfo          *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Description          IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Id                   string                `xml:"id,attr"`
-	Selector             ReferenceURI          `xml:"selector,attr"`
-	Name                 IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Status               *ReferenceURI         `xml:"status,attr,omitempty"`
-	ExternalIdentifier   []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Action               []IAction             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
-	Classification       []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Home                 string                `xml:"home,attr,omitempty"`
-	ObjectType           *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	StartTime            string                `xml:"startTime,attr,omitempty"`
-}
-
-// Interface for types that extend Subscription
-type ISubscription interface {
-	IsRim30Subscription()
-}
-
-type ExternalIdentifierType struct {
-	RegistryObject       ReferenceURI          `xml:"registryObject,attr"`
-	Classification       []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	IdentificationScheme ReferenceURI          `xml:"identificationScheme,attr"`
-	Value                LongName              `xml:"value,attr"`
-	Name                 IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description          IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo          *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier   []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                  string                `xml:"lid,attr,omitempty"`
-	ObjectType           *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status               *ReferenceURI         `xml:"status,attr,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ExternalIdentifierType) IsRim30RegistryObjectType() {}
-
-// Interface for types that extend ExternalIdentifierType
-type IExternalIdentifierType interface {
-	IsRim30ExternalIdentifierType()
-}
-
-type Slot struct {
-	XMLName   xml.Name      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name      LongName      `xml:"name,attr"`
-	SlotType  *ReferenceURI `xml:"slotType,attr,omitempty"`
-	ValueList IValueList    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
-}
-
-// Interface for types that extend Slot
-type ISlot interface {
-	IsRim30Slot()
-}
-
-type ClassificationNode struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ClassificationNode []IClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Parent             *ReferenceURI         `xml:"parent,attr,omitempty"`
-	Code               *LongName             `xml:"code,attr,omitempty"`
-	Path               string                `xml:"path,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-}
-
-// Interface for types that extend ClassificationNode
-type IClassificationNode interface {
-	IsRim30ClassificationNode()
-}
-
-type ExtrinsicObject struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExtrinsicObject"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ContentVersionInfo *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ContentVersionInfo,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	MimeType           *LongName             `xml:"mimeType,attr,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	IsOpaque           bool                  `xml:"isOpaque,attr"`
-}
-
-// Interface for types that extend ExtrinsicObject
-type IExtrinsicObject interface {
-	IsRim30ExtrinsicObject()
-}
-
-type ServiceBinding struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	TargetBinding      *ReferenceURI         `xml:"targetBinding,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Service            ReferenceURI          `xml:"service,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	AccessURI          string                `xml:"accessURI,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	SpecificationLink  []ISpecificationLink  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
-	Id                 string                `xml:"id,attr"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-}
-
-// Interface for types that extend ServiceBinding
-type IServiceBinding interface {
-	IsRim30ServiceBinding()
-}
-
-type String16 string
-
-type ObjectRefListType struct {
-	ObjectRef []IObjectRef `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
-}
-
-// Interface for types that extend ObjectRefListType
-type IObjectRefListType interface {
-	IsRim30ObjectRefListType()
-}
-
-type VersionInfoType struct {
-	VersionName *String16 `xml:"versionName,attr,omitempty"`
-	Comment     string    `xml:"comment,attr,omitempty"`
-}
-
-type Federation struct {
-	XMLName                xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Federation"`
-	Id                     string                `xml:"id,attr"`
-	Home                   string                `xml:"home,attr,omitempty"`
-	Lid                    string                `xml:"lid,attr,omitempty"`
-	Status                 *ReferenceURI         `xml:"status,attr,omitempty"`
-	Name                   IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Classification         []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier     []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ObjectType             *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	ReplicationSyncLatency string                `xml:"replicationSyncLatency,attr,omitempty"`
-	Slot                   []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description            IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo            *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-}
-
-// Interface for types that extend Federation
-type IFederation interface {
-	IsRim30Federation()
-}
-
-type ValueListType struct {
-	Value []Value `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Value"`
-}
-
-// Interface for types that extend ValueListType
-type IValueListType interface {
-	IsRim30ValueListType()
-}
-
-type IdentifiableType struct {
-	Id   string  `xml:"id,attr"`
-	Home string  `xml:"home,attr,omitempty"`
-	Slot []ISlot `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-}
-
-// Interface for types that extend IdentifiableType
-type IIdentifiableType interface {
-	IsRim30IdentifiableType()
-}
-
-type RegistryObjectListType struct {
-	Identifiable []IIdentifiable `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
-}
-
-// Interface for types that extend RegistryObjectListType
-type IRegistryObjectListType interface {
-	IsRim30RegistryObjectListType()
-}
-
-type ClassificationType struct {
-	Description          IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	ExternalIdentifier   []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ObjectType           *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	ClassificationScheme *ReferenceURI         `xml:"classificationScheme,attr,omitempty"`
-	ClassifiedObject     ReferenceURI          `xml:"classifiedObject,attr"`
-	ClassificationNode   *ReferenceURI         `xml:"classificationNode,attr,omitempty"`
-	NodeRepresentation   *LongName             `xml:"nodeRepresentation,attr,omitempty"`
-	Name                 IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo          *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Lid                  string                `xml:"lid,attr,omitempty"`
-	Status               *ReferenceURI         `xml:"status,attr,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (ClassificationType) IsRim30RegistryObjectType() {}
-
-// Interface for types that extend ClassificationType
-type IClassificationType interface {
-	IsRim30ClassificationType()
-}
-
-type RegistryType struct {
-	ReplicationSyncLatency string                `xml:"replicationSyncLatency,attr,omitempty"`
-	CatalogingLatency      string                `xml:"catalogingLatency,attr,omitempty"`
-	ObjectType             *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	SpecificationVersion   string                `xml:"specificationVersion,attr"`
-	Name                   IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Status                 *ReferenceURI         `xml:"status,attr,omitempty"`
-	Description            IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo            *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	ExternalIdentifier     []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                    string                `xml:"lid,attr,omitempty"`
-	ConformanceProfile     string                `xml:"conformanceProfile,attr,omitempty"`
-	Slot                   []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Classification         []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Id                     string                `xml:"id,attr"`
-	Home                   string                `xml:"home,attr,omitempty"`
-	Operator               ReferenceURI          `xml:"operator,attr"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (RegistryType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (RegistryType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend RegistryType
-type IRegistryType interface {
-	IsRim30RegistryType()
-}
-
-type Value string
-
-type SpecificationLinkType struct {
-	Id                  string                `xml:"id,attr"`
-	ServiceBinding      ReferenceURI          `xml:"serviceBinding,attr"`
-	Description         IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	UsageDescription    IUsageDescription     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription"`
-	Home                string                `xml:"home,attr,omitempty"`
-	Lid                 string                `xml:"lid,attr,omitempty"`
-	Status              *ReferenceURI         `xml:"status,attr,omitempty"`
-	SpecificationObject ReferenceURI          `xml:"specificationObject,attr"`
-	Slot                []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo         *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification      []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ObjectType          *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	ExternalIdentifier  []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	UsageParameter      []UsageParameter      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageParameter"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (SpecificationLinkType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (SpecificationLinkType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend SpecificationLinkType
-type ISpecificationLinkType interface {
-	IsRim30SpecificationLinkType()
-}
-
-type Identifiable struct {
-	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
-	Id      string   `xml:"id,attr"`
-	Home    string   `xml:"home,attr,omitempty"`
-	Slot    []ISlot  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-}
-
-// Interface for types that extend Identifiable
-type IIdentifiable interface {
-	IsRim30Identifiable()
-}
-
-type RegistryObjectList struct {
-	XMLName      xml.Name        `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-	Identifiable []IIdentifiable `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
-}
-
-// Interface for types that extend RegistryObjectList
-type IRegistryObjectList interface {
-	IsRim30RegistryObjectList()
-}
-
-type Address struct {
-	XMLName         xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	City            *ShortName `xml:"city,attr,omitempty"`
-	Country         *ShortName `xml:"country,attr,omitempty"`
-	PostalCode      *ShortName `xml:"postalCode,attr,omitempty"`
-	StateOrProvince *ShortName `xml:"stateOrProvince,attr,omitempty"`
-	Street          *ShortName `xml:"street,attr,omitempty"`
-	StreetNumber    *String32  `xml:"streetNumber,attr,omitempty"`
-}
-
-// Interface for types that extend Address
-type IAddress interface {
-	IsRim30Address()
-}
-
-type Action struct {
-	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
-}
-
-// Interface for types that extend Action
-type IAction interface {
-	IsRim30Action()
-}
-
-type Person struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Person"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	TelephoneNumber    []ITelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	PersonName         IPersonName           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName"`
-	Id                 string                `xml:"id,attr"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Address            []IAddress            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	EmailAddress       []IEmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-}
-
-// Interface for types that extend Person
-type IPerson interface {
-	IsRim30Person()
-}
-
-type String8 string
-
-type SlotType1 struct {
-	Name      LongName      `xml:"name,attr"`
-	SlotType  *ReferenceURI `xml:"slotType,attr,omitempty"`
-	ValueList IValueList    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
-}
-
-// Interface for types that extend SlotType1
-type ISlotType1 interface {
-	IsRim30SlotType1()
-}
-
-type RegistryObjectType struct {
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (RegistryObjectType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend RegistryObjectType
-type IRegistryObjectType interface {
-	IsRim30RegistryObjectType()
-}
-
-type OrganizationType struct {
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	TelephoneNumber    []ITelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Address            []IAddress            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	Id                 string                `xml:"id,attr"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	PrimaryContact     *ReferenceURI         `xml:"primaryContact,attr,omitempty"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Parent             *ReferenceURI         `xml:"parent,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	EmailAddress       []IEmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (OrganizationType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (OrganizationType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend OrganizationType
-type IOrganizationType interface {
-	IsRim30OrganizationType()
-}
-
-type PersonType struct {
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Address            []IAddress            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	TelephoneNumber    []ITelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	PersonName         IPersonName           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	EmailAddress       []IEmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (PersonType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (PersonType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend PersonType
-type IPersonType interface {
-	IsRim30PersonType()
-}
+// The type itself implements ITelephoneNumberType
+func (TelephoneNumberType) IsRim30TelephoneNumberType() {}
 
 type QueryExpressionType struct {
 	QueryLanguage  ReferenceURI `xml:"queryLanguage,attr"`
@@ -1199,179 +480,21 @@ type IQueryExpressionType interface {
 	IsRim30QueryExpressionType()
 }
 
-type LocalizedString struct {
-	XMLName xml.Name     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
-	Lang    string       `xml:"http://www.w3.org/XML/1998/namespace lang,attr,omitempty"`
-	Charset string       `xml:"charset,attr,omitempty"`
-	Value   FreeFormText `xml:"value,attr"`
+// The type itself implements IQueryExpressionType
+func (QueryExpressionType) IsRim30QueryExpressionType() {}
+
+type Slot struct {
+	XMLName   xml.Name      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name      LongName      `xml:"name,attr"`
+	SlotType  *ReferenceURI `xml:"slotType,attr,omitempty"`
+	ValueList ValueList     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
 }
 
-// Interface for types that extend LocalizedString
-type ILocalizedString interface {
-	IsRim30LocalizedString()
-}
-
-type ExternalLink struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalLink"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	ExternalURI        string                `xml:"externalURI,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-}
-
-// Interface for types that extend ExternalLink
-type IExternalLink interface {
-	IsRim30ExternalLink()
-}
-
-type SpecificationLink struct {
-	XMLName             xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
-	Home                string                `xml:"home,attr,omitempty"`
-	Description         IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Id                  string                `xml:"id,attr"`
-	Lid                 string                `xml:"lid,attr,omitempty"`
-	ObjectType          *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status              *ReferenceURI         `xml:"status,attr,omitempty"`
-	Classification      []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier  []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	UsageParameter      []UsageParameter      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageParameter"`
-	ServiceBinding      ReferenceURI          `xml:"serviceBinding,attr"`
-	SpecificationObject ReferenceURI          `xml:"specificationObject,attr"`
-	VersionInfo         *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Slot                []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	UsageDescription    IUsageDescription     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription"`
-}
-
-// Interface for types that extend SpecificationLink
-type ISpecificationLink interface {
-	IsRim30SpecificationLink()
-}
-
-type Registry struct {
-	XMLName                xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Registry"`
-	Slot                   []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description            IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Id                     string                `xml:"id,attr"`
-	ReplicationSyncLatency string                `xml:"replicationSyncLatency,attr,omitempty"`
-	VersionInfo            *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Home                   string                `xml:"home,attr,omitempty"`
-	Status                 *ReferenceURI         `xml:"status,attr,omitempty"`
-	CatalogingLatency      string                `xml:"catalogingLatency,attr,omitempty"`
-	Classification         []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Operator               ReferenceURI          `xml:"operator,attr"`
-	ConformanceProfile     string                `xml:"conformanceProfile,attr,omitempty"`
-	Name                   IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	ExternalIdentifier     []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Lid                    string                `xml:"lid,attr,omitempty"`
-	ObjectType             *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	SpecificationVersion   string                `xml:"specificationVersion,attr"`
-}
-
-// Interface for types that extend Registry
-type IRegistry interface {
-	IsRim30Registry()
-}
-
-type String32 string
-
-type AuditableEventType struct {
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	EventType          ReferenceURI          `xml:"eventType,attr"`
-	User               ReferenceURI          `xml:"user,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	AffectedObjects    IObjectRefListType    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 affectedObjects"`
-	Id                 string                `xml:"id,attr"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Timestamp          string                `xml:"timestamp,attr"`
-	RequestId          ReferenceURI          `xml:"requestId,attr"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (AuditableEventType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (AuditableEventType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend AuditableEventType
-type IAuditableEventType interface {
-	IsRim30AuditableEventType()
-}
-
-type PostalAddressType struct {
-	PostalCode      *ShortName `xml:"postalCode,attr,omitempty"`
-	StateOrProvince *ShortName `xml:"stateOrProvince,attr,omitempty"`
-	Street          *ShortName `xml:"street,attr,omitempty"`
-	StreetNumber    *String32  `xml:"streetNumber,attr,omitempty"`
-	City            *ShortName `xml:"city,attr,omitempty"`
-	Country         *ShortName `xml:"country,attr,omitempty"`
-}
-
-// Interface for types that extend PostalAddressType
-type IPostalAddressType interface {
-	IsRim30PostalAddressType()
-}
-
-type RegistryPackageType struct {
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	RegistryObjectList IRegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
-func (RegistryPackageType) IsRim30RegistryObjectType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
-func (RegistryPackageType) IsRim30IdentifiableType() {}
-
-// Interface for types that extend RegistryPackageType
-type IRegistryPackageType interface {
-	IsRim30RegistryPackageType()
-}
-
-type AdhocQuery struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	QueryExpression    IQueryExpression      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 QueryExpression"`
-	Id                 string                `xml:"id,attr"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-}
-
-// Interface for types that extend AdhocQuery
-type IAdhocQuery interface {
-	IsRim30AdhocQuery()
+type NotifyAction struct {
+	XMLName            xml.Name      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 NotifyAction"`
+	NotificationOption *ReferenceURI `xml:"notificationOption,attr,omitempty"`
+	EndPoint           string        `xml:"endPoint,attr"`
+	CharData           string        `xml:"chardata"`
 }
 
 type LocalizedStringType struct {
@@ -1385,22 +508,153 @@ type ILocalizedStringType interface {
 	IsRim30LocalizedStringType()
 }
 
+// The type itself implements ILocalizedStringType
+func (LocalizedStringType) IsRim30LocalizedStringType() {}
+
+type ExtrinsicObjectType struct {
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	MimeType           *LongName            `xml:"mimeType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Home               string               `xml:"home,attr,omitempty"`
+	IsOpaque           bool                 `xml:"isOpaque,attr"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ContentVersionInfo *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ContentVersionInfo,omitempty"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ExtrinsicObjectType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (ExtrinsicObjectType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend ExtrinsicObjectType
+type IExtrinsicObjectType interface {
+	IsRim30ExtrinsicObjectType()
+}
+
+// The type itself implements IExtrinsicObjectType
+func (ExtrinsicObjectType) IsRim30ExtrinsicObjectType() {}
+
+type PostalAddressType struct {
+	Street          *ShortName `xml:"street,attr,omitempty"`
+	StreetNumber    *String32  `xml:"streetNumber,attr,omitempty"`
+	City            *ShortName `xml:"city,attr,omitempty"`
+	Country         *ShortName `xml:"country,attr,omitempty"`
+	PostalCode      *ShortName `xml:"postalCode,attr,omitempty"`
+	StateOrProvince *ShortName `xml:"stateOrProvince,attr,omitempty"`
+}
+
+// Interface for types that extend PostalAddressType
+type IPostalAddressType interface {
+	IsRim30PostalAddressType()
+}
+
+// The type itself implements IPostalAddressType
+func (PostalAddressType) IsRim30PostalAddressType() {}
+
+type AdhocQueryType struct {
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	QueryExpression    *QueryExpression     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 QueryExpression,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (AdhocQueryType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (AdhocQueryType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend AdhocQueryType
+type IAdhocQueryType interface {
+	IsRim30AdhocQueryType()
+}
+
+// The type itself implements IAdhocQueryType
+func (AdhocQueryType) IsRim30AdhocQueryType() {}
+
+type String8 string
+
+type ShortName string
+
+type OrganizationType struct {
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	PrimaryContact     *ReferenceURI        `xml:"primaryContact,attr,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Parent             *ReferenceURI        `xml:"parent,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (OrganizationType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (OrganizationType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend OrganizationType
+type IOrganizationType interface {
+	IsRim30OrganizationType()
+}
+
+// The type itself implements IOrganizationType
+func (OrganizationType) IsRim30OrganizationType() {}
+
+type PersonNameType struct {
+	FirstName  *ShortName `xml:"firstName,attr,omitempty"`
+	MiddleName *ShortName `xml:"middleName,attr,omitempty"`
+	LastName   *ShortName `xml:"lastName,attr,omitempty"`
+}
+
+// Interface for types that extend PersonNameType
+type IPersonNameType interface {
+	IsRim30PersonNameType()
+}
+
+// The type itself implements IPersonNameType
+func (PersonNameType) IsRim30PersonNameType() {}
+
 type ServiceBindingType struct {
-	Service            ReferenceURI          `xml:"service,attr"`
-	TargetBinding      *ReferenceURI         `xml:"targetBinding,attr,omitempty"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Id                 string                `xml:"id,attr"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	SpecificationLink  []ISpecificationLink  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	AccessURI          string                `xml:"accessURI,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	AccessURI          string               `xml:"accessURI,attr,omitempty"`
+	TargetBinding      *ReferenceURI        `xml:"targetBinding,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Service            ReferenceURI         `xml:"service,attr"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	SpecificationLink  []SpecificationLink  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
@@ -1414,22 +668,678 @@ type IServiceBindingType interface {
 	IsRim30ServiceBindingType()
 }
 
+// The type itself implements IServiceBindingType
+func (ServiceBindingType) IsRim30ServiceBindingType() {}
+
+type Service struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Service"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	ServiceBinding     []ServiceBinding     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
+}
+
+type TelephoneNumber struct {
+	XMLName     xml.Name  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+	CountryCode *String8  `xml:"countryCode,attr,omitempty"`
+	Extension   *String8  `xml:"extension,attr,omitempty"`
+	Number      *String16 `xml:"number,attr,omitempty"`
+	PhoneType   *String32 `xml:"phoneType,attr,omitempty"`
+	AreaCode    *String8  `xml:"areaCode,attr,omitempty"`
+}
+
+type String16 string
+
+type String32 string
+
+type SpecificationLinkType struct {
+	Name                *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification      []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Home                string               `xml:"home,attr,omitempty"`
+	ObjectType          *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot                []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	ExternalIdentifier  []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	UsageParameter      []UsageParameter     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageParameter"`
+	Id                  string               `xml:"id,attr"`
+	VersionInfo         *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ServiceBinding      ReferenceURI         `xml:"serviceBinding,attr"`
+	Description         *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	UsageDescription    *UsageDescription    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription,omitempty"`
+	Lid                 string               `xml:"lid,attr,omitempty"`
+	Status              *ReferenceURI        `xml:"status,attr,omitempty"`
+	SpecificationObject ReferenceURI         `xml:"specificationObject,attr"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (SpecificationLinkType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (SpecificationLinkType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend SpecificationLinkType
+type ISpecificationLinkType interface {
+	IsRim30SpecificationLinkType()
+}
+
+// The type itself implements ISpecificationLinkType
+func (SpecificationLinkType) IsRim30SpecificationLinkType() {}
+
+type FederationType struct {
+	Classification         []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier     []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                     string               `xml:"id,attr"`
+	Home                   string               `xml:"home,attr,omitempty"`
+	Lid                    string               `xml:"lid,attr,omitempty"`
+	ObjectType             *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Description            *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Status                 *ReferenceURI        `xml:"status,attr,omitempty"`
+	ReplicationSyncLatency string               `xml:"replicationSyncLatency,attr,omitempty"`
+	Slot                   []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name                   *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo            *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (FederationType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (FederationType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend FederationType
+type IFederationType interface {
+	IsRim30FederationType()
+}
+
+// The type itself implements IFederationType
+func (FederationType) IsRim30FederationType() {}
+
+type ActionType struct{}
+
+// Interface for types that extend ActionType
+type IActionType interface {
+	IsRim30ActionType()
+}
+
+// The type itself implements IActionType
+func (ActionType) IsRim30ActionType() {}
+
+type UsageDescription struct {
+	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription"`
+	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+}
+
+type ExternalIdentifierType struct {
+	Lid                  string               `xml:"lid,attr,omitempty"`
+	ObjectType           *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	RegistryObject       ReferenceURI         `xml:"registryObject,attr"`
+	Value                LongName             `xml:"value,attr"`
+	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Status               *ReferenceURI        `xml:"status,attr,omitempty"`
+	IdentificationScheme ReferenceURI         `xml:"identificationScheme,attr"`
+	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ExternalIdentifierType) IsRim30RegistryObjectType() {}
+
+// Interface for types that extend ExternalIdentifierType
+type IExternalIdentifierType interface {
+	IsRim30ExternalIdentifierType()
+}
+
+// The type itself implements IExternalIdentifierType
+func (ExternalIdentifierType) IsRim30ExternalIdentifierType() {}
+
+type Association struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Association"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	AssociationType    ReferenceURI         `xml:"associationType,attr"`
+	TargetObject       ReferenceURI         `xml:"targetObject,attr"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	SourceObject       ReferenceURI         `xml:"sourceObject,attr"`
+}
+
+type ClassificationNode struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Parent             *ReferenceURI        `xml:"parent,attr,omitempty"`
+	Code               *LongName            `xml:"code,attr,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Path               string               `xml:"path,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ClassificationNode []ClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+}
+
+type PersonName struct {
+	XMLName    xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName"`
+	FirstName  *ShortName `xml:"firstName,attr,omitempty"`
+	MiddleName *ShortName `xml:"middleName,attr,omitempty"`
+	LastName   *ShortName `xml:"lastName,attr,omitempty"`
+}
+
+type SpecificationLink struct {
+	XMLName             xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
+	Status              *ReferenceURI        `xml:"status,attr,omitempty"`
+	VersionInfo         *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier  []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Lid                 string               `xml:"lid,attr,omitempty"`
+	ObjectType          *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	ServiceBinding      ReferenceURI         `xml:"serviceBinding,attr"`
+	SpecificationObject ReferenceURI         `xml:"specificationObject,attr"`
+	Slot                []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description         *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Home                string               `xml:"home,attr,omitempty"`
+	Classification      []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	UsageParameter      []UsageParameter     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageParameter"`
+	UsageDescription    *UsageDescription    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription,omitempty"`
+	Id                  string               `xml:"id,attr"`
+	Name                *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+}
+
+type Federation struct {
+	XMLName                xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Federation"`
+	VersionInfo            *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification         []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                     string               `xml:"id,attr"`
+	Slot                   []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name                   *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	ExternalIdentifier     []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Home                   string               `xml:"home,attr,omitempty"`
+	Lid                    string               `xml:"lid,attr,omitempty"`
+	ObjectType             *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status                 *ReferenceURI        `xml:"status,attr,omitempty"`
+	ReplicationSyncLatency string               `xml:"replicationSyncLatency,attr,omitempty"`
+	Description            *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+}
+
+type SlotType1 struct {
+	Name      LongName      `xml:"name,attr"`
+	SlotType  *ReferenceURI `xml:"slotType,attr,omitempty"`
+	ValueList ValueList     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
+}
+
+// Interface for types that extend SlotType1
+type ISlotType1 interface {
+	IsRim30SlotType1()
+}
+
+// The type itself implements ISlotType1
+func (SlotType1) IsRim30SlotType1() {}
+
+type IdentifiableType struct {
+	Id   string `xml:"id,attr"`
+	Home string `xml:"home,attr,omitempty"`
+	Slot []Slot `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+}
+
+// Interface for types that extend IdentifiableType
+type IIdentifiableType interface {
+	IsRim30IdentifiableType()
+}
+
+// The type itself implements IIdentifiableType
+func (IdentifiableType) IsRim30IdentifiableType() {}
+
+type TelephoneNumberListType struct {
+	TelephoneNumber []TelephoneNumber `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+}
+
+type ObjectRef struct {
+	XMLName       xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
+	Id            string   `xml:"id,attr"`
+	Home          string   `xml:"home,attr,omitempty"`
+	CreateReplica bool     `xml:"createReplica,attr"`
+	Slot          []Slot   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+}
+
+type User struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 User"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	Id                 string               `xml:"id,attr"`
+	PersonName         *PersonName          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName,omitempty"`
+	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+}
+
+type String4 string
+
+type RegistryObjectListType struct {
+	Identifiable []Identifiable `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
+}
+
+// Interface for types that extend RegistryObjectListType
+type IRegistryObjectListType interface {
+	IsRim30RegistryObjectListType()
+}
+
+// The type itself implements IRegistryObjectListType
+func (RegistryObjectListType) IsRim30RegistryObjectListType() {}
+
+type NotifyActionType struct {
+	EndPoint           string        `xml:"endPoint,attr"`
+	CharData           string        `xml:"chardata"`
+	NotificationOption *ReferenceURI `xml:"notificationOption,attr,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ActionType
+func (NotifyActionType) IsRim30ActionType() {}
+
+// Interface for types that extend NotifyActionType
+type INotifyActionType interface {
+	IsRim30NotifyActionType()
+}
+
+// The type itself implements INotifyActionType
+func (NotifyActionType) IsRim30NotifyActionType() {}
+
+type Identifiable struct {
+	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
+	Id      string   `xml:"id,attr"`
+	Home    string   `xml:"home,attr,omitempty"`
+	Slot    []Slot   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+}
+
+type Registry struct {
+	XMLName                xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Registry"`
+	ObjectType             *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Operator               ReferenceURI         `xml:"operator,attr"`
+	ReplicationSyncLatency string               `xml:"replicationSyncLatency,attr,omitempty"`
+	ExternalIdentifier     []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Description            *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo            *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Id                     string               `xml:"id,attr"`
+	Lid                    string               `xml:"lid,attr,omitempty"`
+	Status                 *ReferenceURI        `xml:"status,attr,omitempty"`
+	SpecificationVersion   string               `xml:"specificationVersion,attr"`
+	CatalogingLatency      string               `xml:"catalogingLatency,attr,omitempty"`
+	Home                   string               `xml:"home,attr,omitempty"`
+	Classification         []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ConformanceProfile     string               `xml:"conformanceProfile,attr,omitempty"`
+	Slot                   []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name                   *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+}
+
+type LongName string
+
+type InternationalStringType struct {
+	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+}
+
+// Interface for types that extend InternationalStringType
+type IInternationalStringType interface {
+	IsRim30InternationalStringType()
+}
+
+// The type itself implements IInternationalStringType
+func (InternationalStringType) IsRim30InternationalStringType() {}
+
+type RegistryObjectType struct {
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (RegistryObjectType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend RegistryObjectType
+type IRegistryObjectType interface {
+	IsRim30RegistryObjectType()
+}
+
+// The type itself implements IRegistryObjectType
+func (RegistryObjectType) IsRim30RegistryObjectType() {}
+
+type ExternalLinkType struct {
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Home               string               `xml:"home,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	ExternalURI        string               `xml:"externalURI,attr"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ExternalLinkType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (ExternalLinkType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend ExternalLinkType
+type IExternalLinkType interface {
+	IsRim30ExternalLinkType()
+}
+
+// The type itself implements IExternalLinkType
+func (ExternalLinkType) IsRim30ExternalLinkType() {}
+
+type EmailAddressType struct {
+	Address ShortName `xml:"address,attr"`
+	Type    *String32 `xml:"type,attr,omitempty"`
+}
+
+// Interface for types that extend EmailAddressType
+type IEmailAddressType interface {
+	IsRim30EmailAddressType()
+}
+
+// The type itself implements IEmailAddressType
+func (EmailAddressType) IsRim30EmailAddressType() {}
+
+type Value string
+
+type SlotListType struct {
+	Slot []Slot `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+}
+
+// Interface for types that extend SlotListType
+type ISlotListType interface {
+	IsRim30SlotListType()
+}
+
+// The type itself implements ISlotListType
+func (SlotListType) IsRim30SlotListType() {}
+
+type ClassificationType struct {
+	Lid                  string               `xml:"lid,attr,omitempty"`
+	ObjectType           *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	ClassificationScheme *ReferenceURI        `xml:"classificationScheme,attr,omitempty"`
+	NodeRepresentation   *LongName            `xml:"nodeRepresentation,attr,omitempty"`
+	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Status               *ReferenceURI        `xml:"status,attr,omitempty"`
+	ClassifiedObject     ReferenceURI         `xml:"classifiedObject,attr"`
+	ClassificationNode   *ReferenceURI        `xml:"classificationNode,attr,omitempty"`
+	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ClassificationType) IsRim30RegistryObjectType() {}
+
+// Interface for types that extend ClassificationType
+type IClassificationType interface {
+	IsRim30ClassificationType()
+}
+
+// The type itself implements IClassificationType
+func (ClassificationType) IsRim30ClassificationType() {}
+
+type ClassificationSchemeType struct {
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	NodeType           ReferenceURI         `xml:"nodeType,attr"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	IsInternal         bool                 `xml:"isInternal,attr"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ClassificationNode []ClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ClassificationSchemeType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (ClassificationSchemeType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend ClassificationSchemeType
+type IClassificationSchemeType interface {
+	IsRim30ClassificationSchemeType()
+}
+
+// The type itself implements IClassificationSchemeType
+func (ClassificationSchemeType) IsRim30ClassificationSchemeType() {}
+
+type ServiceType struct {
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ServiceBinding     []ServiceBinding     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ServiceType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (ServiceType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend ServiceType
+type IServiceType interface {
+	IsRim30ServiceType()
+}
+
+// The type itself implements IServiceType
+func (ServiceType) IsRim30ServiceType() {}
+
+type PersonType struct {
+	Home               string               `xml:"home,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	PersonName         *PersonName          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName,omitempty"`
+	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	Id                 string               `xml:"id,attr"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (PersonType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (PersonType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend PersonType
+type IPersonType interface {
+	IsRim30PersonType()
+}
+
+// The type itself implements IPersonType
+func (PersonType) IsRim30PersonType() {}
+
+type NotificationType struct {
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Subscription       ReferenceURI         `xml:"subscription,attr"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	RegistryObjectList RegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (NotificationType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (NotificationType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend NotificationType
+type INotificationType interface {
+	IsRim30NotificationType()
+}
+
+// The type itself implements INotificationType
+func (NotificationType) IsRim30NotificationType() {}
+
+type AuditableEvent struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AuditableEvent"`
+	RequestId          ReferenceURI         `xml:"requestId,attr"`
+	AffectedObjects    ObjectRefListType    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 affectedObjects"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Timestamp          string               `xml:"timestamp,attr"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	EventType          ReferenceURI         `xml:"eventType,attr"`
+	User               ReferenceURI         `xml:"user,attr"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+}
+
+type ExternalLink struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalLink"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	ExternalURI        string               `xml:"externalURI,attr"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+}
+
+type AdhocQuery struct {
+	XMLName            xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	QueryExpression    *QueryExpression     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 QueryExpression,omitempty"`
+	Id                 string               `xml:"id,attr"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+}
+
+type ClassificationNodeType struct {
+	Path               string               `xml:"path,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	ClassificationNode []ClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Id                 string               `xml:"id,attr"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	Parent             *ReferenceURI        `xml:"parent,attr,omitempty"`
+	Code               *LongName            `xml:"code,attr,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (ClassificationNodeType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (ClassificationNodeType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend ClassificationNodeType
+type IClassificationNodeType interface {
+	IsRim30ClassificationNodeType()
+}
+
+// The type itself implements IClassificationNodeType
+func (ClassificationNodeType) IsRim30ClassificationNodeType() {}
+
 type UserType struct {
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	Address            []IAddress            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	PersonName         IPersonName           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	TelephoneNumber    []ITelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	EmailAddress       []IEmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
-	Lid                string                `xml:"lid,attr,omitempty"`
+	Lid                string               `xml:"lid,attr,omitempty"`
+	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
+	Id                 string               `xml:"id,attr"`
+	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
+	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Home               string               `xml:"home,attr,omitempty"`
+	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	PersonName         *PersonName          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/PersonType
@@ -1446,42 +1356,38 @@ type IUserType interface {
 	IsRim30UserType()
 }
 
-type ActionType struct{}
+// The type itself implements IUserType
+func (UserType) IsRim30UserType() {}
 
-// Interface for types that extend ActionType
-type IActionType interface {
-	IsRim30ActionType()
+type SubscriptionType struct {
+	NotificationInterval string               `xml:"notificationInterval,attr,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
+	Lid                  string               `xml:"lid,attr,omitempty"`
+	Selector             ReferenceURI         `xml:"selector,attr"`
+	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
+	Home                 string               `xml:"home,attr,omitempty"`
+	ObjectType           *ReferenceURI        `xml:"objectType,attr,omitempty"`
+	Slot                 []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Id                   string               `xml:"id,attr"`
+	Status               *ReferenceURI        `xml:"status,attr,omitempty"`
+	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
+	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
+	Action               []Action             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
+	StartTime            string               `xml:"startTime,attr,omitempty"`
+	EndTime              string               `xml:"endTime,attr,omitempty"`
 }
 
-type Association struct {
-	XMLName            xml.Name              `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Association"`
-	Slot               []ISlot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Status             *ReferenceURI         `xml:"status,attr,omitempty"`
-	Name               IName                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	Description        IDescription          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	VersionInfo        *VersionInfoType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []IClassification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []IExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Id                 string                `xml:"id,attr"`
-	Home               string                `xml:"home,attr,omitempty"`
-	Lid                string                `xml:"lid,attr,omitempty"`
-	ObjectType         *ReferenceURI         `xml:"objectType,attr,omitempty"`
-	AssociationType    ReferenceURI          `xml:"associationType,attr"`
-	SourceObject       ReferenceURI          `xml:"sourceObject,attr"`
-	TargetObject       ReferenceURI          `xml:"targetObject,attr"`
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/RegistryObjectType
+func (SubscriptionType) IsRim30RegistryObjectType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rim30/IdentifiableType
+func (SubscriptionType) IsRim30IdentifiableType() {}
+
+// Interface for types that extend SubscriptionType
+type ISubscriptionType interface {
+	IsRim30SubscriptionType()
 }
 
-// Interface for types that extend Association
-type IAssociation interface {
-	IsRim30Association()
-}
-
-type Name struct {
-	XMLName         xml.Name           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	LocalizedString []ILocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
-}
-
-// Interface for types that extend Name
-type IName interface {
-	IsRim30Name()
-}
+// The type itself implements ISubscriptionType
+func (SubscriptionType) IsRim30SubscriptionType() {}

@@ -8,11 +8,11 @@ import (
 )
 
 type UpdateObjectsRequest struct {
-	XMLName            xml.Name                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 UpdateObjectsRequest"`
-	RegistryObjectList rim30.IRegistryObjectList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-	Id                 string                    `xml:"id,attr,omitempty"`
-	Comment            string                    `xml:"comment,attr,omitempty"`
-	RequestSlotList    rim30.ISlotListType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
+	XMLName            xml.Name                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 UpdateObjectsRequest"`
+	RegistryObjectList rim30.RegistryObjectList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
+	Id                 string                   `xml:"id,attr,omitempty"`
+	Comment            string                   `xml:"comment,attr,omitempty"`
+	RequestSlotList    *rim30.SlotListType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
@@ -20,11 +20,11 @@ func (UpdateObjectsRequest) IsRs30RegistryRequestType() {}
 
 type ApproveObjectsRequest struct {
 	XMLName         xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 ApproveObjectsRequest"`
+	RequestSlotList *rim30.SlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	AdhocQuery      *rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery,omitempty"`
+	ObjectRefList   *rim30.ObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList,omitempty"`
 	Id              string               `xml:"id,attr,omitempty"`
 	Comment         string               `xml:"comment,attr,omitempty"`
-	RequestSlotList rim30.ISlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
-	AdhocQuery      rim30.IAdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	ObjectRefList   rim30.IObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
@@ -32,11 +32,11 @@ func (ApproveObjectsRequest) IsRs30RegistryRequestType() {}
 
 type DeprecateObjectsRequest struct {
 	XMLName         xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 DeprecateObjectsRequest"`
-	AdhocQuery      rim30.IAdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	ObjectRefList   rim30.IObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
-	Id              string               `xml:"id,attr,omitempty"`
 	Comment         string               `xml:"comment,attr,omitempty"`
-	RequestSlotList rim30.ISlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
+	RequestSlotList *rim30.SlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	AdhocQuery      *rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery,omitempty"`
+	ObjectRefList   *rim30.ObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList,omitempty"`
+	Id              string               `xml:"id,attr,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
@@ -44,11 +44,11 @@ func (DeprecateObjectsRequest) IsRs30RegistryRequestType() {}
 
 type UndeprecateObjectsRequest struct {
 	XMLName         xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 UndeprecateObjectsRequest"`
-	RequestSlotList rim30.ISlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
-	AdhocQuery      rim30.IAdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	ObjectRefList   rim30.IObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
-	Id              string               `xml:"id,attr,omitempty"`
 	Comment         string               `xml:"comment,attr,omitempty"`
+	RequestSlotList *rim30.SlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	AdhocQuery      *rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery,omitempty"`
+	ObjectRefList   *rim30.ObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList,omitempty"`
+	Id              string               `xml:"id,attr,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
@@ -56,9 +56,9 @@ func (UndeprecateObjectsRequest) IsRs30RegistryRequestType() {}
 
 type RemoveObjectsRequest struct {
 	XMLName         xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 RemoveObjectsRequest"`
-	RequestSlotList rim30.ISlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
-	AdhocQuery      rim30.IAdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	ObjectRefList   rim30.IObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
+	RequestSlotList *rim30.SlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	AdhocQuery      *rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery,omitempty"`
+	ObjectRefList   *rim30.ObjectRefList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList,omitempty"`
 	Id              string               `xml:"id,attr,omitempty"`
 	Comment         string               `xml:"comment,attr,omitempty"`
 	DeletionScope   *rim30.ReferenceURI  `xml:"deletionScope,attr,omitempty"`
@@ -68,15 +68,15 @@ type RemoveObjectsRequest struct {
 func (RemoveObjectsRequest) IsRs30RegistryRequestType() {}
 
 type RelocateObjectsRequest struct {
-	XMLName             xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 RelocateObjectsRequest"`
-	OwnerAtDestination  rim30.IObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 OwnerAtDestination"`
-	Id                  string               `xml:"id,attr,omitempty"`
-	Comment             string               `xml:"comment,attr,omitempty"`
-	RequestSlotList     rim30.ISlotListType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
-	AdhocQuery          rim30.IAdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	SourceRegistry      rim30.IObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SourceRegistry"`
-	DestinationRegistry rim30.IObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 DestinationRegistry"`
-	OwnerAtSource       rim30.IObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 OwnerAtSource"`
+	XMLName             xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 RelocateObjectsRequest"`
+	Id                  string              `xml:"id,attr,omitempty"`
+	Comment             string              `xml:"comment,attr,omitempty"`
+	RequestSlotList     *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	AdhocQuery          rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
+	SourceRegistry      rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SourceRegistry"`
+	DestinationRegistry rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 DestinationRegistry"`
+	OwnerAtSource       rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 OwnerAtSource"`
+	OwnerAtDestination  rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 OwnerAtDestination"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
@@ -84,21 +84,21 @@ func (RelocateObjectsRequest) IsRs30RegistryRequestType() {}
 
 type AcceptObjectsRequest struct {
 	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 AcceptObjectsRequest"`
+	CorrelationId   string              `xml:"correlationId,attr"`
+	RequestSlotList *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
 	Id              string              `xml:"id,attr,omitempty"`
 	Comment         string              `xml:"comment,attr,omitempty"`
-	CorrelationId   string              `xml:"correlationId,attr"`
-	RequestSlotList rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
 func (AcceptObjectsRequest) IsRs30RegistryRequestType() {}
 
 type SubmitObjectsRequest struct {
-	XMLName            xml.Name                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
-	Comment            string                    `xml:"comment,attr,omitempty"`
-	RequestSlotList    rim30.ISlotListType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
-	RegistryObjectList rim30.IRegistryObjectList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-	Id                 string                    `xml:"id,attr,omitempty"`
+	XMLName            xml.Name                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
+	Id                 string                   `xml:"id,attr,omitempty"`
+	Comment            string                   `xml:"comment,attr,omitempty"`
+	RequestSlotList    *rim30.SlotListType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	RegistryObjectList rim30.RegistryObjectList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/query30"
+	"github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/rim30"
 )
 
 func TestAdhocQueryRequest(t *testing.T) {
@@ -13,6 +14,24 @@ func TestAdhocQueryRequest(t *testing.T) {
 		Federated:  federated,
 		StartIndex: 0,
 		MaxResults: -1,
+		ResponseOption: query30.ResponseOption{
+			ReturnComposedObjects: true,
+			ReturnType:            "LeafClass",
+		},
+		AdhocQuery: rim30.AdhocQuery{
+			Id: "urn:uuid:xxxxx",
+			Slot: []rim30.Slot{
+				rim30.Slot{
+					Name: "$XDSDocumentEntryStatus",
+					ValueList: rim30.ValueList{
+						Value: []rim30.Value{
+							rim30.Value("('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"),
+							rim30.Value("('urn:oasis:names:tc:ebxml-regrep:StatusType:Deprecated')"),
+						},
+					},
+				},
+			},
+		},
 	}
 
 	data, err := xml.MarshalIndent(query, "", "    ")
