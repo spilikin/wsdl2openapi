@@ -318,10 +318,11 @@ class XmlSchemaVisitor:
     def set_property_declaration(self, property_name: str, property_type: Type) -> None:
         type_declaration = self.current_type()
         if property_name in type_declaration.properties:
-            logging.warning(
+            # TODO: handle name clashes properly (especially cardinality differences)
+            logging.debug(
                 "Possible property name clash for %s in type %s, overwriting existing property: %s",
                 property_name,
-                type_declaration.xml,
+                to_yaml(property_type),
                 to_yaml(type_declaration.properties[property_name]),
             )
             return
