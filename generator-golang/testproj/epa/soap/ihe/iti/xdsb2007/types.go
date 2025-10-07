@@ -13,9 +13,9 @@ type RetrieveDocumentSetRequest struct {
 	XMLName         xml.Name `xml:"urn:ihe:iti:xds-b:2007 RetrieveDocumentSetRequest"`
 	DocumentRequest []struct {
 		XMLName            xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentRequest"`
-		HomeCommunityId    *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId   rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
+		HomeCommunityId    *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentRequest"`
 }
 
@@ -29,13 +29,13 @@ type RetrieveDocumentSetResponse struct {
 	RegistryResponse rs30.IRegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	DocumentResponse []struct {
 		XMLName               xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
-		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
-		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId      rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
 		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
+		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
+		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
 }
 
@@ -49,8 +49,8 @@ type ProvideAndRegisterDocumentSetRequest struct {
 	SubmitObjectsRequest lcm30.SubmitObjectsRequest `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
 	Document             []struct {
 		XMLName  xml.Name `xml:"urn:ihe:iti:xds-b:2007 Document"`
-		CharData string   `xml:"chardata"`
 		Id       string   `xml:"id,attr"`
+		CharData string   `xml:"chardata"`
 	} `xml:"urn:ihe:iti:xds-b:2007 Document"`
 }
 
@@ -77,13 +77,13 @@ type RetrieveDocumentSetResponseType struct {
 	RegistryResponse rs30.IRegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	DocumentResponse []struct {
 		XMLName               xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
-		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
-		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
 		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
 		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId      rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
+		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
+		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
 }
 

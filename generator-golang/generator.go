@@ -148,7 +148,7 @@ func (g *Generator) renderProperty(propName string, propType *TypePointer) (jen.
 }
 
 func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *TypePointer) (*jen.Statement, error) {
-
+	isArray := false
 	if typeArray, ok := propPtr.Type.(*TypeArray); ok {
 		stmt = stmt.Op("[]")
 		itemsTypePtr, err := g.parseType(propPtr.NamespaceId, typeArray.Items)
@@ -156,12 +156,13 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *Type
 			return nil, err
 		}
 		propPtr = itemsTypePtr
-	} else if propPtr.Nullable {
-		stmt = stmt.Op("*")
+		isArray = true
 	}
 
 	xmlExt := propPtr.Xml
 	var xmlTag []string
+
+	// create XML tag from xml extension
 	if xmlExt != nil && xmlExt.Name != "" {
 		if xmlExt.Namespace != "" {
 			xmlTag = append(xmlTag, xmlExt.Namespace+" "+xmlExt.Name)
@@ -173,13 +174,20 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *Type
 		}
 	}
 
-	if propPtr.Nullable && len(xmlTag) > 0 {
-		xmlTag = append(xmlTag, "omitempty")
+	addOmitempty := func() {
+		if propPtr.Nullable && len(xmlTag) > 0 {
+			xmlTag = append(xmlTag, "omitempty")
+		}
 	}
 
 	propType := propPtr.Type
 
 	if propPtr.Qual != nil {
+		// add pointer only for non-array, nullable, non-base types
+		if !isArray && propPtr.Nullable && !propPtr.IsBase {
+			stmt = stmt.Op("*")
+			addOmitempty()
+		}
 		if propPtr.IsBase {
 			interfaceName := g.NamingStrategy.BaseTypeInterfaceName(propPtr.Qual.Name)
 			stmt = stmt.Qual(propPtr.Qual.Path, interfaceName)
@@ -193,6 +201,7 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *Type
 			if t.Format != nil && *t.Format == "chardata" {
 				xmlTag = append(xmlTag, "chardata")
 			}
+			addOmitempty()
 		case *TypeNumber:
 			stmt = stmt.Float64()
 		case *TypeInteger:
@@ -203,6 +212,10 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *Type
 			fields, err := g.renderProperties(propPtr, t)
 			if err != nil {
 				return nil, err
+			}
+			if !isArray && propPtr.Nullable {
+				stmt = stmt.Op("*")
+				addOmitempty()
 			}
 			stmt = stmt.Struct(fields...)
 		default:

@@ -11,9 +11,9 @@ type RemoveDocumentsRequest struct {
 	XMLName         xml.Name `xml:"urn:ihe:iti:rmd:2017 RemoveDocumentsRequest"`
 	DocumentRequest []struct {
 		XMLName            xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentRequest"`
+		DocumentUniqueId   rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 		HomeCommunityId    *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
-		DocumentUniqueId   rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentRequest"`
 }
 

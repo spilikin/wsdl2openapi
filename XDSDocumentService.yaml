@@ -272,6 +272,7 @@ components:
             xml:
               name: highestSeverity
               attribute: true
+            nullable: true
           registryError:
             type: array
             items:
@@ -297,11 +298,13 @@ components:
             xml:
               name: severity
               attribute: true
+            nullable: true
           location:
             type: string
             xml:
               name: location
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -323,11 +326,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -350,6 +355,7 @@ components:
             xml:
               name: requestId
               attribute: true
+            nullable: true
           responseSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -619,6 +625,7 @@ components:
               name: lang
               namespace: http://www.w3.org/XML/1998/namespace
               attribute: true
+            nullable: true
           charset:
             type: string
             format: xml
@@ -626,6 +633,7 @@ components:
               name: charset
               attribute: true
             description: This field can contain any XML content (xsd:anyType).
+            nullable: true
           value:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/FreeFormText'
             xml:
@@ -646,6 +654,7 @@ components:
             xml:
               name: slotType
               attribute: true
+            nullable: true
           valueList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ValueList'
         xml:
@@ -684,6 +693,7 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -706,11 +716,13 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           createReplica:
             type: boolean
             xml:
               name: createReplica
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -744,22 +756,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -816,22 +832,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           associationType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -894,22 +914,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           eventType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -977,21 +1001,25 @@ components:
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           classificationScheme:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: classificationScheme
               attribute: true
+            nullable: true
           classifiedObject:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -1002,11 +1030,13 @@ components:
             xml:
               name: classificationNode
               attribute: true
+            nullable: true
           nodeRepresentation:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/LongName'
             xml:
               name: nodeRepresentation
               attribute: true
+            nullable: true
           name:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/Name'
             nullable: true
@@ -1048,37 +1078,44 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           parent:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: parent
               attribute: true
+            nullable: true
           code:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/LongName'
             xml:
               name: code
               attribute: true
+            nullable: true
           path:
             type: string
             xml:
               name: path
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -1131,22 +1168,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           isInternal:
             type: boolean
             xml:
@@ -1203,16 +1244,19 @@ components:
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           registryObject:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -1269,22 +1313,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           externalURI:
             type: string
             format: uri
@@ -1338,32 +1386,38 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           mimeType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/LongName'
             xml:
               name: mimeType
               attribute: true
+            nullable: true
           isOpaque:
             type: boolean
             xml:
               name: isOpaque
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -1417,32 +1471,38 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           parent:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: parent
               attribute: true
+            nullable: true
           primaryContact:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: primaryContact
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -1498,16 +1558,19 @@ components:
             xml:
               name: firstName
               attribute: true
+            nullable: true
           middleName:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ShortName'
             xml:
               name: middleName
               attribute: true
+            nullable: true
           lastName:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ShortName'
             xml:
               name: lastName
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       EmailAddressType:
@@ -1523,6 +1586,7 @@ components:
             xml:
               name: type
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       PostalAddressType:
@@ -1533,31 +1597,37 @@ components:
             xml:
               name: city
               attribute: true
+            nullable: true
           country:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ShortName'
             xml:
               name: country
               attribute: true
+            nullable: true
           postalCode:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ShortName'
             xml:
               name: postalCode
               attribute: true
+            nullable: true
           stateOrProvince:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ShortName'
             xml:
               name: stateOrProvince
               attribute: true
+            nullable: true
           street:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ShortName'
             xml:
               name: street
               attribute: true
+            nullable: true
           streetNumber:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/String32'
             xml:
               name: streetNumber
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       VersionInfoType:
@@ -1568,11 +1638,13 @@ components:
             xml:
               name: versionName
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
       RegistryPackageType:
         type: object
         properties:
@@ -1588,22 +1660,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -1654,22 +1730,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -1722,22 +1802,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           service:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -1749,11 +1833,13 @@ components:
             xml:
               name: accessURI
               attribute: true
+            nullable: true
           targetBinding:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: targetBinding
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -1806,22 +1892,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           serviceBinding:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -1880,26 +1970,31 @@ components:
             xml:
               name: areaCode
               attribute: true
+            nullable: true
           countryCode:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/String8'
             xml:
               name: countryCode
               attribute: true
+            nullable: true
           extension:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/String8'
             xml:
               name: extension
               attribute: true
+            nullable: true
           number:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/String16'
             xml:
               name: number
               attribute: true
+            nullable: true
           phoneType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/String32'
             xml:
               name: phoneType
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       TelephoneNumberListType:
@@ -1925,22 +2020,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -2006,22 +2105,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -2088,22 +2191,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           operator:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -2119,16 +2226,19 @@ components:
             xml:
               name: replicationSyncLatency
               attribute: true
+            nullable: true
           catalogingLatency:
             type: string
             xml:
               name: catalogingLatency
               attribute: true
+            nullable: true
           conformanceProfile:
             type: string
             xml:
               name: conformanceProfile
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -2176,27 +2286,32 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           replicationSyncLatency:
             type: string
             xml:
               name: replicationSyncLatency
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -2244,22 +2359,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -2324,22 +2443,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           subscription:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -2394,22 +2517,26 @@ components:
             xml:
               name: home
               attribute: true
+            nullable: true
           lid:
             type: string
             format: uri
             xml:
               name: lid
               attribute: true
+            nullable: true
           objectType:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: objectType
               attribute: true
+            nullable: true
           status:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: status
               attribute: true
+            nullable: true
           selector:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
@@ -2421,17 +2548,20 @@ components:
             xml:
               name: startTime
               attribute: true
+            nullable: true
           endTime:
             type: string
             format: date-time
             xml:
               name: endTime
               attribute: true
+            nullable: true
           notificationInterval:
             type: string
             xml:
               name: notificationInterval
               attribute: true
+            nullable: true
           slot:
             type: array
             items:
@@ -2482,6 +2612,7 @@ components:
             xml:
               name: notificationOption
               attribute: true
+            nullable: true
           endPoint:
             type: string
             format: uri
@@ -2505,11 +2636,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2532,11 +2665,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2559,11 +2694,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2590,11 +2727,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2621,11 +2760,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2652,16 +2793,19 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           deletionScope:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/ReferenceURI'
             xml:
               name: deletionScope
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2688,11 +2832,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2735,11 +2881,13 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           correlationId:
             type: string
             format: uri
@@ -2772,32 +2920,38 @@ components:
             xml:
               name: id
               attribute: true
+            nullable: true
           comment:
             type: string
             xml:
               name: comment
               attribute: true
+            nullable: true
           federated:
             type: boolean
             xml:
               name: federated
               attribute: true
+            nullable: true
           federation:
             type: string
             format: uri
             xml:
               name: federation
               attribute: true
+            nullable: true
           startIndex:
             type: integer
             xml:
               name: startIndex
               attribute: true
+            nullable: true
           maxResults:
             type: integer
             xml:
               name: maxResults
               attribute: true
+            nullable: true
           requestSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -2827,16 +2981,19 @@ components:
             xml:
               name: requestId
               attribute: true
+            nullable: true
           startIndex:
             type: integer
             xml:
               name: startIndex
               attribute: true
+            nullable: true
           totalResultCount:
             type: integer
             xml:
               name: totalResultCount
               attribute: true
+            nullable: true
           responseSlotList:
             $ref: '#/components/schemas/oasis.names.tc.ebxmlregrep.rim30/SlotListType'
             xml:
@@ -3001,11 +3158,13 @@ components:
             xml:
               name: returnType
               attribute: true
+            nullable: true
           returnComposedObjects:
             type: boolean
             xml:
               name: returnComposedObjects
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       FilterQueryType:
@@ -4948,6 +5107,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       CompoundFilterType:
@@ -4958,6 +5118,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           logicalOperator:
             type: string
             xml:
@@ -4985,6 +5146,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           domainAttribute:
             type: string
             xml:
@@ -5010,6 +5172,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           domainAttribute:
             type: string
             xml:
@@ -5041,6 +5204,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           domainAttribute:
             type: string
             xml:
@@ -5072,6 +5236,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           domainAttribute:
             type: string
             xml:
@@ -5103,6 +5268,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           domainAttribute:
             type: string
             xml:
@@ -5135,6 +5301,7 @@ components:
             xml:
               name: negate
               attribute: true
+            nullable: true
           domainAttribute:
             type: string
             xml:

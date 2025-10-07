@@ -245,6 +245,7 @@ components:
             xml:
               name: mandant-wide
               attribute: true
+            nullable: true
           context:
             $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context'
           subscriptionID:
@@ -317,6 +318,7 @@ components:
             xml:
               name: mandant-wide
               attribute: true
+            nullable: true
           context:
             $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context'
           ctId:
@@ -349,6 +351,7 @@ components:
             xml:
               name: mandant-wide
               attribute: true
+            nullable: true
           context:
             $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context'
         xml:
@@ -707,23 +710,27 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           base64XML:
             type: string
             format: byte
@@ -806,6 +813,7 @@ components:
                       xml:
                         name: Encoding
                         attribute: true
+                      nullable: true
                     charData:
                       type: string
                       format: chardata
@@ -866,6 +874,7 @@ components:
             xml:
               name: MimeType
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -881,28 +890,33 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           whichReference:
             type: integer
             xml:
               name: WhichReference
               attribute: true
+            nullable: true
           transforms:
             $ref: '#/components/schemas/org.w3200009.xmldsig/Transforms'
             nullable: true
@@ -921,28 +935,33 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           whichReference:
             type: integer
             xml:
               name: WhichReference
               attribute: true
+            nullable: true
           transforms:
             $ref: '#/components/schemas/org.w3200009.xmldsig/Transforms'
             nullable: true
@@ -964,6 +983,7 @@ components:
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           signature:
             $ref: '#/components/schemas/org.w3200009.xmldsig/Signature'
             nullable: true
@@ -994,6 +1014,7 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -1009,11 +1030,13 @@ components:
             xml:
               name: WhichDocument
               attribute: true
+            nullable: true
           xPath:
             type: string
             xml:
               name: XPath
               attribute: true
+            nullable: true
         xml:
           name: SignaturePtr
           namespace: urn:oasis:names:tc:dss:1.0:core:schema
@@ -1109,12 +1132,14 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: true
           profile:
             type: string
             format: uri
             xml:
               name: Profile
               attribute: true
+            nullable: true
           optionalInputs:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/OptionalInputs'
             nullable: true
@@ -1134,12 +1159,14 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: true
           profile:
             type: string
             format: uri
             xml:
               name: Profile
               attribute: true
+            nullable: false
           result:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Result'
           optionalOutputs:
@@ -1236,21 +1263,25 @@ components:
             xml:
               name: WhichDocument
               attribute: true
+            nullable: true
           hasObjectTagsAndAttributesSet:
             type: boolean
             xml:
               name: hasObjectTagsAndAttributesSet
               attribute: true
+            nullable: true
           objId:
             type: string
             xml:
               name: ObjId
               attribute: true
+            nullable: true
           createReference:
             type: boolean
             xml:
               name: createReference
               attribute: true
+            nullable: true
         xml:
           name: IncludeObject
           namespace: urn:oasis:names:tc:dss:1.0:core:schema
@@ -1262,11 +1293,13 @@ components:
             xml:
               name: WhichDocument
               attribute: true
+            nullable: true
           createEnvelopedSignature:
             type: boolean
             xml:
               name: CreateEnvelopedSignature
               attribute: true
+            nullable: true
           xPathAfter:
             type: string
             xml:
@@ -1308,17 +1341,20 @@ components:
             xml:
               name: WhichDocument
               attribute: true
+            nullable: false
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refId:
             type: string
             xml:
               name: RefId
               attribute: true
+            nullable: true
           transforms:
             $ref: '#/components/schemas/org.w3200009.xmldsig/Transforms'
             nullable: true
@@ -1333,12 +1369,14 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: true
           profile:
             type: string
             format: uri
             xml:
               name: Profile
               attribute: true
+            nullable: true
           optionalInputs:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/OptionalInputs'
             nullable: true
@@ -1482,6 +1520,7 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: true
         xml:
           name: ReturnUpdatedSignature
           namespace: urn:oasis:names:tc:dss:1.0:core:schema
@@ -1498,6 +1537,7 @@ components:
             xml:
               name: WhichReference
               attribute: true
+            nullable: false
         xml:
           name: ReturnTransformedDocument
           namespace: urn:oasis:names:tc:dss:1.0:core:schema
@@ -1509,6 +1549,7 @@ components:
             xml:
               name: WhichReference
               attribute: true
+            nullable: false
           document:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Document'
         xml:
@@ -1628,6 +1669,7 @@ components:
               name: lang
               namespace: http://www.w3.org/XML/1998/namespace
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -1641,23 +1683,27 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       DocumentType:
@@ -1668,23 +1714,27 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           inlineXML:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/InlineXMLType'
             xml:
@@ -1722,11 +1772,13 @@ components:
             xml:
               name: ignorePIs
               attribute: true
+            nullable: true
           ignoreComments:
             type: boolean
             xml:
               name: ignoreComments
               attribute: true
+            nullable: true
           unknownContent:
             type: string
             format: xml
@@ -1748,12 +1800,14 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: true
           profile:
             type: string
             format: uri
             xml:
               name: Profile
               attribute: true
+            nullable: true
           optionalInputs:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/OptionalInputs'
             nullable: true
@@ -1770,12 +1824,14 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: true
           profile:
             type: string
             format: uri
             xml:
               name: Profile
               attribute: true
+            nullable: false
           result:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Result'
           optionalOutputs:
@@ -1792,11 +1848,13 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: true
           timeStampTheGivenSignature:
             type: boolean
             xml:
               name: TimeStampTheGivenSignature
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -1812,6 +1870,7 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       PropertiesType:
@@ -1863,11 +1922,13 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: false
           ref:
             type: string
             xml:
               name: Ref
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -1899,6 +1960,7 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: false
           code:
             type: string
             format: uri
@@ -1957,6 +2019,7 @@ components:
             xml:
               name: Type
               attribute: true
+            nullable: true
           signatureObject:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/SignatureObject'
         xml:
@@ -1970,11 +2033,13 @@ components:
             xml:
               name: AttRefURI
               attribute: true
+            nullable: true
           mimeType:
             type: string
             xml:
               name: MimeType
               attribute: true
+            nullable: true
           digestMethod:
             $ref: '#/components/schemas/org.w3200009.xmldsig/DigestMethod'
           digestValue:
@@ -2113,6 +2178,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           signedInfo:
             $ref: '#/components/schemas/org.w3200009.xmldsig/SignedInfo'
           signatureValue:
@@ -2135,6 +2201,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -2149,6 +2216,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           canonicalizationMethod:
             $ref: '#/components/schemas/org.w3200009.xmldsig/CanonicalizationMethod'
           signatureMethod:
@@ -2168,6 +2236,7 @@ components:
             xml:
               name: Algorithm
               attribute: true
+            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -2183,6 +2252,7 @@ components:
             xml:
               name: Algorithm
               attribute: true
+            nullable: false
           hMACOutputLength:
             $ref: '#/components/schemas/org.w3200009.xmldsig/HMACOutputLengthType'
             xml:
@@ -2203,18 +2273,21 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           uri:
             type: string
             format: uri
             xml:
               name: URI
               attribute: true
+            nullable: true
           type:
             type: string
             format: uri
             xml:
               name: Type
               attribute: true
+            nullable: true
           transforms:
             $ref: '#/components/schemas/org.w3200009.xmldsig/Transforms'
             nullable: true
@@ -2242,6 +2315,7 @@ components:
             xml:
               name: Algorithm
               attribute: true
+            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -2266,6 +2340,7 @@ components:
             xml:
               name: Algorithm
               attribute: true
+            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -2283,6 +2358,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           keyName:
             type: array
             items:
@@ -2355,12 +2431,14 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: true
           type:
             type: string
             format: uri
             xml:
               name: Type
               attribute: true
+            nullable: true
           transforms:
             $ref: '#/components/schemas/org.w3200009.xmldsig/Transforms'
             nullable: true
@@ -2468,17 +2546,20 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           mimeType:
             type: string
             xml:
               name: MimeType
               attribute: true
+            nullable: true
           encoding:
             type: string
             format: uri
             xml:
               name: Encoding
               attribute: true
+            nullable: true
           unknownContent:
             type: string
             format: xml
@@ -2493,6 +2574,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           reference:
             type: array
             items:
@@ -2507,6 +2589,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           signatureProperty:
             type: array
             items:
@@ -2522,11 +2605,13 @@ components:
             xml:
               name: Target
               attribute: true
+            nullable: false
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
           unknownContent:
             type: string
             format: xml
@@ -2741,27 +2826,32 @@ components:
             xml:
               name: MajorVersion
               attribute: true
+            nullable: false
           minorVersion:
             type: integer
             xml:
               name: MinorVersion
               attribute: true
+            nullable: false
           assertionID:
             type: string
             xml:
               name: AssertionID
               attribute: true
+            nullable: false
           issuer:
             type: string
             xml:
               name: Issuer
               attribute: true
+            nullable: false
           issueInstant:
             type: string
             format: date-time
             xml:
               name: IssueInstant
               attribute: true
+            nullable: false
           conditions:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/Conditions'
             nullable: true
@@ -2812,12 +2902,14 @@ components:
             xml:
               name: NotBefore
               attribute: true
+            nullable: true
           notOnOrAfter:
             type: string
             format: date-time
             xml:
               name: NotOnOrAfter
               attribute: true
+            nullable: true
           audienceRestrictionCondition:
             type: array
             items:
@@ -2917,12 +3009,14 @@ components:
             xml:
               name: NameQualifier
               attribute: true
+            nullable: true
           format:
             type: string
             format: uri
             xml:
               name: Format
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -2953,12 +3047,14 @@ components:
             xml:
               name: AuthenticationMethod
               attribute: true
+            nullable: false
           authenticationInstant:
             type: string
             format: date-time
             xml:
               name: AuthenticationInstant
               attribute: true
+            nullable: false
           subject:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/Subject'
           subjectLocality:
@@ -2982,11 +3078,13 @@ components:
             xml:
               name: IPAddress
               attribute: true
+            nullable: true
           dNSAddress:
             type: string
             xml:
               name: DNSAddress
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       AuthorityBindingType:
@@ -2997,18 +3095,21 @@ components:
             xml:
               name: AuthorityKind
               attribute: true
+            nullable: false
           location:
             type: string
             format: uri
             xml:
               name: Location
               attribute: true
+            nullable: false
           binding:
             type: string
             format: uri
             xml:
               name: Binding
               attribute: true
+            nullable: false
         xml:
           x-is-base: true
       AuthorizationDecisionStatementType:
@@ -3020,11 +3121,13 @@ components:
             xml:
               name: Resource
               attribute: true
+            nullable: false
           decision:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/DecisionType'
             xml:
               name: Decision
               attribute: true
+            nullable: false
           subject:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/Subject'
           action:
@@ -3048,6 +3151,7 @@ components:
             xml:
               name: Namespace
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -3093,12 +3197,14 @@ components:
             xml:
               name: AttributeName
               attribute: true
+            nullable: false
           attributeNamespace:
             type: string
             format: uri
             xml:
               name: AttributeNamespace
               attribute: true
+            nullable: false
         xml:
           x-is-base: true
       AttributeType:
@@ -3109,12 +3215,14 @@ components:
             xml:
               name: AttributeName
               attribute: true
+            nullable: false
           attributeNamespace:
             type: string
             format: uri
             xml:
               name: AttributeNamespace
               attribute: true
+            nullable: false
           attributeValue:
             type: array
             items:
@@ -3862,6 +3970,7 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: false
           optionalInputs:
             type: object
             properties:
@@ -3942,6 +4051,7 @@ components:
             xml:
               name: RequestID
               attribute: true
+            nullable: false
           status:
             $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/Status'
           optionalOutputs:
@@ -4208,6 +4318,7 @@ components:
                   xml:
                     name: IdRef
                     attribute: true
+                  nullable: true
               xml:
                 name: SignatureValueReference
                 namespace: http://ws.gematik.de/conn/SignatureService/v7.4
@@ -4253,28 +4364,33 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           shortText:
             type: string
             xml:
               name: ShortText
               attribute: true
+            nullable: true
           base64XML:
             type: string
             format: byte
@@ -4298,23 +4414,27 @@ components:
             xml:
               name: ID
               attribute: true
+            nullable: true
           refURI:
             type: string
             format: uri
             xml:
               name: RefURI
               attribute: true
+            nullable: true
           refType:
             type: string
             format: uri
             xml:
               name: RefType
               attribute: true
+            nullable: true
           schemaRefs:
             type: string
             xml:
               name: SchemaRefs
               attribute: true
+            nullable: true
           base64Data:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Base64Data'
         xml:
@@ -4721,6 +4841,7 @@ components:
             xml:
               name: Qualifier
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -4750,12 +4871,14 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           encoding:
             type: string
             format: uri
             xml:
               name: Encoding
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -4771,11 +4894,13 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: false
           referencedData:
             type: boolean
             xml:
               name: referencedData
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       ReferenceInfoType:
@@ -4786,12 +4911,14 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           uri:
             type: string
             format: uri
             xml:
               name: URI
               attribute: true
+            nullable: true
           digestMethod:
             $ref: '#/components/schemas/org.w3200009.xmldsig/DigestMethod'
           digestValue:
@@ -4806,6 +4933,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           include:
             type: array
             items:
@@ -4845,6 +4973,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           include:
             type: array
             items:
@@ -4881,6 +5010,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           referenceInfo:
             type: array
             items:
@@ -4911,11 +5041,13 @@ components:
             xml:
               name: Target
               attribute: true
+            nullable: false
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
           signedProperties:
             $ref: '#/components/schemas/org.etsi01903132/SignedPropertiesType'
             xml:
@@ -4938,6 +5070,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           signedSignatureProperties:
             $ref: '#/components/schemas/org.etsi01903132/SignedSignaturePropertiesType'
             xml:
@@ -4960,6 +5093,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           unsignedSignatureProperties:
             $ref: '#/components/schemas/org.etsi01903132/UnsignedSignaturePropertiesType'
             xml:
@@ -4982,6 +5116,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           signingTime:
             type: string
             format: date-time
@@ -5023,6 +5158,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           dataObjectFormat:
             type: array
             items:
@@ -5065,6 +5201,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           counterSignature:
             type: array
             items:
@@ -5196,6 +5333,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           unsignedDataObjectProperty:
             type: array
             items:
@@ -5214,11 +5352,13 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: false
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       CertIDListType:
@@ -5242,6 +5382,7 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: true
           certDigest:
             $ref: '#/components/schemas/org.etsi01903132/DigestAlgAndValueType'
             xml:
@@ -5367,6 +5508,7 @@ components:
             xml:
               name: ObjectReference
               attribute: true
+            nullable: false
           description:
             type: string
             xml:
@@ -5512,6 +5654,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           certRefs:
             $ref: '#/components/schemas/org.etsi01903132/CertIDListType'
             xml:
@@ -5527,6 +5670,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           cRLRefs:
             $ref: '#/components/schemas/org.etsi01903132/CRLRefsType'
             xml:
@@ -5580,6 +5724,7 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: true
           issuer:
             type: string
             xml:
@@ -5646,6 +5791,7 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: true
           responderID:
             $ref: '#/components/schemas/org.etsi01903132/ResponderIDType'
             xml:
@@ -5675,6 +5821,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           encapsulatedX509Certificate:
             type: array
             items:
@@ -5703,6 +5850,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           cRLValues:
             $ref: '#/components/schemas/org.etsi01903132/CRLValuesType'
             xml:
@@ -5901,21 +6049,25 @@ components:
             xml:
               name: WhichDocument
               attribute: true
+            nullable: true
           xPath:
             type: string
             xml:
               name: XPath
               attribute: true
+            nullable: true
           offset:
             type: integer
             xml:
               name: Offset
               attribute: true
+            nullable: true
           fieldName:
             type: string
             xml:
               name: FieldName
               attribute: true
+            nullable: true
           digestAlgAndValue:
             $ref: '#/components/schemas/org.etsi01903132/DigestAlgAndValueType'
             xml:
@@ -6012,11 +6164,13 @@ components:
             xml:
               name: Target
               attribute: true
+            nullable: true
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
           signedProperties:
             $ref: '#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/SignedPropertiesType'
             xml:
@@ -6037,6 +6191,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           signedSignatureProperties:
             $ref: '#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/SignedSignaturePropertiesType'
             xml:
@@ -6314,6 +6469,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           dataObjectFormat:
             type: array
             items:
@@ -6354,6 +6510,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           formatOK:
             $ref: '#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/VerificationResultType'
             xml:
@@ -6636,6 +6793,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           cRLIdentifier:
             $ref: '#/components/schemas/org.etsi01903132/CRLIdentifierType'
             xml:
@@ -6743,6 +6901,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           oCSPIdentifier:
             $ref: '#/components/schemas/org.etsi01903132/OCSPIdentifierType'
             xml:
@@ -6875,11 +7034,13 @@ components:
             xml:
               name: TSLTag
               attribute: true
+            nullable: false
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
           schemeInformation:
             $ref: '#/components/schemas/org.etsi022312/SchemeInformation'
           trustServiceProviderList:
@@ -6898,6 +7059,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           unsignedSignatureProperties:
             $ref: '#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/UnsignedSignaturePropertiesType'
             xml:
@@ -6921,6 +7083,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           counterSignature:
             type: array
             items:
@@ -7034,6 +7197,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           cRLValues:
             type: object
             properties:
@@ -7076,6 +7240,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           encapsulatedX509Certificate:
             type: array
             items:
@@ -7104,6 +7269,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           formatOK:
             $ref: '#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/VerificationResultType'
             xml:
@@ -7185,6 +7351,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           formatOK:
             $ref: '#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/VerificationResultType'
             xml:
@@ -7245,6 +7412,7 @@ components:
             xml:
               name: HashedObject
               attribute: true
+            nullable: true
           hashValue:
             type: string
             format: hex
@@ -7439,6 +7607,7 @@ components:
               name: lang
               namespace: http://www.w3.org/XML/1998/namespace
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -7453,6 +7622,7 @@ components:
               name: lang
               namespace: http://www.w3.org/XML/1998/namespace
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -7489,6 +7659,7 @@ components:
               name: lang
               namespace: http://www.w3.org/XML/1998/namespace
               attribute: true
+            nullable: true
           streetAddress:
             $ref: '#/components/schemas/org.etsi022312/NonEmptyString'
             xml:
@@ -7547,6 +7718,7 @@ components:
             xml:
               name: Critical
               attribute: true
+            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -7575,6 +7747,7 @@ components:
               name: lang
               namespace: http://www.w3.org/XML/1998/namespace
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -7612,11 +7785,13 @@ components:
             xml:
               name: TSLTag
               attribute: true
+            nullable: false
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
           schemeInformation:
             $ref: '#/components/schemas/org.etsi022312/SchemeInformation'
           trustServiceProviderList:
@@ -8207,11 +8382,13 @@ components:
             xml:
               name: NameQualifier
               attribute: true
+            nullable: true
           sPNameQualifier:
             type: string
             xml:
               name: SPNameQualifier
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       NameIDType:
@@ -8222,22 +8399,26 @@ components:
             xml:
               name: NameQualifier
               attribute: true
+            nullable: true
           sPNameQualifier:
             type: string
             xml:
               name: SPNameQualifier
               attribute: true
+            nullable: true
           format:
             type: string
             format: uri
             xml:
               name: Format
               attribute: true
+            nullable: true
           sPProvidedID:
             type: string
             xml:
               name: SPProvidedID
               attribute: true
+            nullable: true
           charData:
             type: string
             format: chardata
@@ -8264,17 +8445,20 @@ components:
             xml:
               name: Version
               attribute: true
+            nullable: false
           id:
             type: string
             xml:
               name: ID
               attribute: true
+            nullable: false
           issueInstant:
             type: string
             format: date-time
             xml:
               name: IssueInstant
               attribute: true
+            nullable: false
           issuer:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/Issuer'
           signature:
@@ -8343,6 +8527,7 @@ components:
             xml:
               name: Method
               attribute: true
+            nullable: false
           baseID:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/BaseID'
             nullable: true
@@ -8366,28 +8551,33 @@ components:
             xml:
               name: NotBefore
               attribute: true
+            nullable: true
           notOnOrAfter:
             type: string
             format: date-time
             xml:
               name: NotOnOrAfter
               attribute: true
+            nullable: true
           recipient:
             type: string
             format: uri
             xml:
               name: Recipient
               attribute: true
+            nullable: true
           inResponseTo:
             type: string
             xml:
               name: InResponseTo
               attribute: true
+            nullable: true
           address:
             type: string
             xml:
               name: Address
               attribute: true
+            nullable: true
           unknownAttributes:
             type: string
             format: xml
@@ -8411,28 +8601,33 @@ components:
             xml:
               name: NotBefore
               attribute: true
+            nullable: true
           notOnOrAfter:
             type: string
             format: date-time
             xml:
               name: NotOnOrAfter
               attribute: true
+            nullable: true
           recipient:
             type: string
             format: uri
             xml:
               name: Recipient
               attribute: true
+            nullable: true
           inResponseTo:
             type: string
             xml:
               name: InResponseTo
               attribute: true
+            nullable: true
           address:
             type: string
             xml:
               name: Address
               attribute: true
+            nullable: true
           unknownAttributes:
             type: string
             format: xml
@@ -8454,12 +8649,14 @@ components:
             xml:
               name: NotBefore
               attribute: true
+            nullable: true
           notOnOrAfter:
             type: string
             format: date-time
             xml:
               name: NotOnOrAfter
               attribute: true
+            nullable: true
           condition:
             type: array
             items:
@@ -8521,6 +8718,7 @@ components:
             xml:
               name: Count
               attribute: true
+            nullable: true
           audience:
             type: array
             items:
@@ -8577,17 +8775,20 @@ components:
             xml:
               name: AuthnInstant
               attribute: true
+            nullable: false
           sessionIndex:
             type: string
             xml:
               name: SessionIndex
               attribute: true
+            nullable: true
           sessionNotOnOrAfter:
             type: string
             format: date-time
             xml:
               name: SessionNotOnOrAfter
               attribute: true
+            nullable: true
           subjectLocality:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/SubjectLocality'
             nullable: true
@@ -8605,11 +8806,13 @@ components:
             xml:
               name: Address
               attribute: true
+            nullable: true
           dNSName:
             type: string
             xml:
               name: DNSName
               attribute: true
+            nullable: true
         xml:
           x-is-base: true
       AuthnContextType:
@@ -8639,11 +8842,13 @@ components:
             xml:
               name: Resource
               attribute: true
+            nullable: false
           decision:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/DecisionType'
             xml:
               name: Decision
               attribute: true
+            nullable: false
           action:
             type: array
             items:
@@ -8670,6 +8875,7 @@ components:
             xml:
               name: Namespace
               attribute: true
+            nullable: false
           charData:
             type: string
             format: chardata
@@ -8732,17 +8938,20 @@ components:
             xml:
               name: Name
               attribute: true
+            nullable: false
           nameFormat:
             type: string
             format: uri
             xml:
               name: NameFormat
               attribute: true
+            nullable: true
           friendlyName:
             type: string
             xml:
               name: FriendlyName
               attribute: true
+            nullable: true
           unknownAttributes:
             type: string
             format: xml
@@ -8831,23 +9040,27 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           type:
             type: string
             format: uri
             xml:
               name: Type
               attribute: true
+            nullable: true
           mimeType:
             type: string
             xml:
               name: MimeType
               attribute: true
+            nullable: true
           encoding:
             type: string
             format: uri
             xml:
               name: Encoding
               attribute: true
+            nullable: true
           encryptionMethod:
             $ref: '#/components/schemas/org.w3200104.xmlenc/EncryptionMethodType'
             xml:
@@ -8873,6 +9086,7 @@ components:
             xml:
               name: Algorithm
               attribute: true
+            nullable: false
           keySize:
             $ref: '#/components/schemas/org.w3200104.xmlenc/KeySizeType'
             xml:
@@ -8916,6 +9130,7 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: false
           transforms:
             $ref: '#/components/schemas/org.w3200104.xmlenc/TransformsType'
             xml:
@@ -8939,23 +9154,27 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           type:
             type: string
             format: uri
             xml:
               name: Type
               attribute: true
+            nullable: true
           mimeType:
             type: string
             xml:
               name: MimeType
               attribute: true
+            nullable: true
           encoding:
             type: string
             format: uri
             xml:
               name: Encoding
               attribute: true
+            nullable: true
           encryptionMethod:
             $ref: '#/components/schemas/org.w3200104.xmlenc/EncryptionMethodType'
             xml:
@@ -8982,28 +9201,33 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           type:
             type: string
             format: uri
             xml:
               name: Type
               attribute: true
+            nullable: true
           mimeType:
             type: string
             xml:
               name: MimeType
               attribute: true
+            nullable: true
           encoding:
             type: string
             format: uri
             xml:
               name: Encoding
               attribute: true
+            nullable: true
           recipient:
             type: string
             xml:
               name: Recipient
               attribute: true
+            nullable: true
           encryptionMethod:
             $ref: '#/components/schemas/org.w3200104.xmlenc/EncryptionMethodType'
             xml:
@@ -9040,6 +9264,7 @@ components:
             xml:
               name: Algorithm
               attribute: true
+            nullable: false
           kaNonce:
             type: string
             format: byte
@@ -9074,6 +9299,7 @@ components:
             xml:
               name: URI
               attribute: true
+            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -9086,6 +9312,7 @@ components:
             xml:
               name: Id
               attribute: true
+            nullable: true
           encryptionProperty:
             type: array
             items:
@@ -9101,11 +9328,13 @@ components:
             xml:
               name: Target
               attribute: true
+            nullable: true
           id:
             type: string
             xml:
               name: Id
               attribute: true
+            nullable: true
           unknownAttributes:
             type: string
             format: xml

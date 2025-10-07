@@ -7,23 +7,11 @@ import (
 	rim30 "github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/rim30"
 )
 
-type RegistryResponseType struct {
-	RegistryErrorList *RegistryErrorList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
-	Status            rim30.ReferenceURI   `xml:"status,attr"`
-	RequestId         string               `xml:"requestId,attr"`
-	ResponseSlotList  *rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
-}
-
-// Interface for types that extend RegistryResponseType
-type IRegistryResponseType interface {
-	IsRs30RegistryResponseType()
-}
-
 type RegistryRequest struct {
-	XMLName         xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryRequest"`
-	RequestSlotList *rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
-	Id              string               `xml:"id,attr"`
-	Comment         string               `xml:"comment,attr"`
+	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryRequest"`
+	Id              string              `xml:"id,attr,omitempty"`
+	Comment         string              `xml:"comment,attr,omitempty"`
+	RequestSlotList rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
 }
 
 // Interface for types that extend RegistryRequest
@@ -32,26 +20,26 @@ type IRegistryRequest interface {
 }
 
 type RegistryErrorList struct {
-	XMLName         xml.Name           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList"`
-	RegistryError   []RegistryError    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryError"`
-	HighestSeverity rim30.ReferenceURI `xml:"highestSeverity,attr"`
+	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList"`
+	HighestSeverity *rim30.ReferenceURI `xml:"highestSeverity,attr,omitempty"`
+	RegistryError   []RegistryError     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryError"`
 }
 
 type RegistryError struct {
-	XMLName     xml.Name           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryError"`
-	Location    string             `xml:"location,attr"`
-	CharData    string             `xml:"chardata"`
-	CodeContext string             `xml:"codeContext,attr"`
-	ErrorCode   string             `xml:"errorCode,attr"`
-	Severity    rim30.ReferenceURI `xml:"severity,attr"`
+	XMLName     xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryError"`
+	CodeContext string              `xml:"codeContext,attr"`
+	ErrorCode   string              `xml:"errorCode,attr"`
+	Severity    *rim30.ReferenceURI `xml:"severity,attr,omitempty"`
+	Location    string              `xml:"location,attr,omitempty"`
+	CharData    string              `xml:"chardata"`
 }
 
 type RegistryResponse struct {
-	XMLName           xml.Name             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
-	Status            rim30.ReferenceURI   `xml:"status,attr"`
-	RequestId         string               `xml:"requestId,attr"`
-	ResponseSlotList  *rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
-	RegistryErrorList *RegistryErrorList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
+	XMLName           xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
+	RequestId         string              `xml:"requestId,attr,omitempty"`
+	ResponseSlotList  rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList"`
+	RegistryErrorList *RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
+	Status            rim30.ReferenceURI  `xml:"status,attr"`
 }
 
 // Interface for types that extend RegistryResponse
@@ -60,12 +48,24 @@ type IRegistryResponse interface {
 }
 
 type RegistryRequestType struct {
-	RequestSlotList *rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
-	Id              string               `xml:"id,attr"`
-	Comment         string               `xml:"comment,attr"`
+	Comment         string              `xml:"comment,attr,omitempty"`
+	RequestSlotList rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList"`
+	Id              string              `xml:"id,attr,omitempty"`
 }
 
 // Interface for types that extend RegistryRequestType
 type IRegistryRequestType interface {
 	IsRs30RegistryRequestType()
+}
+
+type RegistryResponseType struct {
+	Status            rim30.ReferenceURI  `xml:"status,attr"`
+	RequestId         string              `xml:"requestId,attr,omitempty"`
+	ResponseSlotList  rim30.ISlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList"`
+	RegistryErrorList *RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
+}
+
+// Interface for types that extend RegistryResponseType
+type IRegistryResponseType interface {
+	IsRs30RegistryResponseType()
 }

@@ -15,7 +15,7 @@ func (n NamingStrategy) NormalizeNamespaceId(namespaceId string) string {
 	if customId, ok := n.IdMappings[namespaceId]; ok {
 		return customId
 	}
-	return namespaceId
+	return strings.ToLower(namespaceId)
 }
 
 func (n NamingStrategy) FilenameForTypes(outputDir string, namespaceId string) string {

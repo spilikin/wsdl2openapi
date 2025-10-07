@@ -262,6 +262,7 @@ class XmlSchemaVisitor:
                 )
                 self.set_property_declaration(property_name, property_declaration)
                 continue
+
             property_name = self.naming_strategy.format_property_name(
                 attr.qname.localname
             )
@@ -272,6 +273,9 @@ class XmlSchemaVisitor:
             )
             if attr.qname.namespace:
                 property_declaration.xml.namespace = attr.qname.namespace
+
+            if not attr.required:
+                property_declaration.nullable = True
 
             self.set_property_declaration(property_name, property_declaration)
 

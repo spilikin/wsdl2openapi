@@ -357,7 +357,8 @@
               "xml": {
                 "name": "mandant-wide",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "context": {
               "$ref": "#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context"
@@ -460,7 +461,8 @@
               "xml": {
                 "name": "mandant-wide",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "context": {
               "$ref": "#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context"
@@ -506,7 +508,8 @@
               "xml": {
                 "name": "mandant-wide",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "context": {
               "$ref": "#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context"
@@ -1002,7 +1005,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -1010,7 +1014,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -1018,14 +1023,16 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "base64XML": {
               "type": "string",
@@ -1137,7 +1144,8 @@
                         "xml": {
                           "name": "Encoding",
                           "attribute": true
-                        }
+                        },
+                        "nullable": true
                       },
                       "charData": {
                         "type": "string",
@@ -1225,7 +1233,8 @@
               "xml": {
                 "name": "MimeType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -1246,7 +1255,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -1254,7 +1264,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -1262,21 +1273,24 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "whichReference": {
               "type": "integer",
               "xml": {
                 "name": "WhichReference",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "transforms": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/Transforms",
@@ -1302,7 +1316,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -1310,7 +1325,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -1318,21 +1334,24 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "whichReference": {
               "type": "integer",
               "xml": {
                 "name": "WhichReference",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "transforms": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/Transforms",
@@ -1362,7 +1381,8 @@
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signature": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/Signature",
@@ -1403,7 +1423,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -1424,14 +1445,16 @@
               "xml": {
                 "name": "WhichDocument",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "xPath": {
               "type": "string",
               "xml": {
                 "name": "XPath",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -1563,7 +1586,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "profile": {
               "type": "string",
@@ -1571,7 +1595,8 @@
               "xml": {
                 "name": "Profile",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "optionalInputs": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/OptionalInputs",
@@ -1598,7 +1623,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "profile": {
               "type": "string",
@@ -1606,7 +1632,8 @@
               "xml": {
                 "name": "Profile",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "result": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/Result"
@@ -1741,28 +1768,32 @@
               "xml": {
                 "name": "WhichDocument",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "hasObjectTagsAndAttributesSet": {
               "type": "boolean",
               "xml": {
                 "name": "hasObjectTagsAndAttributesSet",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "objId": {
               "type": "string",
               "xml": {
                 "name": "ObjId",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "createReference": {
               "type": "boolean",
               "xml": {
                 "name": "createReference",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -1778,14 +1809,16 @@
               "xml": {
                 "name": "WhichDocument",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "createEnvelopedSignature": {
               "type": "boolean",
               "xml": {
                 "name": "CreateEnvelopedSignature",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "xPathAfter": {
               "type": "string",
@@ -1844,7 +1877,8 @@
               "xml": {
                 "name": "WhichDocument",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "refURI": {
               "type": "string",
@@ -1852,14 +1886,16 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refId": {
               "type": "string",
               "xml": {
                 "name": "RefId",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "transforms": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/Transforms",
@@ -1879,7 +1915,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "profile": {
               "type": "string",
@@ -1887,7 +1924,8 @@
               "xml": {
                 "name": "Profile",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "optionalInputs": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/OptionalInputs",
@@ -2084,7 +2122,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -2107,7 +2146,8 @@
               "xml": {
                 "name": "WhichReference",
                 "attribute": true
-              }
+              },
+              "nullable": false
             }
           },
           "xml": {
@@ -2123,7 +2163,8 @@
               "xml": {
                 "name": "WhichReference",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "document": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/Document"
@@ -2288,7 +2329,8 @@
                 "name": "lang",
                 "namespace": "http://www.w3.org/XML/1998/namespace",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -2307,7 +2349,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -2315,7 +2358,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -2323,14 +2367,16 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -2345,7 +2391,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -2353,7 +2400,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -2361,14 +2409,16 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "inlineXML": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/InlineXMLType",
@@ -2419,14 +2469,16 @@
               "xml": {
                 "name": "ignorePIs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "ignoreComments": {
               "type": "boolean",
               "xml": {
                 "name": "ignoreComments",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownContent": {
               "type": "string",
@@ -2457,7 +2509,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "profile": {
               "type": "string",
@@ -2465,7 +2518,8 @@
               "xml": {
                 "name": "Profile",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "optionalInputs": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/OptionalInputs",
@@ -2488,7 +2542,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "profile": {
               "type": "string",
@@ -2496,7 +2551,8 @@
               "xml": {
                 "name": "Profile",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "result": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/Result"
@@ -2519,14 +2575,16 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "timeStampTheGivenSignature": {
               "type": "boolean",
               "xml": {
                 "name": "TimeStampTheGivenSignature",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -2548,7 +2606,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -2621,14 +2680,16 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "ref": {
               "type": "string",
               "xml": {
                 "name": "Ref",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -2672,7 +2733,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "code": {
               "type": "string",
@@ -2751,7 +2813,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signatureObject": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/SignatureObject"
@@ -2770,14 +2833,16 @@
               "xml": {
                 "name": "AttRefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "mimeType": {
               "type": "string",
               "xml": {
                 "name": "MimeType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "digestMethod": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/DigestMethod"
@@ -2972,7 +3037,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signedInfo": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/SignedInfo"
@@ -3004,7 +3070,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -3024,7 +3091,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "canonicalizationMethod": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/CanonicalizationMethod"
@@ -3052,7 +3120,8 @@
               "xml": {
                 "name": "Algorithm",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "unknownContent": {
               "type": "string",
@@ -3073,7 +3142,8 @@
               "xml": {
                 "name": "Algorithm",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "hMACOutputLength": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/HMACOutputLengthType",
@@ -3101,7 +3171,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "uri": {
               "type": "string",
@@ -3109,7 +3180,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "type": {
               "type": "string",
@@ -3117,7 +3189,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "transforms": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/Transforms",
@@ -3157,7 +3230,8 @@
               "xml": {
                 "name": "Algorithm",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "unknownContent": {
               "type": "string",
@@ -3190,7 +3264,8 @@
               "xml": {
                 "name": "Algorithm",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "unknownContent": {
               "type": "string",
@@ -3214,7 +3289,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "keyName": {
               "type": "array",
@@ -3312,7 +3388,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "type": {
               "type": "string",
@@ -3320,7 +3397,8 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "transforms": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/Transforms",
@@ -3468,14 +3546,16 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "mimeType": {
               "type": "string",
               "xml": {
                 "name": "MimeType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encoding": {
               "type": "string",
@@ -3483,7 +3563,8 @@
               "xml": {
                 "name": "Encoding",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownContent": {
               "type": "string",
@@ -3503,7 +3584,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "reference": {
               "type": "array",
@@ -3524,7 +3606,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signatureProperty": {
               "type": "array",
@@ -3546,14 +3629,16 @@
               "xml": {
                 "name": "Target",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownContent": {
               "type": "string",
@@ -3851,28 +3936,32 @@
               "xml": {
                 "name": "MajorVersion",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "minorVersion": {
               "type": "integer",
               "xml": {
                 "name": "MinorVersion",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "assertionID": {
               "type": "string",
               "xml": {
                 "name": "AssertionID",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "issuer": {
               "type": "string",
               "xml": {
                 "name": "Issuer",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "issueInstant": {
               "type": "string",
@@ -3880,7 +3969,8 @@
               "xml": {
                 "name": "IssueInstant",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "conditions": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML10.assertion/Conditions",
@@ -3948,7 +4038,8 @@
               "xml": {
                 "name": "NotBefore",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "notOnOrAfter": {
               "type": "string",
@@ -3956,7 +4047,8 @@
               "xml": {
                 "name": "NotOnOrAfter",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "audienceRestrictionCondition": {
               "type": "array",
@@ -4099,7 +4191,8 @@
               "xml": {
                 "name": "NameQualifier",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "format": {
               "type": "string",
@@ -4107,7 +4200,8 @@
               "xml": {
                 "name": "Format",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -4150,7 +4244,8 @@
               "xml": {
                 "name": "AuthenticationMethod",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "authenticationInstant": {
               "type": "string",
@@ -4158,7 +4253,8 @@
               "xml": {
                 "name": "AuthenticationInstant",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "subject": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML10.assertion/Subject"
@@ -4191,14 +4287,16 @@
               "xml": {
                 "name": "IPAddress",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "dNSAddress": {
               "type": "string",
               "xml": {
                 "name": "DNSAddress",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -4213,7 +4311,8 @@
               "xml": {
                 "name": "AuthorityKind",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "location": {
               "type": "string",
@@ -4221,7 +4320,8 @@
               "xml": {
                 "name": "Location",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "binding": {
               "type": "string",
@@ -4229,7 +4329,8 @@
               "xml": {
                 "name": "Binding",
                 "attribute": true
-              }
+              },
+              "nullable": false
             }
           },
           "xml": {
@@ -4245,14 +4346,16 @@
               "xml": {
                 "name": "Resource",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "decision": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML10.assertion/DecisionType",
               "xml": {
                 "name": "Decision",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "subject": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML10.assertion/Subject"
@@ -4285,7 +4388,8 @@
               "xml": {
                 "name": "Namespace",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -4350,7 +4454,8 @@
               "xml": {
                 "name": "AttributeName",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "attributeNamespace": {
               "type": "string",
@@ -4358,7 +4463,8 @@
               "xml": {
                 "name": "AttributeNamespace",
                 "attribute": true
-              }
+              },
+              "nullable": false
             }
           },
           "xml": {
@@ -4373,7 +4479,8 @@
               "xml": {
                 "name": "AttributeName",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "attributeNamespace": {
               "type": "string",
@@ -4381,7 +4488,8 @@
               "xml": {
                 "name": "AttributeNamespace",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "attributeValue": {
               "type": "array",
@@ -5427,7 +5535,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "optionalInputs": {
               "type": "object",
@@ -5540,7 +5649,8 @@
               "xml": {
                 "name": "RequestID",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "status": {
               "$ref": "#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/Status"
@@ -5912,7 +6022,8 @@
                     "xml": {
                       "name": "IdRef",
                       "attribute": true
-                    }
+                    },
+                    "nullable": true
                   }
                 },
                 "xml": {
@@ -5979,7 +6090,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -5987,7 +6099,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -5995,21 +6108,24 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "shortText": {
               "type": "string",
               "xml": {
                 "name": "ShortText",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "base64XML": {
               "type": "string",
@@ -6041,7 +6157,8 @@
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refURI": {
               "type": "string",
@@ -6049,7 +6166,8 @@
               "xml": {
                 "name": "RefURI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "refType": {
               "type": "string",
@@ -6057,14 +6175,16 @@
               "xml": {
                 "name": "RefType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemaRefs": {
               "type": "string",
               "xml": {
                 "name": "SchemaRefs",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "base64Data": {
               "$ref": "#/components/schemas/oasis.names.tc.dss10.core/Base64Data"
@@ -6636,7 +6756,8 @@
               "xml": {
                 "name": "Qualifier",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -6678,7 +6799,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encoding": {
               "type": "string",
@@ -6686,7 +6808,8 @@
               "xml": {
                 "name": "Encoding",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -6707,14 +6830,16 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "referencedData": {
               "type": "boolean",
               "xml": {
                 "name": "referencedData",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -6729,7 +6854,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "uri": {
               "type": "string",
@@ -6737,7 +6863,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "digestMethod": {
               "$ref": "#/components/schemas/org.w3200009.xmldsig/DigestMethod"
@@ -6758,7 +6885,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "include": {
               "type": "array",
@@ -6812,7 +6940,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "include": {
               "type": "array",
@@ -6862,7 +6991,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "referenceInfo": {
               "type": "array",
@@ -6904,14 +7034,16 @@
               "xml": {
                 "name": "Target",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signedProperties": {
               "$ref": "#/components/schemas/org.etsi01903132/SignedPropertiesType",
@@ -6942,7 +7074,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signedSignatureProperties": {
               "$ref": "#/components/schemas/org.etsi01903132/SignedSignaturePropertiesType",
@@ -6973,7 +7106,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unsignedSignatureProperties": {
               "$ref": "#/components/schemas/org.etsi01903132/UnsignedSignaturePropertiesType",
@@ -7004,7 +7138,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signingTime": {
               "type": "string",
@@ -7060,7 +7195,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "dataObjectFormat": {
               "type": "array",
@@ -7119,7 +7255,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "counterSignature": {
               "type": "array",
@@ -7295,7 +7432,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unsignedDataObjectProperty": {
               "type": "array",
@@ -7321,14 +7459,16 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -7362,7 +7502,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "certDigest": {
               "$ref": "#/components/schemas/org.etsi01903132/DigestAlgAndValueType",
@@ -7542,7 +7683,8 @@
               "xml": {
                 "name": "ObjectReference",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "description": {
               "type": "string",
@@ -7745,7 +7887,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "certRefs": {
               "$ref": "#/components/schemas/org.etsi01903132/CertIDListType",
@@ -7767,7 +7910,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "cRLRefs": {
               "$ref": "#/components/schemas/org.etsi01903132/CRLRefsType",
@@ -7842,7 +7986,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "issuer": {
               "type": "string",
@@ -7935,7 +8080,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "responderID": {
               "$ref": "#/components/schemas/org.etsi01903132/ResponderIDType",
@@ -7977,7 +8123,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encapsulatedX509Certificate": {
               "type": "array",
@@ -8016,7 +8163,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "cRLValues": {
               "$ref": "#/components/schemas/org.etsi01903132/CRLValuesType",
@@ -8295,28 +8443,32 @@
               "xml": {
                 "name": "WhichDocument",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "xPath": {
               "type": "string",
               "xml": {
                 "name": "XPath",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "offset": {
               "type": "integer",
               "xml": {
                 "name": "Offset",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "fieldName": {
               "type": "string",
               "xml": {
                 "name": "FieldName",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "digestAlgAndValue": {
               "$ref": "#/components/schemas/org.etsi01903132/DigestAlgAndValueType",
@@ -8448,14 +8600,16 @@
               "xml": {
                 "name": "Target",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signedProperties": {
               "$ref": "#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/SignedPropertiesType",
@@ -8483,7 +8637,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "signedSignatureProperties": {
               "$ref": "#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/SignedSignaturePropertiesType",
@@ -8872,7 +9027,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "dataObjectFormat": {
               "type": "array",
@@ -8928,7 +9084,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "formatOK": {
               "$ref": "#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/VerificationResultType",
@@ -9322,7 +9479,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "cRLIdentifier": {
               "$ref": "#/components/schemas/org.etsi01903132/CRLIdentifierType",
@@ -9470,7 +9628,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "oCSPIdentifier": {
               "$ref": "#/components/schemas/org.etsi01903132/OCSPIdentifierType",
@@ -9654,14 +9813,16 @@
               "xml": {
                 "name": "TSLTag",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemeInformation": {
               "$ref": "#/components/schemas/org.etsi022312/SchemeInformation"
@@ -9687,7 +9848,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unsignedSignatureProperties": {
               "$ref": "#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/UnsignedSignaturePropertiesType",
@@ -9719,7 +9881,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "counterSignature": {
               "type": "array",
@@ -9871,7 +10034,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "cRLValues": {
               "type": "object",
@@ -9931,7 +10095,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encapsulatedX509Certificate": {
               "type": "array",
@@ -9969,7 +10134,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "formatOK": {
               "$ref": "#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/VerificationResultType",
@@ -10085,7 +10251,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "formatOK": {
               "$ref": "#/components/schemas/oasis.names.tc.dssx10.profiles.verificationreport/VerificationResultType",
@@ -10171,7 +10338,8 @@
               "xml": {
                 "name": "HashedObject",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "hashValue": {
               "type": "string",
@@ -10444,7 +10612,8 @@
                 "name": "lang",
                 "namespace": "http://www.w3.org/XML/1998/namespace",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -10464,7 +10633,8 @@
                 "name": "lang",
                 "namespace": "http://www.w3.org/XML/1998/namespace",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -10517,7 +10687,8 @@
                 "name": "lang",
                 "namespace": "http://www.w3.org/XML/1998/namespace",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "streetAddress": {
               "$ref": "#/components/schemas/org.etsi022312/NonEmptyString",
@@ -10600,7 +10771,8 @@
               "xml": {
                 "name": "Critical",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "unknownContent": {
               "type": "string",
@@ -10640,7 +10812,8 @@
                 "name": "lang",
                 "namespace": "http://www.w3.org/XML/1998/namespace",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -10695,14 +10868,16 @@
               "xml": {
                 "name": "TSLTag",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "schemeInformation": {
               "$ref": "#/components/schemas/org.etsi022312/SchemeInformation"
@@ -11536,14 +11711,16 @@
               "xml": {
                 "name": "NameQualifier",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "sPNameQualifier": {
               "type": "string",
               "xml": {
                 "name": "SPNameQualifier",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -11558,14 +11735,16 @@
               "xml": {
                 "name": "NameQualifier",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "sPNameQualifier": {
               "type": "string",
               "xml": {
                 "name": "SPNameQualifier",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "format": {
               "type": "string",
@@ -11573,14 +11752,16 @@
               "xml": {
                 "name": "Format",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "sPProvidedID": {
               "type": "string",
               "xml": {
                 "name": "SPProvidedID",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "charData": {
               "type": "string",
@@ -11618,14 +11799,16 @@
               "xml": {
                 "name": "Version",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "ID",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "issueInstant": {
               "type": "string",
@@ -11633,7 +11816,8 @@
               "xml": {
                 "name": "IssueInstant",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "issuer": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML20.assertion/Issuer"
@@ -11727,7 +11911,8 @@
               "xml": {
                 "name": "Method",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "baseID": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML20.assertion/BaseID",
@@ -11759,7 +11944,8 @@
               "xml": {
                 "name": "NotBefore",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "notOnOrAfter": {
               "type": "string",
@@ -11767,7 +11953,8 @@
               "xml": {
                 "name": "NotOnOrAfter",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "recipient": {
               "type": "string",
@@ -11775,21 +11962,24 @@
               "xml": {
                 "name": "Recipient",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "inResponseTo": {
               "type": "string",
               "xml": {
                 "name": "InResponseTo",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "address": {
               "type": "string",
               "xml": {
                 "name": "Address",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownAttributes": {
               "type": "string",
@@ -11820,7 +12010,8 @@
               "xml": {
                 "name": "NotBefore",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "notOnOrAfter": {
               "type": "string",
@@ -11828,7 +12019,8 @@
               "xml": {
                 "name": "NotOnOrAfter",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "recipient": {
               "type": "string",
@@ -11836,21 +12028,24 @@
               "xml": {
                 "name": "Recipient",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "inResponseTo": {
               "type": "string",
               "xml": {
                 "name": "InResponseTo",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "address": {
               "type": "string",
               "xml": {
                 "name": "Address",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownAttributes": {
               "type": "string",
@@ -11879,7 +12074,8 @@
               "xml": {
                 "name": "NotBefore",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "notOnOrAfter": {
               "type": "string",
@@ -11887,7 +12083,8 @@
               "xml": {
                 "name": "NotOnOrAfter",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "condition": {
               "type": "array",
@@ -11974,7 +12171,8 @@
               "xml": {
                 "name": "Count",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "audience": {
               "type": "array",
@@ -12052,14 +12250,16 @@
               "xml": {
                 "name": "AuthnInstant",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "sessionIndex": {
               "type": "string",
               "xml": {
                 "name": "SessionIndex",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "sessionNotOnOrAfter": {
               "type": "string",
@@ -12067,7 +12267,8 @@
               "xml": {
                 "name": "SessionNotOnOrAfter",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "subjectLocality": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML20.assertion/SubjectLocality",
@@ -12092,14 +12293,16 @@
               "xml": {
                 "name": "Address",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "dNSName": {
               "type": "string",
               "xml": {
                 "name": "DNSName",
                 "attribute": true
-              }
+              },
+              "nullable": true
             }
           },
           "xml": {
@@ -12141,14 +12344,16 @@
               "xml": {
                 "name": "Resource",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "decision": {
               "$ref": "#/components/schemas/oasis.names.tc.SAML20.assertion/DecisionType",
               "xml": {
                 "name": "Decision",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "action": {
               "type": "array",
@@ -12185,7 +12390,8 @@
               "xml": {
                 "name": "Namespace",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "charData": {
               "type": "string",
@@ -12272,7 +12478,8 @@
               "xml": {
                 "name": "Name",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "nameFormat": {
               "type": "string",
@@ -12280,14 +12487,16 @@
               "xml": {
                 "name": "NameFormat",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "friendlyName": {
               "type": "string",
               "xml": {
                 "name": "FriendlyName",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownAttributes": {
               "type": "string",
@@ -12410,7 +12619,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "type": {
               "type": "string",
@@ -12418,14 +12628,16 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "mimeType": {
               "type": "string",
               "xml": {
                 "name": "MimeType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encoding": {
               "type": "string",
@@ -12433,7 +12645,8 @@
               "xml": {
                 "name": "Encoding",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encryptionMethod": {
               "$ref": "#/components/schemas/org.w3200104.xmlenc/EncryptionMethodType",
@@ -12468,7 +12681,8 @@
               "xml": {
                 "name": "Algorithm",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "keySize": {
               "$ref": "#/components/schemas/org.w3200104.xmlenc/KeySizeType",
@@ -12527,7 +12741,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "transforms": {
               "$ref": "#/components/schemas/org.w3200104.xmlenc/TransformsType",
@@ -12561,7 +12776,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "type": {
               "type": "string",
@@ -12569,14 +12785,16 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "mimeType": {
               "type": "string",
               "xml": {
                 "name": "MimeType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encoding": {
               "type": "string",
@@ -12584,7 +12802,8 @@
               "xml": {
                 "name": "Encoding",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encryptionMethod": {
               "$ref": "#/components/schemas/org.w3200104.xmlenc/EncryptionMethodType",
@@ -12621,7 +12840,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "type": {
               "type": "string",
@@ -12629,14 +12849,16 @@
               "xml": {
                 "name": "Type",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "mimeType": {
               "type": "string",
               "xml": {
                 "name": "MimeType",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encoding": {
               "type": "string",
@@ -12644,14 +12866,16 @@
               "xml": {
                 "name": "Encoding",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "recipient": {
               "type": "string",
               "xml": {
                 "name": "Recipient",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encryptionMethod": {
               "$ref": "#/components/schemas/org.w3200104.xmlenc/EncryptionMethodType",
@@ -12701,7 +12925,8 @@
               "xml": {
                 "name": "Algorithm",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "kaNonce": {
               "type": "string",
@@ -12747,7 +12972,8 @@
               "xml": {
                 "name": "URI",
                 "attribute": true
-              }
+              },
+              "nullable": false
             },
             "unknownContent": {
               "type": "string",
@@ -12764,7 +12990,8 @@
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "encryptionProperty": {
               "type": "array",
@@ -12786,14 +13013,16 @@
               "xml": {
                 "name": "Target",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "id": {
               "type": "string",
               "xml": {
                 "name": "Id",
                 "attribute": true
-              }
+              },
+              "nullable": true
             },
             "unknownAttributes": {
               "type": "string",
