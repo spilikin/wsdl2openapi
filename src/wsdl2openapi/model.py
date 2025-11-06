@@ -14,11 +14,7 @@ class BindingType(Enum):
     OTHER = "other"
 
 
-class WebServiceMessage(msgspec.Struct, kw_only=True, tag=True, tag_field="type"):
-    pass
-
-
-class DocumentMessage(WebServiceMessage, tag="document"):
+class WebServiceMessage(msgspec.Struct):
     soapBody: str = msgspec.field()
     soapHeaders: Optional[List[str]] = msgspec.field(default=msgspec.UNSET)
 
@@ -50,7 +46,7 @@ class WebServicePort(msgspec.Struct):
 class WebService(msgspec.Struct):
     name: str
     targetNamespace: str
-    targetNamespaceId: str
+    targetPackage: str
     ports: List[WebServicePort] = msgspec.field(default_factory=list)
 
 
@@ -58,6 +54,15 @@ class Components(msgspec.Struct):
     schemas: OrderedDict[str, "OrderedDict[str, Type | ReferenceObject]"] = (
         msgspec.field(default_factory=OrderedDict)
     )
+
+    def schema_dict(self, path: List[str]) -> OrderedDict:
+        """Return the dictionary for a given path in the components, creates the necessary structure if it doesn't exist."""
+        current = self.schemas
+        for part in path:
+            if part not in current:
+                current[part] = OrderedDict()
+            current = current[part]
+        return current
 
 
 class License:

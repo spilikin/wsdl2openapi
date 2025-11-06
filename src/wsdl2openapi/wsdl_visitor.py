@@ -22,9 +22,9 @@ from wsdl2openapi.model import Api
 
 from .model import (
     BindingType,
-    DocumentMessage,
     OperationDefinition,
     WebService,
+    WebServiceMessage,
     WebServicePort,
 )
 
@@ -51,7 +51,7 @@ class WsdlVisitor:
         wsdl_service = WebService(
             name=service.name,
             targetNamespace=definition.target_namespace,
-            targetNamespaceId=namespace_id,
+            targetPackage=namespace_id,
         )
         self.api.wsdl_services.append(wsdl_service)
         for port in service.ports.values():
@@ -110,7 +110,7 @@ class WsdlVisitor:
 
     def build_document_message(
         self, document_message: SoapDocumentMessage
-    ) -> DocumentMessage:
+    ) -> WebServiceMessage:
         part = next(iter(document_message.abstract.parts.values()))
         if part.element is None:
             raise NotImplementedError("Only element-based messages are supported")
@@ -134,7 +134,7 @@ class WsdlVisitor:
                     self.naming_strategy.reference_to_type(self.ctx, header.qname)
                 )
 
-        return DocumentMessage(
+        return WebServiceMessage(
             soapBody=self.naming_strategy.reference_to_type(
                 self.ctx, part.element.qname
             ),

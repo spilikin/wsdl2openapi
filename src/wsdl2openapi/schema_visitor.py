@@ -1,5 +1,4 @@
 import logging
-from collections import OrderedDict
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from functools import singledispatchmethod
@@ -21,7 +20,6 @@ from zeep.xsd.types import AnySimpleType, AnyType, ComplexType
 from .common import Context, NamingStrategy
 from .model import (
     Api,
-    Components,
     ReferenceObject,
     Type,
     TypeArray,
@@ -81,7 +79,7 @@ class XmlSchemaVisitor:
 
         for qname, type_declaration in self.components:
             id = self.naming_strategy.namespace_identifier(self.ctx, qname.namespace)
-            schema_dict = create_schema_dict(self.api.components, [id])
+            schema_dict = self.api.components.schema_dict([id])
             type_name = self.naming_strategy.format_type_name(qname.localname)
             if type_name in schema_dict:
                 logging.debug(
@@ -99,7 +97,7 @@ class XmlSchemaVisitor:
             id = self.naming_strategy.namespace_identifier(
                 self.ctx, base_qname.namespace
             )
-            schema_dict = create_schema_dict(self.api.components, [id])
+            schema_dict = self.api.components.schema_dict([id])
             type_name = self.naming_strategy.format_type_name(base_qname.localname)
             if type_name in schema_dict:
                 xml_ext = self.get_xml_ext_for_type(schema_dict[type_name])
@@ -376,16 +374,6 @@ class XmlSchemaVisitor:
             type_declaration.xml = XmlExtension()
 
         return type_declaration.xml
-
-
-def create_schema_dict(components: Components, path: List[str]) -> OrderedDict:
-    """Return the dictionary for a given path in the components, creates the necessary structure if it doesn't exist."""
-    current = components.schemas
-    for part in path:
-        if part not in current:
-            current[part] = OrderedDict()
-        current = current[part]
-    return current
 
 
 def is_multi_occurs(max_occurs) -> bool:

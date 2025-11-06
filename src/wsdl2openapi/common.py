@@ -134,6 +134,10 @@ class NamingStrategy:
         """Return the property name for unknown XML attributes."""
         return "unknownAttributes"
 
+    def body_child_property_name(self) -> str:
+        """Return the property name for body child elements."""
+        return "content"
+
 
 _xml_cache = dict()
 

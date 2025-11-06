@@ -7,7 +7,7 @@ info:
 x-wsdl-services:
 - name: XDSDocumentService
   targetNamespace: urn:ihe:iti:xds-b:2007
-  targetNamespaceId: ihe.iti.xdsb2007
+  targetPackage: ihe.iti.xdsb2007
   ports:
   - name: I_Document_Management
     bindingType: soap12
@@ -17,46 +17,36 @@ x-wsdl-services:
       soapAction: urn:ihe:iti:2007:RegistryStoredQuery
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryResponse'
     - name: DocumentRepository_ProvideAndRegisterDocumentSet-b
       soapAction: urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/ProvideAndRegisterDocumentSetRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse'
     - name: DocumentRepository_RetrieveDocumentSet
       soapAction: urn:ihe:iti:2007:RetrieveDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetResponse'
     - name: DocumentRegistry_DeleteDocumentSet
       soapAction: urn:ihe:iti:2010:DeleteDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/RemoveObjectsRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse'
     - name: UpdateResponder_RestrictedUpdateDocumentSet
       soapAction: urn:ihe:iti:2018:RestrictedUpdateDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/SubmitObjectsRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse'
   - name: I_Document_Management_Insurant
     bindingType: soap12
@@ -66,46 +56,36 @@ x-wsdl-services:
       soapAction: urn:ihe:iti:2007:RegistryStoredQuery
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryResponse'
     - name: DocumentRepository_ProvideAndRegisterDocumentSet-b
       soapAction: urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/ProvideAndRegisterDocumentSetRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse'
     - name: DocumentRepository_RetrieveDocumentSet
       soapAction: urn:ihe:iti:2007:RetrieveDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetResponse'
     - name: DocumentRegistry_DeleteDocumentSet
       soapAction: urn:ihe:iti:2010:DeleteDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/RemoveObjectsRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse'
     - name: UpdateResponder_RestrictedUpdateDocumentSet
       soapAction: urn:ihe:iti:2018:RestrictedUpdateDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/SubmitObjectsRequest'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse'
   - name: I_Document_Management_Ncpeh
     bindingType: soap12
@@ -115,23 +95,19 @@ x-wsdl-services:
       soapAction: urn:ihe:iti:2007:RegistryStoredQuery
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryRequest'
         soapHeaders:
         - '#/components/schemas/de.gematik.ws.epaxdsdocument.IDocumentManagement10/HeaderContent'
       output:
-        type: document
         soapBody: '#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryResponse'
     - name: DocumentRepository_RetrieveDocumentSet
       soapAction: urn:ihe:iti:2007:RetrieveDocumentSet
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetRequest'
         soapHeaders:
         - '#/components/schemas/de.gematik.ws.epaxdsdocument.IDocumentManagement10/HeaderContent'
       output:
-        type: document
         soapBody: '#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetResponse'
 components:
   schemas:

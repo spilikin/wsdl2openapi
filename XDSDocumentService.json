@@ -10,7 +10,7 @@
     {
       "name": "XDSDocumentService",
       "targetNamespace": "urn:ihe:iti:xds-b:2007",
-      "targetNamespaceId": "ihe.iti.xdsb2007",
+      "targetPackage": "ihe.iti.xdsb2007",
       "ports": [
         {
           "name": "I_Document_Management",
@@ -22,11 +22,9 @@
               "soapAction": "urn:ihe:iti:2007:RegistryStoredQuery",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryResponse"
               }
             },
@@ -35,11 +33,9 @@
               "soapAction": "urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/ProvideAndRegisterDocumentSetRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse"
               }
             },
@@ -48,11 +44,9 @@
               "soapAction": "urn:ihe:iti:2007:RetrieveDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetResponse"
               }
             },
@@ -61,11 +55,9 @@
               "soapAction": "urn:ihe:iti:2010:DeleteDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/RemoveObjectsRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse"
               }
             },
@@ -74,11 +66,9 @@
               "soapAction": "urn:ihe:iti:2018:RestrictedUpdateDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/SubmitObjectsRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse"
               }
             }
@@ -94,11 +84,9 @@
               "soapAction": "urn:ihe:iti:2007:RegistryStoredQuery",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryResponse"
               }
             },
@@ -107,11 +95,9 @@
               "soapAction": "urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/ProvideAndRegisterDocumentSetRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse"
               }
             },
@@ -120,11 +106,9 @@
               "soapAction": "urn:ihe:iti:2007:RetrieveDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetResponse"
               }
             },
@@ -133,11 +117,9 @@
               "soapAction": "urn:ihe:iti:2010:DeleteDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/RemoveObjectsRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse"
               }
             },
@@ -146,11 +128,9 @@
               "soapAction": "urn:ihe:iti:2018:RestrictedUpdateDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.lcm30/SubmitObjectsRequest"
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponse"
               }
             }
@@ -166,14 +146,12 @@
               "soapAction": "urn:ihe:iti:2007:RegistryStoredQuery",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryRequest",
                 "soapHeaders": [
                   "#/components/schemas/de.gematik.ws.epaxdsdocument.IDocumentManagement10/HeaderContent"
                 ]
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/oasis.names.tc.ebxmlregrep.query30/AdhocQueryResponse"
               }
             },
@@ -182,14 +160,12 @@
               "soapAction": "urn:ihe:iti:2007:RetrieveDocumentSet",
               "style": "document",
               "input": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetRequest",
                 "soapHeaders": [
                   "#/components/schemas/de.gematik.ws.epaxdsdocument.IDocumentManagement10/HeaderContent"
                 ]
               },
               "output": {
-                "type": "document",
                 "soapBody": "#/components/schemas/ihe.iti.xdsb2007/RetrieveDocumentSetResponse"
               }
             }
