@@ -49,7 +49,7 @@ func (n NamingStrategy) BaseTypeFuncName(ref string) string {
 	}
 	packages := strings.Split(parts[len(parts)-2], ".")
 	packageName := packages[len(packages)-1]
-	packageName = strings.Title(packageName)
+	packageName = strings.ToUpper(packageName[:1]) + packageName[1:]
 	typeName := parts[len(parts)-1]
 
 	return "Is" + packageName + typeName

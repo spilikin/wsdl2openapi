@@ -1,6 +1,10 @@
 package main
 
-import "encoding/json"
+import (
+	"bytes"
+	"encoding/json"
+	"fmt"
+)
 
 type BindingType string
 
@@ -12,12 +16,81 @@ const (
 	OTHER     BindingType = "other"
 )
 
-type WebServiceMessage struct {
-	Type string `json:"type"`
+type OrderedMap[T any] struct {
+	Keys    []string
+	Entries map[string]T
 }
 
-type DocumentMessage struct {
-	WebServiceMessage
+// UnmarshalJSON implements json.Unmarshaler interface
+func (om *OrderedMap[T]) UnmarshalJSON(data []byte) error {
+	dec := json.NewDecoder(bytes.NewReader(data))
+
+	// Read opening brace
+	token, err := dec.Token()
+	if err != nil {
+		return err
+	}
+	if delim, ok := token.(json.Delim); !ok || delim != '{' {
+		return fmt.Errorf("expected '{', got %v", token)
+	}
+
+	om.Keys = make([]string, 0)
+	om.Entries = make(map[string]T)
+
+	for dec.More() {
+		// Read key
+		token, err := dec.Token()
+		if err != nil {
+			return err
+		}
+		key := token.(string)
+
+		// Read value
+		var value T
+		if err := dec.Decode(&value); err != nil {
+			return err
+		}
+
+		om.Keys = append(om.Keys, key)
+		om.Entries[key] = value
+	}
+
+	// Read closing brace
+	_, err = dec.Token()
+	return err
+}
+
+// MarshalJSON implements json.Marshaler interface
+func (om *OrderedMap[T]) MarshalJSON() ([]byte, error) {
+	var buf bytes.Buffer
+	buf.WriteString("{")
+
+	for i, key := range om.Keys {
+		if i > 0 {
+			buf.WriteString(",")
+		}
+
+		// Marshal key
+		keyBytes, err := json.Marshal(key)
+		if err != nil {
+			return nil, err
+		}
+		buf.Write(keyBytes)
+		buf.WriteString(":")
+
+		// Marshal value
+		valBytes, err := json.Marshal(om.Entries[key])
+		if err != nil {
+			return nil, err
+		}
+		buf.Write(valBytes)
+	}
+
+	buf.WriteString("}")
+	return buf.Bytes(), nil
+}
+
+type WebServiceMessage struct {
 	SOAPBody    string   `json:"soapBody"`
 	SOAPHeaders []string `json:"soapHeaders,omitempty"`
 }
@@ -41,43 +114,43 @@ type WebServicePort struct {
 }
 
 type WebService struct {
-	Name              string           `json:"name"`
-	TargetNamespace   string           `json:"targetNamespace"`
-	TargetNamespaceId string           `json:"targetNamespaceId"`
-	Ports             []WebServicePort `json:"ports"`
+	Name            string           `json:"name"`
+	TargetNamespace string           `json:"targetNamespace"`
+	TargetPackage   string           `json:"targetPackage"`
+	Ports           []WebServicePort `json:"ports"`
 }
 
 type Components struct {
 	Schemas Schemas `json:"schemas,omitempty"`
 }
 
-type Schemas = map[string]map[string]json.RawMessage
+type Schemas = OrderedMap[OrderedMap[json.RawMessage]]
 
 type License struct {
-	Name       string  `json:"name"`
-	Identifier *string `json:"identifier,omitempty"`
-	URL        *string `json:"url,omitempty"`
+	Name       string `json:"name"`
+	Identifier string `json:"identifier,omitempty"`
+	URL        string `json:"url,omitempty"`
 }
 
 type Contact struct {
-	Name  *string `json:"name,omitempty"`
-	Email *string `json:"email,omitempty"`
-	URL   *string `json:"url,omitempty"`
+	Name  string `json:"name,omitempty"`
+	Email string `json:"email,omitempty"`
+	URL   string `json:"url,omitempty"`
 }
 
 type Info struct {
 	Title          string   `json:"title"`
 	Version        string   `json:"version"`
-	Description    *string  `json:"description,omitempty"`
-	TermsOfService *string  `json:"termsOfService,omitempty"`
+	Description    string   `json:"description,omitempty"`
+	TermsOfService string   `json:"termsOfService,omitempty"`
 	License        *License `json:"license,omitempty"`
 	Contact        *Contact `json:"contact,omitempty"`
 }
 
 type Operation struct {
-	Summary     *string  `json:"summary,omitempty"`
-	Description *string  `json:"description,omitempty"`
-	OperationID *string  `json:"operationId,omitempty"`
+	Summary     string   `json:"summary,omitempty"`
+	Description string   `json:"description,omitempty"`
+	OperationID string   `json:"operationId,omitempty"`
 	Tags        []string `json:"tags,omitempty"`
 }
 
@@ -133,7 +206,7 @@ type Type struct {
 
 type TypeObject struct {
 	Type
-	Properties map[string]json.RawMessage `json:"properties,omitempty"`
+	Properties OrderedMap[json.RawMessage] `json:"properties,omitempty"`
 }
 
 func (t TypeObject) GetType() Type {
