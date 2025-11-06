@@ -8,543 +8,463 @@ import (
 	rs30 "github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/rs30"
 )
 
-type ExternalLinkQueryType struct {
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+type ResponseOption struct {
+	XMLName               xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ResponseOption"`
+	ReturnType            string   `xml:"returnType,attr,omitempty"`
+	ReturnComposedObjects bool     `xml:"returnComposedObjects,attr,omitempty"`
 }
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ExternalLinkQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (ExternalLinkQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend ExternalLinkQueryType
-type IExternalLinkQueryType interface {
-	IsQuery30ExternalLinkQueryType()
-}
-
-// The type itself implements IExternalLinkQueryType
-func (ExternalLinkQueryType) IsQuery30ExternalLinkQueryType() {}
-
-type ServiceBindingQueryType struct {
-	SpecificationLinkQuery  []SpecificationLinkQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationLinkQuery"`
-	TargetBindingQuery      *ServiceBindingQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetBindingQuery,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	ServiceQuery            *ServiceQuery                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceQuery,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ServiceBindingQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (ServiceBindingQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend ServiceBindingQueryType
-type IServiceBindingQueryType interface {
-	IsQuery30ServiceBindingQueryType()
-}
-
-// The type itself implements IServiceBindingQueryType
-func (ServiceBindingQueryType) IsQuery30ServiceBindingQueryType() {}
-
-type SimpleFilterType struct {
-	Negate          bool   `xml:"negate,attr"`
-	DomainAttribute string `xml:"domainAttribute,attr"`
-	Comparator      string `xml:"comparator,attr"`
-	CharData        string `xml:"chardata"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
-func (SimpleFilterType) IsQuery30FilterType() {}
-
-// Interface for types that extend SimpleFilterType
-type ISimpleFilterType interface {
-	IsQuery30SimpleFilterType()
-}
-
-// The type itself implements ISimpleFilterType
-func (SimpleFilterType) IsQuery30SimpleFilterType() {}
-
-type BooleanFilterType struct {
-	Value           bool   `xml:"value,attr"`
-	CharData        string `xml:"chardata"`
-	Negate          bool   `xml:"negate,attr"`
-	DomainAttribute string `xml:"domainAttribute,attr"`
-	Comparator      string `xml:"comparator,attr"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
-func (BooleanFilterType) IsQuery30SimpleFilterType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
-func (BooleanFilterType) IsQuery30FilterType() {}
-
-// Interface for types that extend BooleanFilterType
-type IBooleanFilterType interface {
-	IsQuery30BooleanFilterType()
-}
-
-// The type itself implements IBooleanFilterType
-func (BooleanFilterType) IsQuery30BooleanFilterType() {}
 
 type AdhocQueryRequest struct {
 	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AdhocQueryRequest"`
-	AdhocQuery      rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	Federated       bool                `xml:"federated,attr"`
-	Federation      string              `xml:"federation,attr,omitempty"`
-	StartIndex      int                 `xml:"startIndex,attr"`
-	MaxResults      int                 `xml:"maxResults,attr"`
-	RequestSlotList *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
 	Id              string              `xml:"id,attr,omitempty"`
 	Comment         string              `xml:"comment,attr,omitempty"`
+	Federated       bool                `xml:"federated,attr,omitempty"`
+	Federation      string              `xml:"federation,attr,omitempty"`
+	StartIndex      int                 `xml:"startIndex,attr,omitempty"`
+	MaxResults      int                 `xml:"maxResults,attr,omitempty"`
+	RequestSlotList *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
 	ResponseOption  ResponseOption      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ResponseOption"`
+	AdhocQuery      rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType
 func (AdhocQueryRequest) IsRs30RegistryRequestType() {}
 
+type AdhocQueryResponse struct {
+	XMLName            xml.Name                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AdhocQueryResponse"`
+	Status             rim30.ReferenceURI       `xml:"status,attr"`
+	RequestId          string                   `xml:"requestId,attr,omitempty"`
+	StartIndex         int                      `xml:"startIndex,attr,omitempty"`
+	TotalResultCount   int                      `xml:"totalResultCount,attr,omitempty"`
+	ResponseSlotList   *rim30.SlotListType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
+	RegistryErrorList  *rs30.RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
+	RegistryObjectList rim30.RegistryObjectList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponseType
+func (AdhocQueryResponse) IsRs30RegistryResponseType() {}
+
+type RegistryObjectQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
+type AssociationQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AssociationQuery"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AssociationTypeQuery    *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AssociationTypeQuery,omitempty"`
+	SourceObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceObjectQuery,omitempty"`
+	TargetObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetObjectQuery,omitempty"`
+}
+
+type AuditableEventQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AuditableEventQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AffectedObjectQuery     []RegistryObjectQueryType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AffectedObjectQuery"`
+	EventTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EventTypeQuery,omitempty"`
+	UserQuery               *UserQueryType                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UserQuery,omitempty"`
+}
+
+type ClassificationQuery struct {
+	XMLName                   xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ClassificationSchemeQuery *ClassificationSchemeQuery     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationSchemeQuery,omitempty"`
+	ClassifiedObjectQuery     *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassifiedObjectQuery,omitempty"`
+	ClassificationNodeQuery   *ClassificationNodeQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationNodeQuery,omitempty"`
+}
+
+type ClassificationNodeQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationNodeQuery"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ParentQuery             *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
+	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
+}
+
+type ClassificationSchemeQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationSchemeQuery"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
+	NodeTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NodeTypeQuery,omitempty"`
+}
+
+type ExternalIdentifierQuery struct {
+	XMLName                   xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	RegistryObjectQuery       *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
+	IdentificationSchemeQuery *ClassificationSchemeQueryType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 IdentificationSchemeQuery,omitempty"`
+}
+
+type ExternalLinkQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalLinkQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
 type ExtrinsicObjectQuery struct {
 	XMLName                  xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExtrinsicObjectQuery"`
+	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
 	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	ClassificationQuery      []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
 	ExternalIdentifierQuery  []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
 	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
 	TargetAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
 	ContentVersionInfoFilter *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ContentVersionInfoFilter,omitempty"`
-	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+}
+
+type OrganizationQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 OrganizationQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
+	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
+	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
+	ParentQuery             *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
+	ChildOrganizationQuery  []OrganizationQueryType        `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildOrganizationQuery"`
+	PrimaryContactQuery     *PersonQueryType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryContactQuery,omitempty"`
+}
+
+type RegistryPackageQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryPackageQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
+type ServiceQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ServiceBindingQuery     []ServiceBindingQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery"`
+}
+
+type ServiceBindingQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ServiceQuery            *ServiceQuery                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceQuery,omitempty"`
+	SpecificationLinkQuery  []SpecificationLinkQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationLinkQuery"`
+	TargetBindingQuery      *ServiceBindingQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetBindingQuery,omitempty"`
 }
 
 type SpecificationLinkQuery struct {
 	XMLName                  xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationLinkQuery"`
-	UsageDescriptionBranch   *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UsageDescriptionBranch,omitempty"`
-	ServiceBindingQuery      *ServiceBindingQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery,omitempty"`
-	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	SpecificationObjectQuery *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationObjectQuery,omitempty"`
 	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
 	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	ClassificationQuery      []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
 	ExternalIdentifierQuery  []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
 	TargetAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	UsageDescriptionBranch   *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UsageDescriptionBranch,omitempty"`
+	ServiceBindingQuery      *ServiceBindingQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery,omitempty"`
+	SpecificationObjectQuery *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationObjectQuery,omitempty"`
 }
 
-type QueryExpressionBranchType struct {
-	PrimaryFilter      *FilterType                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	QueryLanguageQuery *ClassificationNodeQueryType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 QueryLanguageQuery,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/BranchType
-func (QueryExpressionBranchType) IsQuery30BranchType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (QueryExpressionBranchType) IsQuery30FilterQueryType() {}
-
-type AuditableEventQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AuditableEventQuery"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	EventTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EventTypeQuery,omitempty"`
-	UserQuery               *UserQueryType                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UserQuery,omitempty"`
+type PersonQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonQuery"`
 	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
 	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	AffectedObjectQuery     []RegistryObjectQueryType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AffectedObjectQuery"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-}
-
-type AuditableEventQueryType struct {
 	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
 	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
 	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	AffectedObjectQuery     []RegistryObjectQueryType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AffectedObjectQuery"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
 	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
 	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
 	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	EventTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EventTypeQuery,omitempty"`
-	UserQuery               *UserQueryType                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UserQuery,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (AuditableEventQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (AuditableEventQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend AuditableEventQueryType
-type IAuditableEventQueryType interface {
-	IsQuery30AuditableEventQueryType()
-}
-
-// The type itself implements IAuditableEventQueryType
-func (AuditableEventQueryType) IsQuery30AuditableEventQueryType() {}
-
-type PersonQueryType struct {
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
-	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
 	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
 	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
+	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
+	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
 }
 
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (PersonQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (PersonQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend PersonQueryType
-type IPersonQueryType interface {
-	IsQuery30PersonQueryType()
-}
-
-// The type itself implements IPersonQueryType
-func (PersonQueryType) IsQuery30PersonQueryType() {}
-
-type AdhocQueryQueryType struct {
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+type UserQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UserQuery"`
 	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	QueryExpressionBranch   *QueryExpressionBranchType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 QueryExpressionBranch,omitempty"`
 	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (AdhocQueryQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (AdhocQueryQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend AdhocQueryQueryType
-type IAdhocQueryQueryType interface {
-	IsQuery30AdhocQueryQueryType()
-}
-
-// The type itself implements IAdhocQueryQueryType
-func (AdhocQueryQueryType) IsQuery30AdhocQueryQueryType() {}
-
-type DateTimeFilterType struct {
-	DomainAttribute string `xml:"domainAttribute,attr"`
-	Comparator      string `xml:"comparator,attr"`
-	Value           string `xml:"value,attr"`
-	CharData        string `xml:"chardata"`
-	Negate          bool   `xml:"negate,attr"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
-func (DateTimeFilterType) IsQuery30SimpleFilterType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
-func (DateTimeFilterType) IsQuery30FilterType() {}
-
-// Interface for types that extend DateTimeFilterType
-type IDateTimeFilterType interface {
-	IsQuery30DateTimeFilterType()
-}
-
-// The type itself implements IDateTimeFilterType
-func (DateTimeFilterType) IsQuery30DateTimeFilterType() {}
-
-type ClassificationNodeQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationNodeQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	ParentQuery             *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
-	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
 	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
 	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
 	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
+	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
+	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
+	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
+}
+
+type RegistryQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
 	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
 	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
 	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	OperatorQuery           *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 OperatorQuery,omitempty"`
+}
+
+type FederationQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 FederationQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
+type AdhocQueryQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AdhocQueryQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	QueryExpressionBranch   *QueryExpressionBranchType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 QueryExpressionBranch,omitempty"`
+}
+
+type NotificationQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NotificationQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	RegistryObjectQuery     *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
+}
+
+type SubscriptionQuery struct {
+	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SubscriptionQuery"`
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	SelectorQuery           *AdhocQueryQueryType           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SelectorQuery,omitempty"`
 }
 
 type Filter struct {
 	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 Filter"`
-	Negate  bool     `xml:"negate,attr"`
+	Negate  bool     `xml:"negate,attr,omitempty"`
+}
+
+type CompoundFilter struct {
+	XMLName         xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 CompoundFilter"`
+	Negate          bool       `xml:"negate,attr,omitempty"`
+	LogicalOperator string     `xml:"logicalOperator,attr"`
+	LeftFilter      FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 LeftFilter"`
+	RightFilter     FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RightFilter"`
 }
 
 type BooleanFilter struct {
 	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 BooleanFilter"`
-	Negate          bool     `xml:"negate,attr"`
+	Negate          bool     `xml:"negate,attr,omitempty"`
 	DomainAttribute string   `xml:"domainAttribute,attr"`
 	Comparator      string   `xml:"comparator,attr"`
 	Value           bool     `xml:"value,attr"`
 	CharData        string   `xml:"chardata"`
 }
 
-type OrganizationQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 OrganizationQuery"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ParentQuery             *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
-	ChildOrganizationQuery  []OrganizationQueryType        `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildOrganizationQuery"`
-	PrimaryContactQuery     *PersonQueryType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryContactQuery,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
-}
-
-type ClassificationSchemeQueryType struct {
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
-	NodeTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NodeTypeQuery,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ClassificationSchemeQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// Interface for types that extend ClassificationSchemeQueryType
-type IClassificationSchemeQueryType interface {
-	IsQuery30ClassificationSchemeQueryType()
-}
-
-// The type itself implements IClassificationSchemeQueryType
-func (ClassificationSchemeQueryType) IsQuery30ClassificationSchemeQueryType() {}
-
-type SubscriptionQueryType struct {
-	SelectorQuery           *AdhocQueryQueryType           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SelectorQuery,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (SubscriptionQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (SubscriptionQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend SubscriptionQueryType
-type ISubscriptionQueryType interface {
-	IsQuery30SubscriptionQueryType()
-}
-
-// The type itself implements ISubscriptionQueryType
-func (SubscriptionQueryType) IsQuery30SubscriptionQueryType() {}
-
-type ClassificationSchemeQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationSchemeQuery"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
-	NodeTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NodeTypeQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-}
-
-type RegistryPackageQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryPackageQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-}
-
-type ServiceBindingQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery"`
-	ServiceQuery            *ServiceQuery                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceQuery,omitempty"`
-	SpecificationLinkQuery  []SpecificationLinkQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationLinkQuery"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetBindingQuery      *ServiceBindingQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetBindingQuery,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-}
-
-type StringFilter struct {
-	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StringFilter"`
-	Comparator      string   `xml:"comparator,attr"`
-	Value           string   `xml:"value,attr"`
-	CharData        string   `xml:"chardata"`
-	Negate          bool     `xml:"negate,attr"`
+type IntegerFilter struct {
+	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 IntegerFilter"`
+	Negate          bool     `xml:"negate,attr,omitempty"`
 	DomainAttribute string   `xml:"domainAttribute,attr"`
+	Comparator      string   `xml:"comparator,attr"`
+	Value           int      `xml:"value,attr"`
+	CharData        string   `xml:"chardata"`
 }
 
-type ExtrinsicObjectQueryType struct {
-	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery      []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery  []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	TargetAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	ContentVersionInfoFilter *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ContentVersionInfoFilter,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ExtrinsicObjectQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (ExtrinsicObjectQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend ExtrinsicObjectQueryType
-type IExtrinsicObjectQueryType interface {
-	IsQuery30ExtrinsicObjectQueryType()
-}
-
-// The type itself implements IExtrinsicObjectQueryType
-func (ExtrinsicObjectQueryType) IsQuery30ExtrinsicObjectQueryType() {}
-
-type RegistryObjectQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+type FloatFilter struct {
+	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 FloatFilter"`
+	Negate          bool     `xml:"negate,attr,omitempty"`
+	DomainAttribute string   `xml:"domainAttribute,attr"`
+	Comparator      string   `xml:"comparator,attr"`
+	Value           float64  `xml:"value,attr"`
+	CharData        string   `xml:"chardata"`
 }
 
 type DateTimeFilter struct {
 	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DateTimeFilter"`
-	CharData        string   `xml:"chardata"`
-	Negate          bool     `xml:"negate,attr"`
+	Negate          bool     `xml:"negate,attr,omitempty"`
 	DomainAttribute string   `xml:"domainAttribute,attr"`
 	Comparator      string   `xml:"comparator,attr"`
 	Value           string   `xml:"value,attr"`
+	CharData        string   `xml:"chardata"`
 }
 
-type NotificationQueryType struct {
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	RegistryObjectQuery     *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+type StringFilter struct {
+	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StringFilter"`
+	Negate          bool     `xml:"negate,attr,omitempty"`
+	DomainAttribute string   `xml:"domainAttribute,attr"`
+	Comparator      string   `xml:"comparator,attr"`
+	Value           string   `xml:"value,attr"`
+	CharData        string   `xml:"chardata"`
 }
 
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (NotificationQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (NotificationQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend NotificationQueryType
-type INotificationQueryType interface {
-	IsQuery30NotificationQueryType()
+type ResponseOptionType struct {
+	ReturnType            string `xml:"returnType,attr,omitempty"`
+	ReturnComposedObjects bool   `xml:"returnComposedObjects,attr,omitempty"`
 }
 
-// The type itself implements INotificationQueryType
-func (NotificationQueryType) IsQuery30NotificationQueryType() {}
+// Interface for types that extend ResponseOptionType
+type IResponseOptionType interface {
+	IsQuery30ResponseOptionType()
+}
+
+// The type itself implements IResponseOptionType
+func (ResponseOptionType) IsQuery30ResponseOptionType() {}
 
 type FilterQueryType struct {
 	PrimaryFilter *FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
@@ -557,466 +477,6 @@ type IFilterQueryType interface {
 
 // The type itself implements IFilterQueryType
 func (FilterQueryType) IsQuery30FilterQueryType() {}
-
-type SlotBranchType struct {
-	PrimaryFilter *FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/BranchType
-func (SlotBranchType) IsQuery30BranchType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (SlotBranchType) IsQuery30FilterQueryType() {}
-
-type RegistryObjectQueryType struct {
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (RegistryObjectQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend RegistryObjectQueryType
-type IRegistryObjectQueryType interface {
-	IsQuery30RegistryObjectQueryType()
-}
-
-// The type itself implements IRegistryObjectQueryType
-func (RegistryObjectQueryType) IsQuery30RegistryObjectQueryType() {}
-
-type CompoundFilterType struct {
-	Negate          bool       `xml:"negate,attr"`
-	LogicalOperator string     `xml:"logicalOperator,attr"`
-	LeftFilter      FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 LeftFilter"`
-	RightFilter     FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RightFilter"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
-func (CompoundFilterType) IsQuery30FilterType() {}
-
-// Interface for types that extend CompoundFilterType
-type ICompoundFilterType interface {
-	IsQuery30CompoundFilterType()
-}
-
-// The type itself implements ICompoundFilterType
-func (CompoundFilterType) IsQuery30CompoundFilterType() {}
-
-type IntegerFilterType struct {
-	Negate          bool   `xml:"negate,attr"`
-	DomainAttribute string `xml:"domainAttribute,attr"`
-	Comparator      string `xml:"comparator,attr"`
-	Value           int    `xml:"value,attr"`
-	CharData        string `xml:"chardata"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
-func (IntegerFilterType) IsQuery30SimpleFilterType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
-func (IntegerFilterType) IsQuery30FilterType() {}
-
-// Interface for types that extend IntegerFilterType
-type IIntegerFilterType interface {
-	IsQuery30IntegerFilterType()
-}
-
-// The type itself implements IIntegerFilterType
-func (IntegerFilterType) IsQuery30IntegerFilterType() {}
-
-type FederationQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 FederationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-}
-
-type FloatFilter struct {
-	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 FloatFilter"`
-	Value           float64  `xml:"value,attr"`
-	CharData        string   `xml:"chardata"`
-	Negate          bool     `xml:"negate,attr"`
-	DomainAttribute string   `xml:"domainAttribute,attr"`
-	Comparator      string   `xml:"comparator,attr"`
-}
-
-type ResponseOptionType struct {
-	ReturnType            string `xml:"returnType,attr,omitempty"`
-	ReturnComposedObjects bool   `xml:"returnComposedObjects,attr"`
-}
-
-// Interface for types that extend ResponseOptionType
-type IResponseOptionType interface {
-	IsQuery30ResponseOptionType()
-}
-
-// The type itself implements IResponseOptionType
-func (ResponseOptionType) IsQuery30ResponseOptionType() {}
-
-type OrganizationQueryType struct {
-	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
-	ParentQuery             *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
-	ChildOrganizationQuery  []OrganizationQueryType        `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildOrganizationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryContactQuery     *PersonQueryType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryContactQuery,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (OrganizationQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (OrganizationQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend OrganizationQueryType
-type IOrganizationQueryType interface {
-	IsQuery30OrganizationQueryType()
-}
-
-// The type itself implements IOrganizationQueryType
-func (OrganizationQueryType) IsQuery30OrganizationQueryType() {}
-
-type RegistryPackageQueryType struct {
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (RegistryPackageQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (RegistryPackageQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend RegistryPackageQueryType
-type IRegistryPackageQueryType interface {
-	IsQuery30RegistryPackageQueryType()
-}
-
-// The type itself implements IRegistryPackageQueryType
-func (RegistryPackageQueryType) IsQuery30RegistryPackageQueryType() {}
-
-type IntegerFilter struct {
-	XMLName         xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 IntegerFilter"`
-	Negate          bool     `xml:"negate,attr"`
-	DomainAttribute string   `xml:"domainAttribute,attr"`
-	Comparator      string   `xml:"comparator,attr"`
-	Value           int      `xml:"value,attr"`
-	CharData        string   `xml:"chardata"`
-}
-
-type ExternalLinkQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalLinkQuery"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-}
-
-type AdhocQueryQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AdhocQueryQuery"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	QueryExpressionBranch   *QueryExpressionBranchType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 QueryExpressionBranch,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-}
-
-type ResponseOption struct {
-	XMLName               xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ResponseOption"`
-	ReturnComposedObjects bool     `xml:"returnComposedObjects,attr"`
-	ReturnType            string   `xml:"returnType,attr,omitempty"`
-}
-
-type ServiceQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceQuery"`
-	ServiceBindingQuery     []ServiceBindingQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-}
-
-type NotificationQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NotificationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	RegistryObjectQuery     *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-}
-
-type ClassificationQueryType struct {
-	ClassificationSchemeQuery *ClassificationSchemeQuery     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationSchemeQuery,omitempty"`
-	ClassificationNodeQuery   *ClassificationNodeQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationNodeQuery,omitempty"`
-	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	ClassifiedObjectQuery     *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassifiedObjectQuery,omitempty"`
-	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ClassificationQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// Interface for types that extend ClassificationQueryType
-type IClassificationQueryType interface {
-	IsQuery30ClassificationQueryType()
-}
-
-// The type itself implements IClassificationQueryType
-func (ClassificationQueryType) IsQuery30ClassificationQueryType() {}
-
-type UserQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UserQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
-	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-}
-
-type AssociationQueryType struct {
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	AssociationTypeQuery    *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AssociationTypeQuery,omitempty"`
-	SourceObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceObjectQuery,omitempty"`
-	TargetObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetObjectQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (AssociationQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// Interface for types that extend AssociationQueryType
-type IAssociationQueryType interface {
-	IsQuery30AssociationQueryType()
-}
-
-// The type itself implements IAssociationQueryType
-func (AssociationQueryType) IsQuery30AssociationQueryType() {}
-
-type SpecificationLinkQueryType struct {
-	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	ClassificationQuery      []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery  []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	UsageDescriptionBranch   *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UsageDescriptionBranch,omitempty"`
-	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	ServiceBindingQuery      *ServiceBindingQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery,omitempty"`
-	SpecificationObjectQuery *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationObjectQuery,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (SpecificationLinkQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (SpecificationLinkQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend SpecificationLinkQueryType
-type ISpecificationLinkQueryType interface {
-	IsQuery30SpecificationLinkQueryType()
-}
-
-// The type itself implements ISpecificationLinkQueryType
-func (SpecificationLinkQueryType) IsQuery30SpecificationLinkQueryType() {}
-
-type UserQueryType struct {
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
-	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/PersonQueryType
-func (UserQueryType) IsQuery30PersonQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (UserQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (UserQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend UserQueryType
-type IUserQueryType interface {
-	IsQuery30UserQueryType()
-}
-
-// The type itself implements IUserQueryType
-func (UserQueryType) IsQuery30UserQueryType() {}
-
-type FederationQueryType struct {
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (FederationQueryType) IsQuery30RegistryObjectQueryType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
-func (FederationQueryType) IsQuery30FilterQueryType() {}
-
-// Interface for types that extend FederationQueryType
-type IFederationQueryType interface {
-	IsQuery30FederationQueryType()
-}
-
-// The type itself implements IFederationQueryType
-func (FederationQueryType) IsQuery30FederationQueryType() {}
-
-type AdhocQueryResponse struct {
-	XMLName            xml.Name                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AdhocQueryResponse"`
-	Status             rim30.ReferenceURI       `xml:"status,attr"`
-	RequestId          string                   `xml:"requestId,attr,omitempty"`
-	StartIndex         int                      `xml:"startIndex,attr"`
-	TotalResultCount   int                      `xml:"totalResultCount,attr"`
-	ResponseSlotList   *rim30.SlotListType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
-	RegistryErrorList  *rs30.RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
-	RegistryObjectList rim30.RegistryObjectList `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryResponseType
-func (AdhocQueryResponse) IsRs30RegistryResponseType() {}
-
-type PersonQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonQuery"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
-	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-}
-
-type CompoundFilter struct {
-	XMLName         xml.Name   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 CompoundFilter"`
-	LogicalOperator string     `xml:"logicalOperator,attr"`
-	LeftFilter      FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 LeftFilter"`
-	RightFilter     FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RightFilter"`
-	Negate          bool       `xml:"negate,attr"`
-}
 
 type BranchType struct {
 	PrimaryFilter *FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
@@ -1044,19 +504,336 @@ func (InternationalStringBranchType) IsQuery30BranchType() {}
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
 func (InternationalStringBranchType) IsQuery30FilterQueryType() {}
 
-type ServiceQueryType struct {
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	ServiceBindingQuery     []ServiceBindingQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+type SlotBranchType struct {
+	PrimaryFilter *FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/BranchType
+func (SlotBranchType) IsQuery30BranchType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (SlotBranchType) IsQuery30FilterQueryType() {}
+
+type RegistryObjectQueryType struct {
 	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
 	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (RegistryObjectQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend RegistryObjectQueryType
+type IRegistryObjectQueryType interface {
+	IsQuery30RegistryObjectQueryType()
+}
+
+// The type itself implements IRegistryObjectQueryType
+func (RegistryObjectQueryType) IsQuery30RegistryObjectQueryType() {}
+
+type AssociationQueryType struct {
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AssociationTypeQuery    *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AssociationTypeQuery,omitempty"`
+	SourceObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceObjectQuery,omitempty"`
+	TargetObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetObjectQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (AssociationQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// Interface for types that extend AssociationQueryType
+type IAssociationQueryType interface {
+	IsQuery30AssociationQueryType()
+}
+
+// The type itself implements IAssociationQueryType
+func (AssociationQueryType) IsQuery30AssociationQueryType() {}
+
+type AuditableEventQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AffectedObjectQuery     []RegistryObjectQueryType      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AffectedObjectQuery"`
+	EventTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EventTypeQuery,omitempty"`
+	UserQuery               *UserQueryType                 `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UserQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (AuditableEventQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (AuditableEventQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend AuditableEventQueryType
+type IAuditableEventQueryType interface {
+	IsQuery30AuditableEventQueryType()
+}
+
+// The type itself implements IAuditableEventQueryType
+func (AuditableEventQueryType) IsQuery30AuditableEventQueryType() {}
+
+type ClassificationQueryType struct {
+	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ClassificationSchemeQuery *ClassificationSchemeQuery     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationSchemeQuery,omitempty"`
+	ClassifiedObjectQuery     *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassifiedObjectQuery,omitempty"`
+	ClassificationNodeQuery   *ClassificationNodeQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationNodeQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (ClassificationQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// Interface for types that extend ClassificationQueryType
+type IClassificationQueryType interface {
+	IsQuery30ClassificationQueryType()
+}
+
+// The type itself implements IClassificationQueryType
+func (ClassificationQueryType) IsQuery30ClassificationQueryType() {}
+
+type ClassificationNodeQueryType struct {
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ParentQuery             *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
+	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (ClassificationNodeQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// Interface for types that extend ClassificationNodeQueryType
+type IClassificationNodeQueryType interface {
+	IsQuery30ClassificationNodeQueryType()
+}
+
+// The type itself implements IClassificationNodeQueryType
+func (ClassificationNodeQueryType) IsQuery30ClassificationNodeQueryType() {}
+
+type ClassificationSchemeQueryType struct {
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
+	NodeTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NodeTypeQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (ClassificationSchemeQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// Interface for types that extend ClassificationSchemeQueryType
+type IClassificationSchemeQueryType interface {
+	IsQuery30ClassificationSchemeQueryType()
+}
+
+// The type itself implements IClassificationSchemeQueryType
+func (ClassificationSchemeQueryType) IsQuery30ClassificationSchemeQueryType() {}
+
+type ExternalIdentifierQueryType struct {
+	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	RegistryObjectQuery       *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
+	IdentificationSchemeQuery *ClassificationSchemeQueryType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 IdentificationSchemeQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (ExternalIdentifierQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// Interface for types that extend ExternalIdentifierQueryType
+type IExternalIdentifierQueryType interface {
+	IsQuery30ExternalIdentifierQueryType()
+}
+
+// The type itself implements IExternalIdentifierQueryType
+func (ExternalIdentifierQueryType) IsQuery30ExternalIdentifierQueryType() {}
+
+type ExternalLinkQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (ExternalLinkQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (ExternalLinkQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend ExternalLinkQueryType
+type IExternalLinkQueryType interface {
+	IsQuery30ExternalLinkQueryType()
+}
+
+// The type itself implements IExternalLinkQueryType
+func (ExternalLinkQueryType) IsQuery30ExternalLinkQueryType() {}
+
+type ExtrinsicObjectQueryType struct {
+	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery      []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery  []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ContentVersionInfoFilter *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ContentVersionInfoFilter,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (ExtrinsicObjectQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (ExtrinsicObjectQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend ExtrinsicObjectQueryType
+type IExtrinsicObjectQueryType interface {
+	IsQuery30ExtrinsicObjectQueryType()
+}
+
+// The type itself implements IExtrinsicObjectQueryType
+func (ExtrinsicObjectQueryType) IsQuery30ExtrinsicObjectQueryType() {}
+
+type OrganizationQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
+	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
+	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
+	ParentQuery             *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
+	ChildOrganizationQuery  []OrganizationQueryType        `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildOrganizationQuery"`
+	PrimaryContactQuery     *PersonQueryType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryContactQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (OrganizationQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (OrganizationQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend OrganizationQueryType
+type IOrganizationQueryType interface {
+	IsQuery30OrganizationQueryType()
+}
+
+// The type itself implements IOrganizationQueryType
+func (OrganizationQueryType) IsQuery30OrganizationQueryType() {}
+
+type RegistryPackageQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (RegistryPackageQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (RegistryPackageQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend RegistryPackageQueryType
+type IRegistryPackageQueryType interface {
+	IsQuery30RegistryPackageQueryType()
+}
+
+// The type itself implements IRegistryPackageQueryType
+func (RegistryPackageQueryType) IsQuery30RegistryPackageQueryType() {}
+
+type ServiceQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	ServiceBindingQuery     []ServiceBindingQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
@@ -1073,83 +850,148 @@ type IServiceQueryType interface {
 // The type itself implements IServiceQueryType
 func (ServiceQueryType) IsQuery30ServiceQueryType() {}
 
-type StringFilterType struct {
-	DomainAttribute string `xml:"domainAttribute,attr"`
-	Comparator      string `xml:"comparator,attr"`
-	Value           string `xml:"value,attr"`
-	CharData        string `xml:"chardata"`
-	Negate          bool   `xml:"negate,attr"`
-}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
-func (StringFilterType) IsQuery30SimpleFilterType() {}
-
-// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
-func (StringFilterType) IsQuery30FilterType() {}
-
-// Interface for types that extend StringFilterType
-type IStringFilterType interface {
-	IsQuery30StringFilterType()
-}
-
-// The type itself implements IStringFilterType
-func (StringFilterType) IsQuery30StringFilterType() {}
-
-type SubscriptionQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SubscriptionQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	SelectorQuery           *AdhocQueryQueryType           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SelectorQuery,omitempty"`
+type ServiceBindingQueryType struct {
 	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
 	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
 	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
 	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-}
-
-type ClassificationNodeQueryType struct {
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
 	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
 	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
 	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
 	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
 	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	ParentQuery             *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ParentQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ChildrenQuery           []ClassificationNodeQueryType  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ChildrenQuery"`
+	ServiceQuery            *ServiceQuery                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceQuery,omitempty"`
+	SpecificationLinkQuery  []SpecificationLinkQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationLinkQuery"`
+	TargetBindingQuery      *ServiceBindingQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetBindingQuery,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ClassificationNodeQueryType) IsQuery30RegistryObjectQueryType() {}
+func (ServiceBindingQueryType) IsQuery30RegistryObjectQueryType() {}
 
-// Interface for types that extend ClassificationNodeQueryType
-type IClassificationNodeQueryType interface {
-	IsQuery30ClassificationNodeQueryType()
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (ServiceBindingQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend ServiceBindingQueryType
+type IServiceBindingQueryType interface {
+	IsQuery30ServiceBindingQueryType()
 }
 
-// The type itself implements IClassificationNodeQueryType
-func (ClassificationNodeQueryType) IsQuery30ClassificationNodeQueryType() {}
+// The type itself implements IServiceBindingQueryType
+func (ServiceBindingQueryType) IsQuery30ServiceBindingQueryType() {}
 
-type RegistryQueryType struct {
+type SpecificationLinkQueryType struct {
+	PrimaryFilter            *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch               []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch               *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch        *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery      []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery  []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery          *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery              *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery   []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	UsageDescriptionBranch   *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 UsageDescriptionBranch,omitempty"`
+	ServiceBindingQuery      *ServiceBindingQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ServiceBindingQuery,omitempty"`
+	SpecificationObjectQuery *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SpecificationObjectQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (SpecificationLinkQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (SpecificationLinkQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend SpecificationLinkQueryType
+type ISpecificationLinkQueryType interface {
+	IsQuery30SpecificationLinkQueryType()
+}
+
+// The type itself implements ISpecificationLinkQueryType
+func (SpecificationLinkQueryType) IsQuery30SpecificationLinkQueryType() {}
+
+type PersonQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
 	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
 	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
 	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	OperatorQuery           *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 OperatorQuery,omitempty"`
 	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
 	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
 	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
 	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
 	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
+	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
+	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
+	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (PersonQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (PersonQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend PersonQueryType
+type IPersonQueryType interface {
+	IsQuery30PersonQueryType()
+}
+
+// The type itself implements IPersonQueryType
+func (PersonQueryType) IsQuery30PersonQueryType() {}
+
+type UserQueryType struct {
 	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	AddressFilter           []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AddressFilter"`
+	PersonNameFilter        *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PersonNameFilter,omitempty"`
+	TelephoneNumberFilter   []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TelephoneNumberFilter"`
+	EmailAddressFilter      []FilterType                   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 EmailAddressFilter"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/PersonQueryType
+func (UserQueryType) IsQuery30PersonQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (UserQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (UserQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend UserQueryType
+type IUserQueryType interface {
+	IsQuery30UserQueryType()
+}
+
+// The type itself implements IUserQueryType
+func (UserQueryType) IsQuery30UserQueryType() {}
+
+type RegistryQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	OperatorQuery           *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 OperatorQuery,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
@@ -1166,68 +1008,134 @@ type IRegistryQueryType interface {
 // The type itself implements IRegistryQueryType
 func (RegistryQueryType) IsQuery30RegistryQueryType() {}
 
-type AssociationQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AssociationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	SourceObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceObjectQuery,omitempty"`
-	TargetObjectQuery       *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetObjectQuery,omitempty"`
+type FederationQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
 	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
 	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
 	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
 	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	AssociationTypeQuery    *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 AssociationTypeQuery,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-}
-
-type ClassificationQuery struct {
-	XMLName                   xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	ClassifiedObjectQuery     *RegistryObjectQueryType       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassifiedObjectQuery,omitempty"`
-	ClassificationNodeQuery   *ClassificationNodeQuery       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationNodeQuery,omitempty"`
-	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	ClassificationSchemeQuery *ClassificationSchemeQuery     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationSchemeQuery,omitempty"`
-	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-}
-
-type ExternalIdentifierQueryType struct {
-	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	RegistryObjectQuery       *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
-	IdentificationSchemeQuery *ClassificationSchemeQueryType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 IdentificationSchemeQuery,omitempty"`
-	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
-func (ExternalIdentifierQueryType) IsQuery30RegistryObjectQueryType() {}
+func (FederationQueryType) IsQuery30RegistryObjectQueryType() {}
 
-// Interface for types that extend ExternalIdentifierQueryType
-type IExternalIdentifierQueryType interface {
-	IsQuery30ExternalIdentifierQueryType()
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (FederationQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend FederationQueryType
+type IFederationQueryType interface {
+	IsQuery30FederationQueryType()
 }
 
-// The type itself implements IExternalIdentifierQueryType
-func (ExternalIdentifierQueryType) IsQuery30ExternalIdentifierQueryType() {}
+// The type itself implements IFederationQueryType
+func (FederationQueryType) IsQuery30FederationQueryType() {}
+
+type AdhocQueryQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	QueryExpressionBranch   *QueryExpressionBranchType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 QueryExpressionBranch,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (AdhocQueryQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (AdhocQueryQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend AdhocQueryQueryType
+type IAdhocQueryQueryType interface {
+	IsQuery30AdhocQueryQueryType()
+}
+
+// The type itself implements IAdhocQueryQueryType
+func (AdhocQueryQueryType) IsQuery30AdhocQueryQueryType() {}
+
+type QueryExpressionBranchType struct {
+	PrimaryFilter      *FilterType                  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	QueryLanguageQuery *ClassificationNodeQueryType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 QueryLanguageQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/BranchType
+func (QueryExpressionBranchType) IsQuery30BranchType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (QueryExpressionBranchType) IsQuery30FilterQueryType() {}
+
+type NotificationQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	RegistryObjectQuery     *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (NotificationQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (NotificationQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend NotificationQueryType
+type INotificationQueryType interface {
+	IsQuery30NotificationQueryType()
+}
+
+// The type itself implements INotificationQueryType
+func (NotificationQueryType) IsQuery30NotificationQueryType() {}
+
+type SubscriptionQueryType struct {
+	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
+	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
+	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
+	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
+	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
+	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
+	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
+	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
+	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
+	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
+	SelectorQuery           *AdhocQueryQueryType           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SelectorQuery,omitempty"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/RegistryObjectQueryType
+func (SubscriptionQueryType) IsQuery30RegistryObjectQueryType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterQueryType
+func (SubscriptionQueryType) IsQuery30FilterQueryType() {}
+
+// Interface for types that extend SubscriptionQueryType
+type ISubscriptionQueryType interface {
+	IsQuery30SubscriptionQueryType()
+}
+
+// The type itself implements ISubscriptionQueryType
+func (SubscriptionQueryType) IsQuery30SubscriptionQueryType() {}
 
 type FilterType struct {
-	Negate bool `xml:"negate,attr"`
+	Negate bool `xml:"negate,attr,omitempty"`
 }
 
 // Interface for types that extend FilterType
@@ -1238,12 +1146,92 @@ type IFilterType interface {
 // The type itself implements IFilterType
 func (FilterType) IsQuery30FilterType() {}
 
+type CompoundFilterType struct {
+	Negate          bool       `xml:"negate,attr,omitempty"`
+	LogicalOperator string     `xml:"logicalOperator,attr"`
+	LeftFilter      FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 LeftFilter"`
+	RightFilter     FilterType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RightFilter"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
+func (CompoundFilterType) IsQuery30FilterType() {}
+
+// Interface for types that extend CompoundFilterType
+type ICompoundFilterType interface {
+	IsQuery30CompoundFilterType()
+}
+
+// The type itself implements ICompoundFilterType
+func (CompoundFilterType) IsQuery30CompoundFilterType() {}
+
+type SimpleFilterType struct {
+	Negate          bool   `xml:"negate,attr,omitempty"`
+	DomainAttribute string `xml:"domainAttribute,attr"`
+	Comparator      string `xml:"comparator,attr"`
+	CharData        string `xml:"chardata"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
+func (SimpleFilterType) IsQuery30FilterType() {}
+
+// Interface for types that extend SimpleFilterType
+type ISimpleFilterType interface {
+	IsQuery30SimpleFilterType()
+}
+
+// The type itself implements ISimpleFilterType
+func (SimpleFilterType) IsQuery30SimpleFilterType() {}
+
+type BooleanFilterType struct {
+	Negate          bool   `xml:"negate,attr,omitempty"`
+	DomainAttribute string `xml:"domainAttribute,attr"`
+	Comparator      string `xml:"comparator,attr"`
+	Value           bool   `xml:"value,attr"`
+	CharData        string `xml:"chardata"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
+func (BooleanFilterType) IsQuery30SimpleFilterType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
+func (BooleanFilterType) IsQuery30FilterType() {}
+
+// Interface for types that extend BooleanFilterType
+type IBooleanFilterType interface {
+	IsQuery30BooleanFilterType()
+}
+
+// The type itself implements IBooleanFilterType
+func (BooleanFilterType) IsQuery30BooleanFilterType() {}
+
+type IntegerFilterType struct {
+	Negate          bool   `xml:"negate,attr,omitempty"`
+	DomainAttribute string `xml:"domainAttribute,attr"`
+	Comparator      string `xml:"comparator,attr"`
+	Value           int    `xml:"value,attr"`
+	CharData        string `xml:"chardata"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
+func (IntegerFilterType) IsQuery30SimpleFilterType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
+func (IntegerFilterType) IsQuery30FilterType() {}
+
+// Interface for types that extend IntegerFilterType
+type IIntegerFilterType interface {
+	IsQuery30IntegerFilterType()
+}
+
+// The type itself implements IIntegerFilterType
+func (IntegerFilterType) IsQuery30IntegerFilterType() {}
+
 type FloatFilterType struct {
+	Negate          bool    `xml:"negate,attr,omitempty"`
+	DomainAttribute string  `xml:"domainAttribute,attr"`
 	Comparator      string  `xml:"comparator,attr"`
 	Value           float64 `xml:"value,attr"`
 	CharData        string  `xml:"chardata"`
-	Negate          bool    `xml:"negate,attr"`
-	DomainAttribute string  `xml:"domainAttribute,attr"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
@@ -1260,34 +1248,46 @@ type IFloatFilterType interface {
 // The type itself implements IFloatFilterType
 func (FloatFilterType) IsQuery30FloatFilterType() {}
 
-type ExternalIdentifierQuery struct {
-	XMLName                   xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	DescriptionBranch         *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	VersionInfoFilter         *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery       []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	StatusQuery               *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	SourceAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	TargetAssociationQuery    []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	RegistryObjectQuery       *RegistryObjectQuery           `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryObjectQuery,omitempty"`
-	SlotBranch                []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
-	NameBranch                *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	ExternalIdentifierQuery   []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	ObjectTypeQuery           *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	IdentificationSchemeQuery *ClassificationSchemeQueryType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 IdentificationSchemeQuery,omitempty"`
+type DateTimeFilterType struct {
+	Negate          bool   `xml:"negate,attr,omitempty"`
+	DomainAttribute string `xml:"domainAttribute,attr"`
+	Comparator      string `xml:"comparator,attr"`
+	Value           string `xml:"value,attr"`
+	CharData        string `xml:"chardata"`
 }
 
-type RegistryQuery struct {
-	XMLName                 xml.Name                       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 RegistryQuery"`
-	NameBranch              *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 NameBranch,omitempty"`
-	DescriptionBranch       *InternationalStringBranchType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 DescriptionBranch,omitempty"`
-	ObjectTypeQuery         *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ObjectTypeQuery,omitempty"`
-	SourceAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SourceAssociationQuery"`
-	VersionInfoFilter       *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 VersionInfoFilter,omitempty"`
-	ClassificationQuery     []ClassificationQuery          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ClassificationQuery"`
-	ExternalIdentifierQuery []ExternalIdentifierQuery      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 ExternalIdentifierQuery"`
-	StatusQuery             *ClassificationNodeQueryType   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 StatusQuery,omitempty"`
-	TargetAssociationQuery  []AssociationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 TargetAssociationQuery"`
-	OperatorQuery           *OrganizationQueryType         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 OperatorQuery,omitempty"`
-	PrimaryFilter           *FilterType                    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 PrimaryFilter,omitempty"`
-	SlotBranch              []SlotBranchType               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0 SlotBranch"`
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
+func (DateTimeFilterType) IsQuery30SimpleFilterType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
+func (DateTimeFilterType) IsQuery30FilterType() {}
+
+// Interface for types that extend DateTimeFilterType
+type IDateTimeFilterType interface {
+	IsQuery30DateTimeFilterType()
 }
+
+// The type itself implements IDateTimeFilterType
+func (DateTimeFilterType) IsQuery30DateTimeFilterType() {}
+
+type StringFilterType struct {
+	Negate          bool   `xml:"negate,attr,omitempty"`
+	DomainAttribute string `xml:"domainAttribute,attr"`
+	Comparator      string `xml:"comparator,attr"`
+	Value           string `xml:"value,attr"`
+	CharData        string `xml:"chardata"`
+}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/SimpleFilterType
+func (StringFilterType) IsQuery30SimpleFilterType() {}
+
+// extends #/components/schemas/oasis.names.tc.ebxmlregrep.query30/FilterType
+func (StringFilterType) IsQuery30FilterType() {}
+
+// Interface for types that extend StringFilterType
+type IStringFilterType interface {
+	IsQuery30StringFilterType()
+}
+
+// The type itself implements IStringFilterType
+func (StringFilterType) IsQuery30StringFilterType() {}

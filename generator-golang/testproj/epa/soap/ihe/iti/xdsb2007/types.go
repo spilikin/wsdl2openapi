@@ -24,13 +24,13 @@ type RetrieveDocumentSetResponse struct {
 	RegistryResponse rs30.RegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	DocumentResponse []struct {
 		XMLName               xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
+		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
+		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId      rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
 		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
 		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
 		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
-		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
-		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
 }
 
@@ -62,17 +62,17 @@ type IRetrieveDocumentSetRequestType interface {
 func (RetrieveDocumentSetRequestType) IsXdsb2007RetrieveDocumentSetRequestType() {}
 
 type RetrieveDocumentSetResponseType struct {
+	RegistryResponse rs30.RegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	DocumentResponse []struct {
 		XMLName               xml.Name        `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
-		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
-		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
-		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
 		HomeCommunityId       *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 HomeCommunityId,omitempty"`
 		RepositoryUniqueId    rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 RepositoryUniqueId"`
 		DocumentUniqueId      rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 DocumentUniqueId"`
 		NewRepositoryUniqueId *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewRepositoryUniqueId,omitempty"`
+		NewDocumentUniqueId   *rim30.LongName `xml:"urn:ihe:iti:xds-b:2007 NewDocumentUniqueId,omitempty"`
+		MimeType              rim30.LongName  `xml:"urn:ihe:iti:xds-b:2007 mimeType"`
+		Document              string          `xml:"urn:ihe:iti:xds-b:2007 Document"`
 	} `xml:"urn:ihe:iti:xds-b:2007 DocumentResponse"`
-	RegistryResponse rs30.RegistryResponse `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 }
 
 // Interface for types that extend RetrieveDocumentSetResponseType
@@ -84,12 +84,12 @@ type IRetrieveDocumentSetResponseType interface {
 func (RetrieveDocumentSetResponseType) IsXdsb2007RetrieveDocumentSetResponseType() {}
 
 type ProvideAndRegisterDocumentSetRequestType struct {
-	Document []struct {
+	SubmitObjectsRequest lcm30.SubmitObjectsRequest `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
+	Document             []struct {
 		XMLName  xml.Name `xml:"urn:ihe:iti:xds-b:2007 Document"`
 		Id       string   `xml:"id,attr"`
 		CharData string   `xml:"chardata"`
 	} `xml:"urn:ihe:iti:xds-b:2007 Document"`
-	SubmitObjectsRequest lcm30.SubmitObjectsRequest `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SubmitObjectsRequest"`
 }
 
 // Interface for types that extend ProvideAndRegisterDocumentSetRequestType

@@ -6,8 +6,8 @@ import "encoding/xml"
 
 type HeaderContent struct {
 	XMLName                       xml.Name                          `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 headerContent"`
-	HealthProfessionalInformation HealthProfessionalInformationType `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthProfessionalInformation"`
 	AccessCode                    AccessCodeType                    `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 accessCode"`
+	HealthProfessionalInformation HealthProfessionalInformationType `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthProfessionalInformation"`
 }
 
 type AccessCode string
@@ -15,16 +15,16 @@ type AccessCode string
 type AccessCodeType string
 
 type HealthProfessionalInformationType struct {
-	HealthcareFacilityType struct {
-		XMLName xml.Name `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthcareFacilityType"`
-		System  string   `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 system"`
-		Code    string   `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 code"`
-	} `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthcareFacilityType"`
-	LeiName                string `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 leiName"`
 	HealthProfessionalName string `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthProfessionalName"`
 	HealthProfessionalRole struct {
 		XMLName xml.Name `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthProfessionalRole"`
 		System  string   `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 system"`
 		Code    string   `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 code"`
 	} `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthProfessionalRole"`
+	HealthcareFacilityType struct {
+		XMLName xml.Name `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthcareFacilityType"`
+		System  string   `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 system"`
+		Code    string   `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 code"`
+	} `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 healthcareFacilityType"`
+	LeiName string `xml:"http://ws.gematik.de/epa-xds-document/I_Document_Management/v1.0 leiName"`
 }
