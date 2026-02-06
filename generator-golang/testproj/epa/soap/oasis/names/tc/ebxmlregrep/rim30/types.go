@@ -6,17 +6,17 @@ import "encoding/xml"
 
 type InternationalString struct {
 	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 InternationalString"`
-	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+	LocalizedString []LocalizedString `xml:"LocalizedString"`
 }
 
 type Name struct {
 	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name"`
-	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+	LocalizedString []LocalizedString `xml:"LocalizedString"`
 }
 
 type Description struct {
 	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description"`
-	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+	LocalizedString []LocalizedString `xml:"LocalizedString"`
 }
 
 type LocalizedString struct {
@@ -30,31 +30,31 @@ type Slot struct {
 	XMLName   xml.Name      `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
 	Name      LongName      `xml:"name,attr"`
 	SlotType  *ReferenceURI `xml:"slotType,attr,omitempty"`
-	ValueList ValueList     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
+	ValueList ValueList     `xml:"ValueList"`
 }
 
 type ValueList struct {
 	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ValueList"`
-	Value   []Value  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Value"`
+	Value   []Value  `xml:"Value"`
 }
 
 type Value string
 
 type SlotList struct {
 	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SlotList"`
-	Slot    []Slot   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Slot    []Slot   `xml:"Slot"`
 }
 
 type Identifiable struct {
 	XMLName xml.Name `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
 	Id      string   `xml:"id,attr"`
 	Home    string   `xml:"home,attr,omitempty"`
-	Slot    []Slot   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Slot    []Slot   `xml:"Slot"`
 }
 
 type ObjectRefList struct {
 	XMLName   xml.Name    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRefList"`
-	ObjectRef []ObjectRef `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ObjectRef"`
+	ObjectRef []ObjectRef `xml:"ObjectRef"`
 }
 
 type ObjectRef struct {
@@ -62,7 +62,7 @@ type ObjectRef struct {
 	Id            string   `xml:"id,attr"`
 	Home          string   `xml:"home,attr,omitempty"`
 	CreateReplica bool     `xml:"createReplica,attr,omitempty"`
-	Slot          []Slot   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
+	Slot          []Slot   `xml:"Slot"`
 }
 
 type RegistryObject struct {
@@ -72,17 +72,17 @@ type RegistryObject struct {
 	Lid                string               `xml:"lid,attr,omitempty"`
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type RegistryObjectList struct {
 	XMLName      xml.Name       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
-	Identifiable []Identifiable `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Identifiable"`
+	Identifiable []Identifiable `xml:"Identifiable"`
 }
 
 type Association struct {
@@ -95,12 +95,12 @@ type Association struct {
 	AssociationType    ReferenceURI         `xml:"associationType,attr"`
 	SourceObject       ReferenceURI         `xml:"sourceObject,attr"`
 	TargetObject       ReferenceURI         `xml:"targetObject,attr"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type AuditableEvent struct {
@@ -114,13 +114,13 @@ type AuditableEvent struct {
 	Timestamp          string               `xml:"timestamp,attr"`
 	User               ReferenceURI         `xml:"user,attr"`
 	RequestId          ReferenceURI         `xml:"requestId,attr"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	AffectedObjects    ObjectRefListType    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 affectedObjects"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	AffectedObjects    ObjectRefListType    `xml:"affectedObjects"`
 }
 
 type Classification struct {
@@ -132,11 +132,11 @@ type Classification struct {
 	ClassifiedObject     ReferenceURI         `xml:"classifiedObject,attr"`
 	ClassificationNode   *ReferenceURI        `xml:"classificationNode,attr,omitempty"`
 	NodeRepresentation   *LongName            `xml:"nodeRepresentation,attr,omitempty"`
-	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Name                 *Name                `xml:"Name,omitempty"`
+	Description          *Description         `xml:"Description,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification       []Classification     `xml:"Classification"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type ClassificationNode struct {
@@ -149,13 +149,13 @@ type ClassificationNode struct {
 	Parent             *ReferenceURI        `xml:"parent,attr,omitempty"`
 	Code               *LongName            `xml:"code,attr,omitempty"`
 	Path               string               `xml:"path,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ClassificationNode []ClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	ClassificationNode []ClassificationNode `xml:"ClassificationNode"`
 }
 
 type ClassificationScheme struct {
@@ -167,13 +167,13 @@ type ClassificationScheme struct {
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
 	IsInternal         bool                 `xml:"isInternal,attr"`
 	NodeType           ReferenceURI         `xml:"nodeType,attr"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ClassificationNode []ClassificationNode `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ClassificationNode"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	ClassificationNode []ClassificationNode `xml:"ClassificationNode"`
 }
 
 type ExternalIdentifier struct {
@@ -184,11 +184,11 @@ type ExternalIdentifier struct {
 	RegistryObject       ReferenceURI         `xml:"registryObject,attr"`
 	IdentificationScheme ReferenceURI         `xml:"identificationScheme,attr"`
 	Value                LongName             `xml:"value,attr"`
-	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Name                 *Name                `xml:"Name,omitempty"`
+	Description          *Description         `xml:"Description,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification       []Classification     `xml:"Classification"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type ExternalLink struct {
@@ -199,12 +199,12 @@ type ExternalLink struct {
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
 	ExternalURI        string               `xml:"externalURI,attr"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type ExtrinsicObject struct {
@@ -216,13 +216,13 @@ type ExtrinsicObject struct {
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
 	MimeType           *LongName            `xml:"mimeType,attr,omitempty"`
 	IsOpaque           bool                 `xml:"isOpaque,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ContentVersionInfo *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ContentVersionInfo,omitempty"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	ContentVersionInfo *VersionInfoType     `xml:"ContentVersionInfo,omitempty"`
 }
 
 type Address struct {
@@ -244,15 +244,15 @@ type Organization struct {
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
 	Parent             *ReferenceURI        `xml:"parent,attr,omitempty"`
 	PrimaryContact     *ReferenceURI        `xml:"primaryContact,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	Address            []Address            `xml:"Address"`
+	TelephoneNumber    []TelephoneNumber    `xml:"TelephoneNumber"`
+	EmailAddress       []EmailAddress       `xml:"EmailAddress"`
 }
 
 type PersonName struct {
@@ -285,13 +285,13 @@ type RegistryPackage struct {
 	Lid                string               `xml:"lid,attr,omitempty"`
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	RegistryObjectList *RegistryObjectList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList,omitempty"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	RegistryObjectList *RegistryObjectList  `xml:"RegistryObjectList,omitempty"`
 }
 
 type Service struct {
@@ -301,13 +301,13 @@ type Service struct {
 	Lid                string               `xml:"lid,attr,omitempty"`
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	ServiceBinding     []ServiceBinding     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ServiceBinding"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	ServiceBinding     []ServiceBinding     `xml:"ServiceBinding"`
 }
 
 type ServiceBinding struct {
@@ -320,13 +320,13 @@ type ServiceBinding struct {
 	Service            ReferenceURI         `xml:"service,attr"`
 	AccessURI          string               `xml:"accessURI,attr,omitempty"`
 	TargetBinding      *ReferenceURI        `xml:"targetBinding,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	SpecificationLink  []SpecificationLink  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 SpecificationLink"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	SpecificationLink  []SpecificationLink  `xml:"SpecificationLink"`
 }
 
 type SpecificationLink struct {
@@ -338,19 +338,19 @@ type SpecificationLink struct {
 	Status              *ReferenceURI        `xml:"status,attr,omitempty"`
 	ServiceBinding      ReferenceURI         `xml:"serviceBinding,attr"`
 	SpecificationObject ReferenceURI         `xml:"specificationObject,attr"`
-	Slot                []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description         *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo         *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification      []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier  []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	UsageDescription    *UsageDescription    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription,omitempty"`
-	UsageParameter      []UsageParameter     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageParameter"`
+	Slot                []Slot               `xml:"Slot"`
+	Name                *Name                `xml:"Name,omitempty"`
+	Description         *Description         `xml:"Description,omitempty"`
+	VersionInfo         *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification      []Classification     `xml:"Classification"`
+	ExternalIdentifier  []ExternalIdentifier `xml:"ExternalIdentifier"`
+	UsageDescription    *UsageDescription    `xml:"UsageDescription,omitempty"`
+	UsageParameter      []UsageParameter     `xml:"UsageParameter"`
 }
 
 type UsageDescription struct {
 	XMLName         xml.Name          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 UsageDescription"`
-	LocalizedString []LocalizedString `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 LocalizedString"`
+	LocalizedString []LocalizedString `xml:"LocalizedString"`
 }
 
 type UsageParameter string
@@ -371,16 +371,16 @@ type Person struct {
 	Lid                string               `xml:"lid,attr,omitempty"`
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	PersonName         *PersonName          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName,omitempty"`
-	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	Address            []Address            `xml:"Address"`
+	PersonName         *PersonName          `xml:"PersonName,omitempty"`
+	TelephoneNumber    []TelephoneNumber    `xml:"TelephoneNumber"`
+	EmailAddress       []EmailAddress       `xml:"EmailAddress"`
 }
 
 type User struct {
@@ -390,16 +390,16 @@ type User struct {
 	Lid                string               `xml:"lid,attr,omitempty"`
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Address            []Address            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Address"`
-	PersonName         *PersonName          `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 PersonName,omitempty"`
-	TelephoneNumber    []TelephoneNumber    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 TelephoneNumber"`
-	EmailAddress       []EmailAddress       `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 EmailAddress"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	Address            []Address            `xml:"Address"`
+	PersonName         *PersonName          `xml:"PersonName,omitempty"`
+	TelephoneNumber    []TelephoneNumber    `xml:"TelephoneNumber"`
+	EmailAddress       []EmailAddress       `xml:"EmailAddress"`
 }
 
 type Registry struct {
@@ -414,12 +414,12 @@ type Registry struct {
 	ReplicationSyncLatency string               `xml:"replicationSyncLatency,attr,omitempty"`
 	CatalogingLatency      string               `xml:"catalogingLatency,attr,omitempty"`
 	ConformanceProfile     string               `xml:"conformanceProfile,attr,omitempty"`
-	Slot                   []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                   *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description            *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo            *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification         []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier     []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Slot                   []Slot               `xml:"Slot"`
+	Name                   *Name                `xml:"Name,omitempty"`
+	Description            *Description         `xml:"Description,omitempty"`
+	VersionInfo            *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification         []Classification     `xml:"Classification"`
+	ExternalIdentifier     []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type Federation struct {
@@ -430,12 +430,12 @@ type Federation struct {
 	ObjectType             *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status                 *ReferenceURI        `xml:"status,attr,omitempty"`
 	ReplicationSyncLatency string               `xml:"replicationSyncLatency,attr,omitempty"`
-	Slot                   []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                   *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description            *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo            *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification         []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier     []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
+	Slot                   []Slot               `xml:"Slot"`
+	Name                   *Name                `xml:"Name,omitempty"`
+	Description            *Description         `xml:"Description,omitempty"`
+	VersionInfo            *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification         []Classification     `xml:"Classification"`
+	ExternalIdentifier     []ExternalIdentifier `xml:"ExternalIdentifier"`
 }
 
 type AdhocQuery struct {
@@ -445,13 +445,13 @@ type AdhocQuery struct {
 	Lid                string               `xml:"lid,attr,omitempty"`
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	QueryExpression    *QueryExpression     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 QueryExpression,omitempty"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	QueryExpression    *QueryExpression     `xml:"QueryExpression,omitempty"`
 }
 
 type QueryExpression struct {
@@ -468,13 +468,13 @@ type Notification struct {
 	ObjectType         *ReferenceURI        `xml:"objectType,attr,omitempty"`
 	Status             *ReferenceURI        `xml:"status,attr,omitempty"`
 	Subscription       ReferenceURI         `xml:"subscription,attr"`
-	Slot               []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name               *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description        *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo        *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification     []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	RegistryObjectList RegistryObjectList   `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 RegistryObjectList"`
+	Slot               []Slot               `xml:"Slot"`
+	Name               *Name                `xml:"Name,omitempty"`
+	Description        *Description         `xml:"Description,omitempty"`
+	VersionInfo        *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification     []Classification     `xml:"Classification"`
+	ExternalIdentifier []ExternalIdentifier `xml:"ExternalIdentifier"`
+	RegistryObjectList RegistryObjectList   `xml:"RegistryObjectList"`
 }
 
 type Action struct {
@@ -492,13 +492,13 @@ type Subscription struct {
 	StartTime            string               `xml:"startTime,attr,omitempty"`
 	EndTime              string               `xml:"endTime,attr,omitempty"`
 	NotificationInterval string               `xml:"notificationInterval,attr,omitempty"`
-	Slot                 []Slot               `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Slot"`
-	Name                 *Name                `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Name,omitempty"`
-	Description          *Description         `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Description,omitempty"`
-	VersionInfo          *VersionInfoType     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 VersionInfo,omitempty"`
-	Classification       []Classification     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Classification"`
-	ExternalIdentifier   []ExternalIdentifier `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 ExternalIdentifier"`
-	Action               []Action             `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 Action"`
+	Slot                 []Slot               `xml:"Slot"`
+	Name                 *Name                `xml:"Name,omitempty"`
+	Description          *Description         `xml:"Description,omitempty"`
+	VersionInfo          *VersionInfoType     `xml:"VersionInfo,omitempty"`
+	Classification       []Classification     `xml:"Classification"`
+	ExternalIdentifier   []ExternalIdentifier `xml:"ExternalIdentifier"`
+	Action               []Action             `xml:"Action"`
 }
 
 type NotifyAction struct {

@@ -84,10 +84,10 @@ type RelocateObjectsRequest struct {
 	Comment             string              `xml:"comment,attr,omitempty"`
 	RequestSlotList     *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
 	AdhocQuery          rim30.AdhocQuery    `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0 AdhocQuery"`
-	SourceRegistry      rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 SourceRegistry"`
-	DestinationRegistry rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 DestinationRegistry"`
-	OwnerAtSource       rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 OwnerAtSource"`
-	OwnerAtDestination  rim30.ObjectRefType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:lcm:3.0 OwnerAtDestination"`
+	SourceRegistry      rim30.ObjectRefType `xml:"SourceRegistry"`
+	DestinationRegistry rim30.ObjectRefType `xml:"DestinationRegistry"`
+	OwnerAtSource       rim30.ObjectRefType `xml:"OwnerAtSource"`
+	OwnerAtDestination  rim30.ObjectRefType `xml:"OwnerAtDestination"`
 }
 
 // extends #/components/schemas/oasis.names.tc.ebxmlregrep.rs30/RegistryRequestType

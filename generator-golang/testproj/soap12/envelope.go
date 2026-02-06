@@ -12,12 +12,6 @@ type Envelope struct {
 	Raw     []byte   `xml:"-"`
 }
 
-// TypeSafeEnvelope is an interface for envelopes with typed headers and body content
-type TypeSafeEnvelope interface {
-	GetHeaders() []any
-	GetBodyContent() []any
-}
-
 func NewEnvelope() *Envelope {
 	return &Envelope{
 		Header: nil,
@@ -26,7 +20,7 @@ func NewEnvelope() *Envelope {
 }
 
 // MarshalEnvelope marshals a SOAP 1.2 envelope into XML
-func MarshalTypeSafeEnvelopeIndent(env TypeSafeEnvelope) ([]byte, error) {
+func MarshalTypeSafeEnvelopeIndent(env any) ([]byte, error) {
 	return xml.MarshalIndent(env, "", "    ")
 }
 
@@ -48,12 +42,12 @@ func UnmarshalEnvelope(data []byte) (*Envelope, error) {
 }
 
 // UnmarshalEnvelopeToTypeSafe unmarshals XML data into a type-safe SOAP 1.2 envelope
-func UnmarshalTypeSafeEnvelope(data []byte, v TypeSafeEnvelope) error {
+func UnmarshalTypeSafeEnvelope(data []byte, v any) error {
 	return xml.Unmarshal(data, v)
 }
 
 // ToTypeSafe converts a generic Envelope to a type-safe envelope
-func (e *Envelope) ToTypeSafe(v TypeSafeEnvelope) error {
+func (e *Envelope) ToTypeSafe(v any) error {
 	return UnmarshalTypeSafeEnvelope(e.Raw, v)
 }
 

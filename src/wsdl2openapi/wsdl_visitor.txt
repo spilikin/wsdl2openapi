@@ -1,0 +1,193 @@
+import logging
+from collections import OrderedDict
+from dataclasses import dataclass
+from functools import singledispatchmethod
+
+import msgspec
+from zeep.wsdl.bindings.http import HttpGetBinding, HttpPostBinding
+from zeep.wsdl.bindings.soap import (
+    DocumentMessage as SoapDocumentMessage,
+)
+from zeep.wsdl.bindings.soap import (
+    Soap11Binding,
+    Soap12Binding,
+    SoapOperation,
+)
+from zeep.wsdl.definitions import Binding, Definition, Port, Service
+from zeep.xsd.elements.element import Element
+from zeep.xsd.elements.indicators import All
+
+from wsdl2openapi.common import Context, NamingStrategy
+from wsdl2openapi.model import Api
+
+from .model import ReferenceObject, TypeBoolean, TypeObject, TypeString, XmlExtension
+
+
+@dataclass
+class WsdlVisitor:
+    naming_strategy: NamingStrategy
+    api: Api
+    ctx: Context
+
+    current_definition: Definition = msgspec.field(default=None)
+    current_namespace_id: str = msgspec.field(default=None)
+    current_service: Service = msgspec.field(default=None)
+    current_port: Port = msgspec.field(default=None)
+    current_operation: SoapOperation = msgspec.field(default=None)
+
+    def visit_definition(self, definition: Definition):
+        self.current_definition = definition
+
+        for service in definition.services.values():
+            self.visit_service(definition, service)
+
+    def visit_service(self, definition: Definition, service: Service):
+        self.current_service = service
+
+        self.current_namespace_id = self.naming_strategy.namespace_identifier(
+            self.ctx, definition.target_namespace
+        )
+        for port in service.ports.values():
+            self.visit_port(port)
+
+    def visit_port(self, port: Port):
+        self.current_port = port
+
+        if not isinstance(
+            port.binding,
+            (Soap11Binding, Soap12Binding),
+        ):
+            logging.getLogger(__name__).warning(
+                f"Skipping non-SOAP binding: {port.binding.name}"
+            )
+            return
+
+        binding = self.current_definition.bindings.get(port.binding.name)
+        for operation_name in binding.all():
+            operation = binding.get(operation_name)
+            self.current_operation = operation
+            self.visit_operation(binding, operation)
+
+    @singledispatchmethod
+    def visit_operation(self, binding: Binding, operation: any):
+        raise NotImplementedError(f"Operation binding not supported: {type(binding)}")
+
+    @visit_operation.register
+    def _(self, binding: Soap11Binding, operation: SoapOperation):
+        input_name = self.naming_strategy.format_operation_input_name(operation.name)
+        self.populate_envelope_type(
+            operation.input, input_name, self.create_soap12_envelope_type()
+        )
+
+        output_name = self.naming_strategy.format_operation_output_name(operation.name)
+        self.populate_envelope_type(
+            operation.output, output_name, self.create_soap12_envelope_type()
+        )
+
+    @visit_operation.register
+    def _(self, binding: Soap12Binding, operation: SoapOperation):
+        input_name = self.naming_strategy.format_operation_input_name(operation.name)
+        self.populate_envelope_type(
+            operation.input, input_name, self.create_soap12_envelope_type()
+        )
+
+        output_name = self.naming_strategy.format_operation_output_name(operation.name)
+        self.populate_envelope_type(
+            operation.output, output_name, self.create_soap12_envelope_type()
+        )
+
+    def populate_envelope_type(
+        self, message: SoapDocumentMessage, env_type_name: str, env_type: TypeObject
+    ):
+        part = next(iter(message.abstract.parts.values()))
+        if part.element is None:
+            raise NotImplementedError("Only element-based messages are supported")
+
+        element: Element = part.element
+
+        ref = ReferenceObject(
+            ref=self.naming_strategy.reference_to_type(self.ctx, element.qname)
+        )
+
+        body_prop_name = self.naming_strategy.format_property_name(
+            element.qname.localname
+        )
+
+        env_type.properties["body"].properties[body_prop_name] = ref
+        schema_dict = self.api.components.schema_dict([self.current_namespace_id])
+        schema_dict[env_type_name] = env_type
+
+    def create_soap12_envelope_type(self) -> TypeObject:
+        env_type = TypeObject(
+            properties={
+                "header": TypeObject(
+                    properties={
+                        "action": self.create_wsa_type("Action"),
+                    },
+                    xml=XmlExtension(
+                        name="Header",
+                        namespace="http://www.w3.org/2003/05/soap-envelope",
+                    ),
+                ),
+                "body": TypeObject(
+                    properties=OrderedDict(),
+                    xml=XmlExtension(
+                        name="Body",
+                        namespace="http://www.w3.org/2003/05/soap-envelope",
+                    ),
+                ),
+            },
+            xml=XmlExtension(
+                name="Envelope",
+                namespace="http://www.w3.org/2003/05/soap-envelope",
+            ),
+        )
+
+        return env_type
+
+    def create_soap11_envelope_type(self) -> TypeObject:
+        env_type = TypeObject(
+            properties={
+                "header": TypeObject(
+                    properties={},
+                    xml={
+                        "name": "Header",
+                        "namespace": "http://schemas.xmlsoap.org/soap/envelope/",
+                    },
+                ),
+                "body": TypeObject(
+                    properties={},
+                    xml={
+                        "name": "Body",
+                        "namespace": "http://schemas.xmlsoap.org/soap/envelope/",
+                    },
+                ),
+            },
+            xml={
+                "name": "Envelope",
+                "namespace": "http://schemas.xmlsoap.org/soap/envelope/",
+            },
+        )
+        return env_type
+
+    def create_wsa_type(self, name: str) -> TypeObject:
+        wsa_type = TypeObject(
+            properties={
+                self.naming_strategy.char_data_property_name(): TypeString(
+                    format="chardata",
+                ),
+                "mustUnderstand": TypeBoolean(
+                    nullable=True,
+                    xml=XmlExtension(
+                        name="mustUnderstand",
+                        namespace="http://www.w3.org/2003/05/soap-envelope",
+                        attribute=True,
+                    ),
+                ),
+            },
+            xml=XmlExtension(
+                name=name,
+                namespace="http://www.w3.org/2005/08/addressing",
+            ),
+        )
+        return wsa_type

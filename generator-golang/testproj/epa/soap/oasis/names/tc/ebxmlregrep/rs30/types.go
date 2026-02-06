@@ -11,13 +11,13 @@ type RegistryRequest struct {
 	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryRequest"`
 	Id              string              `xml:"id,attr,omitempty"`
 	Comment         string              `xml:"comment,attr,omitempty"`
-	RequestSlotList *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RequestSlotList,omitempty"`
+	RequestSlotList *rim30.SlotListType `xml:"RequestSlotList,omitempty"`
 }
 
 type RegistryErrorList struct {
 	XMLName         xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList"`
 	HighestSeverity *rim30.ReferenceURI `xml:"highestSeverity,attr,omitempty"`
-	RegistryError   []RegistryError     `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryError"`
+	RegistryError   []RegistryError     `xml:"RegistryError"`
 }
 
 type RegistryError struct {
@@ -33,8 +33,8 @@ type RegistryResponse struct {
 	XMLName           xml.Name            `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryResponse"`
 	Status            rim30.ReferenceURI  `xml:"status,attr"`
 	RequestId         string              `xml:"requestId,attr,omitempty"`
-	ResponseSlotList  *rim30.SlotListType `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 ResponseSlotList,omitempty"`
-	RegistryErrorList *RegistryErrorList  `xml:"urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0 RegistryErrorList,omitempty"`
+	ResponseSlotList  *rim30.SlotListType `xml:"ResponseSlotList,omitempty"`
+	RegistryErrorList *RegistryErrorList  `xml:"RegistryErrorList,omitempty"`
 }
 
 type RegistryRequestType struct {

@@ -11,19 +11,26 @@ import (
 )
 
 type Qual struct {
-	NamespaceId string
+	PackageName string
 	Path        string
 	Name        string
 }
 
 type TypePointer struct {
-	NamespaceId string
+	PackageName string
 	Type        TypeDefinition
 	Xml         *XmlExtension
 	Nullable    bool
 	Ref         *ReferenceObject
 	Qual        *Qual
 	IsBase      bool
+}
+
+func (tp *TypePointer) IsSameNemespace(other *TypePointer) bool {
+	if tp.Xml == nil || other.Xml == nil {
+		return false
+	}
+	return tp.Xml.Namespace == other.Xml.Namespace
 }
 
 type Generator struct {
@@ -41,19 +48,23 @@ func (g *Generator) Generate() error {
 		return err
 	}
 
+	if err := g.GenerateSoap(); err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (g *Generator) GenerateTypes() error {
-	for _, namespaceId := range g.Api.Components.Schemas.Keys {
-		schema := g.Api.Components.Schemas.Entries[namespaceId]
-		schemaPath := g.NamingStrategy.FilenameForTypes(g.OutputDir, namespaceId)
+	for _, packageName := range g.Api.Components.Schemas.Keys {
+		schema := g.Api.Components.Schemas.Entries[packageName]
+		schemaPath := g.NamingStrategy.FilePath(g.OutputDir, packageName, "types.go")
 		err := os.MkdirAll(filepath.Dir(schemaPath), 0755)
 		if err != nil {
 			return err
 		}
 
-		packagePath := g.NamingStrategy.BuildPackagePath(namespaceId)
+		packagePath := g.NamingStrategy.BuildPackagePath(packageName)
 
 		jenFile := jen.NewFilePath(packagePath)
 
@@ -61,9 +72,9 @@ func (g *Generator) GenerateTypes() error {
 
 		for _, typeName := range schema.Keys {
 			typeRaw := schema.Entries[typeName]
-			typePtr, err := g.parseType(namespaceId, typeRaw)
+			typePtr, err := g.parseType(packageName, typeRaw)
 			if err != nil {
-				return fmt.Errorf("failed to parse type %s in schema %s: %w", typeName, namespaceId, err)
+				return fmt.Errorf("failed to parse type %s in schema %s: %w", typeName, packageName, err)
 			}
 
 			jenFile.Line()
@@ -72,12 +83,12 @@ func (g *Generator) GenerateTypes() error {
 			case *TypeObject:
 				err := g.renderGlobalObject(jenFile, typeName, typePtr, t)
 				if err != nil {
-					return fmt.Errorf("failed to render struct for type %s in schema %s: %w", typeName, namespaceId, err)
+					return fmt.Errorf("failed to render struct for type %s in schema %s: %w", typeName, packageName, err)
 				}
 			case *TypeString:
 				jenFile.Type().Id(typeName).String()
 			default:
-				return fmt.Errorf("unsupported type definition for type %s in schema %s: %T", typeName, namespaceId, typePtr.Type)
+				return fmt.Errorf("unsupported type definition for type %s in schema %s: %T", typeName, packageName, typePtr.Type)
 			}
 		}
 		err = jenFile.Save(schemaPath)
@@ -92,7 +103,7 @@ func (g *Generator) renderGlobalObject(jenFile *jen.File, typeName string, typeP
 
 	fields, err := g.renderProperties(typePtr, typeDef)
 	if err != nil {
-		return fmt.Errorf("failed to render properties for type %s in namespace %s: %w", typeName, typePtr.NamespaceId, err)
+		return fmt.Errorf("failed to render properties for type %s in package %s: %w", typeName, typePtr.PackageName, err)
 	}
 	jenFile.Type().Id(typeName).Struct(fields...)
 
@@ -105,7 +116,7 @@ func (g *Generator) renderGlobalObject(jenFile *jen.File, typeName string, typeP
 
 	if typePtr.IsBase {
 		interfaceName := g.NamingStrategy.BaseTypeInterfaceName(typeName)
-		funcName := g.NamingStrategy.BaseTypeFuncName(fmt.Sprintf("#/components/schemas/%s/%s", typePtr.NamespaceId, typeName))
+		funcName := g.NamingStrategy.BaseTypeFuncName(fmt.Sprintf("#/components/schemas/%s/%s", typePtr.PackageName, typeName))
 		jenFile.Line()
 		jenFile.Comment("Interface for types that extend " + typeName)
 		jenFile.Type().Id(interfaceName).Interface(
@@ -116,47 +127,7 @@ func (g *Generator) renderGlobalObject(jenFile *jen.File, typeName string, typeP
 		jenFile.Func().Params(jen.Id(typeName)).Id(funcName).Params().Block()
 	}
 
-	if isSoapEnvelope(typePtr.Xml) {
-		g.renderEnvelopeDuckType(jenFile, typeName, typeDef)
-	}
-
 	return nil
-}
-
-func (g *Generator) renderEnvelopeDuckType(jenFile *jen.File, typeName string, typeDef *TypeObject) {
-	jenFile.Line()
-	jenFile.Comment("Duck-type implement TypeSafeEnvelope interface")
-	jenFile.Func().Params(jen.Id(typeName)).Id("GetHeaders").Params().Index().Any().Block(
-		jen.Return(jen.Nil()),
-	)
-	jenFile.Line()
-
-	bodyFields := make([]jen.Code, 0)
-	if typeDef.Properties.Entries != nil {
-		if bodyProp, exists := typeDef.Properties.Entries["body"]; exists {
-			bodyTypePtr, err := g.parseType(typeName, bodyProp)
-			if err != nil {
-				jenFile.Comment("Error parsing Body property: " + err.Error())
-				return
-			}
-
-			if bodyObj, ok := bodyTypePtr.Type.(*TypeObject); ok && bodyObj.Properties.Entries != nil {
-				for _, propName := range bodyObj.Properties.Keys {
-					code := jen.Id("e").Dot("Body").Dot(g.NamingStrategy.PublicFieldName(propName))
-					bodyFields = append(bodyFields, code)
-				}
-			}
-		}
-	}
-	jenFile.Line()
-
-	jenFile.Func().Params(jen.Id("e").Op("*").Id(typeName)).Id("GetBodyContent").Params().Index().Any().Block(
-		jen.Return(
-			jen.Index().Any().Values(
-				bodyFields...,
-			),
-		),
-	)
 }
 
 func (g *Generator) renderProperties(typePtr *TypePointer, typeDef *TypeObject) ([]jen.Code, error) {
@@ -171,13 +142,13 @@ func (g *Generator) renderProperties(typePtr *TypePointer, typeDef *TypeObject) 
 
 	for _, propName := range typeDef.Properties.Keys {
 		propTypeRaw := typeDef.Properties.Entries[propName]
-		propType, err := g.parseType(typePtr.NamespaceId, propTypeRaw)
+		propType, err := g.parseType(typePtr.PackageName, propTypeRaw)
 		if err != nil {
-			return nil, fmt.Errorf("failed to parse property %s in namespace %s: %w", propName, typePtr.NamespaceId, err)
+			return nil, fmt.Errorf("failed to parse property %s in package %s: %w", propName, typePtr.PackageName, err)
 		}
-		propertyCode, err := g.renderProperty(propName, propType)
+		propertyCode, err := g.renderProperty(typePtr, propName, propType)
 		if err != nil {
-			return nil, fmt.Errorf("failed to render property %s in namespace %s: %w", propName, typePtr.NamespaceId, err)
+			return nil, fmt.Errorf("failed to render property %s in package %s: %w", propName, typePtr.PackageName, err)
 		}
 		fieldDefs = append(fieldDefs, propertyCode)
 	}
@@ -185,32 +156,32 @@ func (g *Generator) renderProperties(typePtr *TypePointer, typeDef *TypeObject) 
 	return fieldDefs, nil
 }
 
-func (g *Generator) renderProperty(propName string, propType *TypePointer) (jen.Code, error) {
-	fieldName := g.NamingStrategy.PublicFieldName(propName)
+func (g *Generator) renderProperty(baseTypePtr *TypePointer, propName string, propTypePtr *TypePointer) (jen.Code, error) {
+	fieldName := g.NamingStrategy.PublicIdentifier(propName)
 
 	stmt := jen.Id(fieldName)
 
-	return g.renderPropertyTypeAndTags(stmt, propType)
+	return g.renderPropertyTypeAndTags(stmt, baseTypePtr, propTypePtr)
 }
 
-func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *TypePointer) (*jen.Statement, error) {
+func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, baseTypePtr, propTypePtr *TypePointer) (*jen.Statement, error) {
 	isArray := false
-	if typeArray, ok := propPtr.Type.(*TypeArray); ok {
+	if typeArray, ok := propTypePtr.Type.(*TypeArray); ok {
 		stmt = stmt.Op("[]")
-		itemsTypePtr, err := g.parseType(propPtr.NamespaceId, typeArray.Items)
+		itemsTypePtr, err := g.parseType(propTypePtr.PackageName, typeArray.Items)
 		if err != nil {
 			return nil, err
 		}
-		propPtr = itemsTypePtr
+		propTypePtr = itemsTypePtr
 		isArray = true
 	}
 
-	xmlExt := propPtr.Xml
+	xmlExt := propTypePtr.Xml
 	var xmlTag []string
 
 	// create XML tag from xml extension
 	if xmlExt != nil && xmlExt.Name != "" {
-		if xmlExt.Namespace != "" {
+		if xmlExt.Namespace != "" && !baseTypePtr.IsSameNemespace(propTypePtr) {
 			xmlTag = append(xmlTag, xmlExt.Namespace+" "+xmlExt.Name)
 		} else {
 			xmlTag = append(xmlTag, xmlExt.Name)
@@ -221,30 +192,30 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *Type
 	}
 
 	addOmitempty := func() {
-		if propPtr.Nullable && len(xmlTag) > 0 {
+		if propTypePtr.Nullable && len(xmlTag) > 0 {
 			xmlTag = append(xmlTag, "omitempty")
 		}
 	}
 
-	propType := propPtr.Type
+	propType := propTypePtr.Type
 
-	if propPtr.Qual != nil {
+	if propTypePtr.Qual != nil {
 		// add pointer only for non-array, nullable, non-base types
-		if !isArray && propPtr.Nullable && !propPtr.IsBase {
+		if !isArray && propTypePtr.Nullable && !propTypePtr.IsBase {
 			stmt = stmt.Op("*")
 			addOmitempty()
 		}
-		if propPtr.IsBase {
-			interfaceName := g.NamingStrategy.BaseTypeInterfaceName(propPtr.Qual.Name)
-			stmt = stmt.Qual(propPtr.Qual.Path, interfaceName)
+		if propTypePtr.IsBase {
+			interfaceName := g.NamingStrategy.BaseTypeInterfaceName(propTypePtr.Qual.Name)
+			stmt = stmt.Qual(propTypePtr.Qual.Path, interfaceName)
 		} else {
-			stmt = stmt.Qual(propPtr.Qual.Path, propPtr.Qual.Name)
+			stmt = stmt.Qual(propTypePtr.Qual.Path, propTypePtr.Qual.Name)
 		}
 	} else {
 		switch t := propType.(type) {
 		case *TypeString:
 			stmt = stmt.String()
-			if t.Format != nil && *t.Format == "chardata" {
+			if t.Format == "chardata" {
 				xmlTag = append(xmlTag, "chardata")
 			}
 		case *TypeNumber:
@@ -254,18 +225,18 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, propPtr *Type
 		case *TypeBoolean:
 			stmt = stmt.Bool()
 		case *TypeObject:
-			fields, err := g.renderProperties(propPtr, t)
+			fields, err := g.renderProperties(propTypePtr, t)
 			if err != nil {
 				return nil, err
 			}
-			if !isArray && propPtr.Nullable {
+			if !isArray && propTypePtr.Nullable {
 				stmt = stmt.Op("*")
 			}
 			stmt = stmt.Struct(fields...)
 		default:
 			return nil, fmt.Errorf("unsupported property type: %T", propType)
 		}
-		if !isArray && propPtr.Nullable {
+		if !isArray && propTypePtr.Nullable {
 			addOmitempty()
 		}
 	}
@@ -288,12 +259,12 @@ func (g *Generator) resolveRef(ref string) (*Qual, *json.RawMessage, error) {
 	if len(parts) < 2 {
 		return nil, nil, fmt.Errorf("invalid ref format: %s", ref)
 	}
-	namespaceId := parts[0]
+	packageName := parts[0]
 	typeName := parts[1]
 
-	schema, ok := g.Api.Components.Schemas.Entries[namespaceId]
+	schema, ok := g.Api.Components.Schemas.Entries[packageName]
 	if !ok {
-		return nil, nil, fmt.Errorf("schema not found: %s", namespaceId)
+		return nil, nil, fmt.Errorf("schema not found: %s", packageName)
 	}
 
 	rawType, ok := schema.Entries[typeName]
@@ -302,8 +273,8 @@ func (g *Generator) resolveRef(ref string) (*Qual, *json.RawMessage, error) {
 	}
 
 	qual := &Qual{
-		NamespaceId: namespaceId,
-		Path:        g.NamingStrategy.BuildPackagePath(namespaceId),
+		PackageName: packageName,
+		Path:        g.NamingStrategy.BuildPackagePath(packageName),
 		Name:        typeName,
 	}
 
@@ -321,12 +292,12 @@ func (g *Generator) parseRef(raw json.RawMessage) (*TypePointer, error) {
 		return nil, err
 	}
 
-	pointer, err := g.parseType(qual.NamespaceId, *rawType)
+	pointer, err := g.parseType(qual.PackageName, *rawType)
 	if err != nil {
 		return nil, err
 	}
 
-	pointer.NamespaceId = qual.NamespaceId
+	pointer.PackageName = qual.PackageName
 	pointer.Qual = qual
 	pointer.Ref = refObj
 	// XML extension from the reference overrides the type definition
@@ -384,7 +355,7 @@ func (g *Generator) parseType(schemaId string, typeRaw json.RawMessage) (*TypePo
 	}
 
 	typePtr := &TypePointer{
-		NamespaceId: schemaId,
+		PackageName: schemaId,
 		Type:        typeDef,
 		Qual:        nil,
 		Ref:         nil,
@@ -399,14 +370,4 @@ func (g *Generator) parseType(schemaId string, typeRaw json.RawMessage) (*TypePo
 	}
 
 	return typePtr, nil
-}
-
-func isSoapEnvelope(xmlExt *XmlExtension) bool {
-	if xmlExt == nil {
-		return false
-	}
-	if xmlExt.Name != "Envelope" {
-		return false
-	}
-	return xmlExt.Namespace == "http://www.w3.org/2003/05/soap-envelope" || xmlExt.Namespace == "http://schemas.xmlsoap.org/soap/envelope/"
 }

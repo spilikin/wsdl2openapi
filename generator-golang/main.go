@@ -20,13 +20,19 @@ func main() {
 		panic(err)
 	}
 
+	namingStrategy := NewNamingStrategy()
+	namingStrategy.BasePackage = "github.com/test/testproj/epa/soap"
+	namingStrategy.PortMappings["I_Document_Management"] = "docmgmt"
+	namingStrategy.PortMappings["I_Document_Management_Insurant"] = "docmgmtinsurant"
+	namingStrategy.PortMappings["I_Document_Management_NCPeH"] = "docmgmtncpeh"
+
+	namingStrategy.Soap11Package = "github.com/test/testproj/soap11"
+	namingStrategy.Soap12Package = "github.com/test/testproj/soap12"
+
 	gen := Generator{
-		OutputDir: "./testproj/epa/soap",
-		NamingStrategy: NamingStrategy{
-			IdMappings:  map[string]string{},
-			BasePackage: "github.com/test/testproj/epa/soap",
-		},
-		Api: api,
+		OutputDir:      "./testproj/epa/soap",
+		NamingStrategy: namingStrategy,
+		Api:            api,
 	}
 
 	err = gen.Generate()

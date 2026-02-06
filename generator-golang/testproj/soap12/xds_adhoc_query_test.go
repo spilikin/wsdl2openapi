@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/test/testproj/epa/soap/ihe/iti/xdsb2007"
+	"github.com/test/testproj/epa/soap/ihe/iti/xdsb2007/docmgmt"
 	"github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/query30"
 	"github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/rim30"
 	"github.com/test/testproj/soap12"
@@ -66,9 +66,8 @@ func TestAdhocQueryRequest(t *testing.T) {
 		},
 	}
 
-	typeSafeEnv := &xdsb2007.DocumentRegistryRegistryStoredQueryInputEnvelope{}
+	typeSafeEnv := &docmgmt.DocumentRegistryRegistryStoredQueryInputEnvelope{}
 	//typeSafeEnv.Header.Action = "urn:ihe:iti:2007:RegistryStoredQuery"
-	typeSafeEnv.Body.AdhocQueryRequest = qr
 
 	data1, err := soap12.MarshalTypeSafeEnvelopeIndent(typeSafeEnv)
 	if err != nil {

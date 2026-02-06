@@ -169,7 +169,7 @@ type Api struct {
 	OpenAPI              string              `json:"openapi"`
 	WSDLExtensionVersion string              `json:"x-wsdl-extension"`
 	Info                 Info                `json:"info"`
-	WebServices          []WebService        `json:"x-web-services,omitempty"`
+	WebServices          []WebService        `json:"x-wsdl-services,omitempty"`
 	Paths                map[string]PathItem `json:"paths,omitempty"`
 	Components           Components          `json:"components"`
 }
@@ -215,12 +215,12 @@ func (t TypeObject) GetType() Type {
 
 type TypeString struct {
 	Type
-	Pattern          *string `json:"pattern,omitempty"`
-	MinLength        *int    `json:"minLength,omitempty"`
-	MaxLength        *int    `json:"maxLength,omitempty"`
-	Format           *string `json:"format,omitempty"`
-	ContentMediaType *string `json:"contentMediaType,omitempty"`
-	ContentEncoding  *string `json:"contentEncoding,omitempty"`
+	Pattern          string `json:"pattern,omitempty"`
+	MinLength        int    `json:"minLength,omitempty"`
+	MaxLength        int    `json:"maxLength,omitempty"`
+	Format           string `json:"format,omitempty"`
+	ContentMediaType string `json:"contentMediaType,omitempty"`
+	ContentEncoding  string `json:"contentEncoding,omitempty"`
 }
 
 func (t TypeString) GetType() Type {
@@ -229,11 +229,11 @@ func (t TypeString) GetType() Type {
 
 type TypeNumber struct {
 	Type
-	MultipleOf       *float64 `json:"multipleOf,omitempty"`
-	Maximum          *float64 `json:"maximum,omitempty"`
-	ExclusiveMaximum *float64 `json:"exclusiveMaximum,omitempty"`
-	Minimum          *float64 `json:"minimum,omitempty"`
-	ExclusiveMinimum *float64 `json:"exclusiveMinimum,omitempty"`
+	MultipleOf       float64 `json:"multipleOf,omitempty"`
+	Maximum          float64 `json:"maximum,omitempty"`
+	ExclusiveMaximum float64 `json:"exclusiveMaximum,omitempty"`
+	Minimum          float64 `json:"minimum,omitempty"`
+	ExclusiveMinimum float64 `json:"exclusiveMinimum,omitempty"`
 }
 
 func (t TypeNumber) GetType() Type {
