@@ -101,25 +101,25 @@ func (n NamingStrategy) PackageForPort(ws *WebService, port *WebServicePort) str
 }
 
 func (n NamingStrategy) InputEnvelopeName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "InputEnvelope"
+	return n.PublicIdentifier(op.Name) + "Envelope"
 }
 
-func (n NamingStrategy) InputeHeadersName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "InputHeaders"
+func (n NamingStrategy) InputHeadersName(op *OperationDefinition) string {
+	return n.PublicIdentifier(op.Name) + "Headers"
 }
 
 func (n NamingStrategy) InputBodyName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "InputBody"
+	return n.PublicIdentifier(op.Name) + "Body"
 }
 
 func (n NamingStrategy) OutputEnvelopeName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "OutputEnvelope"
+	return n.PublicIdentifier(op.Name) + "ResponseEnvelope"
 }
 
-func (n NamingStrategy) OutpuHeadersName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "OutputHeaders"
+func (n NamingStrategy) OutputHeadersName(op *OperationDefinition) string {
+	return n.PublicIdentifier(op.Name) + "ResponseHeaders"
 }
 
 func (n NamingStrategy) OutputBodyName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "OutputBody"
+	return n.PublicIdentifier(op.Name) + "ResponseBody"
 }

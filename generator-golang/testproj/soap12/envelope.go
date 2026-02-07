@@ -4,22 +4,12 @@ import (
 	"encoding/xml"
 )
 
-// Envelope represents a SOAP 1.2 envelope
-type Envelope struct {
-	XMLName xml.Name `xml:"http://www.w3.org/2003/05/soap-envelope Envelope"`
-	Header  *Header  `xml:"Header,omitempty"`
-	Body    Body     `xml:"Body"`
-	Raw     []byte   `xml:"-"`
+// MarshalEnvelope marshals a SOAP envelope into XML
+func MarshalTypeSafeEnvelope(env any) ([]byte, error) {
+	return xml.Marshal(env)
 }
 
-func NewEnvelope() *Envelope {
-	return &Envelope{
-		Header: nil,
-		Body:   Body{},
-	}
-}
-
-// MarshalEnvelope marshals a SOAP 1.2 envelope into XML
+// MarshalEnvelope marshals a SOAP envelope into XML
 func MarshalTypeSafeEnvelopeIndent(env any) ([]byte, error) {
 	return xml.MarshalIndent(env, "", "    ")
 }
@@ -32,13 +22,15 @@ func UnmarshalEnvelope(data []byte) (*Envelope, error) {
 		return nil, err
 	}
 	env.Raw = data
-	// TODO: parse headers and body elements into DOM-Like Element structs
-	// empty the nested slices to remove nil values from unmarshalling the unknown elements
-	if env.Header != nil {
-		env.Header.Nested = make([]Element, 0)
-	}
-	env.Body.Nested = make([]any, 0)
 	return env, nil
+}
+
+// Envelope represents a SOAP 1.2 envelope
+type Envelope struct {
+	XMLName xml.Name `xml:"http://www.w3.org/2003/05/soap-envelope Envelope"`
+	Header  *Header  `xml:"Header,omitempty"`
+	Body    Body     `xml:"Body"`
+	Raw     []byte   `xml:"-"`
 }
 
 // UnmarshalEnvelopeToTypeSafe unmarshals XML data into a type-safe SOAP 1.2 envelope
@@ -46,17 +38,16 @@ func UnmarshalTypeSafeEnvelope(data []byte, v any) error {
 	return xml.Unmarshal(data, v)
 }
 
+func NewEnvelope() *Envelope {
+	return &Envelope{
+		Header: nil,
+		Body:   Body{},
+	}
+}
+
 // ToTypeSafe converts a generic Envelope to a type-safe envelope
 func (e *Envelope) ToTypeSafe(v any) error {
 	return UnmarshalTypeSafeEnvelope(e.Raw, v)
-}
-
-// Element represents a generic XML element with attributes
-type Element struct {
-	XMLName    xml.Name
-	Attributes []xml.Attr `xml:",any,attr"`
-	CharData   string     `xml:",chardata"`
-	Nested     []Element  `xml:",any"`
 }
 
 // Header represents a SOAP 1.2 header
@@ -70,8 +61,6 @@ type Header struct {
 	Action    *Action
 	MessageID *MessageID
 	RelatesTo *RelatesTo
-	// custom headers
-	Nested []Element `xml:",any"`
 }
 
 // Body represents a SOAP 1.2 body

@@ -42,14 +42,6 @@ type GetWeatherByPostalCodeEnvelope struct {
 	} `xml:"Body"`
 }
 
-func (e *GetWeatherByPostalCodeEnvelope) GetHeaders() []any {
-	return []any{e.Header.AccessToken}
-}
-
-func (e *GetWeatherByPostalCodeEnvelope) GetBodyContent() []any {
-	return []any{e.Body.WeatherRequest}
-}
-
 type GetWeatherResponseEnvelope struct {
 	XMLName xml.Name `xml:"http://www.w3.org/2003/05/soap-envelope Envelope"`
 	Body    struct {

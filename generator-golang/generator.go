@@ -87,6 +87,12 @@ func (g *Generator) GenerateTypes() error {
 				}
 			case *TypeString:
 				jenFile.Type().Id(typeName).String()
+			case *TypeInteger:
+				jenFile.Type().Id(typeName).Int()
+			case *TypeBoolean:
+				jenFile.Type().Id(typeName).Bool()
+			case *TypeNumber:
+				jenFile.Type().Id(typeName).Float64()
 			default:
 				return fmt.Errorf("unsupported type definition for type %s in schema %s: %T", typeName, packageName, typePtr.Type)
 			}

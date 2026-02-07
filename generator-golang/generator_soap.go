@@ -72,12 +72,6 @@ func (g *Generator) renderPort(jenFile *jen.File, ctx *soapContext) error {
 }
 
 func (g *Generator) renderOperation(jenFile *jen.File, ctx *soapContext) error {
-	// Implement the rendering logic for the operation here
-	// This is a placeholder implementation
-	funcName := g.NamingStrategy.PublicIdentifier(ctx.op.Name)
-	jenFile.Func().Id(funcName).Params().Block(
-		jen.Comment("TODO: Implement SOAP operation logic"),
-	)
 
 	if ctx.port.BindingType == SOAP11 {
 		g.renderEnvelopes11(jenFile, ctx)
@@ -91,15 +85,25 @@ func (g *Generator) renderOperation(jenFile *jen.File, ctx *soapContext) error {
 }
 
 func (g *Generator) renderEnvelopes11(jenFile *jen.File, ctx *soapContext) {
+
 	inputEnvelopeName := g.NamingStrategy.InputEnvelopeName(ctx.op)
+	inputHeadersName := g.NamingStrategy.InputHeadersName(ctx.op)
+
+	if len(ctx.op.Input.SOAPHeaders) > 0 {
+		jenFile.Type().Id(inputHeadersName).Struct()
+		jenFile.Line()
+	}
+
 	jenFile.Type().Id(inputEnvelopeName).Struct(
 		xmlNameEnvelope11,
 	)
+	jenFile.Line()
 
 	outputEnvelopeName := g.NamingStrategy.OutputEnvelopeName(ctx.op)
 	jenFile.Type().Id(outputEnvelopeName).Struct(
 		xmlNameEnvelope11,
 	)
+	jenFile.Line()
 }
 
 func (g *Generator) renderEnvelopes12(jenFile *jen.File, ctx *soapContext) {

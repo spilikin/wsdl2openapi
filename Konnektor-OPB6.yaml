@@ -7,7 +7,7 @@ info:
 x-wsdl-services:
 - name: EventService
   targetNamespace: http://ws.gematik.de/conn/EventService/WSDL/v7.2
-  targetNamespaceId: de.gematik.ws.conn.EventService72
+  targetPackage: de.gematik.ws.conn.EventService72
   ports:
   - name: EventServicePort
     bindingType: soap11
@@ -17,96 +17,75 @@ x-wsdl-services:
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#Subscribe
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/Subscribe'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/SubscribeResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
     - name: Unsubscribe
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#Unsubscribe
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/Unsubscribe'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/UnsubscribeResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
     - name: GetSubscription
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#GetSubscription
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetSubscription'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetSubscriptionResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
     - name: GetResourceInformation
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#GetResourceInformation
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetResourceInformation'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetResourceInformationResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
     - name: GetCardTerminals
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#GetCardTerminals
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetCardTerminals'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetCardTerminalsResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
     - name: GetCards
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#GetCards
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetCards'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/GetCardsResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
     - name: RenewSubscriptions
       soapAction: http://ws.gematik.de/conn/EventService/v7.2#RenewSubscriptions
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/RenewSubscriptions'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.EventService72/RenewSubscriptionsResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
 - name: AuthSignatureService
   targetNamespace: http://ws.gematik.de/conn/AuthSignatureService/WSDL/v7.4
-  targetNamespaceId: de.gematik.ws.conn.AuthSignatureService741
+  targetPackage: de.gematik.ws.conn.AuthSignatureService741
   ports:
   - name: AuthSignatureServicePort
     bindingType: soap11
@@ -116,14 +95,11 @@ x-wsdl-services:
       soapAction: http://ws.gematik.de/conn/SignatureService/v7.4#ExternalAuthenticate
       style: document
       input:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.SignatureService74/ExternalAuthenticate'
       output:
-        type: document
         soapBody: '#/components/schemas/de.gematik.ws.conn.SignatureService74/ExternalAuthenticateResponse'
       faults:
         FaultMessage:
-          type: document
           soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
 components:
   schemas:
@@ -1166,7 +1142,6 @@ components:
             xml:
               name: Profile
               attribute: true
-            nullable: false
           result:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Result'
           optionalOutputs:
@@ -1341,7 +1316,6 @@ components:
             xml:
               name: WhichDocument
               attribute: true
-            nullable: false
           refURI:
             type: string
             format: uri
@@ -1537,7 +1511,6 @@ components:
             xml:
               name: WhichReference
               attribute: true
-            nullable: false
         xml:
           name: ReturnTransformedDocument
           namespace: urn:oasis:names:tc:dss:1.0:core:schema
@@ -1549,7 +1522,6 @@ components:
             xml:
               name: WhichReference
               attribute: true
-            nullable: false
           document:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Document'
         xml:
@@ -1831,7 +1803,6 @@ components:
             xml:
               name: Profile
               attribute: true
-            nullable: false
           result:
             $ref: '#/components/schemas/oasis.names.tc.dss10.core/Result'
           optionalOutputs:
@@ -1922,7 +1893,6 @@ components:
             xml:
               name: Type
               attribute: true
-            nullable: false
           ref:
             type: string
             xml:
@@ -1960,7 +1930,6 @@ components:
             xml:
               name: Type
               attribute: true
-            nullable: false
           code:
             type: string
             format: uri
@@ -2236,7 +2205,6 @@ components:
             xml:
               name: Algorithm
               attribute: true
-            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -2252,7 +2220,6 @@ components:
             xml:
               name: Algorithm
               attribute: true
-            nullable: false
           hMACOutputLength:
             $ref: '#/components/schemas/org.w3200009.xmldsig/HMACOutputLengthType'
             xml:
@@ -2315,7 +2282,6 @@ components:
             xml:
               name: Algorithm
               attribute: true
-            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -2340,7 +2306,6 @@ components:
             xml:
               name: Algorithm
               attribute: true
-            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -2605,7 +2570,6 @@ components:
             xml:
               name: Target
               attribute: true
-            nullable: false
           id:
             type: string
             xml:
@@ -2826,32 +2790,27 @@ components:
             xml:
               name: MajorVersion
               attribute: true
-            nullable: false
           minorVersion:
             type: integer
             xml:
               name: MinorVersion
               attribute: true
-            nullable: false
           assertionID:
             type: string
             xml:
               name: AssertionID
               attribute: true
-            nullable: false
           issuer:
             type: string
             xml:
               name: Issuer
               attribute: true
-            nullable: false
           issueInstant:
             type: string
             format: date-time
             xml:
               name: IssueInstant
               attribute: true
-            nullable: false
           conditions:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/Conditions'
             nullable: true
@@ -3047,14 +3006,12 @@ components:
             xml:
               name: AuthenticationMethod
               attribute: true
-            nullable: false
           authenticationInstant:
             type: string
             format: date-time
             xml:
               name: AuthenticationInstant
               attribute: true
-            nullable: false
           subject:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/Subject'
           subjectLocality:
@@ -3095,21 +3052,18 @@ components:
             xml:
               name: AuthorityKind
               attribute: true
-            nullable: false
           location:
             type: string
             format: uri
             xml:
               name: Location
               attribute: true
-            nullable: false
           binding:
             type: string
             format: uri
             xml:
               name: Binding
               attribute: true
-            nullable: false
         xml:
           x-is-base: true
       AuthorizationDecisionStatementType:
@@ -3121,13 +3075,11 @@ components:
             xml:
               name: Resource
               attribute: true
-            nullable: false
           decision:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/DecisionType'
             xml:
               name: Decision
               attribute: true
-            nullable: false
           subject:
             $ref: '#/components/schemas/oasis.names.tc.SAML10.assertion/Subject'
           action:
@@ -3197,14 +3149,12 @@ components:
             xml:
               name: AttributeName
               attribute: true
-            nullable: false
           attributeNamespace:
             type: string
             format: uri
             xml:
               name: AttributeNamespace
               attribute: true
-            nullable: false
         xml:
           x-is-base: true
       AttributeType:
@@ -3215,14 +3165,12 @@ components:
             xml:
               name: AttributeName
               attribute: true
-            nullable: false
           attributeNamespace:
             type: string
             format: uri
             xml:
               name: AttributeNamespace
               attribute: true
-            nullable: false
           attributeValue:
             type: array
             items:
@@ -3970,7 +3918,6 @@ components:
             xml:
               name: RequestID
               attribute: true
-            nullable: false
           optionalInputs:
             type: object
             properties:
@@ -4051,7 +3998,6 @@ components:
             xml:
               name: RequestID
               attribute: true
-            nullable: false
           status:
             $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/Status'
           optionalOutputs:
@@ -4894,7 +4840,6 @@ components:
             xml:
               name: URI
               attribute: true
-            nullable: false
           referencedData:
             type: boolean
             xml:
@@ -5041,7 +4986,6 @@ components:
             xml:
               name: Target
               attribute: true
-            nullable: false
           id:
             type: string
             xml:
@@ -5352,7 +5296,6 @@ components:
             xml:
               name: URI
               attribute: true
-            nullable: false
           id:
             type: string
             xml:
@@ -5508,7 +5451,6 @@ components:
             xml:
               name: ObjectReference
               attribute: true
-            nullable: false
           description:
             type: string
             xml:
@@ -7034,7 +6976,6 @@ components:
             xml:
               name: TSLTag
               attribute: true
-            nullable: false
           id:
             type: string
             xml:
@@ -7718,7 +7659,6 @@ components:
             xml:
               name: Critical
               attribute: true
-            nullable: false
           unknownContent:
             type: string
             format: xml
@@ -7785,7 +7725,6 @@ components:
             xml:
               name: TSLTag
               attribute: true
-            nullable: false
           id:
             type: string
             xml:
@@ -8445,20 +8384,17 @@ components:
             xml:
               name: Version
               attribute: true
-            nullable: false
           id:
             type: string
             xml:
               name: ID
               attribute: true
-            nullable: false
           issueInstant:
             type: string
             format: date-time
             xml:
               name: IssueInstant
               attribute: true
-            nullable: false
           issuer:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/Issuer'
           signature:
@@ -8527,7 +8463,6 @@ components:
             xml:
               name: Method
               attribute: true
-            nullable: false
           baseID:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/BaseID'
             nullable: true
@@ -8775,7 +8710,6 @@ components:
             xml:
               name: AuthnInstant
               attribute: true
-            nullable: false
           sessionIndex:
             type: string
             xml:
@@ -8842,13 +8776,11 @@ components:
             xml:
               name: Resource
               attribute: true
-            nullable: false
           decision:
             $ref: '#/components/schemas/oasis.names.tc.SAML20.assertion/DecisionType'
             xml:
               name: Decision
               attribute: true
-            nullable: false
           action:
             type: array
             items:
@@ -8875,7 +8807,6 @@ components:
             xml:
               name: Namespace
               attribute: true
-            nullable: false
           charData:
             type: string
             format: chardata
@@ -8938,7 +8869,6 @@ components:
             xml:
               name: Name
               attribute: true
-            nullable: false
           nameFormat:
             type: string
             format: uri
@@ -9086,7 +9016,6 @@ components:
             xml:
               name: Algorithm
               attribute: true
-            nullable: false
           keySize:
             $ref: '#/components/schemas/org.w3200104.xmlenc/KeySizeType'
             xml:
@@ -9130,7 +9059,6 @@ components:
             xml:
               name: URI
               attribute: true
-            nullable: false
           transforms:
             $ref: '#/components/schemas/org.w3200104.xmlenc/TransformsType'
             xml:
@@ -9264,7 +9192,6 @@ components:
             xml:
               name: Algorithm
               attribute: true
-            nullable: false
           kaNonce:
             type: string
             format: byte
@@ -9299,7 +9226,6 @@ components:
             xml:
               name: URI
               attribute: true
-            nullable: false
           unknownContent:
             type: string
             format: xml
