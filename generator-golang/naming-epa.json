@@ -1,0 +1,17 @@
+{
+  "basePackage": "github.com/spilikin/koap-go/api",
+
+  "portMappings": {
+    "I_Document_Management":          "docmgmt",
+    "I_Document_Management_Insurant": "docmgmtinsurant",
+    "I_Document_Management_NCPeH":    "docmgmtncpeh"
+  },
+
+  "packageMappings": [
+    {
+      "pattern": "de\\.gematik\\.ws\\.(.*)",
+      "replacement": "gematik.$1"
+    }
+
+  ]
+}

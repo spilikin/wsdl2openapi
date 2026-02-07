@@ -54,13 +54,13 @@ class SchemaFacetsVisitor:
         tag = str(restriction.tag)
 
         if tag.endswith("minInclusive") and isinstance(type_definition, TypeNumber):
-            type_definition.minimum = decimal.Decimal(restriction.get("value"))
+            type_definition.minimum = float(restriction.get("value"))
         elif tag.endswith("maxInclusive") and isinstance(type_definition, TypeNumber):
-            type_definition.maximum = decimal.Decimal(restriction.get("value"))
+            type_definition.maximum = float(restriction.get("value"))
         elif tag.endswith("minExclusive") and isinstance(type_definition, TypeNumber):
-            type_definition.exclusiveMinimum = decimal.Decimal(restriction.get("value"))
+            type_definition.exclusiveMinimum = float(restriction.get("value"))
         elif tag.endswith("maxExclusive") and isinstance(type_definition, TypeNumber):
-            type_definition.exclusiveMaximum = decimal.Decimal(restriction.get("value"))
+            type_definition.exclusiveMaximum = float(restriction.get("value"))
         elif tag.endswith("length") and isinstance(type_definition, TypeString):
             type_definition.maxLength = int(restriction.get("value"))
             type_definition.minLength = int(restriction.get("value"))

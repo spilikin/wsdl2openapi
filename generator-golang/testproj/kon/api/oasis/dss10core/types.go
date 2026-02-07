@@ -503,6 +503,14 @@ type PropertiesType struct {
 	Property []Property `xml:"urn:oasis:names:tc:dss:1.0:core:schema Property"`
 }
 
+// Interface for types that extend PropertiesType
+type IPropertiesType interface {
+	IsCorePropertiesType()
+}
+
+// The type itself implements IPropertiesType
+func (PropertiesType) IsCorePropertiesType() {}
+
 type VerifyManifestResultsType struct {
 	ManifestResult []ManifestResult `xml:"urn:oasis:names:tc:dss:1.0:core:schema ManifestResult"`
 }
