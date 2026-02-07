@@ -12,6 +12,22 @@ import (
 var xmlNameEnvelope11 = jen.Id("XMLName").Qual("encoding/xml", "Name").Tag(map[string]string{"xml": "http://schemas.xmlsoap.org/soap/envelope/ Envelope"})
 var xmlNameEnvelope12 = jen.Id("XMLName").Qual("encoding/xml", "Name").Tag(map[string]string{"xml": "http://www.w3.org/2003/05/soap-envelope Envelope"})
 
+func soap11FaultFields() []jen.Code {
+	return []jen.Code{
+		jen.Id("Code").String().Tag(map[string]string{"xml": "faultcode"}),
+		jen.Id("String").String().Tag(map[string]string{"xml": "faultstring"}),
+		jen.Id("Actor").String().Tag(map[string]string{"xml": "faultactor"}),
+	}
+}
+
+func renderFaultStruct(detailField jen.Code) jen.Code {
+	fields := soap11FaultFields()
+	if detailField != nil {
+		fields = append(fields, detailField)
+	}
+	return jen.Id("Fault").Op("*").Struct(fields...).Tag(map[string]string{"xml": "Body>Fault"})
+}
+
 type soapContext struct {
 	service *WebService
 	port    *WebServicePort
@@ -26,7 +42,9 @@ func (g *Generator) GenerateSoap() error {
 	ctx := &soapContext{}
 	for _, ws := range g.Api.WebServices {
 		ctx.service = &ws
-		g.renderService(ctx)
+		if err := g.renderService(ctx); err != nil {
+			return err
+		}
 	}
 
 	return nil
@@ -62,18 +80,20 @@ func (g *Generator) renderService(ctx *soapContext) error {
 	return nil
 }
 
-func (g *Generator) renderPort(jenFile *jen.File, ctx *soapContext) (err error) {
+func (g *Generator) renderPort(jenFile *jen.File, ctx *soapContext) error {
 	for _, operation := range ctx.port.Operations {
 		slog.Info("Generating SOAP operation", "operation", operation.Name)
 		ctx.op = &operation
 		switch ctx.port.BindingType {
 		case SOAP11:
-			err = g.renderOperation11(jenFile, ctx)
+			if err := g.renderOperation11(jenFile, ctx); err != nil {
+				return err
+			}
 		default:
 			slog.Warn("Unknown SOAP binding type", "bindingType", ctx.port.BindingType)
 		}
 	}
-	return err
+	return nil
 }
 
 func (g *Generator) renderOperation11(jenFile *jen.File, ctx *soapContext) (err error) {
@@ -121,7 +141,7 @@ func (g *Generator) renderEnvelopes11(jenFile *jen.File, ctx *soapContext) error
 	outputBodyXmlTag := map[string]string{"xml": fmt.Sprintf("Body>%s", outputBodyType.Xml.Name)}
 
 	// fault detail code generation
-	var faultDetailCode jen.Code
+	var faultDetailField jen.Code
 
 	// we only support custom faults with one fault definition,
 	if len(ctx.op.Faults) > 1 {
@@ -137,18 +157,12 @@ func (g *Generator) renderEnvelopes11(jenFile *jen.File, ctx *soapContext) error
 		faultXmlTag := map[string]string{"xml": fmt.Sprintf("Detail>%s", faultType.Xml.Name)}
 
 		slog.Info("Generating SOAP fault for operation", "operation", ctx.op.Name, "faultType", faultType)
-		faultDetailCode = jen.Id("Detail").Op("*").Qual(faultType.Qual.Path, faultType.Qual.Name).Tag(faultXmlTag)
+		faultDetailField = jen.Id("Detail").Op("*").Qual(faultType.Qual.Path, faultType.Qual.Name).Tag(faultXmlTag)
 	} else {
 		slog.Info("Generating generic SOAP fault for operation", "operation", ctx.op.Name)
-		faultDetailCode = jen.Nil()
 	}
 
-	faultCode := jen.Id("Fault").Op("*").Struct(
-		jen.Id("Code").String().Tag(map[string]string{"xml": "faultcode"}),
-		jen.Id("String").String().Tag(map[string]string{"xml": "faultstring"}),
-		jen.Id("Actor").String().Tag(map[string]string{"xml": "faultactor"}),
-		faultDetailCode,
-	).Tag(map[string]string{"xml": "Body>Fault"})
+	faultCode := renderFaultStruct(faultDetailField)
 
 	jenFile.Type().Id(outputEnvelopeName).Struct(
 		xmlNameEnvelope11,
