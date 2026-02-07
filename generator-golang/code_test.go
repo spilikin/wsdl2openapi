@@ -1,4 +1,4 @@
-package main_test
+package generator_test
 
 import (
 	"encoding/xml"

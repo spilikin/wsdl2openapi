@@ -1,0 +1,6 @@
+# display info about the project
+info:
+    just -l
+
+generate-kon:
+    go run ./cmd/wsdl2openapi2go --file ../Konnektor-OPB6.json --output ./testproj/kon/api

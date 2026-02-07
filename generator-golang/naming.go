@@ -1,31 +1,32 @@
-package main
+package generator
 
 import (
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 )
 
-type NamingStrategy struct {
-	PackageMappings map[string]string
-	ServiceMappings map[string]string
-	PortMappings    map[string]string
-	BasePackage     string
-	Soap11Package   string
-	Soap12Package   string
+// PackageMapping defines a mapping from a package name pattern to a replacement string.
+// de.gematik.ws.(.*) -> $1
+type PackageMapping struct {
+	Patter      string
+	Replacement string
 }
 
-func NewNamingStrategy() NamingStrategy {
-	return NamingStrategy{
-		PackageMappings: map[string]string{},
-		ServiceMappings: map[string]string{},
-		PortMappings:    map[string]string{},
-	}
+type NamingStrategy struct {
+	PackageMappings []PackageMapping
+	PortMappings    map[string]string
+	BasePackage     string
 }
 
 func (n NamingStrategy) NormalizePackageName(packageName string) string {
-	if customId, ok := n.PackageMappings[packageName]; ok {
-		return customId
+
+	for _, mapping := range n.PackageMappings {
+		if matched, _ := regexp.MatchString(mapping.Patter, packageName); matched {
+			packageName = regexp.MustCompile(mapping.Patter).ReplaceAllString(packageName, mapping.Replacement)
+			break
+		}
 	}
 	return strings.ToLower(packageName)
 }

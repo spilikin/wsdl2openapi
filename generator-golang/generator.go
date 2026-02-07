@@ -1,4 +1,4 @@
-package main
+package generator
 
 import (
 	"encoding/json"
@@ -257,7 +257,7 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, baseTypePtr, 
 	return stmt, nil
 }
 
-func (g *Generator) resolveRef(ref string) (*Qual, *json.RawMessage, error) {
+func (g *Generator) resolveRef(ref string) (*Qual, json.RawMessage, error) {
 	if !strings.HasPrefix(ref, "#/components/schemas/") {
 		return nil, nil, fmt.Errorf("unsupported ref format: %s", ref)
 	}
@@ -284,7 +284,7 @@ func (g *Generator) resolveRef(ref string) (*Qual, *json.RawMessage, error) {
 		Name:        typeName,
 	}
 
-	return qual, &rawType, nil
+	return qual, rawType, nil
 }
 
 func (g *Generator) parseRef(raw json.RawMessage) (*TypePointer, error) {
@@ -298,7 +298,7 @@ func (g *Generator) parseRef(raw json.RawMessage) (*TypePointer, error) {
 		return nil, err
 	}
 
-	pointer, err := g.parseType(qual.PackageName, *rawType)
+	pointer, err := g.parseType(qual.PackageName, rawType)
 	if err != nil {
 		return nil, err
 	}
