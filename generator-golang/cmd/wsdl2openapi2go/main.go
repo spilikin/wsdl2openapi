@@ -85,7 +85,15 @@ func generateKon(inputFile string, outputDir string) {
 		BasePackage: "github.com/test/testproj/kon/api",
 		PackageMappings: []generator.PackageMapping{
 			{
-				Patter:      `de\.gematik\.ws\.(.*)`,
+				Pattern:     `de\.gematik\.ws\.(.*)`,
+				Replacement: "gematik.$1",
+			},
+			{
+				Pattern:     `oasis.names.tc.([^.]+).([^.]+)`,
+				Replacement: "oasis.$1$2",
+			},
+			{
+				Pattern:     `org.(.*)`,
 				Replacement: "$1",
 			},
 		},

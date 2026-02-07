@@ -5,8 +5,8 @@ import (
 
 	"github.com/gematik/zero-lab/go/soap"
 	"github.com/stretchr/testify/assert"
-	"github.com/test/testproj/kon/api/conn/authsignatureservice741"
-	"github.com/test/testproj/kon/api/conn/signatureservice74"
+	"github.com/test/testproj/kon/api/gematik/conn/authsignatureservice741"
+	"github.com/test/testproj/kon/api/gematik/conn/signatureservice74"
 )
 
 func TestEventService(t *testing.T) {

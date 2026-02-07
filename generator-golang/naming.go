@@ -10,7 +10,7 @@ import (
 // PackageMapping defines a mapping from a package name pattern to a replacement string.
 // de.gematik.ws.(.*) -> $1
 type PackageMapping struct {
-	Patter      string
+	Pattern     string
 	Replacement string
 }
 
@@ -23,8 +23,8 @@ type NamingStrategy struct {
 func (n NamingStrategy) NormalizePackageName(packageName string) string {
 
 	for _, mapping := range n.PackageMappings {
-		if matched, _ := regexp.MatchString(mapping.Patter, packageName); matched {
-			packageName = regexp.MustCompile(mapping.Patter).ReplaceAllString(packageName, mapping.Replacement)
+		if matched, _ := regexp.MatchString(mapping.Pattern, packageName); matched {
+			packageName = regexp.MustCompile(mapping.Pattern).ReplaceAllString(packageName, mapping.Replacement)
 			break
 		}
 	}
