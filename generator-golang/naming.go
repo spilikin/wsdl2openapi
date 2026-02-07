@@ -8,16 +8,15 @@ import (
 )
 
 // PackageMapping defines a mapping from a package name pattern to a replacement string.
-// de.gematik.ws.(.*) -> $1
 type PackageMapping struct {
-	Pattern     string
-	Replacement string
+	Pattern     string `json:"pattern" yaml:"pattern"`
+	Replacement string `json:"replacement" yaml:"replacement"`
 }
 
 type NamingStrategy struct {
-	PackageMappings []PackageMapping
-	PortMappings    map[string]string
-	BasePackage     string
+	PackageMappings []PackageMapping  `json:"packageMappings" yaml:"packageMappings"`
+	PortMappings    map[string]string `json:"portMappings" yaml:"portMappings"`
+	BasePackage     string            `json:"basePackage" yaml:"basePackage"`
 }
 
 func (n NamingStrategy) NormalizePackageName(packageName string) string {
@@ -105,22 +104,10 @@ func (n NamingStrategy) InputEnvelopeName(op *OperationDefinition) string {
 	return n.PublicIdentifier(op.Name) + "Envelope"
 }
 
-func (n NamingStrategy) InputHeadersName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "Headers"
-}
-
-func (n NamingStrategy) InputBodyName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "Body"
-}
-
 func (n NamingStrategy) OutputEnvelopeName(op *OperationDefinition) string {
 	return n.PublicIdentifier(op.Name) + "ResponseEnvelope"
 }
 
-func (n NamingStrategy) OutputHeadersName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "ResponseHeaders"
-}
-
-func (n NamingStrategy) OutputBodyName(op *OperationDefinition) string {
-	return n.PublicIdentifier(op.Name) + "ResponseBody"
+func (n NamingStrategy) FaultStructName(op *OperationDefinition) string {
+	return n.PublicIdentifier(op.Name) + "Fault"
 }

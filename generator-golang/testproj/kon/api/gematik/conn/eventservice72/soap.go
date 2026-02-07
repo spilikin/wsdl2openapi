@@ -2,67 +2,175 @@
 
 package eventservice72
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
+)
 
 type SubscribeEnvelope struct {
-	XMLName xml.Name  `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    Subscribe `xml:"Body>Subscribe"`
+	XMLName   xml.Name   `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	Subscribe *Subscribe `xml:"Body>Subscribe"`
+}
+
+func (e *SubscribeEnvelope) IsFault() bool {
+	return false
 }
 
 type SubscribeResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName           xml.Name           `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	SubscribeResponse *SubscribeResponse `xml:"Body>SubscribeResponse"`
+	Fault             *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *SubscribeResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }
 
 type UnsubscribeEnvelope struct {
-	XMLName xml.Name    `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    Unsubscribe `xml:"Body>Unsubscribe"`
+	XMLName     xml.Name     `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	Unsubscribe *Unsubscribe `xml:"Body>Unsubscribe"`
+}
+
+func (e *UnsubscribeEnvelope) IsFault() bool {
+	return false
 }
 
 type UnsubscribeResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName             xml.Name             `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	UnsubscribeResponse *UnsubscribeResponse `xml:"Body>UnsubscribeResponse"`
+	Fault               *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *UnsubscribeResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }
 
 type GetSubscriptionEnvelope struct {
-	XMLName xml.Name        `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    GetSubscription `xml:"Body>GetSubscription"`
+	XMLName         xml.Name         `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetSubscription *GetSubscription `xml:"Body>GetSubscription"`
+}
+
+func (e *GetSubscriptionEnvelope) IsFault() bool {
+	return false
 }
 
 type GetSubscriptionResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName                 xml.Name                 `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetSubscriptionResponse *GetSubscriptionResponse `xml:"Body>GetSubscriptionResponse"`
+	Fault                   *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *GetSubscriptionResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }
 
 type GetResourceInformationEnvelope struct {
-	XMLName xml.Name               `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    GetResourceInformation `xml:"Body>GetResourceInformation"`
+	XMLName                xml.Name                `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetResourceInformation *GetResourceInformation `xml:"Body>GetResourceInformation"`
+}
+
+func (e *GetResourceInformationEnvelope) IsFault() bool {
+	return false
 }
 
 type GetResourceInformationResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName                        xml.Name                        `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetResourceInformationResponse *GetResourceInformationResponse `xml:"Body>GetResourceInformationResponse"`
+	Fault                          *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *GetResourceInformationResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }
 
 type GetCardTerminalsEnvelope struct {
-	XMLName xml.Name         `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    GetCardTerminals `xml:"Body>GetCardTerminals"`
+	XMLName          xml.Name          `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetCardTerminals *GetCardTerminals `xml:"Body>GetCardTerminals"`
+}
+
+func (e *GetCardTerminalsEnvelope) IsFault() bool {
+	return false
 }
 
 type GetCardTerminalsResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName                  xml.Name                  `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetCardTerminalsResponse *GetCardTerminalsResponse `xml:"Body>GetCardTerminalsResponse"`
+	Fault                    *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *GetCardTerminalsResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }
 
 type GetCardsEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    GetCards `xml:"Body>GetCards"`
+	XMLName  xml.Name  `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetCards *GetCards `xml:"Body>GetCards"`
+}
+
+func (e *GetCardsEnvelope) IsFault() bool {
+	return false
 }
 
 type GetCardsResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName          xml.Name          `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	GetCardsResponse *GetCardsResponse `xml:"Body>GetCardsResponse"`
+	Fault            *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *GetCardsResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }
 
 type RenewSubscriptionsEnvelope struct {
-	XMLName xml.Name           `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
-	Body    RenewSubscriptions `xml:"Body>RenewSubscriptions"`
+	XMLName            xml.Name            `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	RenewSubscriptions *RenewSubscriptions `xml:"Body>RenewSubscriptions"`
+}
+
+func (e *RenewSubscriptionsEnvelope) IsFault() bool {
+	return false
 }
 
 type RenewSubscriptionsResponseEnvelope struct {
-	XMLName xml.Name `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	XMLName                    xml.Name                    `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
+	RenewSubscriptionsResponse *RenewSubscriptionsResponse `xml:"Body>RenewSubscriptionsResponse"`
+	Fault                      *struct {
+		Code   string         `xml:"faultcode"`
+		String string         `xml:"faultstring"`
+		Actor  string         `xml:"faultactor"`
+		Detail *error20.Error `xml:"Detail>Error"`
+	} `xml:"Body>Fault"`
+}
+
+func (e *RenewSubscriptionsResponseEnvelope) IsFault() bool {
+	return e.Fault != nil
 }

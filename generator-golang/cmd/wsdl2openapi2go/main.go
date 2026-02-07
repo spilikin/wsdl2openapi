@@ -11,11 +11,15 @@ import (
 func main() {
 	var inputFile string
 	var outputDir string
+	var namingFile string
 
 	flag.StringVar(&inputFile, "file", "", "OpenAPI specification file")
 	flag.StringVar(&inputFile, "f", "", "OpenAPI specification file (shorthand)")
 	flag.StringVar(&outputDir, "output", "", "Output directory for generated code")
 	flag.StringVar(&outputDir, "o", "", "Output directory for generated code (shorthand)")
+	flag.StringVar(&namingFile, "naming", "", "Config file with naming strategy configuration")
+	flag.StringVar(&namingFile, "n", "l", "Config file with naming strategy configuration (shorthand)")
+
 	flag.Parse()
 
 	if inputFile == "" {
@@ -26,18 +30,40 @@ func main() {
 		panic("output directory is required")
 	}
 
-	//generateEpa()
-	generateKon(inputFile, outputDir)
+	namingStrategy := new(generator.NamingStrategy)
+	if err := unmarshalJsonFile(namingFile, namingStrategy); err != nil {
+		panic(err)
+	}
 
-}
+	api := new(generator.Api)
+	if err := unmarshalJsonFile(inputFile, api); err != nil {
+		panic(err)
+	}
 
-func generateEpa() {
-	inputFile := "../../../XDSDocumentService.json"
+	gen := generator.Generator{
+		OutputDir:      outputDir,
+		NamingStrategy: *namingStrategy,
+		Api:            api,
+	}
 
-	inputData, err := os.ReadFile(inputFile)
+	err := gen.Generate()
 	if err != nil {
 		panic(err)
 	}
+
+}
+
+func unmarshalJsonFile(filename string, v any) error {
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return err
+	}
+	return json.Unmarshal(data, v)
+}
+
+/*
+func generateEpa() {
+	inputFile := "../../../XDSDocumentService.json"
 
 	api := new(generator.Api)
 
@@ -74,13 +100,6 @@ func generateKon(inputFile string, outputDir string) {
 		panic(err)
 	}
 
-	api := new(generator.Api)
-
-	err = json.Unmarshal(inputData, api)
-	if err != nil {
-		panic(err)
-	}
-
 	namingStrategy := generator.NamingStrategy{
 		BasePackage: "github.com/test/testproj/kon/api",
 		PackageMappings: []generator.PackageMapping{
@@ -110,3 +129,4 @@ func generateKon(inputFile string, outputDir string) {
 		panic(err)
 	}
 }
+*/
