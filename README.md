@@ -20,6 +20,11 @@ There are practically no tools to work with WSDL and SOAP for modern languages l
 - XSD facets and constraints (patterns, enums, min/max) mapped to JSON Schema validation
 - Support for TI-Konnektor naming and versioning convention: multiple patch-level versions of services in the same OpenAPI document
 
+## Generated Examples
+
+- **TI-Konnektor (OPB6):** [JSON](konnektor-opb6.json) | [YAML](konnektor-opb6.yaml)
+- **EPA XDS Document Service:** [JSON](XDSDocumentService.json) | [YAML](XDSDocumentService.yaml)
+
 ## Output Format
 
 The output is a standard OpenAPI 3.1 document with two extensions:
