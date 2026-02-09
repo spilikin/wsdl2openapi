@@ -38,7 +38,7 @@ type ReferenceInfo struct {
 	Id           string               `xml:"Id,attr,omitempty"`
 	Uri          string               `xml:"URI,attr,omitempty"`
 	DigestMethod xmldsig.DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod"`
-	DigestValue  xmldsig.DigestValue  `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue  string               `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 type XAdESTimeStamp struct {
@@ -131,8 +131,6 @@ type QualifyingPropertiesReference struct {
 	Id      string   `xml:"Id,attr,omitempty"`
 }
 
-type SigningTime string
-
 type SigningCertificate struct {
 	XMLName xml.Name     `xml:"http://uri.etsi.org/01903/v1.3.2# SigningCertificate"`
 	Cert    []CertIDType `xml:"Cert"`
@@ -143,8 +141,6 @@ type SignaturePolicyIdentifier struct {
 	SignaturePolicyId      *SignaturePolicyIdType `xml:"SignaturePolicyId,omitempty"`
 	SignaturePolicyImplied string                 `xml:"SignaturePolicyImplied,omitempty"`
 }
-
-type SPURI string
 
 type SPUserNotice struct {
 	XMLName      xml.Name             `xml:"http://uri.etsi.org/01903/v1.3.2# SPUserNotice"`
@@ -328,11 +324,9 @@ type IObjectIdentifierType interface {
 func (ObjectIdentifierType) IsEtsi01903132ObjectIdentifierType() {}
 
 type IdentifierType struct {
-	Qualifier *QualifierType `xml:"Qualifier,attr,omitempty"`
-	CharData  string         `xml:"chardata"`
+	Qualifier string `xml:"Qualifier,attr,omitempty"`
+	CharData  string `xml:"chardata"`
 }
-
-type QualifierType string
 
 type DocumentationReferencesType struct {
 	DocumentationReference []string `xml:"http://uri.etsi.org/01903/v1.3.2# DocumentationReference"`
@@ -369,7 +363,7 @@ type ReferenceInfoType struct {
 	Id           string               `xml:"Id,attr,omitempty"`
 	Uri          string               `xml:"URI,attr,omitempty"`
 	DigestMethod xmldsig.DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod"`
-	DigestValue  xmldsig.DigestValue  `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue  string               `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 // Interface for types that extend ReferenceInfoType
@@ -569,7 +563,7 @@ type CertIDType struct {
 
 type DigestAlgAndValueType struct {
 	DigestMethod xmldsig.DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod"`
-	DigestValue  xmldsig.DigestValue  `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue  string               `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 type SignaturePolicyIdentifierType struct {

@@ -12,48 +12,30 @@ type ProductInformation struct {
 	ProductMiscellaneous   ProductMiscellaneous   `xml:"ProductMiscellaneous"`
 }
 
-type ProductType string
-
-type ProductTypeVersion string
-
-type ProductVendorID string
-
-type ProductCode string
-
-type HWVersion string
-
-type FWVersion string
-
 type ProductVersionLocal struct {
-	HWVersion HWVersion `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 HWVersion"`
-	FWVersion FWVersion `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 FWVersion"`
+	HWVersion string `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 HWVersion"`
+	FWVersion string `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 FWVersion"`
 }
-
-type ProductVersionCentral string
 
 type ProductVersion struct {
-	Local   *ProductVersionLocal   `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 Local,omitempty"`
-	Central *ProductVersionCentral `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 Central,omitempty"`
+	Local   *ProductVersionLocal `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 Local,omitempty"`
+	Central string               `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 Central,omitempty"`
 }
 
-type ProductVendorName string
-
-type ProductName string
-
 type ProductTypeInformation struct {
-	ProductType        ProductType        `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductType"`
-	ProductTypeVersion ProductTypeVersion `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductTypeVersion"`
+	ProductType        string `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductType"`
+	ProductTypeVersion string `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductTypeVersion"`
 }
 
 type ProductIdentification struct {
-	ProductVendorID ProductVendorID `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductVendorID"`
-	ProductCode     ProductCode     `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductCode"`
-	ProductVersion  ProductVersion  `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductVersion"`
+	ProductVendorID string         `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductVendorID"`
+	ProductCode     string         `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductCode"`
+	ProductVersion  ProductVersion `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductVersion"`
 }
 
 type ProductMiscellaneous struct {
-	ProductVendorName ProductVendorName `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductVendorName"`
-	ProductName       ProductName       `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductName"`
+	ProductVendorName string `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductVendorName"`
+	ProductName       string `xml:"http://ws.gematik.de/int/version/ProductInformation/v1.1 ProductName"`
 }
 
 type ProductInformationElementType struct {

@@ -15,12 +15,12 @@ type EncryptDocument struct {
 	RecipientKeys struct {
 		XMLName           xml.Name           `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 RecipientKeys"`
 		CertificateOnCard *CertificateOnCard `xml:"CertificateOnCard,omitempty"`
-		Certificate       []Certificate      `xml:"Certificate"`
+		Certificate       []string           `xml:"Certificate"`
 	} `xml:"RecipientKeys"`
 	Document       connectorcommon50.Document `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Document"`
 	OptionalInputs *struct {
 		XMLName               xml.Name               `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 OptionalInputs"`
-		EncryptionType        *EncryptionType        `xml:"EncryptionType,omitempty"`
+		EncryptionType        string                 `xml:"EncryptionType,omitempty"`
 		Element               []Element              `xml:"Element"`
 		UnprotectedProperties *UnprotectedProperties `xml:"UnprotectedProperties,omitempty"`
 	} `xml:"OptionalInputs,omitempty"`
@@ -34,22 +34,18 @@ type EncryptDocumentResponse struct {
 }
 
 type CertificateOnCard struct {
-	XMLName      xml.Name                     `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 CertificateOnCard"`
-	CardHandle   connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	KeyReference string                       `xml:"KeyReference,omitempty"`
-	Crypt        string                       `xml:"Crypt,omitempty"`
+	XMLName      xml.Name `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 CertificateOnCard"`
+	CardHandle   string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	KeyReference string   `xml:"KeyReference,omitempty"`
+	Crypt        string   `xml:"Crypt,omitempty"`
 }
 
 type PrivateKeyOnCard struct {
-	XMLName      xml.Name                     `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 PrivateKeyOnCard"`
-	CardHandle   connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	KeyReference string                       `xml:"KeyReference,omitempty"`
-	Crypt        string                       `xml:"Crypt,omitempty"`
+	XMLName      xml.Name `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 PrivateKeyOnCard"`
+	CardHandle   string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	KeyReference string   `xml:"KeyReference,omitempty"`
+	Crypt        string   `xml:"Crypt,omitempty"`
 }
-
-type Certificate string
-
-type EncryptionType string
 
 type Element struct {
 	XMLName  xml.Name `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 Element"`
@@ -77,14 +73,10 @@ type UnprotectedProperties struct {
 	Property []dss10core.Property `xml:"urn:oasis:names:tc:dss:1.0:core:schema Property"`
 }
 
-type CommonStepsEnum string
-
-type EncryptionStepResultEnum string
-
 type KeyOnCardType struct {
-	CardHandle   connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	KeyReference string                       `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 KeyReference,omitempty"`
-	Crypt        string                       `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 Crypt,omitempty"`
+	CardHandle   string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	KeyReference string `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 KeyReference,omitempty"`
+	Crypt        string `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 Crypt,omitempty"`
 }
 
 // Interface for types that extend KeyOnCardType

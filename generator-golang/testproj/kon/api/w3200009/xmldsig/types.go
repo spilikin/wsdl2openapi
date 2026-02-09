@@ -34,9 +34,9 @@ type CanonicalizationMethod struct {
 }
 
 type SignatureMethod struct {
-	XMLName          xml.Name              `xml:"http://www.w3.org/2000/09/xmldsig# SignatureMethod"`
-	Algorithm        string                `xml:"Algorithm,attr"`
-	HMACOutputLength *HMACOutputLengthType `xml:"HMACOutputLength,omitempty"`
+	XMLName          xml.Name `xml:"http://www.w3.org/2000/09/xmldsig# SignatureMethod"`
+	Algorithm        string   `xml:"Algorithm,attr"`
+	HMACOutputLength int      `xml:"HMACOutputLength,omitempty"`
 	UnknownContent   string
 }
 
@@ -47,7 +47,7 @@ type Reference struct {
 	Type         string       `xml:"Type,attr,omitempty"`
 	Transforms   *Transforms  `xml:"Transforms,omitempty"`
 	DigestMethod DigestMethod `xml:"DigestMethod"`
-	DigestValue  DigestValue  `xml:"DigestValue"`
+	DigestValue  string       `xml:"DigestValue"`
 }
 
 type Transforms struct {
@@ -68,24 +68,18 @@ type DigestMethod struct {
 	UnknownContent string
 }
 
-type DigestValue string
-
 type KeyInfo struct {
 	XMLName         xml.Name          `xml:"http://www.w3.org/2000/09/xmldsig# KeyInfo"`
 	Id              string            `xml:"Id,attr,omitempty"`
-	KeyName         []KeyName         `xml:"KeyName"`
+	KeyName         []string          `xml:"KeyName,omitempty"`
 	KeyValue        []KeyValue        `xml:"KeyValue"`
 	RetrievalMethod []RetrievalMethod `xml:"RetrievalMethod"`
 	X509Data        []X509Data        `xml:"X509Data"`
 	PGPData         []PGPData         `xml:"PGPData"`
 	SPKIData        []SPKIData        `xml:"SPKIData"`
-	MgmtData        []MgmtData        `xml:"MgmtData"`
+	MgmtData        []string          `xml:"MgmtData,omitempty"`
 	UnknownContent  string
 }
-
-type KeyName string
-
-type MgmtData string
 
 type KeyValue struct {
 	XMLName        xml.Name     `xml:"http://www.w3.org/2000/09/xmldsig# KeyValue"`
@@ -152,23 +146,21 @@ type SignatureProperty struct {
 }
 
 type DSAKeyValue struct {
-	XMLName     xml.Name      `xml:"http://www.w3.org/2000/09/xmldsig# DSAKeyValue"`
-	P           CryptoBinary  `xml:"P"`
-	Q           CryptoBinary  `xml:"Q"`
-	G           *CryptoBinary `xml:"G,omitempty"`
-	Y           CryptoBinary  `xml:"Y"`
-	J           *CryptoBinary `xml:"J,omitempty"`
-	Seed        CryptoBinary  `xml:"Seed"`
-	PgenCounter CryptoBinary  `xml:"PgenCounter"`
+	XMLName     xml.Name `xml:"http://www.w3.org/2000/09/xmldsig# DSAKeyValue"`
+	P           string   `xml:"P"`
+	Q           string   `xml:"Q"`
+	G           string   `xml:"G,omitempty"`
+	Y           string   `xml:"Y"`
+	J           string   `xml:"J,omitempty"`
+	Seed        string   `xml:"Seed"`
+	PgenCounter string   `xml:"PgenCounter"`
 }
 
 type RSAKeyValue struct {
-	XMLName  xml.Name     `xml:"http://www.w3.org/2000/09/xmldsig# RSAKeyValue"`
-	Modulus  CryptoBinary `xml:"Modulus"`
-	Exponent CryptoBinary `xml:"Exponent"`
+	XMLName  xml.Name `xml:"http://www.w3.org/2000/09/xmldsig# RSAKeyValue"`
+	Modulus  string   `xml:"Modulus"`
+	Exponent string   `xml:"Exponent"`
 }
-
-type CryptoBinary string
 
 type SignatureType struct {
 	Id             string         `xml:"Id,attr,omitempty"`
@@ -228,8 +220,8 @@ type ICanonicalizationMethodType interface {
 func (CanonicalizationMethodType) IsXmldsigCanonicalizationMethodType() {}
 
 type SignatureMethodType struct {
-	Algorithm        string                `xml:"Algorithm,attr"`
-	HMACOutputLength *HMACOutputLengthType `xml:"http://www.w3.org/2000/09/xmldsig# HMACOutputLength,omitempty"`
+	Algorithm        string `xml:"Algorithm,attr"`
+	HMACOutputLength int    `xml:"http://www.w3.org/2000/09/xmldsig# HMACOutputLength,omitempty"`
 	UnknownContent   string
 }
 
@@ -247,7 +239,7 @@ type ReferenceType struct {
 	Type         string       `xml:"Type,attr,omitempty"`
 	Transforms   *Transforms  `xml:"http://www.w3.org/2000/09/xmldsig# Transforms,omitempty"`
 	DigestMethod DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod"`
-	DigestValue  DigestValue  `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue  string       `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 // Interface for types that extend ReferenceType
@@ -297,17 +289,15 @@ type IDigestMethodType interface {
 // The type itself implements IDigestMethodType
 func (DigestMethodType) IsXmldsigDigestMethodType() {}
 
-type DigestValueType string
-
 type KeyInfoType struct {
 	Id              string            `xml:"Id,attr,omitempty"`
-	KeyName         []KeyName         `xml:"http://www.w3.org/2000/09/xmldsig# KeyName"`
+	KeyName         []string          `xml:"http://www.w3.org/2000/09/xmldsig# KeyName,omitempty"`
 	KeyValue        []KeyValue        `xml:"http://www.w3.org/2000/09/xmldsig# KeyValue"`
 	RetrievalMethod []RetrievalMethod `xml:"http://www.w3.org/2000/09/xmldsig# RetrievalMethod"`
 	X509Data        []X509Data        `xml:"http://www.w3.org/2000/09/xmldsig# X509Data"`
 	PGPData         []PGPData         `xml:"http://www.w3.org/2000/09/xmldsig# PGPData"`
 	SPKIData        []SPKIData        `xml:"http://www.w3.org/2000/09/xmldsig# SPKIData"`
-	MgmtData        []MgmtData        `xml:"http://www.w3.org/2000/09/xmldsig# MgmtData"`
+	MgmtData        []string          `xml:"http://www.w3.org/2000/09/xmldsig# MgmtData,omitempty"`
 	UnknownContent  string
 }
 
@@ -451,16 +441,14 @@ type ISignaturePropertyType interface {
 // The type itself implements ISignaturePropertyType
 func (SignaturePropertyType) IsXmldsigSignaturePropertyType() {}
 
-type HMACOutputLengthType int
-
 type DSAKeyValueType struct {
-	P           CryptoBinary  `xml:"http://www.w3.org/2000/09/xmldsig# P"`
-	Q           CryptoBinary  `xml:"http://www.w3.org/2000/09/xmldsig# Q"`
-	G           *CryptoBinary `xml:"http://www.w3.org/2000/09/xmldsig# G,omitempty"`
-	Y           CryptoBinary  `xml:"http://www.w3.org/2000/09/xmldsig# Y"`
-	J           *CryptoBinary `xml:"http://www.w3.org/2000/09/xmldsig# J,omitempty"`
-	Seed        CryptoBinary  `xml:"http://www.w3.org/2000/09/xmldsig# Seed"`
-	PgenCounter CryptoBinary  `xml:"http://www.w3.org/2000/09/xmldsig# PgenCounter"`
+	P           string `xml:"http://www.w3.org/2000/09/xmldsig# P"`
+	Q           string `xml:"http://www.w3.org/2000/09/xmldsig# Q"`
+	G           string `xml:"http://www.w3.org/2000/09/xmldsig# G,omitempty"`
+	Y           string `xml:"http://www.w3.org/2000/09/xmldsig# Y"`
+	J           string `xml:"http://www.w3.org/2000/09/xmldsig# J,omitempty"`
+	Seed        string `xml:"http://www.w3.org/2000/09/xmldsig# Seed"`
+	PgenCounter string `xml:"http://www.w3.org/2000/09/xmldsig# PgenCounter"`
 }
 
 // Interface for types that extend DSAKeyValueType
@@ -472,8 +460,8 @@ type IDSAKeyValueType interface {
 func (DSAKeyValueType) IsXmldsigDSAKeyValueType() {}
 
 type RSAKeyValueType struct {
-	Modulus  CryptoBinary `xml:"http://www.w3.org/2000/09/xmldsig# Modulus"`
-	Exponent CryptoBinary `xml:"http://www.w3.org/2000/09/xmldsig# Exponent"`
+	Modulus  string `xml:"http://www.w3.org/2000/09/xmldsig# Modulus"`
+	Exponent string `xml:"http://www.w3.org/2000/09/xmldsig# Exponent"`
 }
 
 // Interface for types that extend RSAKeyValueType

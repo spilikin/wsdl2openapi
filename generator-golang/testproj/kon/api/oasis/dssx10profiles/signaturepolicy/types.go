@@ -17,8 +17,6 @@ type GenerateUnderSignaturePolicy struct {
 	DigestAndAlgorithm        *etsi01903132.DigestAlgAndValueType `xml:"DigestAndAlgorithm,omitempty"`
 }
 
-type ReturnSupportedSignaturePolicies string
-
 type UsedSignaturePolicy struct {
 	XMLName                   xml.Name                            `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema# UsedSignaturePolicy"`
 	SignaturePolicyIdentifier string                              `xml:"SignaturePolicyIdentifier"`

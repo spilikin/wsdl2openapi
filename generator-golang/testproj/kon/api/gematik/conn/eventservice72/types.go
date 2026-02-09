@@ -5,20 +5,17 @@ package eventservice72
 import (
 	"encoding/xml"
 	cardservice81 "github.com/test/testproj/kon/api/gematik/conn/cardservice81"
-	cardservicecommon20 "github.com/test/testproj/kon/api/gematik/conn/cardservicecommon20"
 	cardterminalinfo80 "github.com/test/testproj/kon/api/gematik/conn/cardterminalinfo80"
 	connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 	connectorcontext20 "github.com/test/testproj/kon/api/gematik/conn/connectorcontext20"
 )
 
-type SubscriptionID string
-
 type Event struct {
-	XMLName        xml.Name          `xml:"http://ws.gematik.de/conn/EventService/v7.2 Event"`
-	Topic          TopicType         `xml:"Topic"`
-	Type           EventType         `xml:"Type"`
-	Severity       EventSeverityType `xml:"Severity"`
-	SubscriptionID SubscriptionID    `xml:"SubscriptionID"`
+	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Event"`
+	Topic          string   `xml:"Topic"`
+	Type           string   `xml:"Type"`
+	Severity       string   `xml:"Severity"`
+	SubscriptionID string   `xml:"SubscriptionID"`
 	Message        struct {
 		XMLName   xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Message"`
 		Parameter []struct {
@@ -38,21 +35,21 @@ type Subscribe struct {
 type SubscribeResponse struct {
 	XMLName         xml.Name                 `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscribeResponse"`
 	Status          connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	SubscriptionID  SubscriptionID           `xml:"SubscriptionID"`
-	TerminationTime TerminationTime          `xml:"TerminationTime"`
+	SubscriptionID  string                   `xml:"SubscriptionID"`
+	TerminationTime string                   `xml:"TerminationTime"`
 }
 
 type SubscriptionRenewal struct {
-	XMLName         xml.Name        `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscriptionRenewal"`
-	SubscriptionID  SubscriptionID  `xml:"SubscriptionID"`
-	TerminationTime TerminationTime `xml:"TerminationTime"`
+	XMLName         xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscriptionRenewal"`
+	SubscriptionID  string   `xml:"SubscriptionID"`
+	TerminationTime string   `xml:"TerminationTime"`
 }
 
 type Unsubscribe struct {
 	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/EventService/v7.2 Unsubscribe"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	SubscriptionID *SubscriptionID            `xml:"SubscriptionID,omitempty"`
-	EventTo        *EventTo                   `xml:"EventTo,omitempty"`
+	SubscriptionID string                     `xml:"SubscriptionID,omitempty"`
+	EventTo        string                     `xml:"EventTo,omitempty"`
 }
 
 type UnsubscribeResponse struct {
@@ -64,7 +61,7 @@ type GetSubscription struct {
 	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetSubscription"`
 	MandantWide    bool                       `xml:"mandant-wide,attr,omitempty"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	SubscriptionID *SubscriptionID            `xml:"SubscriptionID,omitempty"`
+	SubscriptionID string                     `xml:"SubscriptionID,omitempty"`
 }
 
 type GetSubscriptionResponse struct {
@@ -77,12 +74,12 @@ type GetSubscriptionResponse struct {
 }
 
 type GetResourceInformation struct {
-	XMLName    xml.Name                      `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetResourceInformation"`
-	Context    connectorcontext20.Context    `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CtId       *cardservicecommon20.CtId     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId,omitempty"`
-	SlotId     *cardservicecommon20.SlotId   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId,omitempty"`
-	Iccsn      *cardservicecommon20.Iccsn    `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CardHandle *connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle,omitempty"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetResourceInformation"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CtId       string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId,omitempty"`
+	SlotId     int                        `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId,omitempty"`
+	Iccsn      string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle,omitempty"`
 }
 
 type GetResourceInformationResponse struct {
@@ -94,12 +91,12 @@ type GetResourceInformationResponse struct {
 }
 
 type GetCards struct {
-	XMLName     xml.Name                      `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetCards"`
-	MandantWide bool                          `xml:"mandant-wide,attr,omitempty"`
-	Context     connectorcontext20.Context    `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CtId        *cardservicecommon20.CtId     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId,omitempty"`
-	SlotId      *cardservicecommon20.SlotId   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId,omitempty"`
-	CardType    *cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
+	XMLName     xml.Name                   `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetCards"`
+	MandantWide bool                       `xml:"mandant-wide,attr,omitempty"`
+	Context     connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CtId        string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId,omitempty"`
+	SlotId      int                        `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId,omitempty"`
+	CardType    string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
 }
 
 type GetCardsResponse struct {
@@ -121,22 +118,18 @@ type GetCardTerminalsResponse struct {
 }
 
 type Subscription struct {
-	XMLName         xml.Name         `xml:"http://ws.gematik.de/conn/EventService/v7.2 Subscription"`
-	SubscriptionID  *SubscriptionID  `xml:"SubscriptionID,omitempty"`
-	TerminationTime *TerminationTime `xml:"TerminationTime,omitempty"`
-	EventTo         EventTo          `xml:"EventTo"`
-	Topic           TopicType        `xml:"Topic"`
-	Filter          *FilterType      `xml:"Filter,omitempty"`
+	XMLName         xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Subscription"`
+	SubscriptionID  string   `xml:"SubscriptionID,omitempty"`
+	TerminationTime string   `xml:"TerminationTime,omitempty"`
+	EventTo         string   `xml:"EventTo"`
+	Topic           string   `xml:"Topic"`
+	Filter          string   `xml:"Filter,omitempty"`
 }
-
-type TerminationTime string
-
-type EventTo string
 
 type RenewSubscriptions struct {
 	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/EventService/v7.2 RenewSubscriptions"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	SubscriptionID []SubscriptionID           `xml:"SubscriptionID"`
+	SubscriptionID []string                   `xml:"SubscriptionID"`
 }
 
 type RenewSubscriptionsResponse struct {
@@ -148,22 +141,12 @@ type RenewSubscriptionsResponse struct {
 	} `xml:"SubscribeRenewals"`
 }
 
-type SubscriptionIDType string
-
-type TopicType string
-
-type FilterType string
-
-type EventType string
-
-type EventSeverityType string
-
 type SubscriptionType struct {
-	SubscriptionID  *SubscriptionID  `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscriptionID,omitempty"`
-	TerminationTime *TerminationTime `xml:"http://ws.gematik.de/conn/EventService/v7.2 TerminationTime,omitempty"`
-	EventTo         EventTo          `xml:"http://ws.gematik.de/conn/EventService/v7.2 EventTo"`
-	Topic           TopicType        `xml:"http://ws.gematik.de/conn/EventService/v7.2 Topic"`
-	Filter          *FilterType      `xml:"http://ws.gematik.de/conn/EventService/v7.2 Filter,omitempty"`
+	SubscriptionID  string `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscriptionID,omitempty"`
+	TerminationTime string `xml:"http://ws.gematik.de/conn/EventService/v7.2 TerminationTime,omitempty"`
+	EventTo         string `xml:"http://ws.gematik.de/conn/EventService/v7.2 EventTo"`
+	Topic           string `xml:"http://ws.gematik.de/conn/EventService/v7.2 Topic"`
+	Filter          string `xml:"http://ws.gematik.de/conn/EventService/v7.2 Filter,omitempty"`
 }
 
 // Interface for types that extend SubscriptionType

@@ -58,7 +58,7 @@ type DocumentHash struct {
 	WhichReference int                   `xml:"WhichReference,attr,omitempty"`
 	Transforms     *xmldsig.Transforms   `xml:"http://www.w3.org/2000/09/xmldsig# Transforms,omitempty"`
 	DigestMethod   *xmldsig.DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod,omitempty"`
-	DigestValue    xmldsig.DigestValue   `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue    string                `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 // extends #/components/schemas/oasis.names.tc.dss10.core/DocumentBaseType
@@ -103,17 +103,11 @@ type OptionalOutputs struct {
 	UnknownContent string
 }
 
-type ServicePolicy string
-
 type ClaimedIdentity struct {
 	XMLName        xml.Name                           `xml:"urn:oasis:names:tc:dss:1.0:core:schema ClaimedIdentity"`
 	Name           saml10assertion.NameIdentifierType `xml:"Name"`
 	SupportingInfo *AnyType                           `xml:"SupportingInfo,omitempty"`
 }
-
-type Language string
-
-type AdditionalProfile string
 
 type Schemas struct {
 	XMLName xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema Schemas"`
@@ -163,8 +157,6 @@ type SignResponse struct {
 
 // extends #/components/schemas/oasis.names.tc.dss10.core/ResponseBaseType
 func (SignResponse) IsCoreResponseBaseType() {}
-
-type SignatureType string
 
 type AddTimestamp struct {
 	XMLName xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema AddTimestamp"`
@@ -259,10 +251,6 @@ type ManifestResult struct {
 	Status         string   `xml:"Status"`
 }
 
-type UseVerificationTime string
-
-type ReturnVerificationTimeInfo string
-
 type AdditionalTimeInfo struct {
 	XMLName  xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema AdditionalTimeInfo"`
 	Type     string   `xml:"Type,attr"`
@@ -281,16 +269,12 @@ type AdditionalKeyInfo struct {
 	KeyInfo xmldsig.KeyInfo `xml:"http://www.w3.org/2000/09/xmldsig# KeyInfo"`
 }
 
-type ReturnProcessingDetails string
-
 type ProcessingDetails struct {
 	XMLName             xml.Name     `xml:"urn:oasis:names:tc:dss:1.0:core:schema ProcessingDetails"`
 	ValidDetail         []DetailType `xml:"ValidDetail"`
 	IndeterminateDetail []DetailType `xml:"IndeterminateDetail"`
 	InvalidDetail       []DetailType `xml:"InvalidDetail"`
 }
-
-type ReturnSigningTimeInfo string
 
 type SigningTimeInfo struct {
 	XMLName               xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeInfo"`
@@ -301,8 +285,6 @@ type SigningTimeInfo struct {
 		UpperBoundary string   `xml:"UpperBoundary,omitempty"`
 	} `xml:"SigningTimeBoundaries,omitempty"`
 }
-
-type ReturnSignerIdentity string
 
 type SignerIdentity struct {
 	XMLName       xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignerIdentity"`
@@ -372,7 +354,7 @@ type AttachmentReference struct {
 	AttRefURI    string               `xml:"AttRefURI,attr,omitempty"`
 	MimeType     string               `xml:"MimeType,attr,omitempty"`
 	DigestMethod xmldsig.DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod"`
-	DigestValue  xmldsig.DigestValue  `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue  string               `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 type AnyType struct {
@@ -605,7 +587,7 @@ type AttachmentReferenceType struct {
 	AttRefURI    string               `xml:"AttRefURI,attr,omitempty"`
 	MimeType     string               `xml:"MimeType,attr,omitempty"`
 	DigestMethod xmldsig.DigestMethod `xml:"http://www.w3.org/2000/09/xmldsig# DigestMethod"`
-	DigestValue  xmldsig.DigestValue  `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
+	DigestValue  string               `xml:"http://www.w3.org/2000/09/xmldsig# DigestValue"`
 }
 
 // Interface for types that extend AttachmentReferenceType

@@ -7,6 +7,30 @@ import (
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
 
+type soapOperation struct {
+	name        string
+	soapAction  string
+	bindingType string
+}
+
+func (op *soapOperation) Name() string {
+	return op.name
+}
+
+func (op *soapOperation) SOAPAction() string {
+	return op.soapAction
+}
+
+func (op *soapOperation) BindingType() string {
+	return op.bindingType
+}
+
+var OperationVerifyDocument = soapOperation{
+	bindingType: "soap11",
+	name:        "VerifyDocument",
+	soapAction:  "http://ws.gematik.de/conn/SignatureService/v7.4#VerifyDocument",
+}
+
 type VerifyDocumentEnvelope struct {
 	XMLName        xml.Name        `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	VerifyDocument *VerifyDocument `xml:"Body>VerifyDocument"`
@@ -29,6 +53,12 @@ type VerifyDocumentResponseEnvelope struct {
 
 func (e *VerifyDocumentResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationSignDocument = soapOperation{
+	bindingType: "soap11",
+	name:        "SignDocument",
+	soapAction:  "http://ws.gematik.de/conn/SignatureService/v7.4#SignDocument",
 }
 
 type SignDocumentEnvelope struct {
@@ -55,6 +85,12 @@ func (e *SignDocumentResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationGetJobNumber = soapOperation{
+	bindingType: "soap11",
+	name:        "GetJobNumber",
+	soapAction:  "http://ws.gematik.de/conn/SignatureService/v7.4#GetJobNumber",
+}
+
 type GetJobNumberEnvelope struct {
 	XMLName      xml.Name      `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	GetJobNumber *GetJobNumber `xml:"Body>GetJobNumber"`
@@ -77,6 +113,12 @@ type GetJobNumberResponseEnvelope struct {
 
 func (e *GetJobNumberResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationStopSignature = soapOperation{
+	bindingType: "soap11",
+	name:        "StopSignature",
+	soapAction:  "http://ws.gematik.de/conn/SignatureService/v7.4#StopSignature",
 }
 
 type StopSignatureEnvelope struct {

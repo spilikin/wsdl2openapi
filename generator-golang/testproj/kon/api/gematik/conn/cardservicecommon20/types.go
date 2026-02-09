@@ -4,33 +4,9 @@ package cardservicecommon20
 
 import connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 
-type CardType string
-
-type CtId string
-
-type SlotId int
-
-type Iccsn string
-
-type PinTyp string
-
-type PinResult string
-
-type KvnrType string
-
-type CtIdType string
-
-type SlotIdType int
-
-type PinTypType string
-
-type CardTypeType string
-
-type IccsnType string
-
 type PinResponseType struct {
 	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult PinResult                `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
 	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
 
@@ -41,5 +17,3 @@ type IPinResponseType interface {
 
 // The type itself implements IPinResponseType
 func (PinResponseType) IsCardServiceCommon20PinResponseType() {}
-
-type PinResultEnum string

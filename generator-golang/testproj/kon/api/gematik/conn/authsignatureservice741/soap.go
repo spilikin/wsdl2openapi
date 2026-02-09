@@ -8,6 +8,30 @@ import (
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
 
+type soapOperation struct {
+	name        string
+	soapAction  string
+	bindingType string
+}
+
+func (op *soapOperation) Name() string {
+	return op.name
+}
+
+func (op *soapOperation) SOAPAction() string {
+	return op.soapAction
+}
+
+func (op *soapOperation) BindingType() string {
+	return op.bindingType
+}
+
+var OperationExternalAuthenticate = soapOperation{
+	bindingType: "soap11",
+	name:        "ExternalAuthenticate",
+	soapAction:  "http://ws.gematik.de/conn/SignatureService/v7.4#ExternalAuthenticate",
+}
+
 type ExternalAuthenticateEnvelope struct {
 	XMLName              xml.Name                                 `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	ExternalAuthenticate *signatureservice74.ExternalAuthenticate `xml:"Body>ExternalAuthenticate"`

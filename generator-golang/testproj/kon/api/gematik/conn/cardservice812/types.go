@@ -4,25 +4,10 @@ package cardservice812
 
 import (
 	"encoding/xml"
-	cardservicecommon20 "github.com/test/testproj/kon/api/gematik/conn/cardservicecommon20"
 	connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 	connectorcontext20 "github.com/test/testproj/kon/api/gematik/conn/connectorcontext20"
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
-
-type Pin string
-
-type Puk string
-
-type OldPin string
-
-type NewPin string
-
-type Kvnr string
-
-type CardHolderName string
-
-type CertificateExpirationDate string
 
 type Cards struct {
 	XMLName xml.Name `xml:"http://ws.gematik.de/conn/CardService/v8.1 Cards"`
@@ -30,9 +15,9 @@ type Cards struct {
 }
 
 type Card struct {
-	XMLName     xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 Card"`
-	CardHandle  connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
+	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/CardService/v8.1 Card"`
+	CardHandle  string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	CardType    string   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
 	CardVersion *struct {
 		XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
 		COSVersion           VersionInfoType  `xml:"COSVersion"`
@@ -44,107 +29,99 @@ type Card struct {
 		GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
 		KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
 	} `xml:"CardVersion,omitempty"`
-	Iccsn                     *cardservicecommon20.Iccsn `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CtId                      cardservicecommon20.CtId   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId                    cardservicecommon20.SlotId `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
-	InsertTime                string                     `xml:"InsertTime"`
-	CardHolderName            *CardHolderName            `xml:"CardHolderName,omitempty"`
-	Kvnr                      *Kvnr                      `xml:"Kvnr,omitempty"`
-	CertificateExpirationDate *CertificateExpirationDate `xml:"CertificateExpirationDate,omitempty"`
+	Iccsn                     string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CtId                      string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId                    int    `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	InsertTime                string `xml:"InsertTime"`
+	CardHolderName            string `xml:"CardHolderName,omitempty"`
+	Kvnr                      string `xml:"Kvnr,omitempty"`
+	CertificateExpirationDate string `xml:"CertificateExpirationDate,omitempty"`
 }
 
 type VerifyPin struct {
-	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 VerifyPin"`
-	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	PinTyp     cardservicecommon20.PinTyp   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardService/v8.1 VerifyPin"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	PinTyp     string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
 }
 
 type VerifyPinResponse struct {
-	XMLName   xml.Name                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 VerifyPinResponse"`
-	Status    connectorcommon50.Status      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult cardservicecommon20.PinResult `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
-	LeftTries int                           `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
+	XMLName   xml.Name                 `xml:"http://ws.gematik.de/conn/CardService/v8.1 VerifyPinResponse"`
+	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
 
 type ChangePin struct {
-	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 ChangePin"`
-	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	PinTyp     cardservicecommon20.PinTyp   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardService/v8.1 ChangePin"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	PinTyp     string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
 }
 
 type ChangePinResponse struct {
-	XMLName   xml.Name                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 ChangePinResponse"`
-	Status    connectorcommon50.Status      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult cardservicecommon20.PinResult `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
-	LeftTries int                           `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
+	XMLName   xml.Name                 `xml:"http://ws.gematik.de/conn/CardService/v8.1 ChangePinResponse"`
+	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
 
 type GetPinStatus struct {
-	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 GetPinStatus"`
-	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	PinTyp     cardservicecommon20.PinTyp   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardService/v8.1 GetPinStatus"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	PinTyp     string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
 }
 
 type GetPinStatusResponse struct {
 	XMLName   xml.Name                 `xml:"http://ws.gematik.de/conn/CardService/v8.1 GetPinStatusResponse"`
 	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinStatus *PinStatusEnum           `xml:"PinStatus,omitempty"`
+	PinStatus string                   `xml:"PinStatus,omitempty"`
 	LeftTries int                      `xml:"LeftTries,omitempty"`
 }
 
 type UnblockPin struct {
-	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 UnblockPin"`
-	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	PinTyp     cardservicecommon20.PinTyp   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
-	SetNewPin  bool                         `xml:"SetNewPin,omitempty"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardService/v8.1 UnblockPin"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	PinTyp     string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
+	SetNewPin  bool                       `xml:"SetNewPin,omitempty"`
 }
 
 type UnblockPinResponse struct {
-	XMLName   xml.Name                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 UnblockPinResponse"`
-	Status    connectorcommon50.Status      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult cardservicecommon20.PinResult `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
-	LeftTries int                           `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
+	XMLName   xml.Name                 `xml:"http://ws.gematik.de/conn/CardService/v8.1 UnblockPinResponse"`
+	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
 
 type EnablePin struct {
-	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 EnablePin"`
-	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	PinTyp     cardservicecommon20.PinTyp   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardService/v8.1 EnablePin"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	PinTyp     string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
 }
 
 type EnablePinResponse struct {
-	XMLName   xml.Name                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 EnablePinResponse"`
-	Status    connectorcommon50.Status      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult cardservicecommon20.PinResult `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
-	LeftTries int                           `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
+	XMLName   xml.Name                 `xml:"http://ws.gematik.de/conn/CardService/v8.1 EnablePinResponse"`
+	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
 
 type DisablePin struct {
-	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 DisablePin"`
-	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	PinTyp     cardservicecommon20.PinTyp   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardService/v8.1 DisablePin"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	PinTyp     string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinTyp"`
 }
 
 type DisablePinResponse struct {
-	XMLName   xml.Name                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 DisablePinResponse"`
-	Status    connectorcommon50.Status      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult cardservicecommon20.PinResult `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
-	LeftTries int                           `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
+	XMLName   xml.Name                 `xml:"http://ws.gematik.de/conn/CardService/v8.1 DisablePinResponse"`
+	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
-
-type RequestCardResultEnum string
-
-type PinStatusEnum string
-
-type PinType string
-
-type CommonStepsEnum string
 
 type VersionInfoType struct {
 	Major    int `xml:"http://ws.gematik.de/conn/CardService/v8.1 Major"`
@@ -153,8 +130,8 @@ type VersionInfoType struct {
 }
 
 type CardInfoType struct {
-	CardHandle  connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
+	CardHandle  string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	CardType    string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
 	CardVersion *struct {
 		XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
 		COSVersion           VersionInfoType  `xml:"COSVersion"`
@@ -166,13 +143,13 @@ type CardInfoType struct {
 		GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
 		KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
 	} `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion,omitempty"`
-	Iccsn                     *cardservicecommon20.Iccsn `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CtId                      cardservicecommon20.CtId   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId                    cardservicecommon20.SlotId `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
-	InsertTime                string                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
-	CardHolderName            *CardHolderName            `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
-	Kvnr                      *Kvnr                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
-	CertificateExpirationDate *CertificateExpirationDate `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
+	Iccsn                     string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CtId                      string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId                    int    `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	InsertTime                string `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
+	CardHolderName            string `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
+	Kvnr                      string `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
+	CertificateExpirationDate string `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
 }
 
 // Interface for types that extend CardInfoType
@@ -184,8 +161,8 @@ type ICardInfoType interface {
 func (CardInfoType) IsCardService812CardInfoType() {}
 
 type CardInfoErrType struct {
-	CardHandle  connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
+	CardHandle  string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	CardType    string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
 	CardVersion *struct {
 		XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
 		COSVersion           VersionInfoType  `xml:"COSVersion"`
@@ -197,14 +174,14 @@ type CardInfoErrType struct {
 		GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
 		KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
 	} `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion,omitempty"`
-	Iccsn                     *cardservicecommon20.Iccsn `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CtId                      cardservicecommon20.CtId   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId                    cardservicecommon20.SlotId `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
-	InsertTime                string                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
-	CardHolderName            *CardHolderName            `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
-	Kvnr                      *Kvnr                      `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
-	CertificateExpirationDate *CertificateExpirationDate `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
-	Error                     *error20.Error             `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
+	Iccsn                     string         `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CtId                      string         `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId                    int            `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	InsertTime                string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
+	CardHolderName            string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
+	Kvnr                      string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
+	CertificateExpirationDate string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
+	Error                     *error20.Error `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
 }
 
 // extends #/components/schemas/de.gematik.ws.conn.CardService812/CardInfoType

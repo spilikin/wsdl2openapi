@@ -154,23 +154,17 @@ func (g *Generator) generatePackageTypes(packageName string) error {
 
 		jenFile.Line()
 
-		switch t := typePtr.Type.(type) {
-		case *TypeObject:
+		if t, ok := typePtr.Type.(*TypeObject); ok {
 			err := g.renderGlobalObject(jenFile, typeName, typePtr, t)
 			if err != nil {
 				return fmt.Errorf("failed to render struct for type %s in schema %s: %w", typeName, packageName, err)
 			}
-		case *TypeString:
-			jenFile.Type().Id(typeName).String()
-		case *TypeInteger:
-			jenFile.Type().Id(typeName).Int()
-		case *TypeBoolean:
-			jenFile.Type().Id(typeName).Bool()
-		case *TypeNumber:
-			jenFile.Type().Id(typeName).Float64()
-		default:
+		} else if typePtr.Type.IsPrimitive() {
+			// skip generating type definitions for primitive types, as they are directly used in the struct fields
+		} else {
 			return fmt.Errorf("unsupported type definition for type %s in schema %s: %T", typeName, packageName, typePtr.Type)
 		}
+
 	}
 	err = jenFile.Save(schemaPath)
 	if err != nil {
@@ -183,7 +177,7 @@ func (g *Generator) renderGlobalObject(jenFile *jen.File, typeName string, typeP
 
 	fields, err := g.renderProperties(typePtr, typeDef)
 	if err != nil {
-		return fmt.Errorf("failed to render properties for type %s in package %s: %w", typeName, typePtr.PackageName, err)
+		return fmt.Errorf("failed to render pr	operties for type %s in package %s: %w", typeName, typePtr.PackageName, err)
 	}
 	jenFile.Type().Id(typeName).Struct(fields...)
 
@@ -280,14 +274,22 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, baseTypePtr, 
 	propType := propTypePtr.Type
 
 	if propTypePtr.Qual != nil {
-		// add pointer only for non-array, nullable, non-base types
-		if !isArray && propTypePtr.Nullable && !propTypePtr.IsBase {
+		// add pointer only for non-array, nullable, non-base, non-primitive types
+		if propTypePtr.Nullable && !isArray && !propTypePtr.IsBase && !propType.IsPrimitive() {
 			stmt = stmt.Op("*")
+			addOmitempty()
+		} else if propTypePtr.Nullable && propTypePtr.Type.IsPrimitive() {
 			addOmitempty()
 		}
 		if propTypePtr.IsBase {
 			interfaceName := g.NamingStrategy.BaseTypeInterfaceName(propTypePtr.Qual.Name)
 			stmt = stmt.Qual(propTypePtr.Qual.Path, interfaceName)
+		} else if propType.IsPrimitive() {
+			primitiveTypeStmt, err := g.golangPrimitiveType(&propType)
+			if err != nil {
+				return nil, err
+			}
+			stmt = stmt.Add(primitiveTypeStmt)
 		} else {
 			stmt = stmt.Qual(propTypePtr.Qual.Path, propTypePtr.Qual.Name)
 		}
@@ -329,6 +331,21 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, baseTypePtr, 
 	stmt = stmt.Tag(tag)
 
 	return stmt, nil
+}
+
+func (g *Generator) golangPrimitiveType(primitiveType *TypeDefinition) (jen.Code, error) {
+	switch t := (*primitiveType).(type) {
+	case *TypeString:
+		return jen.String(), nil
+	case *TypeInteger:
+		return jen.Int(), nil
+	case *TypeNumber:
+		return jen.Float64(), nil
+	case *TypeBoolean:
+		return jen.Bool(), nil
+	default:
+		return nil, fmt.Errorf("unsupported primitive type: %T", t)
+	}
 }
 
 func (g *Generator) resolveRef(ref string) (*Qual, json.RawMessage, error) {

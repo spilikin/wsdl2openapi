@@ -194,6 +194,7 @@ type ReferenceObject struct {
 
 type TypeDefinition interface {
 	GetType() Type
+	IsPrimitive() bool
 }
 
 type Type struct {
@@ -213,6 +214,10 @@ func (t TypeObject) GetType() Type {
 	return t.Type
 }
 
+func (t TypeObject) IsPrimitive() bool {
+	return false
+}
+
 type TypeString struct {
 	Type
 	Pattern          string `json:"pattern,omitempty"`
@@ -225,6 +230,10 @@ type TypeString struct {
 
 func (t TypeString) GetType() Type {
 	return t.Type
+}
+
+func (t TypeString) IsPrimitive() bool {
+	return true
 }
 
 type TypeNumber struct {
@@ -240,12 +249,20 @@ func (t TypeNumber) GetType() Type {
 	return t.Type
 }
 
+func (t TypeNumber) IsPrimitive() bool {
+	return true
+}
+
 type TypeBoolean struct {
 	Type
 }
 
 func (t TypeBoolean) GetType() Type {
 	return t.Type
+}
+
+func (t TypeBoolean) IsPrimitive() bool {
+	return true
 }
 
 type TypeInteger struct {
@@ -256,12 +273,20 @@ func (t TypeInteger) GetType() Type {
 	return t.Type
 }
 
+func (t TypeInteger) IsPrimitive() bool {
+	return true
+}
+
 type TypeNull struct {
 	Type
 }
 
 func (t TypeNull) GetType() Type {
 	return t.Type
+}
+
+func (t TypeNull) IsPrimitive() bool {
+	return true
 }
 
 type TypeArray struct {
@@ -271,4 +296,8 @@ type TypeArray struct {
 
 func (t TypeArray) GetType() Type {
 	return t.Type
+}
+
+func (t TypeArray) IsPrimitive() bool {
+	return false
 }

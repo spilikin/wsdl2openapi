@@ -38,10 +38,6 @@ type Issuer struct {
 	CharData        string   `xml:"chardata"`
 }
 
-type AssertionIDRef string
-
-type AssertionURIRef string
-
 type Assertion struct {
 	XMLName                xml.Name                 `xml:"urn:oasis:names:tc:SAML:2.0:assertion Assertion"`
 	Version                string                   `xml:"Version,attr"`
@@ -101,11 +97,9 @@ type Condition struct {
 }
 
 type AudienceRestriction struct {
-	XMLName  xml.Name   `xml:"urn:oasis:names:tc:SAML:2.0:assertion AudienceRestriction"`
-	Audience []Audience `xml:"Audience"`
+	XMLName  xml.Name `xml:"urn:oasis:names:tc:SAML:2.0:assertion AudienceRestriction"`
+	Audience []string `xml:"Audience"`
 }
-
-type Audience string
 
 type OneTimeUse struct {
 	XMLName  xml.Name `xml:"urn:oasis:names:tc:SAML:2.0:assertion OneTimeUse"`
@@ -113,15 +107,15 @@ type OneTimeUse struct {
 }
 
 type ProxyRestriction struct {
-	XMLName  xml.Name   `xml:"urn:oasis:names:tc:SAML:2.0:assertion ProxyRestriction"`
-	Count    int        `xml:"Count,attr,omitempty"`
-	Audience []Audience `xml:"Audience"`
+	XMLName  xml.Name `xml:"urn:oasis:names:tc:SAML:2.0:assertion ProxyRestriction"`
+	Count    int      `xml:"Count,attr,omitempty"`
+	Audience []string `xml:"Audience"`
 }
 
 type Advice struct {
 	XMLName            xml.Name             `xml:"urn:oasis:names:tc:SAML:2.0:assertion Advice"`
-	AssertionIDRef     []AssertionIDRef     `xml:"AssertionIDRef"`
-	AssertionURIRef    []AssertionURIRef    `xml:"AssertionURIRef"`
+	AssertionIDRef     []string             `xml:"AssertionIDRef,omitempty"`
+	AssertionURIRef    []string             `xml:"AssertionURIRef,omitempty"`
 	Assertion          []Assertion          `xml:"Assertion"`
 	EncryptedAssertion []EncryptedAssertion `xml:"EncryptedAssertion"`
 	UnknownContent     string
@@ -153,27 +147,19 @@ type SubjectLocality struct {
 }
 
 type AuthnContext struct {
-	XMLName                 xml.Name                  `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContext"`
-	AuthnContextClassRef    AuthnContextClassRef      `xml:"AuthnContextClassRef"`
-	AuthnContextDecl        *AuthnContextDecl         `xml:"AuthnContextDecl,omitempty"`
-	AuthnContextDeclRef     *AuthnContextDeclRef      `xml:"AuthnContextDeclRef,omitempty"`
-	AuthenticatingAuthority []AuthenticatingAuthority `xml:"AuthenticatingAuthority"`
+	XMLName                 xml.Name `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContext"`
+	AuthnContextClassRef    string   `xml:"AuthnContextClassRef"`
+	AuthnContextDecl        string   `xml:"AuthnContextDecl,omitempty"`
+	AuthnContextDeclRef     string   `xml:"AuthnContextDeclRef,omitempty"`
+	AuthenticatingAuthority []string `xml:"AuthenticatingAuthority"`
 }
 
-type AuthnContextClassRef string
-
-type AuthnContextDeclRef string
-
-type AuthnContextDecl string
-
-type AuthenticatingAuthority string
-
 type AuthzDecisionStatement struct {
-	XMLName  xml.Name     `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthzDecisionStatement"`
-	Resource string       `xml:"Resource,attr"`
-	Decision DecisionType `xml:"Decision,attr"`
-	Action   []Action     `xml:"Action"`
-	Evidence *Evidence    `xml:"Evidence,omitempty"`
+	XMLName  xml.Name  `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthzDecisionStatement"`
+	Resource string    `xml:"Resource,attr"`
+	Decision string    `xml:"Decision,attr"`
+	Action   []Action  `xml:"Action"`
+	Evidence *Evidence `xml:"Evidence,omitempty"`
 }
 
 type Action struct {
@@ -184,8 +170,8 @@ type Action struct {
 
 type Evidence struct {
 	XMLName            xml.Name             `xml:"urn:oasis:names:tc:SAML:2.0:assertion Evidence"`
-	AssertionIDRef     []AssertionIDRef     `xml:"AssertionIDRef"`
-	AssertionURIRef    []AssertionURIRef    `xml:"AssertionURIRef"`
+	AssertionIDRef     []string             `xml:"AssertionIDRef,omitempty"`
+	AssertionURIRef    []string             `xml:"AssertionURIRef,omitempty"`
 	Assertion          []Assertion          `xml:"Assertion"`
 	EncryptedAssertion []EncryptedAssertion `xml:"EncryptedAssertion"`
 }
@@ -197,15 +183,13 @@ type AttributeStatement struct {
 }
 
 type Attribute struct {
-	XMLName           xml.Name         `xml:"urn:oasis:names:tc:SAML:2.0:assertion Attribute"`
-	Name              string           `xml:"Name,attr"`
-	NameFormat        string           `xml:"NameFormat,attr,omitempty"`
-	FriendlyName      string           `xml:"FriendlyName,attr,omitempty"`
-	UnknownAttributes string           `xml:"anyAttribute,attr,omitempty"`
-	AttributeValue    []AttributeValue `xml:"AttributeValue"`
+	XMLName           xml.Name `xml:"urn:oasis:names:tc:SAML:2.0:assertion Attribute"`
+	Name              string   `xml:"Name,attr"`
+	NameFormat        string   `xml:"NameFormat,attr,omitempty"`
+	FriendlyName      string   `xml:"FriendlyName,attr,omitempty"`
+	UnknownAttributes string   `xml:"anyAttribute,attr,omitempty"`
+	AttributeValue    []string `xml:"AttributeValue"`
 }
-
-type AttributeValue string
 
 type EncryptedAttribute struct {
 	XMLName       xml.Name              `xml:"urn:oasis:names:tc:SAML:2.0:assertion EncryptedAttribute"`
@@ -365,7 +349,7 @@ type IConditionAbstractType interface {
 func (ConditionAbstractType) IsAssertionConditionAbstractType() {}
 
 type AudienceRestrictionType struct {
-	Audience []Audience `xml:"urn:oasis:names:tc:SAML:2.0:assertion Audience"`
+	Audience []string `xml:"urn:oasis:names:tc:SAML:2.0:assertion Audience"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML20.assertion/ConditionAbstractType
@@ -395,8 +379,8 @@ type IOneTimeUseType interface {
 func (OneTimeUseType) IsAssertionOneTimeUseType() {}
 
 type ProxyRestrictionType struct {
-	Count    int        `xml:"Count,attr,omitempty"`
-	Audience []Audience `xml:"urn:oasis:names:tc:SAML:2.0:assertion Audience"`
+	Count    int      `xml:"Count,attr,omitempty"`
+	Audience []string `xml:"urn:oasis:names:tc:SAML:2.0:assertion Audience"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML20.assertion/ConditionAbstractType
@@ -411,8 +395,8 @@ type IProxyRestrictionType interface {
 func (ProxyRestrictionType) IsAssertionProxyRestrictionType() {}
 
 type AdviceType struct {
-	AssertionIDRef     []AssertionIDRef     `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionIDRef"`
-	AssertionURIRef    []AssertionURIRef    `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionURIRef"`
+	AssertionIDRef     []string             `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionIDRef,omitempty"`
+	AssertionURIRef    []string             `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionURIRef,omitempty"`
 	Assertion          []Assertion          `xml:"urn:oasis:names:tc:SAML:2.0:assertion Assertion"`
 	EncryptedAssertion []EncryptedAssertion `xml:"urn:oasis:names:tc:SAML:2.0:assertion EncryptedAssertion"`
 	UnknownContent     string
@@ -469,10 +453,10 @@ type ISubjectLocalityType interface {
 func (SubjectLocalityType) IsAssertionSubjectLocalityType() {}
 
 type AuthnContextType struct {
-	AuthnContextClassRef    AuthnContextClassRef      `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContextClassRef"`
-	AuthnContextDecl        *AuthnContextDecl         `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContextDecl,omitempty"`
-	AuthnContextDeclRef     *AuthnContextDeclRef      `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContextDeclRef,omitempty"`
-	AuthenticatingAuthority []AuthenticatingAuthority `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthenticatingAuthority"`
+	AuthnContextClassRef    string   `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContextClassRef"`
+	AuthnContextDecl        string   `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContextDecl,omitempty"`
+	AuthnContextDeclRef     string   `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthnContextDeclRef,omitempty"`
+	AuthenticatingAuthority []string `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthenticatingAuthority"`
 }
 
 // Interface for types that extend AuthnContextType
@@ -484,10 +468,10 @@ type IAuthnContextType interface {
 func (AuthnContextType) IsAssertionAuthnContextType() {}
 
 type AuthzDecisionStatementType struct {
-	Resource string       `xml:"Resource,attr"`
-	Decision DecisionType `xml:"Decision,attr"`
-	Action   []Action     `xml:"urn:oasis:names:tc:SAML:2.0:assertion Action"`
-	Evidence *Evidence    `xml:"urn:oasis:names:tc:SAML:2.0:assertion Evidence,omitempty"`
+	Resource string    `xml:"Resource,attr"`
+	Decision string    `xml:"Decision,attr"`
+	Action   []Action  `xml:"urn:oasis:names:tc:SAML:2.0:assertion Action"`
+	Evidence *Evidence `xml:"urn:oasis:names:tc:SAML:2.0:assertion Evidence,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML20.assertion/StatementAbstractType
@@ -500,8 +484,6 @@ type IAuthzDecisionStatementType interface {
 
 // The type itself implements IAuthzDecisionStatementType
 func (AuthzDecisionStatementType) IsAssertionAuthzDecisionStatementType() {}
-
-type DecisionType string
 
 type ActionType struct {
 	Namespace string `xml:"Namespace,attr"`
@@ -517,8 +499,8 @@ type IActionType interface {
 func (ActionType) IsAssertionActionType() {}
 
 type EvidenceType struct {
-	AssertionIDRef     []AssertionIDRef     `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionIDRef"`
-	AssertionURIRef    []AssertionURIRef    `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionURIRef"`
+	AssertionIDRef     []string             `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionIDRef,omitempty"`
+	AssertionURIRef    []string             `xml:"urn:oasis:names:tc:SAML:2.0:assertion AssertionURIRef,omitempty"`
 	Assertion          []Assertion          `xml:"urn:oasis:names:tc:SAML:2.0:assertion Assertion"`
 	EncryptedAssertion []EncryptedAssertion `xml:"urn:oasis:names:tc:SAML:2.0:assertion EncryptedAssertion"`
 }
@@ -548,11 +530,11 @@ type IAttributeStatementType interface {
 func (AttributeStatementType) IsAssertionAttributeStatementType() {}
 
 type AttributeType struct {
-	Name              string           `xml:"Name,attr"`
-	NameFormat        string           `xml:"NameFormat,attr,omitempty"`
-	FriendlyName      string           `xml:"FriendlyName,attr,omitempty"`
-	UnknownAttributes string           `xml:"anyAttribute,attr,omitempty"`
-	AttributeValue    []AttributeValue `xml:"urn:oasis:names:tc:SAML:2.0:assertion AttributeValue"`
+	Name              string   `xml:"Name,attr"`
+	NameFormat        string   `xml:"NameFormat,attr,omitempty"`
+	FriendlyName      string   `xml:"FriendlyName,attr,omitempty"`
+	UnknownAttributes string   `xml:"anyAttribute,attr,omitempty"`
+	AttributeValue    []string `xml:"urn:oasis:names:tc:SAML:2.0:assertion AttributeValue"`
 }
 
 // Interface for types that extend AttributeType

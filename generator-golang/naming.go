@@ -111,3 +111,7 @@ func (n NamingStrategy) OutputEnvelopeName(op *OperationDefinition) string {
 func (n NamingStrategy) FaultStructName(op *OperationDefinition) string {
 	return n.PublicIdentifier(op.Name) + "Fault"
 }
+
+func (n NamingStrategy) OperationVarName(op *OperationDefinition) string {
+	return "Operation" + n.PublicIdentifier(op.Name)
+}

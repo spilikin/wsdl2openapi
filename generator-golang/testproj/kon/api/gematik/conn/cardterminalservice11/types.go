@@ -5,18 +5,17 @@ package cardterminalservice11
 import (
 	"encoding/xml"
 	cardservice81 "github.com/test/testproj/kon/api/gematik/conn/cardservice81"
-	cardservicecommon20 "github.com/test/testproj/kon/api/gematik/conn/cardservicecommon20"
 	connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 	connectorcontext20 "github.com/test/testproj/kon/api/gematik/conn/connectorcontext20"
 )
 
 type RequestCard struct {
-	XMLName    xml.Name                      `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 RequestCard"`
-	Context    connectorcontext20.Context    `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	Slot       Slot                          `xml:"Slot"`
-	CardType   *cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
-	DisplayMsg *DisplayMsg                   `xml:"DisplayMsg,omitempty"`
-	TimeOut    *TimeOut                      `xml:"TimeOut,omitempty"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 RequestCard"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	Slot       Slot                       `xml:"Slot"`
+	CardType   string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
+	DisplayMsg string                     `xml:"DisplayMsg,omitempty"`
+	TimeOut    int                        `xml:"TimeOut,omitempty"`
 }
 
 type RequestCardResponse struct {
@@ -27,12 +26,12 @@ type RequestCardResponse struct {
 }
 
 type EjectCard struct {
-	XMLName    xml.Name                      `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 EjectCard"`
-	Context    connectorcontext20.Context    `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CardHandle *connectorcommon50.CardHandle `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle,omitempty"`
-	Slot       *Slot                         `xml:"Slot,omitempty"`
-	DisplayMsg *DisplayMsg                   `xml:"DisplayMsg,omitempty"`
-	TimeOut    *TimeOut                      `xml:"TimeOut,omitempty"`
+	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 EjectCard"`
+	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle,omitempty"`
+	Slot       *Slot                      `xml:"Slot,omitempty"`
+	DisplayMsg string                     `xml:"DisplayMsg,omitempty"`
+	TimeOut    int                        `xml:"TimeOut,omitempty"`
 }
 
 type EjectCardResponse struct {
@@ -41,11 +40,7 @@ type EjectCardResponse struct {
 }
 
 type Slot struct {
-	XMLName xml.Name                   `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 Slot"`
-	CtId    cardservicecommon20.CtId   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId  cardservicecommon20.SlotId `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	XMLName xml.Name `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 Slot"`
+	CtId    string   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId  int      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
 }
-
-type DisplayMsg string
-
-type TimeOut int

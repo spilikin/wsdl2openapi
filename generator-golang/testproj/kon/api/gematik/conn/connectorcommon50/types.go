@@ -10,32 +10,14 @@ import (
 
 type Status struct {
 	XMLName xml.Name       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	Result  Result         `xml:"Result"`
+	Result  string         `xml:"Result"`
 	Error   *error20.Error `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
 }
 
-type Result string
-
-type CardHandle string
-
-type EhcHandle string
-
-type HpcHandle string
-
-type SmcHandle string
-
-type WorkplaceId string
-
 type WorkplaceIds struct {
-	XMLName     xml.Name      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceIds"`
-	WorkplaceId []WorkplaceId `xml:"WorkplaceId"`
+	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceIds"`
+	WorkplaceId []string `xml:"WorkplaceId"`
 }
-
-type MandantId string
-
-type ClientSystemId string
-
-type UserId string
 
 type Connector struct {
 	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Connector"`
@@ -87,18 +69,6 @@ type XslStylesheet struct {
 	Data    string   `xml:"Data"`
 	RefURI  string   `xml:"RefURI"`
 }
-
-type ResultEnum string
-
-type CardHandleType string
-
-type WorkplaceIdType string
-
-type MandantIdType string
-
-type ClientSystemIdType string
-
-type UserIdType string
 
 type AttachmentType struct {
 	Data   string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Data"`

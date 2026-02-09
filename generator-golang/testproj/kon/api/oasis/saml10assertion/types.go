@@ -7,8 +7,6 @@ import (
 	xmldsig "github.com/test/testproj/kon/api/w3200009/xmldsig"
 )
 
-type AssertionIDReference string
-
 type Assertion struct {
 	XMLName                        xml.Name                         `xml:"urn:oasis:names:tc:SAML:1.0:assertion Assertion"`
 	MajorVersion                   int                              `xml:"MajorVersion,attr"`
@@ -40,11 +38,9 @@ type Condition struct {
 }
 
 type AudienceRestrictionCondition struct {
-	XMLName  xml.Name   `xml:"urn:oasis:names:tc:SAML:1.0:assertion AudienceRestrictionCondition"`
-	Audience []Audience `xml:"Audience"`
+	XMLName  xml.Name `xml:"urn:oasis:names:tc:SAML:1.0:assertion AudienceRestrictionCondition"`
+	Audience []string `xml:"Audience"`
 }
-
-type Audience string
 
 type DoNotCacheCondition struct {
 	XMLName  xml.Name `xml:"urn:oasis:names:tc:SAML:1.0:assertion DoNotCacheCondition"`
@@ -52,9 +48,9 @@ type DoNotCacheCondition struct {
 }
 
 type Advice struct {
-	XMLName              xml.Name               `xml:"urn:oasis:names:tc:SAML:1.0:assertion Advice"`
-	AssertionIDReference []AssertionIDReference `xml:"AssertionIDReference"`
-	Assertion            []Assertion            `xml:"Assertion"`
+	XMLName              xml.Name    `xml:"urn:oasis:names:tc:SAML:1.0:assertion Advice"`
+	AssertionIDReference []string    `xml:"AssertionIDReference,omitempty"`
+	Assertion            []Assertion `xml:"Assertion"`
 	UnknownContent       string
 }
 
@@ -81,15 +77,11 @@ type NameIdentifier struct {
 }
 
 type SubjectConfirmation struct {
-	XMLName                 xml.Name                 `xml:"urn:oasis:names:tc:SAML:1.0:assertion SubjectConfirmation"`
-	ConfirmationMethod      []ConfirmationMethod     `xml:"ConfirmationMethod"`
-	SubjectConfirmationData *SubjectConfirmationData `xml:"SubjectConfirmationData,omitempty"`
-	KeyInfo                 *xmldsig.KeyInfo         `xml:"http://www.w3.org/2000/09/xmldsig# KeyInfo,omitempty"`
+	XMLName                 xml.Name         `xml:"urn:oasis:names:tc:SAML:1.0:assertion SubjectConfirmation"`
+	ConfirmationMethod      []string         `xml:"ConfirmationMethod"`
+	SubjectConfirmationData string           `xml:"SubjectConfirmationData,omitempty"`
+	KeyInfo                 *xmldsig.KeyInfo `xml:"http://www.w3.org/2000/09/xmldsig# KeyInfo,omitempty"`
 }
-
-type SubjectConfirmationData string
-
-type ConfirmationMethod string
 
 type AuthenticationStatement struct {
 	XMLName               xml.Name           `xml:"urn:oasis:names:tc:SAML:1.0:assertion AuthenticationStatement"`
@@ -114,12 +106,12 @@ type AuthorityBinding struct {
 }
 
 type AuthorizationDecisionStatement struct {
-	XMLName  xml.Name     `xml:"urn:oasis:names:tc:SAML:1.0:assertion AuthorizationDecisionStatement"`
-	Resource string       `xml:"Resource,attr"`
-	Decision DecisionType `xml:"Decision,attr"`
-	Subject  Subject      `xml:"Subject"`
-	Action   []Action     `xml:"Action"`
-	Evidence *Evidence    `xml:"Evidence,omitempty"`
+	XMLName  xml.Name  `xml:"urn:oasis:names:tc:SAML:1.0:assertion AuthorizationDecisionStatement"`
+	Resource string    `xml:"Resource,attr"`
+	Decision string    `xml:"Decision,attr"`
+	Subject  Subject   `xml:"Subject"`
+	Action   []Action  `xml:"Action"`
+	Evidence *Evidence `xml:"Evidence,omitempty"`
 }
 
 type Action struct {
@@ -129,9 +121,9 @@ type Action struct {
 }
 
 type Evidence struct {
-	XMLName              xml.Name               `xml:"urn:oasis:names:tc:SAML:1.0:assertion Evidence"`
-	AssertionIDReference []AssertionIDReference `xml:"AssertionIDReference"`
-	Assertion            []Assertion            `xml:"Assertion"`
+	XMLName              xml.Name    `xml:"urn:oasis:names:tc:SAML:1.0:assertion Evidence"`
+	AssertionIDReference []string    `xml:"AssertionIDReference,omitempty"`
+	Assertion            []Assertion `xml:"Assertion"`
 }
 
 type AttributeStatement struct {
@@ -147,15 +139,11 @@ type AttributeDesignator struct {
 }
 
 type Attribute struct {
-	XMLName            xml.Name         `xml:"urn:oasis:names:tc:SAML:1.0:assertion Attribute"`
-	AttributeName      string           `xml:"AttributeName,attr"`
-	AttributeNamespace string           `xml:"AttributeNamespace,attr"`
-	AttributeValue     []AttributeValue `xml:"AttributeValue"`
+	XMLName            xml.Name `xml:"urn:oasis:names:tc:SAML:1.0:assertion Attribute"`
+	AttributeName      string   `xml:"AttributeName,attr"`
+	AttributeNamespace string   `xml:"AttributeNamespace,attr"`
+	AttributeValue     []string `xml:"AttributeValue"`
 }
-
-type AttributeValue string
-
-type DecisionType string
 
 type AssertionType struct {
 	MajorVersion                   int                              `xml:"MajorVersion,attr"`
@@ -208,7 +196,7 @@ type IConditionAbstractType interface {
 func (ConditionAbstractType) IsAssertionConditionAbstractType() {}
 
 type AudienceRestrictionConditionType struct {
-	Audience []Audience `xml:"urn:oasis:names:tc:SAML:1.0:assertion Audience"`
+	Audience []string `xml:"urn:oasis:names:tc:SAML:1.0:assertion Audience"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML10.assertion/ConditionAbstractType
@@ -238,8 +226,8 @@ type IDoNotCacheConditionType interface {
 func (DoNotCacheConditionType) IsAssertionDoNotCacheConditionType() {}
 
 type AdviceType struct {
-	AssertionIDReference []AssertionIDReference `xml:"urn:oasis:names:tc:SAML:1.0:assertion AssertionIDReference"`
-	Assertion            []Assertion            `xml:"urn:oasis:names:tc:SAML:1.0:assertion Assertion"`
+	AssertionIDReference []string    `xml:"urn:oasis:names:tc:SAML:1.0:assertion AssertionIDReference,omitempty"`
+	Assertion            []Assertion `xml:"urn:oasis:names:tc:SAML:1.0:assertion Assertion"`
 	UnknownContent       string
 }
 
@@ -304,9 +292,9 @@ type INameIdentifierType interface {
 func (NameIdentifierType) IsAssertionNameIdentifierType() {}
 
 type SubjectConfirmationType struct {
-	ConfirmationMethod      []ConfirmationMethod     `xml:"urn:oasis:names:tc:SAML:1.0:assertion ConfirmationMethod"`
-	SubjectConfirmationData *SubjectConfirmationData `xml:"urn:oasis:names:tc:SAML:1.0:assertion SubjectConfirmationData,omitempty"`
-	KeyInfo                 *xmldsig.KeyInfo         `xml:"http://www.w3.org/2000/09/xmldsig# KeyInfo,omitempty"`
+	ConfirmationMethod      []string         `xml:"urn:oasis:names:tc:SAML:1.0:assertion ConfirmationMethod"`
+	SubjectConfirmationData string           `xml:"urn:oasis:names:tc:SAML:1.0:assertion SubjectConfirmationData,omitempty"`
+	KeyInfo                 *xmldsig.KeyInfo `xml:"http://www.w3.org/2000/09/xmldsig# KeyInfo,omitempty"`
 }
 
 // Interface for types that extend SubjectConfirmationType
@@ -367,11 +355,11 @@ type IAuthorityBindingType interface {
 func (AuthorityBindingType) IsAssertionAuthorityBindingType() {}
 
 type AuthorizationDecisionStatementType struct {
-	Resource string       `xml:"Resource,attr"`
-	Decision DecisionType `xml:"Decision,attr"`
-	Subject  Subject      `xml:"urn:oasis:names:tc:SAML:1.0:assertion Subject"`
-	Action   []Action     `xml:"urn:oasis:names:tc:SAML:1.0:assertion Action"`
-	Evidence *Evidence    `xml:"urn:oasis:names:tc:SAML:1.0:assertion Evidence,omitempty"`
+	Resource string    `xml:"Resource,attr"`
+	Decision string    `xml:"Decision,attr"`
+	Subject  Subject   `xml:"urn:oasis:names:tc:SAML:1.0:assertion Subject"`
+	Action   []Action  `xml:"urn:oasis:names:tc:SAML:1.0:assertion Action"`
+	Evidence *Evidence `xml:"urn:oasis:names:tc:SAML:1.0:assertion Evidence,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML10.assertion/SubjectStatementAbstractType
@@ -402,8 +390,8 @@ type IActionType interface {
 func (ActionType) IsAssertionActionType() {}
 
 type EvidenceType struct {
-	AssertionIDReference []AssertionIDReference `xml:"urn:oasis:names:tc:SAML:1.0:assertion AssertionIDReference"`
-	Assertion            []Assertion            `xml:"urn:oasis:names:tc:SAML:1.0:assertion Assertion"`
+	AssertionIDReference []string    `xml:"urn:oasis:names:tc:SAML:1.0:assertion AssertionIDReference,omitempty"`
+	Assertion            []Assertion `xml:"urn:oasis:names:tc:SAML:1.0:assertion Assertion"`
 }
 
 // Interface for types that extend EvidenceType
@@ -447,9 +435,9 @@ type IAttributeDesignatorType interface {
 func (AttributeDesignatorType) IsAssertionAttributeDesignatorType() {}
 
 type AttributeType struct {
-	AttributeName      string           `xml:"AttributeName,attr"`
-	AttributeNamespace string           `xml:"AttributeNamespace,attr"`
-	AttributeValue     []AttributeValue `xml:"urn:oasis:names:tc:SAML:1.0:assertion AttributeValue"`
+	AttributeName      string   `xml:"AttributeName,attr"`
+	AttributeNamespace string   `xml:"AttributeNamespace,attr"`
+	AttributeValue     []string `xml:"urn:oasis:names:tc:SAML:1.0:assertion AttributeValue"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML10.assertion/AttributeDesignatorType

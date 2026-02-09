@@ -7,6 +7,30 @@ import (
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
 
+type soapOperation struct {
+	name        string
+	soapAction  string
+	bindingType string
+}
+
+func (op *soapOperation) Name() string {
+	return op.name
+}
+
+func (op *soapOperation) SOAPAction() string {
+	return op.soapAction
+}
+
+func (op *soapOperation) BindingType() string {
+	return op.bindingType
+}
+
+var OperationCheckCertificateExpiration = soapOperation{
+	bindingType: "soap11",
+	name:        "CheckCertificateExpiration",
+	soapAction:  "http://ws.gematik.de/conn/CertificateService/v6.0#CheckCertificateExpiration",
+}
+
 type CheckCertificateExpirationEnvelope struct {
 	XMLName                    xml.Name                    `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	CheckCertificateExpiration *CheckCertificateExpiration `xml:"Body>CheckCertificateExpiration"`
@@ -31,6 +55,12 @@ func (e *CheckCertificateExpirationResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationReadCardCertificate = soapOperation{
+	bindingType: "soap11",
+	name:        "ReadCardCertificate",
+	soapAction:  "http://ws.gematik.de/conn/CertificateService/v6.0#ReadCardCertificate",
+}
+
 type ReadCardCertificateEnvelope struct {
 	XMLName             xml.Name             `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	ReadCardCertificate *ReadCardCertificate `xml:"Body>ReadCardCertificate"`
@@ -53,6 +83,12 @@ type ReadCardCertificateResponseEnvelope struct {
 
 func (e *ReadCardCertificateResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationVerifyCertificate = soapOperation{
+	bindingType: "soap11",
+	name:        "VerifyCertificate",
+	soapAction:  "http://ws.gematik.de/conn/CertificateService/v6.0#VerifyCertificate",
 }
 
 type VerifyCertificateEnvelope struct {

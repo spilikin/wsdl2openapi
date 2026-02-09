@@ -80,10 +80,48 @@ func (g *Generator) renderService(ctx *soapContext) error {
 	return nil
 }
 
+func (g *Generator) renderOperationTypeStruct(jenFile *jen.File, ctx *soapContext) error {
+	// generate private struct we will use to duck type for external usage without dependency on the generator package,
+	// since we cannot use the OperationDefinition struct directly due to the WebServiceMessage fields which contain raw XML that needs to be parsed and cannot be easily represented in a way that is useful for external users of the generated code
+	jenFile.Type().Id("soapOperation").Struct(
+		jen.Id("name").String(),
+		jen.Id("soapAction").String(),
+		jen.Id("bindingType").String(),
+	)
+	jenFile.Line()
+	// add duck type functions to access private fields
+	jenFile.Func().Params(jen.Id("op").Op("*").Id("soapOperation")).Id("Name").Params().String().Block(
+		jen.Return(jen.Id("op").Dot("name")),
+	)
+	jenFile.Line()
+	jenFile.Func().Params(jen.Id("op").Op("*").Id("soapOperation")).Id("SOAPAction").Params().String().Block(
+		jen.Return(jen.Id("op").Dot("soapAction")),
+	)
+	jenFile.Line()
+	jenFile.Func().Params(jen.Id("op").Op("*").Id("soapOperation")).Id("BindingType").Params().String().Block(
+		jen.Return(jen.Id("op").Dot("bindingType")),
+	)
+	jenFile.Line()
+	return nil
+}
+
 func (g *Generator) renderPort(jenFile *jen.File, ctx *soapContext) error {
+	if err := g.renderOperationTypeStruct(jenFile, ctx); err != nil {
+		return err
+	}
 	for _, operation := range ctx.port.Operations {
 		slog.Info("Generating SOAP operation", "operation", operation.Name)
 		ctx.op = &operation
+
+		jenFile.Var().Id(g.NamingStrategy.OperationVarName(&operation)).Op("=").Id("soapOperation").Values(
+			jen.Dict{
+				jen.Id("name"):        jen.Lit(operation.Name),
+				jen.Id("soapAction"):  jen.Lit(operation.SOAPAction),
+				jen.Id("bindingType"): jen.Lit(string(ctx.port.BindingType)),
+			},
+		)
+		jenFile.Line()
+
 		switch ctx.port.BindingType {
 		case SOAP11:
 			if err := g.renderOperation11(jenFile, ctx); err != nil {
@@ -96,11 +134,13 @@ func (g *Generator) renderPort(jenFile *jen.File, ctx *soapContext) error {
 	return nil
 }
 
-func (g *Generator) renderOperation11(jenFile *jen.File, ctx *soapContext) (err error) {
+func (g *Generator) renderOperation11(jenFile *jen.File, ctx *soapContext) error {
 
-	err = g.renderEnvelopes11(jenFile, ctx)
+	if err := g.renderEnvelopes11(jenFile, ctx); err != nil {
+		return err
+	}
 
-	return err
+	return nil
 }
 
 func (g *Generator) renderEnvelopes11(jenFile *jen.File, ctx *soapContext) error {

@@ -7,6 +7,30 @@ import (
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
 
+type soapOperation struct {
+	name        string
+	soapAction  string
+	bindingType string
+}
+
+func (op *soapOperation) Name() string {
+	return op.name
+}
+
+func (op *soapOperation) SOAPAction() string {
+	return op.soapAction
+}
+
+func (op *soapOperation) BindingType() string {
+	return op.bindingType
+}
+
+var OperationSubscribe = soapOperation{
+	bindingType: "soap11",
+	name:        "Subscribe",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#Subscribe",
+}
+
 type SubscribeEnvelope struct {
 	XMLName   xml.Name   `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	Subscribe *Subscribe `xml:"Body>Subscribe"`
@@ -29,6 +53,12 @@ type SubscribeResponseEnvelope struct {
 
 func (e *SubscribeResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationUnsubscribe = soapOperation{
+	bindingType: "soap11",
+	name:        "Unsubscribe",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#Unsubscribe",
 }
 
 type UnsubscribeEnvelope struct {
@@ -55,6 +85,12 @@ func (e *UnsubscribeResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationGetSubscription = soapOperation{
+	bindingType: "soap11",
+	name:        "GetSubscription",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#GetSubscription",
+}
+
 type GetSubscriptionEnvelope struct {
 	XMLName         xml.Name         `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	GetSubscription *GetSubscription `xml:"Body>GetSubscription"`
@@ -77,6 +113,12 @@ type GetSubscriptionResponseEnvelope struct {
 
 func (e *GetSubscriptionResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationGetResourceInformation = soapOperation{
+	bindingType: "soap11",
+	name:        "GetResourceInformation",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#GetResourceInformation",
 }
 
 type GetResourceInformationEnvelope struct {
@@ -103,6 +145,12 @@ func (e *GetResourceInformationResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationGetCardTerminals = soapOperation{
+	bindingType: "soap11",
+	name:        "GetCardTerminals",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#GetCardTerminals",
+}
+
 type GetCardTerminalsEnvelope struct {
 	XMLName          xml.Name          `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	GetCardTerminals *GetCardTerminals `xml:"Body>GetCardTerminals"`
@@ -127,6 +175,12 @@ func (e *GetCardTerminalsResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationGetCards = soapOperation{
+	bindingType: "soap11",
+	name:        "GetCards",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#GetCards",
+}
+
 type GetCardsEnvelope struct {
 	XMLName  xml.Name  `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	GetCards *GetCards `xml:"Body>GetCards"`
@@ -149,6 +203,12 @@ type GetCardsResponseEnvelope struct {
 
 func (e *GetCardsResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationRenewSubscriptions = soapOperation{
+	bindingType: "soap11",
+	name:        "RenewSubscriptions",
+	soapAction:  "http://ws.gematik.de/conn/EventService/v7.2#RenewSubscriptions",
 }
 
 type RenewSubscriptionsEnvelope struct {

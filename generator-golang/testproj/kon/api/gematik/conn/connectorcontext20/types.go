@@ -2,24 +2,21 @@
 
 package connectorcontext20
 
-import (
-	"encoding/xml"
-	connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
-)
+import "encoding/xml"
 
 type Context struct {
-	XMLName        xml.Name                         `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	MandantId      connectorcommon50.MandantId      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 MandantId"`
-	ClientSystemId connectorcommon50.ClientSystemId `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 ClientSystemId"`
-	WorkplaceId    connectorcommon50.WorkplaceId    `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceId"`
-	UserId         *connectorcommon50.UserId        `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 UserId,omitempty"`
+	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	MandantId      string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 MandantId"`
+	ClientSystemId string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 ClientSystemId"`
+	WorkplaceId    string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceId"`
+	UserId         string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 UserId,omitempty"`
 }
 
 type ContextType struct {
-	MandantId      connectorcommon50.MandantId      `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 MandantId"`
-	ClientSystemId connectorcommon50.ClientSystemId `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 ClientSystemId"`
-	WorkplaceId    connectorcommon50.WorkplaceId    `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceId"`
-	UserId         *connectorcommon50.UserId        `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 UserId,omitempty"`
+	MandantId      string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 MandantId"`
+	ClientSystemId string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 ClientSystemId"`
+	WorkplaceId    string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceId"`
+	UserId         string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 UserId,omitempty"`
 }
 
 // Interface for types that extend ContextType

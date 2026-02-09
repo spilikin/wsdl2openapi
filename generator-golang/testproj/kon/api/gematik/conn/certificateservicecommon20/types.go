@@ -7,8 +7,8 @@ import "encoding/xml"
 type X509DataInfoList struct {
 	XMLName      xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfoList"`
 	X509DataInfo []struct {
-		XMLName  xml.Name    `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
-		CertRef  CertRefEnum `xml:"CertRef"`
+		XMLName  xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
+		CertRef  string   `xml:"CertRef"`
 		X509Data *struct {
 			XMLName          xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509Data"`
 			X509IssuerSerial struct {
@@ -16,25 +16,19 @@ type X509DataInfoList struct {
 				X509IssuerName   string   `xml:"X509IssuerName"`
 				X509SerialNumber string   `xml:"X509SerialNumber"`
 			} `xml:"X509IssuerSerial"`
-			X509SubjectName string          `xml:"X509SubjectName"`
-			X509Certificate X509Certificate `xml:"X509Certificate"`
+			X509SubjectName string `xml:"X509SubjectName"`
+			X509Certificate string `xml:"X509Certificate"`
 		} `xml:"X509Data,omitempty"`
 	} `xml:"X509DataInfo"`
 }
 
 type CheckCertificateDetails struct {
-	XMLName                xml.Name                     `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetails"`
-	CheckCertificateDetail []CheckCertificateDetailEnum `xml:"CheckCertificateDetail"`
+	XMLName                xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetails"`
+	CheckCertificateDetail []string `xml:"CheckCertificateDetail"`
 }
 
-type X509Certificate string
-
-type CertRefEnum string
-
-type CheckCertificateDetailEnum string
-
 type CheckCertificateDetailsType struct {
-	CheckCertificateDetail []CheckCertificateDetailEnum `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetail"`
+	CheckCertificateDetail []string `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetail"`
 }
 
 // Interface for types that extend CheckCertificateDetailsType
@@ -47,8 +41,8 @@ func (CheckCertificateDetailsType) IsCertificateServiceCommon20CheckCertificateD
 
 type X509DataInfoListType struct {
 	X509DataInfo []struct {
-		XMLName  xml.Name    `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
-		CertRef  CertRefEnum `xml:"CertRef"`
+		XMLName  xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
+		CertRef  string   `xml:"CertRef"`
 		X509Data *struct {
 			XMLName          xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509Data"`
 			X509IssuerSerial struct {
@@ -56,8 +50,8 @@ type X509DataInfoListType struct {
 				X509IssuerName   string   `xml:"X509IssuerName"`
 				X509SerialNumber string   `xml:"X509SerialNumber"`
 			} `xml:"X509IssuerSerial"`
-			X509SubjectName string          `xml:"X509SubjectName"`
-			X509Certificate X509Certificate `xml:"X509Certificate"`
+			X509SubjectName string `xml:"X509SubjectName"`
+			X509Certificate string `xml:"X509Certificate"`
 		} `xml:"X509Data,omitempty"`
 	} `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
 }

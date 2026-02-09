@@ -7,6 +7,30 @@ import (
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
 
+type soapOperation struct {
+	name        string
+	soapAction  string
+	bindingType string
+}
+
+func (op *soapOperation) Name() string {
+	return op.name
+}
+
+func (op *soapOperation) SOAPAction() string {
+	return op.soapAction
+}
+
+func (op *soapOperation) BindingType() string {
+	return op.bindingType
+}
+
+var OperationEncryptDocument = soapOperation{
+	bindingType: "soap11",
+	name:        "EncryptDocument",
+	soapAction:  "http://ws.gematik.de/conn/EncryptionService/v6.1#EncryptDocument",
+}
+
 type EncryptDocumentEnvelope struct {
 	XMLName         xml.Name         `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	EncryptDocument *EncryptDocument `xml:"Body>EncryptDocument"`
@@ -29,6 +53,12 @@ type EncryptDocumentResponseEnvelope struct {
 
 func (e *EncryptDocumentResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationDecryptDocument = soapOperation{
+	bindingType: "soap11",
+	name:        "DecryptDocument",
+	soapAction:  "http://ws.gematik.de/conn/crypt/EncryptionService/v6.1#DecryptDocument",
 }
 
 type DecryptDocumentEnvelope struct {

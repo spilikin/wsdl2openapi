@@ -76,13 +76,13 @@ type EncryptionProperty struct {
 }
 
 type DHKeyValue struct {
-	XMLName     xml.Name             `xml:"http://www.w3.org/2001/04/xmlenc# DHKeyValue"`
-	P           xmldsig.CryptoBinary `xml:"P"`
-	Q           xmldsig.CryptoBinary `xml:"Q"`
-	Generator   xmldsig.CryptoBinary `xml:"Generator"`
-	Public      xmldsig.CryptoBinary `xml:"Public"`
-	Seed        xmldsig.CryptoBinary `xml:"seed"`
-	PgenCounter xmldsig.CryptoBinary `xml:"pgenCounter"`
+	XMLName     xml.Name `xml:"http://www.w3.org/2001/04/xmlenc# DHKeyValue"`
+	P           string   `xml:"P"`
+	Q           string   `xml:"Q"`
+	Generator   string   `xml:"Generator"`
+	Public      string   `xml:"Public"`
+	Seed        string   `xml:"seed"`
+	PgenCounter string   `xml:"pgenCounter"`
 }
 
 type EncryptedType struct {
@@ -105,13 +105,11 @@ type IEncryptedType interface {
 func (EncryptedType) IsXmlencEncryptedType() {}
 
 type EncryptionMethodType struct {
-	Algorithm      string       `xml:"Algorithm,attr"`
-	KeySize        *KeySizeType `xml:"http://www.w3.org/2001/04/xmlenc# KeySize,omitempty"`
-	OAEPparams     string       `xml:"http://www.w3.org/2001/04/xmlenc# OAEPparams,omitempty"`
+	Algorithm      string `xml:"Algorithm,attr"`
+	KeySize        int    `xml:"http://www.w3.org/2001/04/xmlenc# KeySize,omitempty"`
+	OAEPparams     string `xml:"http://www.w3.org/2001/04/xmlenc# OAEPparams,omitempty"`
 	UnknownContent string
 }
-
-type KeySizeType int
 
 type CipherDataType struct {
 	CipherValue     string           `xml:"http://www.w3.org/2001/04/xmlenc# CipherValue,omitempty"`
@@ -240,12 +238,12 @@ type IEncryptionPropertyType interface {
 func (EncryptionPropertyType) IsXmlencEncryptionPropertyType() {}
 
 type DHKeyValueType struct {
-	P           xmldsig.CryptoBinary `xml:"http://www.w3.org/2001/04/xmlenc# P"`
-	Q           xmldsig.CryptoBinary `xml:"http://www.w3.org/2001/04/xmlenc# Q"`
-	Generator   xmldsig.CryptoBinary `xml:"http://www.w3.org/2001/04/xmlenc# Generator"`
-	Public      xmldsig.CryptoBinary `xml:"http://www.w3.org/2001/04/xmlenc# Public"`
-	Seed        xmldsig.CryptoBinary `xml:"http://www.w3.org/2001/04/xmlenc# seed"`
-	PgenCounter xmldsig.CryptoBinary `xml:"http://www.w3.org/2001/04/xmlenc# pgenCounter"`
+	P           string `xml:"http://www.w3.org/2001/04/xmlenc# P"`
+	Q           string `xml:"http://www.w3.org/2001/04/xmlenc# Q"`
+	Generator   string `xml:"http://www.w3.org/2001/04/xmlenc# Generator"`
+	Public      string `xml:"http://www.w3.org/2001/04/xmlenc# Public"`
+	Seed        string `xml:"http://www.w3.org/2001/04/xmlenc# seed"`
+	PgenCounter string `xml:"http://www.w3.org/2001/04/xmlenc# pgenCounter"`
 }
 
 // Interface for types that extend DHKeyValueType

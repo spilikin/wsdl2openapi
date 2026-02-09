@@ -200,7 +200,7 @@ type SignedPropertiesType struct {
 }
 
 type SignedSignaturePropertiesType struct {
-	SigningTime               *etsi01903132.SigningTime               `xml:"http://uri.etsi.org/01903/v1.3.2# SigningTime,omitempty"`
+	SigningTime               string                                  `xml:"http://uri.etsi.org/01903/v1.3.2# SigningTime,omitempty"`
 	SigningCertificate        *etsi01903132.SigningCertificate        `xml:"http://uri.etsi.org/01903/v1.3.2# SigningCertificate,omitempty"`
 	SignaturePolicyIdentifier *etsi01903132.SignaturePolicyIdentifier `xml:"http://uri.etsi.org/01903/v1.3.2# SignaturePolicyIdentifier,omitempty"`
 	SignatureProductionPlace  *etsi01903132.SignatureProductionPlace  `xml:"http://uri.etsi.org/01903/v1.3.2# SignatureProductionPlace,omitempty"`
@@ -457,7 +457,7 @@ type SingleResponseType struct {
 }
 
 type TrustStatusListValidityType struct {
-	TSLTag                   etsi022312.TSLTagType                `xml:"TSLTag,attr"`
+	TSLTag                   string                               `xml:"TSLTag,attr"`
 	Id                       string                               `xml:"Id,attr,omitempty"`
 	SchemeInformation        etsi022312.SchemeInformation         `xml:"http://uri.etsi.org/02231/v2# SchemeInformation"`
 	TrustServiceProviderList *etsi022312.TrustServiceProviderList `xml:"http://uri.etsi.org/02231/v2# TrustServiceProviderList,omitempty"`

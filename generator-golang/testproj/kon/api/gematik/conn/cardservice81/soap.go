@@ -7,6 +7,30 @@ import (
 	error20 "github.com/test/testproj/kon/api/gematik/tel/error20"
 )
 
+type soapOperation struct {
+	name        string
+	soapAction  string
+	bindingType string
+}
+
+func (op *soapOperation) Name() string {
+	return op.name
+}
+
+func (op *soapOperation) SOAPAction() string {
+	return op.soapAction
+}
+
+func (op *soapOperation) BindingType() string {
+	return op.bindingType
+}
+
+var OperationVerifyPin = soapOperation{
+	bindingType: "soap11",
+	name:        "VerifyPin",
+	soapAction:  "http://ws.gematik.de/conn/CardService/v8.1#VerifyPin",
+}
+
 type VerifyPinEnvelope struct {
 	XMLName   xml.Name   `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	VerifyPin *VerifyPin `xml:"Body>VerifyPin"`
@@ -29,6 +53,12 @@ type VerifyPinResponseEnvelope struct {
 
 func (e *VerifyPinResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationChangePin = soapOperation{
+	bindingType: "soap11",
+	name:        "ChangePin",
+	soapAction:  "http://ws.gematik.de/conn/CardService/v8.1#ChangePin",
 }
 
 type ChangePinEnvelope struct {
@@ -55,6 +85,12 @@ func (e *ChangePinResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationUnblockPin = soapOperation{
+	bindingType: "soap11",
+	name:        "UnblockPin",
+	soapAction:  "http://ws.gematik.de/conn/CardService/v8.1#UnblockPin",
+}
+
 type UnblockPinEnvelope struct {
 	XMLName    xml.Name    `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	UnblockPin *UnblockPin `xml:"Body>UnblockPin"`
@@ -79,6 +115,12 @@ func (e *UnblockPinResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
 }
 
+var OperationGetPinStatus = soapOperation{
+	bindingType: "soap11",
+	name:        "GetPinStatus",
+	soapAction:  "http://ws.gematik.de/conn/CardService/v8.1#GetPinStatus",
+}
+
 type GetPinStatusEnvelope struct {
 	XMLName      xml.Name      `xml:"http://schemas.xmlsoap.org/soap/envelope/ Envelope"`
 	GetPinStatus *GetPinStatus `xml:"Body>GetPinStatus"`
@@ -101,6 +143,12 @@ type GetPinStatusResponseEnvelope struct {
 
 func (e *GetPinStatusResponseEnvelope) IsFault() bool {
 	return e.Fault != nil
+}
+
+var OperationAuthorizeSMC = soapOperation{
+	bindingType: "soap11",
+	name:        "AuthorizeSMC",
+	soapAction:  "http://ws.gematik.de/conn/CardService/v8.1#AuthorizeSMC",
 }
 
 type AuthorizeSMCEnvelope struct {
