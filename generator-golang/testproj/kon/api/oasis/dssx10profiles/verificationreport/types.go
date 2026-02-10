@@ -91,27 +91,14 @@ type IndividualOCSPReport struct {
 }
 
 type EvidenceRecordReport struct {
-	XMLName         xml.Name                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EvidenceRecordReport"`
-	Id              string                  `xml:"Id,attr,omitempty"`
-	FormatOK        VerificationResultType  `xml:"FormatOK"`
-	Version         int                     `xml:"Version,omitempty"`
-	DigestAlgorithm []AlgorithmValidityType `xml:"DigestAlgorithm"`
-	CryptoInfos     *struct {
-		XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CryptoInfos"`
-		Attribute []AttributeType `xml:"Attribute"`
-	} `xml:"CryptoInfos,omitempty"`
-	EncryptionInfo *struct {
-		XMLName             xml.Name              `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EncryptionInfo"`
-		EncryptionInfoType  AlgorithmValidityType `xml:"EncryptionInfoType"`
-		EncryptionInfoValue dss10core.AnyType     `xml:"EncryptionInfoValue"`
-	} `xml:"EncryptionInfo,omitempty"`
-	ArchiveTimeStampSequence struct {
-		XMLName               xml.Name `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampSequence"`
-		ArchiveTimeStampChain []struct {
-			XMLName          xml.Name                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampChain"`
-			ArchiveTimeStamp []ArchiveTimeStampValidityType `xml:"ArchiveTimeStamp"`
-		} `xml:"ArchiveTimeStampChain"`
-	} `xml:"ArchiveTimeStampSequence"`
+	XMLName                  xml.Name                                           `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EvidenceRecordReport"`
+	Id                       string                                             `xml:"Id,attr,omitempty"`
+	FormatOK                 VerificationResultType                             `xml:"FormatOK"`
+	Version                  int                                                `xml:"Version,omitempty"`
+	DigestAlgorithm          []AlgorithmValidityType                            `xml:"DigestAlgorithm"`
+	CryptoInfos              *EvidenceRecordValidityTypeCryptoInfos             `xml:"CryptoInfos,omitempty"`
+	EncryptionInfo           *EvidenceRecordValidityTypeEncryptionInfo          `xml:"EncryptionInfo,omitempty"`
+	ArchiveTimeStampSequence EvidenceRecordValidityTypeArchiveTimeStampSequence `xml:"ArchiveTimeStampSequence"`
 }
 
 type VerificationReportType struct {
@@ -246,18 +233,15 @@ type EntityType struct {
 }
 
 type AttributeCertificateContentType struct {
-	Version               int                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version,omitempty"`
-	Holder                EntityType         `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Holder"`
-	Issuer                EntityType         `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Issuer"`
-	SignatureAlgorithm    string             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# SignatureAlgorithm"`
-	SerialNumber          int                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# SerialNumber"`
-	AttCertValidityPeriod ValidityPeriodType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# AttCertValidityPeriod"`
-	Attributes            struct {
-		XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes"`
-		Attribute []AttributeType `xml:"Attribute"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes"`
-	IssuerUniqueID string          `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# IssuerUniqueID,omitempty"`
-	Extensions     *ExtensionsType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Extensions,omitempty"`
+	Version               int                                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version,omitempty"`
+	Holder                EntityType                                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Holder"`
+	Issuer                EntityType                                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Issuer"`
+	SignatureAlgorithm    string                                    `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# SignatureAlgorithm"`
+	SerialNumber          int                                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# SerialNumber"`
+	AttCertValidityPeriod ValidityPeriodType                        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# AttCertValidityPeriod"`
+	Attributes            AttributeCertificateContentTypeAttributes `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes"`
+	IssuerUniqueID        string                                    `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# IssuerUniqueID,omitempty"`
+	Extensions            *ExtensionsType                           `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Extensions,omitempty"`
 }
 
 type ValidityPeriodType struct {
@@ -366,20 +350,9 @@ type CertificateContentType struct {
 }
 
 type CertificateStatusType struct {
-	CertStatusOK   VerificationResultType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertStatusOK"`
-	RevocationInfo *struct {
-		XMLName          xml.Name               `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationInfo"`
-		RevocationDate   string                 `xml:"RevocationDate"`
-		RevocationReason VerificationResultType `xml:"RevocationReason"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationInfo,omitempty"`
-	RevocationEvidence *struct {
-		XMLName       xml.Name                         `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationEvidence"`
-		CRLValidity   *CRLValidityType                 `xml:"CRLValidity,omitempty"`
-		CRLReference  *etsi01903132.CRLIdentifierType  `xml:"CRLReference,omitempty"`
-		OCSPValidity  *OCSPValidityType                `xml:"OCSPValidity,omitempty"`
-		OCSPReference *etsi01903132.OCSPIdentifierType `xml:"OCSPReference,omitempty"`
-		Other         *dss10core.AnyType               `xml:"Other,omitempty"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationEvidence,omitempty"`
+	CertStatusOK       VerificationResultType                   `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertStatusOK"`
+	RevocationInfo     *CertificateStatusTypeRevocationInfo     `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationInfo,omitempty"`
+	RevocationEvidence *CertificateStatusTypeRevocationEvidence `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationEvidence,omitempty"`
 }
 
 type CRLValidityType struct {
@@ -400,18 +373,13 @@ type ICRLValidityType interface {
 func (CRLValidityType) IsVerificationreportCRLValidityType() {}
 
 type CRLContentType struct {
-	Version             int                    `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version,omitempty"`
-	Signature           VerificationResultType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Signature"`
-	Issuer              string                 `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Issuer"`
-	ThisUpdate          string                 `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ThisUpdate"`
-	NextUpdate          string                 `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# NextUpdate,omitempty"`
-	RevokedCertificates *struct {
-		XMLName            xml.Name         `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevokedCertificates"`
-		UserCertificate    []int            `xml:"UserCertificate"`
-		RevocationDate     []string         `xml:"RevocationDate"`
-		CrlEntryExtensions []ExtensionsType `xml:"CrlEntryExtensions"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevokedCertificates,omitempty"`
-	CrlExtensions *ExtensionsType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CrlExtensions,omitempty"`
+	Version             int                                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version,omitempty"`
+	Signature           VerificationResultType             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Signature"`
+	Issuer              string                             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Issuer"`
+	ThisUpdate          string                             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ThisUpdate"`
+	NextUpdate          string                             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# NextUpdate,omitempty"`
+	RevokedCertificates *CRLContentTypeRevokedCertificates `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevokedCertificates,omitempty"`
+	CrlExtensions       *ExtensionsType                    `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CrlExtensions,omitempty"`
 }
 
 type OCSPValidityType struct {
@@ -432,28 +400,19 @@ type IOCSPValidityType interface {
 func (OCSPValidityType) IsVerificationreportOCSPValidityType() {}
 
 type OCSPContentType struct {
-	Version     int    `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version"`
-	ResponderID string `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ResponderID"`
-	ProducedAt  string `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# producedAt"`
-	Responses   struct {
-		XMLName        xml.Name             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Responses"`
-		SingleResponse []SingleResponseType `xml:"SingleResponse"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Responses"`
-	ResponseExtensions *ExtensionsType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ResponseExtensions,omitempty"`
+	Version            int                      `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version"`
+	ResponderID        string                   `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ResponderID"`
+	ProducedAt         string                   `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# producedAt"`
+	Responses          OCSPContentTypeResponses `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Responses"`
+	ResponseExtensions *ExtensionsType          `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ResponseExtensions,omitempty"`
 }
 
 type SingleResponseType struct {
-	CertID struct {
-		XMLName        xml.Name `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertID"`
-		HashAlgorithm  string   `xml:"HashAlgorithm"`
-		IssuerNameHash string   `xml:"IssuerNameHash"`
-		IssuerKeyHash  string   `xml:"IssuerKeyHash"`
-		SerialNumber   int      `xml:"SerialNumber"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertID"`
-	CertStatus       VerificationResultType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertStatus"`
-	ThisUpdate       string                 `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ThisUpdate"`
-	NextUpdate       string                 `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# NextUpdate,omitempty"`
-	SingleExtensions *ExtensionsType        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# SingleExtensions,omitempty"`
+	CertID           SingleResponseTypeCertID `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertID"`
+	CertStatus       VerificationResultType   `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertStatus"`
+	ThisUpdate       string                   `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ThisUpdate"`
+	NextUpdate       string                   `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# NextUpdate,omitempty"`
+	SingleExtensions *ExtensionsType          `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# SingleExtensions,omitempty"`
 }
 
 type TrustStatusListValidityType struct {
@@ -489,16 +448,10 @@ type UnsignedSignaturePropertiesType struct {
 }
 
 type RevocationValuesType struct {
-	Id        string `xml:"Id,attr,omitempty"`
-	CRLValues *struct {
-		XMLName     xml.Name          `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CRLValues"`
-		VerifiedCRL []CRLValidityType `xml:"VerifiedCRL"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CRLValues,omitempty"`
-	OCSPValues *struct {
-		XMLName              xml.Name           `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# OCSPValues"`
-		VerifiedOCSPResponse []OCSPValidityType `xml:"VerifiedOCSPResponse"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# OCSPValues,omitempty"`
-	OtherValues *dss10core.AnyType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# OtherValues,omitempty"`
+	Id          string                          `xml:"Id,attr,omitempty"`
+	CRLValues   *RevocationValuesTypeCRLValues  `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CRLValues,omitempty"`
+	OCSPValues  *RevocationValuesTypeOCSPValues `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# OCSPValues,omitempty"`
+	OtherValues *dss10core.AnyType              `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# OtherValues,omitempty"`
 }
 
 type CertificateValuesType struct {
@@ -508,26 +461,13 @@ type CertificateValuesType struct {
 }
 
 type EvidenceRecordValidityType struct {
-	Id              string                  `xml:"Id,attr,omitempty"`
-	FormatOK        VerificationResultType  `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# FormatOK"`
-	Version         int                     `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version,omitempty"`
-	DigestAlgorithm []AlgorithmValidityType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# DigestAlgorithm"`
-	CryptoInfos     *struct {
-		XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CryptoInfos"`
-		Attribute []AttributeType `xml:"Attribute"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CryptoInfos,omitempty"`
-	EncryptionInfo *struct {
-		XMLName             xml.Name              `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EncryptionInfo"`
-		EncryptionInfoType  AlgorithmValidityType `xml:"EncryptionInfoType"`
-		EncryptionInfoValue dss10core.AnyType     `xml:"EncryptionInfoValue"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EncryptionInfo,omitempty"`
-	ArchiveTimeStampSequence struct {
-		XMLName               xml.Name `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampSequence"`
-		ArchiveTimeStampChain []struct {
-			XMLName          xml.Name                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampChain"`
-			ArchiveTimeStamp []ArchiveTimeStampValidityType `xml:"ArchiveTimeStamp"`
-		} `xml:"ArchiveTimeStampChain"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampSequence"`
+	Id                       string                                             `xml:"Id,attr,omitempty"`
+	FormatOK                 VerificationResultType                             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# FormatOK"`
+	Version                  int                                                `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Version,omitempty"`
+	DigestAlgorithm          []AlgorithmValidityType                            `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# DigestAlgorithm"`
+	CryptoInfos              *EvidenceRecordValidityTypeCryptoInfos             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CryptoInfos,omitempty"`
+	EncryptionInfo           *EvidenceRecordValidityTypeEncryptionInfo          `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EncryptionInfo,omitempty"`
+	ArchiveTimeStampSequence EvidenceRecordValidityTypeArchiveTimeStampSequence `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampSequence"`
 }
 
 // Interface for types that extend EvidenceRecordValidityType
@@ -539,24 +479,101 @@ type IEvidenceRecordValidityType interface {
 func (EvidenceRecordValidityType) IsVerificationreportEvidenceRecordValidityType() {}
 
 type ArchiveTimeStampValidityType struct {
-	Id              string                 `xml:"Id,attr,omitempty"`
-	FormatOK        VerificationResultType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# FormatOK"`
-	DigestAlgorithm *AlgorithmValidityType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# DigestAlgorithm,omitempty"`
-	Attributes      *struct {
-		XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes"`
-		Attribute []AttributeType `xml:"Attribute"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes,omitempty"`
-	ReducedHashTree *struct {
-		XMLName         xml.Name `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ReducedHashTree"`
-		PartialHashTree []struct {
-			XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# PartialHashTree"`
-			HashValue []HashValueType `xml:"HashValue"`
-		} `xml:"PartialHashTree"`
-	} `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ReducedHashTree,omitempty"`
-	TimeStamp TimeStampValidityType `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# TimeStamp"`
+	Id              string                                       `xml:"Id,attr,omitempty"`
+	FormatOK        VerificationResultType                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# FormatOK"`
+	DigestAlgorithm *AlgorithmValidityType                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# DigestAlgorithm,omitempty"`
+	Attributes      *ArchiveTimeStampValidityTypeAttributes      `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes,omitempty"`
+	ReducedHashTree *ArchiveTimeStampValidityTypeReducedHashTree `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ReducedHashTree,omitempty"`
+	TimeStamp       TimeStampValidityType                        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# TimeStamp"`
 }
 
 type HashValueType struct {
 	HashedObject string `xml:"HashedObject,attr,omitempty"`
 	HashValue    string `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# HashValue"`
+}
+
+type AttributeCertificateContentTypeAttributes struct {
+	XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes"`
+	Attribute []AttributeType `xml:"Attribute"`
+}
+
+type CertificateStatusTypeRevocationInfo struct {
+	XMLName          xml.Name               `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationInfo"`
+	RevocationDate   string                 `xml:"RevocationDate"`
+	RevocationReason VerificationResultType `xml:"RevocationReason"`
+}
+
+type CertificateStatusTypeRevocationEvidence struct {
+	XMLName       xml.Name                         `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevocationEvidence"`
+	CRLValidity   *CRLValidityType                 `xml:"CRLValidity,omitempty"`
+	CRLReference  *etsi01903132.CRLIdentifierType  `xml:"CRLReference,omitempty"`
+	OCSPValidity  *OCSPValidityType                `xml:"OCSPValidity,omitempty"`
+	OCSPReference *etsi01903132.OCSPIdentifierType `xml:"OCSPReference,omitempty"`
+	Other         *dss10core.AnyType               `xml:"Other,omitempty"`
+}
+
+type CRLContentTypeRevokedCertificates struct {
+	XMLName            xml.Name         `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# RevokedCertificates"`
+	UserCertificate    []int            `xml:"UserCertificate"`
+	RevocationDate     []string         `xml:"RevocationDate"`
+	CrlEntryExtensions []ExtensionsType `xml:"CrlEntryExtensions"`
+}
+
+type OCSPContentTypeResponses struct {
+	XMLName        xml.Name             `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Responses"`
+	SingleResponse []SingleResponseType `xml:"SingleResponse"`
+}
+
+type SingleResponseTypeCertID struct {
+	XMLName        xml.Name `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CertID"`
+	HashAlgorithm  string   `xml:"HashAlgorithm"`
+	IssuerNameHash string   `xml:"IssuerNameHash"`
+	IssuerKeyHash  string   `xml:"IssuerKeyHash"`
+	SerialNumber   int      `xml:"SerialNumber"`
+}
+
+type RevocationValuesTypeCRLValues struct {
+	XMLName     xml.Name          `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CRLValues"`
+	VerifiedCRL []CRLValidityType `xml:"VerifiedCRL"`
+}
+
+type RevocationValuesTypeOCSPValues struct {
+	XMLName              xml.Name           `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# OCSPValues"`
+	VerifiedOCSPResponse []OCSPValidityType `xml:"VerifiedOCSPResponse"`
+}
+
+type EvidenceRecordValidityTypeCryptoInfos struct {
+	XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# CryptoInfos"`
+	Attribute []AttributeType `xml:"Attribute"`
+}
+
+type EvidenceRecordValidityTypeEncryptionInfo struct {
+	XMLName             xml.Name              `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# EncryptionInfo"`
+	EncryptionInfoType  AlgorithmValidityType `xml:"EncryptionInfoType"`
+	EncryptionInfoValue dss10core.AnyType     `xml:"EncryptionInfoValue"`
+}
+
+type EvidenceRecordValidityTypeArchiveTimeStampSequence struct {
+	XMLName               xml.Name                                                                  `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampSequence"`
+	ArchiveTimeStampChain []EvidenceRecordValidityTypeArchiveTimeStampSequenceArchiveTimeStampChain `xml:"ArchiveTimeStampChain"`
+}
+
+type ArchiveTimeStampValidityTypeAttributes struct {
+	XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# Attributes"`
+	Attribute []AttributeType `xml:"Attribute"`
+}
+
+type ArchiveTimeStampValidityTypeReducedHashTree struct {
+	XMLName         xml.Name                                                     `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ReducedHashTree"`
+	PartialHashTree []ArchiveTimeStampValidityTypeReducedHashTreePartialHashTree `xml:"PartialHashTree"`
+}
+
+type EvidenceRecordValidityTypeArchiveTimeStampSequenceArchiveTimeStampChain struct {
+	XMLName          xml.Name                       `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ArchiveTimeStampChain"`
+	ArchiveTimeStamp []ArchiveTimeStampValidityType `xml:"ArchiveTimeStamp"`
+}
+
+type ArchiveTimeStampValidityTypeReducedHashTreePartialHashTree struct {
+	XMLName   xml.Name        `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# PartialHashTree"`
+	HashValue []HashValueType `xml:"HashValue"`
 }

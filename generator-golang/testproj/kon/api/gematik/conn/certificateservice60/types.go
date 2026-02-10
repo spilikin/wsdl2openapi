@@ -23,13 +23,10 @@ type CheckCertificateExpirationResponse struct {
 }
 
 type ReadCardCertificate struct {
-	XMLName     xml.Name                   `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 ReadCardCertificate"`
-	CardHandle  string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	Context     connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CertRefList struct {
-		XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 CertRefList"`
-		CertRef []string `xml:"CertRef"`
-	} `xml:"CertRefList"`
+	XMLName     xml.Name                       `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 ReadCardCertificate"`
+	CardHandle  string                         `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	Context     connectorcontext20.Context     `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CertRefList ReadCardCertificateCertRefList `xml:"CertRefList"`
 }
 
 type ReadCardCertificateResponse struct {
@@ -46,17 +43,10 @@ type VerifyCertificate struct {
 }
 
 type VerifyCertificateResponse struct {
-	XMLName            xml.Name                 `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerifyCertificateResponse"`
-	Status             connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	VerificationStatus struct {
-		XMLName            xml.Name               `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerificationStatus"`
-		VerificationResult VerificationResultType `xml:"VerificationResult"`
-		Error              *error20.Error         `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
-	} `xml:"VerificationStatus"`
-	RoleList struct {
-		XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 RoleList"`
-		Role    []string `xml:"Role"`
-	} `xml:"RoleList"`
+	XMLName            xml.Name                                    `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerifyCertificateResponse"`
+	Status             connectorcommon50.Status                    `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	VerificationStatus VerifyCertificateResponseVerificationStatus `xml:"VerificationStatus"`
+	RoleList           VerifyCertificateResponseRoleList           `xml:"RoleList"`
 }
 
 type CertificateExpirationType struct {
@@ -76,3 +66,19 @@ const (
 	VerificationResultTypeInconclusive VerificationResultType = "INCONCLUSIVE"
 	VerificationResultTypeInvalid      VerificationResultType = "INVALID"
 )
+
+type ReadCardCertificateCertRefList struct {
+	XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 CertRefList"`
+	CertRef []string `xml:"CertRef"`
+}
+
+type VerifyCertificateResponseVerificationStatus struct {
+	XMLName            xml.Name               `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerificationStatus"`
+	VerificationResult VerificationResultType `xml:"VerificationResult"`
+	Error              *error20.Error         `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
+}
+
+type VerifyCertificateResponseRoleList struct {
+	XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 RoleList"`
+	Role    []string `xml:"Role"`
+}

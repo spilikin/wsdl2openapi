@@ -15,14 +15,10 @@ type CardTerminal struct {
 	WorkplaceIds       connectorcommon50.WorkplaceIds          `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceIds"`
 	Name               string                                  `xml:"Name"`
 	MacAddress         string                                  `xml:"MacAddress"`
-	IPAddress          *struct {
-		XMLName     xml.Name `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IPAddress"`
-		IPV4Address string   `xml:"IPV4Address,omitempty"`
-		IPV6Address string   `xml:"IPV6Address,omitempty"`
-	} `xml:"IPAddress,omitempty"`
-	Slots      int  `xml:"Slots"`
-	IsPhysical bool `xml:"IS_PHYSICAL"`
-	Connected  bool `xml:"Connected"`
+	IPAddress          *CardTerminalInfoTypeIPAddress          `xml:"IPAddress,omitempty"`
+	Slots              int                                     `xml:"Slots"`
+	IsPhysical         bool                                    `xml:"IS_PHYSICAL"`
+	Connected          bool                                    `xml:"Connected"`
 }
 
 type CardTerminals struct {
@@ -36,14 +32,10 @@ type CardTerminalInfoType struct {
 	WorkplaceIds       connectorcommon50.WorkplaceIds          `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceIds"`
 	Name               string                                  `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 Name"`
 	MacAddress         string                                  `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 MacAddress"`
-	IPAddress          *struct {
-		XMLName     xml.Name `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IPAddress"`
-		IPV4Address string   `xml:"IPV4Address,omitempty"`
-		IPV6Address string   `xml:"IPV6Address,omitempty"`
-	} `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IPAddress,omitempty"`
-	Slots      int  `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 Slots"`
-	IsPhysical bool `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IS_PHYSICAL"`
-	Connected  bool `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 Connected"`
+	IPAddress          *CardTerminalInfoTypeIPAddress          `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IPAddress,omitempty"`
+	Slots              int                                     `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 Slots"`
+	IsPhysical         bool                                    `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IS_PHYSICAL"`
+	Connected          bool                                    `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 Connected"`
 }
 
 // Interface for types that extend CardTerminalInfoType
@@ -53,3 +45,9 @@ type ICardTerminalInfoType interface {
 
 // The type itself implements ICardTerminalInfoType
 func (CardTerminalInfoType) IsCardTerminalInfo80CardTerminalInfoType() {}
+
+type CardTerminalInfoTypeIPAddress struct {
+	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/CardTerminalInfo/v8.0 IPAddress"`
+	IPV4Address string   `xml:"IPV4Address,omitempty"`
+	IPV6Address string   `xml:"IPV6Address,omitempty"`
+}

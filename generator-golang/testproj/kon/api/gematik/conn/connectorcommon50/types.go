@@ -28,18 +28,10 @@ type WorkplaceIds struct {
 }
 
 type Connector struct {
-	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Connector"`
-	VPNTIStatus struct {
-		XMLName          xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 VPNTIStatus"`
-		ConnectionStatus string   `xml:"ConnectionStatus"`
-		Timestamp        string   `xml:"Timestamp"`
-	} `xml:"VPNTIStatus"`
-	VPNSISStatus struct {
-		XMLName          xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 VPNSISStatus"`
-		ConnectionStatus string   `xml:"ConnectionStatus"`
-		Timestamp        string   `xml:"Timestamp"`
-	} `xml:"VPNSISStatus"`
-	OperatingState OperatingState `xml:"OperatingState"`
+	XMLName        xml.Name              `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Connector"`
+	VPNTIStatus    ConnectorVPNTIStatus  `xml:"VPNTIStatus"`
+	VPNSISStatus   ConnectorVPNSISStatus `xml:"VPNSISStatus"`
+	OperatingState OperatingState        `xml:"OperatingState"`
 }
 
 type ErrorState struct {
@@ -119,3 +111,15 @@ type IDocumentType interface {
 
 // The type itself implements IDocumentType
 func (DocumentType) IsConnectorCommon50DocumentType() {}
+
+type ConnectorVPNTIStatus struct {
+	XMLName          xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 VPNTIStatus"`
+	ConnectionStatus string   `xml:"ConnectionStatus"`
+	Timestamp        string   `xml:"Timestamp"`
+}
+
+type ConnectorVPNSISStatus struct {
+	XMLName          xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 VPNSISStatus"`
+	ConnectionStatus string   `xml:"ConnectionStatus"`
+	Timestamp        string   `xml:"Timestamp"`
+}

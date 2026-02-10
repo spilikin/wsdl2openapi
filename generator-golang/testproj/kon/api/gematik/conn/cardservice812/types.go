@@ -16,27 +16,17 @@ type Cards struct {
 }
 
 type Card struct {
-	XMLName     xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 Card"`
-	CardHandle  string                       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
-	CardVersion *struct {
-		XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
-		COSVersion           VersionInfoType  `xml:"COSVersion"`
-		ObjectSystemVersion  VersionInfoType  `xml:"ObjectSystemVersion"`
-		CardPTPersVersion    *VersionInfoType `xml:"CardPTPersVersion,omitempty"`
-		DataStructureVersion *VersionInfoType `xml:"DataStructureVersion,omitempty"`
-		LoggingVersion       *VersionInfoType `xml:"LoggingVersion,omitempty"`
-		ATRVersion           *VersionInfoType `xml:"ATRVersion,omitempty"`
-		GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
-		KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
-	} `xml:"CardVersion,omitempty"`
-	Iccsn                     string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CtId                      string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId                    int    `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
-	InsertTime                string `xml:"InsertTime"`
-	CardHolderName            string `xml:"CardHolderName,omitempty"`
-	Kvnr                      string `xml:"Kvnr,omitempty"`
-	CertificateExpirationDate string `xml:"CertificateExpirationDate,omitempty"`
+	XMLName                   xml.Name                     `xml:"http://ws.gematik.de/conn/CardService/v8.1 Card"`
+	CardHandle                string                       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	CardType                  cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
+	CardVersion               *CardInfoTypeCardVersion     `xml:"CardVersion,omitempty"`
+	Iccsn                     string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CtId                      string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId                    int                          `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	InsertTime                string                       `xml:"InsertTime"`
+	CardHolderName            string                       `xml:"CardHolderName,omitempty"`
+	Kvnr                      string                       `xml:"Kvnr,omitempty"`
+	CertificateExpirationDate string                       `xml:"CertificateExpirationDate,omitempty"`
 }
 
 type VerifyPin struct {
@@ -169,26 +159,16 @@ type VersionInfoType struct {
 }
 
 type CardInfoType struct {
-	CardHandle  string                       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
-	CardVersion *struct {
-		XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
-		COSVersion           VersionInfoType  `xml:"COSVersion"`
-		ObjectSystemVersion  VersionInfoType  `xml:"ObjectSystemVersion"`
-		CardPTPersVersion    *VersionInfoType `xml:"CardPTPersVersion,omitempty"`
-		DataStructureVersion *VersionInfoType `xml:"DataStructureVersion,omitempty"`
-		LoggingVersion       *VersionInfoType `xml:"LoggingVersion,omitempty"`
-		ATRVersion           *VersionInfoType `xml:"ATRVersion,omitempty"`
-		GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
-		KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
-	} `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion,omitempty"`
-	Iccsn                     string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CtId                      string `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId                    int    `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
-	InsertTime                string `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
-	CardHolderName            string `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
-	Kvnr                      string `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
-	CertificateExpirationDate string `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
+	CardHandle                string                       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	CardType                  cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
+	CardVersion               *CardInfoTypeCardVersion     `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion,omitempty"`
+	Iccsn                     string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CtId                      string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId                    int                          `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	InsertTime                string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
+	CardHolderName            string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
+	Kvnr                      string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
+	CertificateExpirationDate string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
 }
 
 // Interface for types that extend CardInfoType
@@ -200,28 +180,42 @@ type ICardInfoType interface {
 func (CardInfoType) IsCardService812CardInfoType() {}
 
 type CardInfoErrType struct {
-	CardHandle  string                       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
-	CardVersion *struct {
-		XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
-		COSVersion           VersionInfoType  `xml:"COSVersion"`
-		ObjectSystemVersion  VersionInfoType  `xml:"ObjectSystemVersion"`
-		CardPTPersVersion    *VersionInfoType `xml:"CardPTPersVersion,omitempty"`
-		DataStructureVersion *VersionInfoType `xml:"DataStructureVersion,omitempty"`
-		LoggingVersion       *VersionInfoType `xml:"LoggingVersion,omitempty"`
-		ATRVersion           *VersionInfoType `xml:"ATRVersion,omitempty"`
-		GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
-		KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
-	} `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion,omitempty"`
-	Iccsn                     string         `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
-	CtId                      string         `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
-	SlotId                    int            `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
-	InsertTime                string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
-	CardHolderName            string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
-	Kvnr                      string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
-	CertificateExpirationDate string         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
-	Error                     *error20.Error `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
+	CardHandle                string                       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	CardType                  cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType"`
+	CardVersion               *CardInfoErrTypeCardVersion  `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion,omitempty"`
+	Iccsn                     string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 Iccsn,omitempty"`
+	CtId                      string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId"`
+	SlotId                    int                          `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId"`
+	InsertTime                string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 InsertTime"`
+	CardHolderName            string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardHolderName,omitempty"`
+	Kvnr                      string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 Kvnr,omitempty"`
+	CertificateExpirationDate string                       `xml:"http://ws.gematik.de/conn/CardService/v8.1 CertificateExpirationDate,omitempty"`
+	Error                     *error20.Error               `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
 }
 
 // extends #/components/schemas/de.gematik.ws.conn.CardService812/CardInfoType
 func (CardInfoErrType) IsCardService812CardInfoType() {}
+
+type CardInfoTypeCardVersion struct {
+	XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
+	COSVersion           VersionInfoType  `xml:"COSVersion"`
+	ObjectSystemVersion  VersionInfoType  `xml:"ObjectSystemVersion"`
+	CardPTPersVersion    *VersionInfoType `xml:"CardPTPersVersion,omitempty"`
+	DataStructureVersion *VersionInfoType `xml:"DataStructureVersion,omitempty"`
+	LoggingVersion       *VersionInfoType `xml:"LoggingVersion,omitempty"`
+	ATRVersion           *VersionInfoType `xml:"ATRVersion,omitempty"`
+	GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
+	KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
+}
+
+type CardInfoErrTypeCardVersion struct {
+	XMLName              xml.Name         `xml:"http://ws.gematik.de/conn/CardService/v8.1 CardVersion"`
+	COSVersion           VersionInfoType  `xml:"COSVersion"`
+	ObjectSystemVersion  VersionInfoType  `xml:"ObjectSystemVersion"`
+	CardPTPersVersion    *VersionInfoType `xml:"CardPTPersVersion,omitempty"`
+	DataStructureVersion *VersionInfoType `xml:"DataStructureVersion,omitempty"`
+	LoggingVersion       *VersionInfoType `xml:"LoggingVersion,omitempty"`
+	ATRVersion           *VersionInfoType `xml:"ATRVersion,omitempty"`
+	GDOVersion           *VersionInfoType `xml:"GDOVersion,omitempty"`
+	KeyInfoVersion       *VersionInfoType `xml:"KeyInfoVersion,omitempty"`
+}

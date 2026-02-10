@@ -10,20 +10,11 @@ import (
 )
 
 type EncryptDocument struct {
-	XMLName       xml.Name                   `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 EncryptDocument"`
-	Context       connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	RecipientKeys struct {
-		XMLName           xml.Name           `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 RecipientKeys"`
-		CertificateOnCard *CertificateOnCard `xml:"CertificateOnCard,omitempty"`
-		Certificate       []string           `xml:"Certificate"`
-	} `xml:"RecipientKeys"`
-	Document       connectorcommon50.Document `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Document"`
-	OptionalInputs *struct {
-		XMLName               xml.Name               `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 OptionalInputs"`
-		EncryptionType        EncryptionType         `xml:"EncryptionType,omitempty"`
-		Element               []Element              `xml:"Element"`
-		UnprotectedProperties *UnprotectedProperties `xml:"UnprotectedProperties,omitempty"`
-	} `xml:"OptionalInputs,omitempty"`
+	XMLName        xml.Name                       `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 EncryptDocument"`
+	Context        connectorcontext20.Context     `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	RecipientKeys  EncryptDocumentRecipientKeys   `xml:"RecipientKeys"`
+	Document       connectorcommon50.Document     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Document"`
+	OptionalInputs *EncryptDocumentOptionalInputs `xml:"OptionalInputs,omitempty"`
 }
 
 type EncryptDocumentResponse struct {
@@ -111,3 +102,16 @@ type IKeyOnCardType interface {
 
 // The type itself implements IKeyOnCardType
 func (KeyOnCardType) IsEncryptionService611KeyOnCardType() {}
+
+type EncryptDocumentRecipientKeys struct {
+	XMLName           xml.Name           `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 RecipientKeys"`
+	CertificateOnCard *CertificateOnCard `xml:"CertificateOnCard,omitempty"`
+	Certificate       []string           `xml:"Certificate"`
+}
+
+type EncryptDocumentOptionalInputs struct {
+	XMLName               xml.Name               `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 OptionalInputs"`
+	EncryptionType        EncryptionType         `xml:"EncryptionType,omitempty"`
+	Element               []Element              `xml:"Element"`
+	UnprotectedProperties *UnprotectedProperties `xml:"UnprotectedProperties,omitempty"`
+}

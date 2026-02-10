@@ -17,14 +17,7 @@ type Event struct {
 	Type           EventType         `xml:"Type"`
 	Severity       EventSeverityType `xml:"Severity"`
 	SubscriptionID string            `xml:"SubscriptionID"`
-	Message        struct {
-		XMLName   xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Message"`
-		Parameter []struct {
-			XMLName xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Parameter"`
-			Key     string   `xml:"Key"`
-			Value   string   `xml:"Value"`
-		} `xml:"Parameter"`
-	} `xml:"Message"`
+	Message        EventMessage      `xml:"Message"`
 }
 
 type Subscribe struct {
@@ -66,12 +59,9 @@ type GetSubscription struct {
 }
 
 type GetSubscriptionResponse struct {
-	XMLName       xml.Name                 `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetSubscriptionResponse"`
-	Status        connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	Subscriptions struct {
-		XMLName      xml.Name       `xml:"http://ws.gematik.de/conn/EventService/v7.2 Subscriptions"`
-		Subscription []Subscription `xml:"Subscription"`
-	} `xml:"Subscriptions"`
+	XMLName       xml.Name                             `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetSubscriptionResponse"`
+	Status        connectorcommon50.Status             `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	Subscriptions GetSubscriptionResponseSubscriptions `xml:"Subscriptions"`
 }
 
 type GetResourceInformation struct {
@@ -134,12 +124,9 @@ type RenewSubscriptions struct {
 }
 
 type RenewSubscriptionsResponse struct {
-	XMLName           xml.Name                 `xml:"http://ws.gematik.de/conn/EventService/v7.2 RenewSubscriptionsResponse"`
-	Status            connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	SubscribeRenewals struct {
-		XMLName             xml.Name              `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscribeRenewals"`
-		SubscriptionRenewal []SubscriptionRenewal `xml:"SubscriptionRenewal"`
-	} `xml:"SubscribeRenewals"`
+	XMLName           xml.Name                                    `xml:"http://ws.gematik.de/conn/EventService/v7.2 RenewSubscriptionsResponse"`
+	Status            connectorcommon50.Status                    `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	SubscribeRenewals RenewSubscriptionsResponseSubscribeRenewals `xml:"SubscribeRenewals"`
 }
 
 type EventType string
@@ -178,3 +165,24 @@ type ISubscriptionType interface {
 
 // The type itself implements ISubscriptionType
 func (SubscriptionType) IsEventService72SubscriptionType() {}
+
+type EventMessage struct {
+	XMLName   xml.Name                `xml:"http://ws.gematik.de/conn/EventService/v7.2 Message"`
+	Parameter []EventMessageParameter `xml:"Parameter"`
+}
+
+type GetSubscriptionResponseSubscriptions struct {
+	XMLName      xml.Name       `xml:"http://ws.gematik.de/conn/EventService/v7.2 Subscriptions"`
+	Subscription []Subscription `xml:"Subscription"`
+}
+
+type RenewSubscriptionsResponseSubscribeRenewals struct {
+	XMLName             xml.Name              `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscribeRenewals"`
+	SubscriptionRenewal []SubscriptionRenewal `xml:"SubscriptionRenewal"`
+}
+
+type EventMessageParameter struct {
+	XMLName xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Parameter"`
+	Key     string   `xml:"Key"`
+	Value   string   `xml:"Value"`
+}

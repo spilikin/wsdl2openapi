@@ -88,6 +88,8 @@ func (g *Generator) validateRefs(raw json.RawMessage) error {
 }
 
 func (g *Generator) Generate() error {
+	g.ExtractInlineObjects()
+
 	if err := g.Validate(); err != nil {
 		return fmt.Errorf("validation failed: %w", err)
 	}

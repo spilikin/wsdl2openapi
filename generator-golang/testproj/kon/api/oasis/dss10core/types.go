@@ -277,13 +277,9 @@ type ProcessingDetails struct {
 }
 
 type SigningTimeInfo struct {
-	XMLName               xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeInfo"`
-	SigningTime           string   `xml:"SigningTime"`
-	SigningTimeBoundaries *struct {
-		XMLName       xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeBoundaries"`
-		LowerBoundary string   `xml:"LowerBoundary,omitempty"`
-		UpperBoundary string   `xml:"UpperBoundary,omitempty"`
-	} `xml:"SigningTimeBoundaries,omitempty"`
+	XMLName               xml.Name                                  `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeInfo"`
+	SigningTime           string                                    `xml:"SigningTime"`
+	SigningTimeBoundaries *SigningTimeInfoTypeSigningTimeBoundaries `xml:"SigningTimeBoundaries,omitempty"`
 }
 
 type SignerIdentity struct {
@@ -554,12 +550,8 @@ type DetailType struct {
 }
 
 type SigningTimeInfoType struct {
-	SigningTime           string `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTime"`
-	SigningTimeBoundaries *struct {
-		XMLName       xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeBoundaries"`
-		LowerBoundary string   `xml:"LowerBoundary,omitempty"`
-		UpperBoundary string   `xml:"UpperBoundary,omitempty"`
-	} `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeBoundaries,omitempty"`
+	SigningTime           string                                    `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTime"`
+	SigningTimeBoundaries *SigningTimeInfoTypeSigningTimeBoundaries `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeBoundaries,omitempty"`
 }
 
 // Interface for types that extend SigningTimeInfoType
@@ -597,3 +589,9 @@ type IAttachmentReferenceType interface {
 
 // The type itself implements IAttachmentReferenceType
 func (AttachmentReferenceType) IsCoreAttachmentReferenceType() {}
+
+type SigningTimeInfoTypeSigningTimeBoundaries struct {
+	XMLName       xml.Name `xml:"urn:oasis:names:tc:dss:1.0:core:schema SigningTimeBoundaries"`
+	LowerBoundary string   `xml:"LowerBoundary,omitempty"`
+	UpperBoundary string   `xml:"UpperBoundary,omitempty"`
+}

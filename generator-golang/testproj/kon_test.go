@@ -439,19 +439,8 @@ func TestNestedStructMarshal(t *testing.T) {
 		Type:           "Info",
 		Severity:       "Info",
 		SubscriptionID: "sub-123",
-		Message: struct {
-			XMLName   xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Message"`
-			Parameter []struct {
-				XMLName xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Parameter"`
-				Key     string   `xml:"Key"`
-				Value   string   `xml:"Value"`
-			} `xml:"Parameter"`
-		}{
-			Parameter: []struct {
-				XMLName xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Parameter"`
-				Key     string   `xml:"Key"`
-				Value   string   `xml:"Value"`
-			}{
+		Message: eventservice72.EventMessage{
+			Parameter: []eventservice72.EventMessageParameter{
 				{Key: "CardHandle", Value: "card-001"},
 				{Key: "CardType", Value: "EGK"},
 			},

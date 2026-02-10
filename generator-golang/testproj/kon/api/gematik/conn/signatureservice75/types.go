@@ -22,25 +22,11 @@ type SignDocument struct {
 }
 
 type SignRequest struct {
-	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SignRequest"`
-	RequestID      string   `xml:"RequestID,attr"`
-	OptionalInputs *struct {
-		XMLName         xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
-		SignatureType   string                `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
-		Properties      *dss10core.Properties `xml:"urn:oasis:names:tc:dss:1.0:core:schema Properties,omitempty"`
-		IncludeEContent bool                  `xml:"IncludeEContent,omitempty"`
-		IncludeObjects  *struct {
-			XMLName       xml.Name                  `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 IncludeObjects"`
-			IncludeObject []dss10core.IncludeObject `xml:"urn:oasis:names:tc:dss:1.0:core:schema IncludeObject"`
-		} `xml:"IncludeObjects,omitempty"`
-		SignaturePlacement           *dss10core.SignaturePlacement                 `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignaturePlacement,omitempty"`
-		ReturnUpdatedSignature       *dss10core.ReturnUpdatedSignature             `xml:"urn:oasis:names:tc:dss:1.0:core:schema ReturnUpdatedSignature,omitempty"`
-		Schemas                      *dss10core.Schemas                            `xml:"urn:oasis:names:tc:dss:1.0:core:schema Schemas,omitempty"`
-		GenerateUnderSignaturePolicy *signaturepolicy.GenerateUnderSignaturePolicy `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema# GenerateUnderSignaturePolicy,omitempty"`
-		ViewerInfo                   *ViewerInfo                                   `xml:"ViewerInfo,omitempty"`
-	} `xml:"OptionalInputs,omitempty"`
-	Document              Document `xml:"Document"`
-	IncludeRevocationInfo bool     `xml:"IncludeRevocationInfo"`
+	XMLName               xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SignRequest"`
+	RequestID             string                     `xml:"RequestID,attr"`
+	OptionalInputs        *SignRequestOptionalInputs `xml:"OptionalInputs,omitempty"`
+	Document              Document                   `xml:"Document"`
+	IncludeRevocationInfo bool                       `xml:"IncludeRevocationInfo"`
 }
 
 type SignatureSchemes string
@@ -68,33 +54,21 @@ type SignDocumentResponse struct {
 }
 
 type SignResponse struct {
-	XMLName         xml.Name                 `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SignResponse"`
-	RequestID       string                   `xml:"RequestID,attr"`
-	Status          connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	OptionalOutputs *struct {
-		XMLName               xml.Name                               `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalOutputs"`
-		DocumentWithSignature *DocumentWithSignature                 `xml:"DocumentWithSignature,omitempty"`
-		VerificationReport    *verificationreport.VerificationReport `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# VerificationReport,omitempty"`
-	} `xml:"OptionalOutputs,omitempty"`
-	SignatureObject *dss10core.SignatureObject `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureObject,omitempty"`
+	XMLName         xml.Name                     `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SignResponse"`
+	RequestID       string                       `xml:"RequestID,attr"`
+	Status          connectorcommon50.Status     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	OptionalOutputs *SignResponseOptionalOutputs `xml:"OptionalOutputs,omitempty"`
+	SignatureObject *dss10core.SignatureObject   `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureObject,omitempty"`
 }
 
 type VerifyDocument struct {
-	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 VerifyDocument"`
-	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	TvMode         TvMode                     `xml:"TvMode,omitempty"`
-	OptionalInputs *struct {
-		XMLName                  xml.Name                                     `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
-		VerifyManifests          string                                       `xml:"VerifyManifests,omitempty"`
-		UseVerificationTime      *UseVerificationTime                         `xml:"UseVerificationTime,omitempty"`
-		AdditionalKeyInfo        *dss10core.AdditionalKeyInfo                 `xml:"urn:oasis:names:tc:dss:1.0:core:schema AdditionalKeyInfo,omitempty"`
-		ReturnVerificationReport *verificationreport.ReturnVerificationReport `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ReturnVerificationReport,omitempty"`
-		Schemas                  *dss10core.Schemas                           `xml:"urn:oasis:names:tc:dss:1.0:core:schema Schemas,omitempty"`
-		ViewerInfo               *ViewerInfo                                  `xml:"ViewerInfo,omitempty"`
-	} `xml:"OptionalInputs,omitempty"`
-	Document              *Document                  `xml:"Document,omitempty"`
-	SignatureObject       *dss10core.SignatureObject `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureObject,omitempty"`
-	IncludeRevocationInfo bool                       `xml:"IncludeRevocationInfo"`
+	XMLName               xml.Name                      `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 VerifyDocument"`
+	Context               connectorcontext20.Context    `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	TvMode                TvMode                        `xml:"TvMode,omitempty"`
+	OptionalInputs        *VerifyDocumentOptionalInputs `xml:"OptionalInputs,omitempty"`
+	Document              *Document                     `xml:"Document,omitempty"`
+	SignatureObject       *dss10core.SignatureObject    `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureObject,omitempty"`
+	IncludeRevocationInfo bool                          `xml:"IncludeRevocationInfo"`
 }
 
 type UseVerificationTime struct {
@@ -105,16 +79,10 @@ type UseVerificationTime struct {
 }
 
 type VerifyDocumentResponse struct {
-	XMLName            xml.Name                 `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 VerifyDocumentResponse"`
-	Status             connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	VerificationResult VerificationResultType   `xml:"VerificationResult"`
-	OptionalOutputs    *struct {
-		XMLName               xml.Name                               `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalOutputs"`
-		VerifyManifestResults *dss10core.VerifyManifestResults       `xml:"urn:oasis:names:tc:dss:1.0:core:schema VerifyManifestResults,omitempty"`
-		DocumentWithSignature *DocumentWithSignature                 `xml:"DocumentWithSignature,omitempty"`
-		UpdatedSignature      *dss10core.UpdatedSignature            `xml:"urn:oasis:names:tc:dss:1.0:core:schema UpdatedSignature,omitempty"`
-		VerificationReport    *verificationreport.VerificationReport `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# VerificationReport,omitempty"`
-	} `xml:"OptionalOutputs,omitempty"`
+	XMLName            xml.Name                               `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 VerifyDocumentResponse"`
+	Status             connectorcommon50.Status               `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	VerificationResult VerificationResultType                 `xml:"VerificationResult"`
+	OptionalOutputs    *VerifyDocumentResponseOptionalOutputs `xml:"OptionalOutputs,omitempty"`
 }
 
 type GetJobNumber struct {
@@ -128,15 +96,11 @@ type GetJobNumberResponse struct {
 }
 
 type ExternalAuthenticate struct {
-	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ExternalAuthenticate"`
-	CardHandle     string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
-	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	OptionalInputs *struct {
-		XMLName          xml.Name         `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
-		SignatureType    string           `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
-		SignatureSchemes SignatureSchemes `xml:"SignatureSchemes,omitempty"`
-	} `xml:"OptionalInputs,omitempty"`
-	BinaryString BinaryString `xml:"BinaryString"`
+	XMLName        xml.Name                            `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ExternalAuthenticate"`
+	CardHandle     string                              `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
+	Context        connectorcontext20.Context          `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	OptionalInputs *ExternalAuthenticateOptionalInputs `xml:"OptionalInputs,omitempty"`
+	BinaryString   BinaryString                        `xml:"BinaryString"`
 }
 
 type ExternalAuthenticateResponse struct {
@@ -166,11 +130,8 @@ const (
 )
 
 type ViewerInfo struct {
-	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ViewerInfo"`
-	XslStyleSheets *struct {
-		XMLName       xml.Name                          `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 XslStyleSheets"`
-		XslStylesheet []connectorcommon50.XslStylesheet `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 XslStylesheet"`
-	} `xml:"XslStyleSheets,omitempty"`
+	XMLName        xml.Name                  `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ViewerInfo"`
+	XslStyleSheets *ViewerInfoXslStyleSheets `xml:"XslStyleSheets,omitempty"`
 }
 
 type SignatureForm string
@@ -205,20 +166,13 @@ type BinaryString struct {
 }
 
 type CounterSignatureMarker struct {
-	XMLName                 xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 CounterSignatureMarker"`
-	SignatureValueReference []struct {
-		XMLName xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SignatureValueReference"`
-		IdRef   string   `xml:"IdRef,attr,omitempty"`
-	} `xml:"SignatureValueReference"`
+	XMLName                 xml.Name                                        `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 CounterSignatureMarker"`
+	SignatureValueReference []CounterSignatureMarkerSignatureValueReference `xml:"SignatureValueReference"`
 }
 
 type DisplayableAttributes struct {
-	XMLName              xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 DisplayableAttributes"`
-	DisplayableAttribute []struct {
-		XMLName xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 DisplayableAttribute"`
-		Key     string   `xml:"Key"`
-		Value   string   `xml:"Value"`
-	} `xml:"DisplayableAttribute"`
+	XMLName              xml.Name                                    `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 DisplayableAttributes"`
+	DisplayableAttribute []DisplayableAttributesDisplayableAttribute `xml:"DisplayableAttribute"`
 }
 
 type ActivateComfortSignature struct {
@@ -337,3 +291,67 @@ const (
 	ComfortSignatureStatusEnumEnabled  ComfortSignatureStatusEnum = "ENABLED"
 	ComfortSignatureStatusEnumDisabled ComfortSignatureStatusEnum = "DISABLED"
 )
+
+type SignRequestOptionalInputs struct {
+	XMLName                      xml.Name                                      `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
+	SignatureType                string                                        `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
+	Properties                   *dss10core.Properties                         `xml:"urn:oasis:names:tc:dss:1.0:core:schema Properties,omitempty"`
+	IncludeEContent              bool                                          `xml:"IncludeEContent,omitempty"`
+	IncludeObjects               *SignRequestOptionalInputsIncludeObjects      `xml:"IncludeObjects,omitempty"`
+	SignaturePlacement           *dss10core.SignaturePlacement                 `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignaturePlacement,omitempty"`
+	ReturnUpdatedSignature       *dss10core.ReturnUpdatedSignature             `xml:"urn:oasis:names:tc:dss:1.0:core:schema ReturnUpdatedSignature,omitempty"`
+	Schemas                      *dss10core.Schemas                            `xml:"urn:oasis:names:tc:dss:1.0:core:schema Schemas,omitempty"`
+	GenerateUnderSignaturePolicy *signaturepolicy.GenerateUnderSignaturePolicy `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:SignaturePolicy:schema# GenerateUnderSignaturePolicy,omitempty"`
+	ViewerInfo                   *ViewerInfo                                   `xml:"ViewerInfo,omitempty"`
+}
+
+type SignResponseOptionalOutputs struct {
+	XMLName               xml.Name                               `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalOutputs"`
+	DocumentWithSignature *DocumentWithSignature                 `xml:"DocumentWithSignature,omitempty"`
+	VerificationReport    *verificationreport.VerificationReport `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# VerificationReport,omitempty"`
+}
+
+type VerifyDocumentOptionalInputs struct {
+	XMLName                  xml.Name                                     `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
+	VerifyManifests          string                                       `xml:"VerifyManifests,omitempty"`
+	UseVerificationTime      *UseVerificationTime                         `xml:"UseVerificationTime,omitempty"`
+	AdditionalKeyInfo        *dss10core.AdditionalKeyInfo                 `xml:"urn:oasis:names:tc:dss:1.0:core:schema AdditionalKeyInfo,omitempty"`
+	ReturnVerificationReport *verificationreport.ReturnVerificationReport `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# ReturnVerificationReport,omitempty"`
+	Schemas                  *dss10core.Schemas                           `xml:"urn:oasis:names:tc:dss:1.0:core:schema Schemas,omitempty"`
+	ViewerInfo               *ViewerInfo                                  `xml:"ViewerInfo,omitempty"`
+}
+
+type VerifyDocumentResponseOptionalOutputs struct {
+	XMLName               xml.Name                               `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalOutputs"`
+	VerifyManifestResults *dss10core.VerifyManifestResults       `xml:"urn:oasis:names:tc:dss:1.0:core:schema VerifyManifestResults,omitempty"`
+	DocumentWithSignature *DocumentWithSignature                 `xml:"DocumentWithSignature,omitempty"`
+	UpdatedSignature      *dss10core.UpdatedSignature            `xml:"urn:oasis:names:tc:dss:1.0:core:schema UpdatedSignature,omitempty"`
+	VerificationReport    *verificationreport.VerificationReport `xml:"urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema# VerificationReport,omitempty"`
+}
+
+type ExternalAuthenticateOptionalInputs struct {
+	XMLName          xml.Name         `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
+	SignatureType    string           `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
+	SignatureSchemes SignatureSchemes `xml:"SignatureSchemes,omitempty"`
+}
+
+type ViewerInfoXslStyleSheets struct {
+	XMLName       xml.Name                          `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 XslStyleSheets"`
+	XslStylesheet []connectorcommon50.XslStylesheet `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 XslStylesheet"`
+}
+
+type CounterSignatureMarkerSignatureValueReference struct {
+	XMLName xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SignatureValueReference"`
+	IdRef   string   `xml:"IdRef,attr,omitempty"`
+}
+
+type DisplayableAttributesDisplayableAttribute struct {
+	XMLName xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 DisplayableAttribute"`
+	Key     string   `xml:"Key"`
+	Value   string   `xml:"Value"`
+}
+
+type SignRequestOptionalInputsIncludeObjects struct {
+	XMLName       xml.Name                  `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 IncludeObjects"`
+	IncludeObject []dss10core.IncludeObject `xml:"urn:oasis:names:tc:dss:1.0:core:schema IncludeObject"`
+}
