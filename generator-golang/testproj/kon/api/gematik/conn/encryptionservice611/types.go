@@ -47,6 +47,19 @@ const (
 	EncryptionTypeUrnIetfRfc5751           EncryptionType = "urn:ietf:rfc:5751"
 )
 
+func (v EncryptionType) IsValid() bool {
+	switch v {
+	case EncryptionTypeHttpWwwW3OrgTRXmlencCore:
+		return true
+	case EncryptionTypeUrnIetfRfc5652:
+		return true
+	case EncryptionTypeUrnIetfRfc5751:
+		return true
+	default:
+		return false
+	}
+}
+
 type Element struct {
 	XMLName  xml.Name `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 Element"`
 	Type     string   `xml:"Type,attr"`
@@ -81,6 +94,17 @@ const (
 	CommonStepsEnumDecryptXMLData CommonStepsEnum = "DecryptXMLData"
 )
 
+func (v CommonStepsEnum) IsValid() bool {
+	switch v {
+	case CommonStepsEnumEncryptXMLData:
+		return true
+	case CommonStepsEnumDecryptXMLData:
+		return true
+	default:
+		return false
+	}
+}
+
 type EncryptionStepResultEnum string
 
 // Enum values for EncryptionStepResultEnum
@@ -88,6 +112,17 @@ const (
 	EncryptionStepResultEnumError EncryptionStepResultEnum = "ERROR"
 	EncryptionStepResultEnumOk    EncryptionStepResultEnum = "OK"
 )
+
+func (v EncryptionStepResultEnum) IsValid() bool {
+	switch v {
+	case EncryptionStepResultEnumError:
+		return true
+	case EncryptionStepResultEnumOk:
+		return true
+	default:
+		return false
+	}
+}
 
 type KeyOnCardType struct {
 	CardHandle   string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`

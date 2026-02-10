@@ -194,7 +194,17 @@ func (g *Generator) renderPrimitiveTypeWithFacets(jenFile *jen.File, typeName st
 		constDefs = append(constDefs, jen.Id(constName).Id(typeName).Op("=").Lit(enumVal))
 	}
 	jenFile.Const().Defs(constDefs...)
-
+	// generate IsValid method to validate if a value is one of the allowed enum values
+	isValidFunc := jen.Func().Params(jen.Id("v").Id(typeName)).Id("IsValid").Params().Bool().BlockFunc(func(jg *jen.Group) {
+		jg.Switch(jen.Id("v")).BlockFunc(func(jg *jen.Group) {
+			for _, enumVal := range typePtr.Type.GetType().Enum {
+				constName := g.NamingStrategy.EnumValueName(typeName, enumVal)
+				jg.Case(jen.Id(constName)).Return(jen.True())
+			}
+			jg.Default().Return(jen.False())
+		})
+	})
+	jenFile.Add(isValidFunc)
 }
 
 func (g *Generator) renderGlobalObject(jenFile *jen.File, typeName string, typePtr *TypePointer, typeDef *TypeObject) error {

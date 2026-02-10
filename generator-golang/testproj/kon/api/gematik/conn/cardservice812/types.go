@@ -123,6 +123,19 @@ const (
 	RequestCardResultEnumAlreadyInserted RequestCardResultEnum = "ALREADY_INSERTED"
 )
 
+func (v RequestCardResultEnum) IsValid() bool {
+	switch v {
+	case RequestCardResultEnumError:
+		return true
+	case RequestCardResultEnumOk:
+		return true
+	case RequestCardResultEnumAlreadyInserted:
+		return true
+	default:
+		return false
+	}
+}
+
 type PinStatusEnum string
 
 // Enum values for PinStatusEnum
@@ -134,6 +147,25 @@ const (
 	PinStatusEnumVerifiable   PinStatusEnum = "VERIFIABLE"
 	PinStatusEnumDisabled     PinStatusEnum = "DISABLED"
 )
+
+func (v PinStatusEnum) IsValid() bool {
+	switch v {
+	case PinStatusEnumVerified:
+		return true
+	case PinStatusEnumTransportPin:
+		return true
+	case PinStatusEnumEmptyPin:
+		return true
+	case PinStatusEnumBlocked:
+		return true
+	case PinStatusEnumVerifiable:
+		return true
+	case PinStatusEnumDisabled:
+		return true
+	default:
+		return false
+	}
+}
 
 type CommonStepsEnum string
 
@@ -151,6 +183,35 @@ const (
 	CommonStepsEnumFullfillAccessConditions CommonStepsEnum = "FullfillAccessConditions"
 	CommonStepsEnumCardToCard               CommonStepsEnum = "CardToCard"
 )
+
+func (v CommonStepsEnum) IsValid() bool {
+	switch v {
+	case CommonStepsEnumCheckCardHandle:
+		return true
+	case CommonStepsEnumVerifyPin:
+		return true
+	case CommonStepsEnumVerifyEhcPin:
+		return true
+	case CommonStepsEnumVerifyHpcPin:
+		return true
+	case CommonStepsEnumVerifySmcPin:
+		return true
+	case CommonStepsEnumWriteToEhc:
+		return true
+	case CommonStepsEnumReadFromEhc:
+		return true
+	case CommonStepsEnumLogging:
+		return true
+	case CommonStepsEnumCheckEhcBlocking:
+		return true
+	case CommonStepsEnumFullfillAccessConditions:
+		return true
+	case CommonStepsEnumCardToCard:
+		return true
+	default:
+		return false
+	}
+}
 
 type VersionInfoType struct {
 	Major    int `xml:"http://ws.gematik.de/conn/CardService/v8.1 Major"`

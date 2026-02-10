@@ -36,6 +36,17 @@ const (
 	SignatureSchemesRSASSAPKCS1V15 SignatureSchemes = "RSASSA-PKCS1-v1_5"
 )
 
+func (v SignatureSchemes) IsValid() bool {
+	switch v {
+	case SignatureSchemesRsassaPss:
+		return true
+	case SignatureSchemesRSASSAPKCS1V15:
+		return true
+	default:
+		return false
+	}
+}
+
 type DocumentWithSignature struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 DocumentWithSignature"`
 	Id         string                `xml:"ID,attr,omitempty"`
@@ -128,6 +139,19 @@ const (
 	TvModeConfirmed   TvMode = "CONFIRMED"
 )
 
+func (v TvMode) IsValid() bool {
+	switch v {
+	case TvModeNone:
+		return true
+	case TvModeUnconfirmed:
+		return true
+	case TvModeConfirmed:
+		return true
+	default:
+		return false
+	}
+}
+
 type ViewerInfo struct {
 	XMLName        xml.Name                  `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 ViewerInfo"`
 	XslStyleSheets *ViewerInfoXslStyleSheets `xml:"XslStyleSheets,omitempty"`
@@ -143,6 +167,23 @@ const (
 	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESX  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X"
 	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESXL SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L"
 )
+
+func (v SignatureForm) IsValid() bool {
+	switch v {
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsBES:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsEST:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESC:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESX:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESXL:
+		return true
+	default:
+		return false
+	}
+}
 
 type Document struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 Document"`

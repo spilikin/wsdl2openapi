@@ -21,6 +21,35 @@ const (
 	CardTypeSmB     CardType = "SM-B"
 )
 
+func (v CardType) IsValid() bool {
+	switch v {
+	case CardTypeEgk:
+		return true
+	case CardTypeHBAQSig:
+		return true
+	case CardTypeHba:
+		return true
+	case CardTypeSmcB:
+		return true
+	case CardTypeHsmB:
+		return true
+	case CardTypeSmcKt:
+		return true
+	case CardTypeKvk:
+		return true
+	case CardTypeZod20:
+		return true
+	case CardTypeUnknown:
+		return true
+	case CardTypeHBAx:
+		return true
+	case CardTypeSmB:
+		return true
+	default:
+		return false
+	}
+}
+
 type PinResult string
 
 // Enum values for PinResult
@@ -32,6 +61,25 @@ const (
 	PinResultNowblocked   PinResult = "NOWBLOCKED"
 	PinResultTransportPin PinResult = "TRANSPORT_PIN"
 )
+
+func (v PinResult) IsValid() bool {
+	switch v {
+	case PinResultError:
+		return true
+	case PinResultOk:
+		return true
+	case PinResultRejected:
+		return true
+	case PinResultWasblocked:
+		return true
+	case PinResultNowblocked:
+		return true
+	case PinResultTransportPin:
+		return true
+	default:
+		return false
+	}
+}
 
 type CardTypeType string
 
@@ -49,6 +97,35 @@ const (
 	CardTypeTypeHBAx    CardTypeType = "HBAx"
 	CardTypeTypeSmB     CardTypeType = "SM-B"
 )
+
+func (v CardTypeType) IsValid() bool {
+	switch v {
+	case CardTypeTypeEgk:
+		return true
+	case CardTypeTypeHBAQSig:
+		return true
+	case CardTypeTypeHba:
+		return true
+	case CardTypeTypeSmcB:
+		return true
+	case CardTypeTypeHsmB:
+		return true
+	case CardTypeTypeSmcKt:
+		return true
+	case CardTypeTypeKvk:
+		return true
+	case CardTypeTypeZod20:
+		return true
+	case CardTypeTypeUnknown:
+		return true
+	case CardTypeTypeHBAx:
+		return true
+	case CardTypeTypeSmB:
+		return true
+	default:
+		return false
+	}
+}
 
 type PinResponseType struct {
 	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
@@ -75,3 +152,22 @@ const (
 	PinResultEnumNowblocked   PinResultEnum = "NOWBLOCKED"
 	PinResultEnumTransportPin PinResultEnum = "TRANSPORT_PIN"
 )
+
+func (v PinResultEnum) IsValid() bool {
+	switch v {
+	case PinResultEnumError:
+		return true
+	case PinResultEnumOk:
+		return true
+	case PinResultEnumRejected:
+		return true
+	case PinResultEnumWasblocked:
+		return true
+	case PinResultEnumNowblocked:
+		return true
+	case PinResultEnumTransportPin:
+		return true
+	default:
+		return false
+	}
+}

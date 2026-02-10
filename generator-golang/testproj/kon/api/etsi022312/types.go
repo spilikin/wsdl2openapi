@@ -350,6 +350,15 @@ const (
 	TSLTagTypeHttpUriEtsiOrg02231TSLTag TSLTagType = "http://uri.etsi.org/02231/TSLTag"
 )
 
+func (v TSLTagType) IsValid() bool {
+	switch v {
+	case TSLTagTypeHttpUriEtsiOrg02231TSLTag:
+		return true
+	default:
+		return false
+	}
+}
+
 type TrustServiceProviderListType struct {
 	TrustServiceProvider []TrustServiceProvider `xml:"http://uri.etsi.org/02231/v2# TrustServiceProvider"`
 }

@@ -68,6 +68,17 @@ const (
 	CryptTypeEcc CryptType = "ECC"
 )
 
+func (v CryptType) IsValid() bool {
+	switch v {
+	case CryptTypeRsa:
+		return true
+	case CryptTypeEcc:
+		return true
+	default:
+		return false
+	}
+}
+
 type VerificationResultType string
 
 // Enum values for VerificationResultType
@@ -76,6 +87,19 @@ const (
 	VerificationResultTypeInconclusive VerificationResultType = "INCONCLUSIVE"
 	VerificationResultTypeInvalid      VerificationResultType = "INVALID"
 )
+
+func (v VerificationResultType) IsValid() bool {
+	switch v {
+	case VerificationResultTypeValid:
+		return true
+	case VerificationResultTypeInconclusive:
+		return true
+	case VerificationResultTypeInvalid:
+		return true
+	default:
+		return false
+	}
+}
 
 type ReadCardCertificateCertRefList struct {
 	XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 CertRefList"`

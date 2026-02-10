@@ -24,6 +24,21 @@ const (
 	CertRefEnumCQes CertRefEnum = "C.QES"
 )
 
+func (v CertRefEnum) IsValid() bool {
+	switch v {
+	case CertRefEnumCAut:
+		return true
+	case CertRefEnumCEnc:
+		return true
+	case CertRefEnumCSig:
+		return true
+	case CertRefEnumCQes:
+		return true
+	default:
+		return false
+	}
+}
+
 type CheckCertificateDetailEnum string
 
 // Enum values for CheckCertificateDetailEnum
@@ -43,6 +58,41 @@ const (
 	CheckCertificateDetailEnumTslOutOfDate              CheckCertificateDetailEnum = "TSL_OUT_OF_DATE"
 	CheckCertificateDetailEnumQualified                 CheckCertificateDetailEnum = "QUALIFIED"
 )
+
+func (v CheckCertificateDetailEnum) IsValid() bool {
+	switch v {
+	case CheckCertificateDetailEnumCertSigError:
+		return true
+	case CheckCertificateDetailEnumBuildChainFailed:
+		return true
+	case CheckCertificateDetailEnumCheckRevocationFailed:
+		return true
+	case CheckCertificateDetailEnumCertRevoked:
+		return true
+	case CheckCertificateDetailEnumCertExpired:
+		return true
+	case CheckCertificateDetailEnumCertBadFormat:
+		return true
+	case CheckCertificateDetailEnumPolicyError:
+		return true
+	case CheckCertificateDetailEnumQcStatementError:
+		return true
+	case CheckCertificateDetailEnumWrongRole:
+		return true
+	case CheckCertificateDetailEnumUnknownCriticalExtensions:
+		return true
+	case CheckCertificateDetailEnumCertRevokedAfter:
+		return true
+	case CheckCertificateDetailEnumNoRevocationCheck:
+		return true
+	case CheckCertificateDetailEnumTslOutOfDate:
+		return true
+	case CheckCertificateDetailEnumQualified:
+		return true
+	default:
+		return false
+	}
+}
 
 type CheckCertificateDetailsType struct {
 	CheckCertificateDetail []CheckCertificateDetailEnum `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetail"`

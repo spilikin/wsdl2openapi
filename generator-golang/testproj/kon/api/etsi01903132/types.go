@@ -336,6 +336,17 @@ const (
 	QualifierTypeOIDAsURN QualifierType = "OIDAsURN"
 )
 
+func (v QualifierType) IsValid() bool {
+	switch v {
+	case QualifierTypeOIDAsURI:
+		return true
+	case QualifierTypeOIDAsURN:
+		return true
+	default:
+		return false
+	}
+}
+
 type DocumentationReferencesType struct {
 	DocumentationReference []string `xml:"http://uri.etsi.org/01903/v1.3.2# DocumentationReference"`
 }

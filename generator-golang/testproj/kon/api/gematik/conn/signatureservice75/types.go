@@ -37,6 +37,17 @@ const (
 	SignatureSchemesRSASSAPKCS1V15 SignatureSchemes = "RSASSA-PKCS1-v1_5"
 )
 
+func (v SignatureSchemes) IsValid() bool {
+	switch v {
+	case SignatureSchemesRsassaPss:
+		return true
+	case SignatureSchemesRSASSAPKCS1V15:
+		return true
+	default:
+		return false
+	}
+}
+
 type DocumentWithSignature struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 DocumentWithSignature"`
 	Id         string                `xml:"ID,attr,omitempty"`
@@ -129,6 +140,19 @@ const (
 	TvModeConfirmed   TvMode = "CONFIRMED"
 )
 
+func (v TvMode) IsValid() bool {
+	switch v {
+	case TvModeNone:
+		return true
+	case TvModeUnconfirmed:
+		return true
+	case TvModeConfirmed:
+		return true
+	default:
+		return false
+	}
+}
+
 type ViewerInfo struct {
 	XMLName        xml.Name                  `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ViewerInfo"`
 	XslStyleSheets *ViewerInfoXslStyleSheets `xml:"XslStyleSheets,omitempty"`
@@ -144,6 +168,23 @@ const (
 	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESX  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X"
 	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESXL SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L"
 )
+
+func (v SignatureForm) IsValid() bool {
+	switch v {
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsBES:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsEST:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESC:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESX:
+		return true
+	case SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESXL:
+		return true
+	default:
+		return false
+	}
+}
 
 type Document struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 Document"`
@@ -227,6 +268,17 @@ const (
 	SignatureModeComfort SignatureMode = "COMFORT"
 )
 
+func (v SignatureMode) IsValid() bool {
+	switch v {
+	case SignatureModePin:
+		return true
+	case SignatureModeComfort:
+		return true
+	default:
+		return false
+	}
+}
+
 type DocumentType struct {
 	Id         string                `xml:"ID,attr,omitempty"`
 	RefURI     string                `xml:"RefURI,attr,omitempty"`
@@ -284,6 +336,17 @@ const (
 	SignatureModeEnumComfort SignatureModeEnum = "COMFORT"
 )
 
+func (v SignatureModeEnum) IsValid() bool {
+	switch v {
+	case SignatureModeEnumPin:
+		return true
+	case SignatureModeEnumComfort:
+		return true
+	default:
+		return false
+	}
+}
+
 type ComfortSignatureStatusEnum string
 
 // Enum values for ComfortSignatureStatusEnum
@@ -291,6 +354,17 @@ const (
 	ComfortSignatureStatusEnumEnabled  ComfortSignatureStatusEnum = "ENABLED"
 	ComfortSignatureStatusEnumDisabled ComfortSignatureStatusEnum = "DISABLED"
 )
+
+func (v ComfortSignatureStatusEnum) IsValid() bool {
+	switch v {
+	case ComfortSignatureStatusEnumEnabled:
+		return true
+	case ComfortSignatureStatusEnumDisabled:
+		return true
+	default:
+		return false
+	}
+}
 
 type SignRequestOptionalInputs struct {
 	XMLName                      xml.Name                                      `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`

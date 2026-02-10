@@ -22,6 +22,17 @@ const (
 	ResultWarning Result = "Warning"
 )
 
+func (v Result) IsValid() bool {
+	switch v {
+	case ResultOk:
+		return true
+	case ResultWarning:
+		return true
+	default:
+		return false
+	}
+}
+
 type WorkplaceIds struct {
 	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceIds"`
 	WorkplaceId []string `xml:"WorkplaceId"`
@@ -78,6 +89,19 @@ const (
 	ResultEnumOk      ResultEnum = "OK"
 	ResultEnumWarning ResultEnum = "WARNING"
 )
+
+func (v ResultEnum) IsValid() bool {
+	switch v {
+	case ResultEnumError:
+		return true
+	case ResultEnumOk:
+		return true
+	case ResultEnumWarning:
+		return true
+	default:
+		return false
+	}
+}
 
 type AttachmentType struct {
 	Data   string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Data"`

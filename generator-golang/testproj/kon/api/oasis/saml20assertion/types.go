@@ -494,6 +494,19 @@ const (
 	DecisionTypeIndeterminate DecisionType = "Indeterminate"
 )
 
+func (v DecisionType) IsValid() bool {
+	switch v {
+	case DecisionTypePermit:
+		return true
+	case DecisionTypeDeny:
+		return true
+	case DecisionTypeIndeterminate:
+		return true
+	default:
+		return false
+	}
+}
+
 type ActionType struct {
 	Namespace string `xml:"Namespace,attr"`
 	CharData  string `xml:"chardata"`

@@ -154,6 +154,19 @@ const (
 	DecisionTypeIndeterminate DecisionType = "Indeterminate"
 )
 
+func (v DecisionType) IsValid() bool {
+	switch v {
+	case DecisionTypePermit:
+		return true
+	case DecisionTypeDeny:
+		return true
+	case DecisionTypeIndeterminate:
+		return true
+	default:
+		return false
+	}
+}
+
 type AssertionType struct {
 	MajorVersion                   int                              `xml:"MajorVersion,attr"`
 	MinorVersion                   int                              `xml:"MinorVersion,attr"`

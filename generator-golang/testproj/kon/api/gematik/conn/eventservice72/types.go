@@ -140,6 +140,23 @@ const (
 	EventTypeOther          EventType = "Other"
 )
 
+func (v EventType) IsValid() bool {
+	switch v {
+	case EventTypeOperation:
+		return true
+	case EventTypeSecurity:
+		return true
+	case EventTypeInfrastructure:
+		return true
+	case EventTypeBusiness:
+		return true
+	case EventTypeOther:
+		return true
+	default:
+		return false
+	}
+}
+
 type EventSeverityType string
 
 // Enum values for EventSeverityType
@@ -149,6 +166,21 @@ const (
 	EventSeverityTypeError   EventSeverityType = "Error"
 	EventSeverityTypeFatal   EventSeverityType = "Fatal"
 )
+
+func (v EventSeverityType) IsValid() bool {
+	switch v {
+	case EventSeverityTypeInfo:
+		return true
+	case EventSeverityTypeWarning:
+		return true
+	case EventSeverityTypeError:
+		return true
+	case EventSeverityTypeFatal:
+		return true
+	default:
+		return false
+	}
+}
 
 type SubscriptionType struct {
 	SubscriptionID  string `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscriptionID,omitempty"`
