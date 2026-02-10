@@ -10,9 +10,17 @@ import (
 
 type Status struct {
 	XMLName xml.Name       `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	Result  string         `xml:"Result"`
+	Result  Result         `xml:"Result"`
 	Error   *error20.Error `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
 }
+
+type Result string
+
+// Enum values for Result
+const (
+	ResultOk      Result = "OK"
+	ResultWarning Result = "Warning"
+)
 
 type WorkplaceIds struct {
 	XMLName     xml.Name `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 WorkplaceIds"`
@@ -69,6 +77,15 @@ type XslStylesheet struct {
 	Data    string   `xml:"Data"`
 	RefURI  string   `xml:"RefURI"`
 }
+
+type ResultEnum string
+
+// Enum values for ResultEnum
+const (
+	ResultEnumError   ResultEnum = "ERROR"
+	ResultEnumOk      ResultEnum = "OK"
+	ResultEnumWarning ResultEnum = "WARNING"
+)
 
 type AttachmentType struct {
 	Data   string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Data"`

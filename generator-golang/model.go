@@ -197,6 +197,14 @@ type TypeDefinition interface {
 	IsPrimitive() bool
 }
 
+// TypeHasFacets returns true if the given type has facets (e.g. enum values, pattern, etc.)
+// that should be preserved in the generated code, even if the type is a primitive type
+// at the moment we only support enums as facets for primitive types,
+// but this can be extended in the future to support other facets as well
+func TypeHasFacets(t Type) bool {
+	return t.Enum != nil
+}
+
 type Type struct {
 	Xml         *XmlExtension `json:"xml,omitempty"`
 	Type        string        `json:"type"`

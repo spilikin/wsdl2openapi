@@ -5,17 +5,18 @@ package cardterminalservice11
 import (
 	"encoding/xml"
 	cardservice81 "github.com/test/testproj/kon/api/gematik/conn/cardservice81"
+	cardservicecommon20 "github.com/test/testproj/kon/api/gematik/conn/cardservicecommon20"
 	connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 	connectorcontext20 "github.com/test/testproj/kon/api/gematik/conn/connectorcontext20"
 )
 
 type RequestCard struct {
-	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 RequestCard"`
-	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	Slot       Slot                       `xml:"Slot"`
-	CardType   string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
-	DisplayMsg string                     `xml:"DisplayMsg,omitempty"`
-	TimeOut    int                        `xml:"TimeOut,omitempty"`
+	XMLName    xml.Name                     `xml:"http://ws.gematik.de/conn/CardTerminalService/v1.1 RequestCard"`
+	Context    connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	Slot       Slot                         `xml:"Slot"`
+	CardType   cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
+	DisplayMsg string                       `xml:"DisplayMsg,omitempty"`
+	TimeOut    int                          `xml:"TimeOut,omitempty"`
 }
 
 type RequestCardResponse struct {

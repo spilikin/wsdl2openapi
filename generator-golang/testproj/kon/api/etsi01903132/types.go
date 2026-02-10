@@ -324,9 +324,17 @@ type IObjectIdentifierType interface {
 func (ObjectIdentifierType) IsEtsi01903132ObjectIdentifierType() {}
 
 type IdentifierType struct {
-	Qualifier string `xml:"Qualifier,attr,omitempty"`
-	CharData  string `xml:"chardata"`
+	Qualifier QualifierType `xml:"Qualifier,attr,omitempty"`
+	CharData  string        `xml:"chardata"`
 }
+
+type QualifierType string
+
+// Enum values for QualifierType
+const (
+	QualifierTypeOIDAsURI QualifierType = "OIDAsURI"
+	QualifierTypeOIDAsURN QualifierType = "OIDAsURN"
+)
 
 type DocumentationReferencesType struct {
 	DocumentationReference []string `xml:"http://uri.etsi.org/01903/v1.3.2# DocumentationReference"`

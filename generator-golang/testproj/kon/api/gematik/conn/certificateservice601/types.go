@@ -14,7 +14,7 @@ type CheckCertificateExpiration struct {
 	XMLName    xml.Name                   `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 CheckCertificateExpiration"`
 	CardHandle string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle,omitempty"`
 	Context    connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	Crypt      string                     `xml:"Crypt,omitempty"`
+	Crypt      CryptType                  `xml:"Crypt,omitempty"`
 }
 
 type CheckCertificateExpirationResponse struct {
@@ -31,7 +31,7 @@ type ReadCardCertificate struct {
 		XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 CertRefList"`
 		CertRef []string `xml:"CertRef"`
 	} `xml:"CertRefList"`
-	Crypt string `xml:"Crypt,omitempty"`
+	Crypt CryptType `xml:"Crypt,omitempty"`
 }
 
 type ReadCardCertificateResponse struct {
@@ -51,9 +51,9 @@ type VerifyCertificateResponse struct {
 	XMLName            xml.Name                 `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerifyCertificateResponse"`
 	Status             connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
 	VerificationStatus struct {
-		XMLName            xml.Name       `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerificationStatus"`
-		VerificationResult string         `xml:"VerificationResult"`
-		Error              *error20.Error `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
+		XMLName            xml.Name               `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerificationStatus"`
+		VerificationResult VerificationResultType `xml:"VerificationResult"`
+		Error              *error20.Error         `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
 	} `xml:"VerificationStatus"`
 	RoleList struct {
 		XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 RoleList"`
@@ -69,3 +69,20 @@ type CertificateExpirationType struct {
 	SerialNumber      string `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 serialNumber"`
 	Validity          string `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 validity"`
 }
+
+type CryptType string
+
+// Enum values for CryptType
+const (
+	CryptTypeRsa CryptType = "RSA"
+	CryptTypeEcc CryptType = "ECC"
+)
+
+type VerificationResultType string
+
+// Enum values for VerificationResultType
+const (
+	VerificationResultTypeValid        VerificationResultType = "VALID"
+	VerificationResultTypeInconclusive VerificationResultType = "INCONCLUSIVE"
+	VerificationResultTypeInvalid      VerificationResultType = "INVALID"
+)

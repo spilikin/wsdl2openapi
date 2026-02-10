@@ -155,11 +155,11 @@ type AuthnContext struct {
 }
 
 type AuthzDecisionStatement struct {
-	XMLName  xml.Name  `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthzDecisionStatement"`
-	Resource string    `xml:"Resource,attr"`
-	Decision string    `xml:"Decision,attr"`
-	Action   []Action  `xml:"Action"`
-	Evidence *Evidence `xml:"Evidence,omitempty"`
+	XMLName  xml.Name     `xml:"urn:oasis:names:tc:SAML:2.0:assertion AuthzDecisionStatement"`
+	Resource string       `xml:"Resource,attr"`
+	Decision DecisionType `xml:"Decision,attr"`
+	Action   []Action     `xml:"Action"`
+	Evidence *Evidence    `xml:"Evidence,omitempty"`
 }
 
 type Action struct {
@@ -468,10 +468,10 @@ type IAuthnContextType interface {
 func (AuthnContextType) IsAssertionAuthnContextType() {}
 
 type AuthzDecisionStatementType struct {
-	Resource string    `xml:"Resource,attr"`
-	Decision string    `xml:"Decision,attr"`
-	Action   []Action  `xml:"urn:oasis:names:tc:SAML:2.0:assertion Action"`
-	Evidence *Evidence `xml:"urn:oasis:names:tc:SAML:2.0:assertion Evidence,omitempty"`
+	Resource string       `xml:"Resource,attr"`
+	Decision DecisionType `xml:"Decision,attr"`
+	Action   []Action     `xml:"urn:oasis:names:tc:SAML:2.0:assertion Action"`
+	Evidence *Evidence    `xml:"urn:oasis:names:tc:SAML:2.0:assertion Evidence,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML20.assertion/StatementAbstractType
@@ -484,6 +484,15 @@ type IAuthzDecisionStatementType interface {
 
 // The type itself implements IAuthzDecisionStatementType
 func (AuthzDecisionStatementType) IsAssertionAuthzDecisionStatementType() {}
+
+type DecisionType string
+
+// Enum values for DecisionType
+const (
+	DecisionTypePermit        DecisionType = "Permit"
+	DecisionTypeDeny          DecisionType = "Deny"
+	DecisionTypeIndeterminate DecisionType = "Indeterminate"
+)
 
 type ActionType struct {
 	Namespace string `xml:"Namespace,attr"`

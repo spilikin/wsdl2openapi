@@ -457,7 +457,7 @@ type SingleResponseType struct {
 }
 
 type TrustStatusListValidityType struct {
-	TSLTag                   string                               `xml:"TSLTag,attr"`
+	TSLTag                   etsi022312.TSLTagType                `xml:"TSLTag,attr"`
 	Id                       string                               `xml:"Id,attr,omitempty"`
 	SchemeInformation        etsi022312.SchemeInformation         `xml:"http://uri.etsi.org/02231/v2# SchemeInformation"`
 	TrustServiceProviderList *etsi022312.TrustServiceProviderList `xml:"http://uri.etsi.org/02231/v2# TrustServiceProviderList,omitempty"`

@@ -7,8 +7,8 @@ import "encoding/xml"
 type X509DataInfoList struct {
 	XMLName      xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfoList"`
 	X509DataInfo []struct {
-		XMLName  xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
-		CertRef  string   `xml:"CertRef"`
+		XMLName  xml.Name    `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
+		CertRef  CertRefEnum `xml:"CertRef"`
 		X509Data *struct {
 			XMLName          xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509Data"`
 			X509IssuerSerial struct {
@@ -23,12 +23,42 @@ type X509DataInfoList struct {
 }
 
 type CheckCertificateDetails struct {
-	XMLName                xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetails"`
-	CheckCertificateDetail []string `xml:"CheckCertificateDetail"`
+	XMLName                xml.Name                     `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetails"`
+	CheckCertificateDetail []CheckCertificateDetailEnum `xml:"CheckCertificateDetail"`
 }
 
+type CertRefEnum string
+
+// Enum values for CertRefEnum
+const (
+	CertRefEnumCAut CertRefEnum = "C.AUT"
+	CertRefEnumCEnc CertRefEnum = "C.ENC"
+	CertRefEnumCSig CertRefEnum = "C.SIG"
+	CertRefEnumCQes CertRefEnum = "C.QES"
+)
+
+type CheckCertificateDetailEnum string
+
+// Enum values for CheckCertificateDetailEnum
+const (
+	CheckCertificateDetailEnumCertSigError              CheckCertificateDetailEnum = "CERT_SIG_ERROR"
+	CheckCertificateDetailEnumBuildChainFailed          CheckCertificateDetailEnum = "BUILD_CHAIN_FAILED"
+	CheckCertificateDetailEnumCheckRevocationFailed     CheckCertificateDetailEnum = "CHECK_REVOCATION_FAILED"
+	CheckCertificateDetailEnumCertRevoked               CheckCertificateDetailEnum = "CERT_REVOKED"
+	CheckCertificateDetailEnumCertExpired               CheckCertificateDetailEnum = "CERT_EXPIRED"
+	CheckCertificateDetailEnumCertBadFormat             CheckCertificateDetailEnum = "CERT_BAD_FORMAT"
+	CheckCertificateDetailEnumPolicyError               CheckCertificateDetailEnum = "POLICY_ERROR"
+	CheckCertificateDetailEnumQcStatementError          CheckCertificateDetailEnum = "QC_STATEMENT_ERROR"
+	CheckCertificateDetailEnumWrongRole                 CheckCertificateDetailEnum = "WRONG_ROLE"
+	CheckCertificateDetailEnumUnknownCriticalExtensions CheckCertificateDetailEnum = "UNKNOWN_CRITICAL_EXTENSIONS"
+	CheckCertificateDetailEnumCertRevokedAfter          CheckCertificateDetailEnum = "CERT_REVOKED_AFTER"
+	CheckCertificateDetailEnumNoRevocationCheck         CheckCertificateDetailEnum = "NO_REVOCATION_CHECK"
+	CheckCertificateDetailEnumTslOutOfDate              CheckCertificateDetailEnum = "TSL_OUT_OF_DATE"
+	CheckCertificateDetailEnumQualified                 CheckCertificateDetailEnum = "QUALIFIED"
+)
+
 type CheckCertificateDetailsType struct {
-	CheckCertificateDetail []string `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetail"`
+	CheckCertificateDetail []CheckCertificateDetailEnum `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 CheckCertificateDetail"`
 }
 
 // Interface for types that extend CheckCertificateDetailsType
@@ -41,8 +71,8 @@ func (CheckCertificateDetailsType) IsCertificateServiceCommon20CheckCertificateD
 
 type X509DataInfoListType struct {
 	X509DataInfo []struct {
-		XMLName  xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
-		CertRef  string   `xml:"CertRef"`
+		XMLName  xml.Name    `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509DataInfo"`
+		CertRef  CertRefEnum `xml:"CertRef"`
 		X509Data *struct {
 			XMLName          xml.Name `xml:"http://ws.gematik.de/conn/CertificateServiceCommon/v2.0 X509Data"`
 			X509IssuerSerial struct {

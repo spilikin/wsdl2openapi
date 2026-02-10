@@ -744,10 +744,6 @@ components:
         enum:
         - RSASSA-PSS
         - RSASSA-PKCS1-v1_5
-        - RSASSA-PSS
-        - RSASSA-PKCS1-v1_5
-        - RSASSA-PSS
-        - RSASSA-PKCS1-v1_5
       DocumentWithSignature:
         $ref: '#/components/schemas/de.gematik.ws.conn.SignatureService74/DocumentType'
         xml:
@@ -957,12 +953,6 @@ components:
         - NONE
         - UNCONFIRMED
         - CONFIRMED
-        - NONE
-        - UNCONFIRMED
-        - CONFIRMED
-        - NONE
-        - UNCONFIRMED
-        - CONFIRMED
       JobNumber:
         type: string
         pattern: '[A-Z][A-Z][A-Z]-[0-9][0-9][0-9]|[A-Z][A-Z][A-Z]-[0-9][0-9][0-9]|[A-Z][A-Z][A-Z]-[0-9][0-9][0-9]'
@@ -999,16 +989,6 @@ components:
           name: SignatureForm
           namespace: http://ws.gematik.de/conn/SignatureService/v7.4
         enum:
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L
         - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES
         - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T
         - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C
@@ -1188,26 +1168,12 @@ components:
             - VALID
             - INCONCLUSIVE
             - INVALID
-            - VALID
-            - INCONCLUSIVE
-            - INVALID
-            - VALID
-            - INCONCLUSIVE
-            - INVALID
           timestampType:
             type: string
             xml:
               name: TimestampType
               namespace: http://ws.gematik.de/conn/SignatureService/v7.4
             enum:
-            - SIGNATURE_EMBEDDED_TIMESTAMP
-            - QUALIFIED_TIMESTAMP
-            - USER_DEFINED_TIMESTAMP
-            - SYSTEM_TIMESTAMP
-            - SIGNATURE_EMBEDDED_TIMESTAMP
-            - QUALIFIED_TIMESTAMP
-            - USER_DEFINED_TIMESTAMP
-            - SYSTEM_TIMESTAMP
             - SIGNATURE_EMBEDDED_TIMESTAMP
             - QUALIFIED_TIMESTAMP
             - USER_DEFINED_TIMESTAMP
@@ -2225,14 +2191,6 @@ components:
       QualifierType:
         type: string
         enum:
-        - OIDAsURI
-        - OIDAsURN
-        - OIDAsURI
-        - OIDAsURN
-        - OIDAsURI
-        - OIDAsURN
-        - OIDAsURI
-        - OIDAsURN
         - OIDAsURI
         - OIDAsURN
       DocumentationReferencesType:
@@ -4632,45 +4590,6 @@ components:
         - Permit
         - Deny
         - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
       AssertionType:
         type: object
         properties:
@@ -6971,10 +6890,6 @@ components:
         format: uri
         enum:
         - http://uri.etsi.org/02231/TSLTag
-        - http://uri.etsi.org/02231/TSLTag
-        - http://uri.etsi.org/02231/TSLTag
-        - http://uri.etsi.org/02231/TSLTag
-        - http://uri.etsi.org/02231/TSLTag
       TrustServiceProviderListType:
         type: object
         properties:
@@ -8027,18 +7942,6 @@ components:
         - Permit
         - Deny
         - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
-        - Permit
-        - Deny
-        - Indeterminate
       ActionType:
         type: object
         properties:
@@ -8575,117 +8478,9 @@ components:
         - C.ENC
         - C.SIG
         - C.QES
-        - C.AUT
-        - C.ENC
-        - C.SIG
-        - C.QES
-        - C.AUT
-        - C.ENC
-        - C.SIG
-        - C.QES
-        - C.AUT
-        - C.ENC
-        - C.SIG
-        - C.QES
-        - C.AUT
-        - C.ENC
-        - C.SIG
-        - C.QES
-        - C.AUT
-        - C.ENC
-        - C.SIG
-        - C.QES
-        - C.AUT
-        - C.ENC
-        - C.SIG
-        - C.QES
       CheckCertificateDetailEnum:
         type: string
         enum:
-        - CERT_SIG_ERROR
-        - BUILD_CHAIN_FAILED
-        - CHECK_REVOCATION_FAILED
-        - CERT_REVOKED
-        - CERT_EXPIRED
-        - CERT_BAD_FORMAT
-        - POLICY_ERROR
-        - QC_STATEMENT_ERROR
-        - WRONG_ROLE
-        - UNKNOWN_CRITICAL_EXTENSIONS
-        - CERT_REVOKED_AFTER
-        - NO_REVOCATION_CHECK
-        - TSL_OUT_OF_DATE
-        - QUALIFIED
-        - CERT_SIG_ERROR
-        - BUILD_CHAIN_FAILED
-        - CHECK_REVOCATION_FAILED
-        - CERT_REVOKED
-        - CERT_EXPIRED
-        - CERT_BAD_FORMAT
-        - POLICY_ERROR
-        - QC_STATEMENT_ERROR
-        - WRONG_ROLE
-        - UNKNOWN_CRITICAL_EXTENSIONS
-        - CERT_REVOKED_AFTER
-        - NO_REVOCATION_CHECK
-        - TSL_OUT_OF_DATE
-        - QUALIFIED
-        - CERT_SIG_ERROR
-        - BUILD_CHAIN_FAILED
-        - CHECK_REVOCATION_FAILED
-        - CERT_REVOKED
-        - CERT_EXPIRED
-        - CERT_BAD_FORMAT
-        - POLICY_ERROR
-        - QC_STATEMENT_ERROR
-        - WRONG_ROLE
-        - UNKNOWN_CRITICAL_EXTENSIONS
-        - CERT_REVOKED_AFTER
-        - NO_REVOCATION_CHECK
-        - TSL_OUT_OF_DATE
-        - QUALIFIED
-        - CERT_SIG_ERROR
-        - BUILD_CHAIN_FAILED
-        - CHECK_REVOCATION_FAILED
-        - CERT_REVOKED
-        - CERT_EXPIRED
-        - CERT_BAD_FORMAT
-        - POLICY_ERROR
-        - QC_STATEMENT_ERROR
-        - WRONG_ROLE
-        - UNKNOWN_CRITICAL_EXTENSIONS
-        - CERT_REVOKED_AFTER
-        - NO_REVOCATION_CHECK
-        - TSL_OUT_OF_DATE
-        - QUALIFIED
-        - CERT_SIG_ERROR
-        - BUILD_CHAIN_FAILED
-        - CHECK_REVOCATION_FAILED
-        - CERT_REVOKED
-        - CERT_EXPIRED
-        - CERT_BAD_FORMAT
-        - POLICY_ERROR
-        - QC_STATEMENT_ERROR
-        - WRONG_ROLE
-        - UNKNOWN_CRITICAL_EXTENSIONS
-        - CERT_REVOKED_AFTER
-        - NO_REVOCATION_CHECK
-        - TSL_OUT_OF_DATE
-        - QUALIFIED
-        - CERT_SIG_ERROR
-        - BUILD_CHAIN_FAILED
-        - CHECK_REVOCATION_FAILED
-        - CERT_REVOKED
-        - CERT_EXPIRED
-        - CERT_BAD_FORMAT
-        - POLICY_ERROR
-        - QC_STATEMENT_ERROR
-        - WRONG_ROLE
-        - UNKNOWN_CRITICAL_EXTENSIONS
-        - CERT_REVOKED_AFTER
-        - NO_REVOCATION_CHECK
-        - TSL_OUT_OF_DATE
-        - QUALIFIED
         - CERT_SIG_ERROR
         - BUILD_CHAIN_FAILED
         - CHECK_REVOCATION_FAILED
@@ -8781,32 +8576,6 @@ components:
         enum:
         - OK
         - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
-        - OK
-        - Warning
       CardHandle:
         $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/CardHandleType'
         xml:
@@ -8872,60 +8641,6 @@ components:
                 enum:
                 - Online
                 - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
-                - Online
-                - Offline
               timestamp:
                 type: string
                 format: date-time
@@ -8976,103 +8691,12 @@ components:
             - Error
             - Warning
             - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
-            - Fatal
-            - Error
-            - Warning
-            - Info
           type:
             type: string
             xml:
               name: Type
               namespace: http://ws.gematik.de/conn/ConnectorCommon/v5.0
             enum:
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
-            - Operation
-            - Security
-            - Infrastructure
             - Operation
             - Security
             - Infrastructure
@@ -9118,45 +8742,6 @@ components:
       ResultEnum:
         type: string
         enum:
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
-        - ERROR
-        - OK
-        - WARNING
         - ERROR
         - OK
         - WARNING
@@ -9508,25 +9093,9 @@ components:
         - ERROR
         - OK
         - ALREADY_INSERTED
-        - ERROR
-        - OK
-        - ALREADY_INSERTED
-        - ERROR
-        - OK
-        - ALREADY_INSERTED
       PinStatusEnum:
         type: string
         enum:
-        - VERIFIED
-        - TRANSPORT_PIN
-        - EMPTY_PIN
-        - BLOCKED
-        - VERIFIABLE
-        - VERIFIED
-        - TRANSPORT_PIN
-        - EMPTY_PIN
-        - BLOCKED
-        - VERIFIABLE
         - VERIFIED
         - TRANSPORT_PIN
         - EMPTY_PIN
@@ -9538,28 +9107,6 @@ components:
       CommonStepsEnum:
         type: string
         enum:
-        - CheckCardHandle
-        - VerifyPin
-        - VerifyEhcPin
-        - VerifyHpcPin
-        - VerifySmcPin
-        - WriteToEhc
-        - ReadFromEhc
-        - Logging
-        - CheckEhcBlocking
-        - FullfillAccessConditions
-        - CardToCard
-        - CheckCardHandle
-        - VerifyPin
-        - VerifyEhcPin
-        - VerifyHpcPin
-        - VerifySmcPin
-        - WriteToEhc
-        - ReadFromEhc
-        - Logging
-        - CheckEhcBlocking
-        - FullfillAccessConditions
-        - CardToCard
         - CheckCardHandle
         - VerifyPin
         - VerifyEhcPin
@@ -9821,50 +9368,6 @@ components:
         - UNKNOWN
         - HBAx
         - SM-B
-        - EGK
-        - HBA-qSig
-        - HBA
-        - SMC-B
-        - HSM-B
-        - SMC-KT
-        - KVK
-        - ZOD_2.0
-        - UNKNOWN
-        - HBAx
-        - SM-B
-        - EGK
-        - HBA-qSig
-        - HBA
-        - SMC-B
-        - HSM-B
-        - SMC-KT
-        - KVK
-        - ZOD_2.0
-        - UNKNOWN
-        - HBAx
-        - SM-B
-        - EGK
-        - HBA-qSig
-        - HBA
-        - SMC-B
-        - HSM-B
-        - SMC-KT
-        - KVK
-        - ZOD_2.0
-        - UNKNOWN
-        - HBAx
-        - SM-B
-        - EGK
-        - HBA-qSig
-        - HBA
-        - SMC-B
-        - HSM-B
-        - SMC-KT
-        - KVK
-        - ZOD_2.0
-        - UNKNOWN
-        - HBAx
-        - SM-B
       IccsnType:
         type: string
         pattern: ([0-9])*|([0-9])*|([0-9])*|([0-9])*|([0-9])*
@@ -9889,30 +9392,6 @@ components:
       PinResultEnum:
         type: string
         enum:
-        - ERROR
-        - OK
-        - REJECTED
-        - WASBLOCKED
-        - NOWBLOCKED
-        - TRANSPORT_PIN
-        - ERROR
-        - OK
-        - REJECTED
-        - WASBLOCKED
-        - NOWBLOCKED
-        - TRANSPORT_PIN
-        - ERROR
-        - OK
-        - REJECTED
-        - WASBLOCKED
-        - NOWBLOCKED
-        - TRANSPORT_PIN
-        - ERROR
-        - OK
-        - REJECTED
-        - WASBLOCKED
-        - NOWBLOCKED
-        - TRANSPORT_PIN
         - ERROR
         - OK
         - REJECTED
@@ -12008,9 +11487,6 @@ components:
             - RSA
             - ECC
             - RSA_ECC
-            - RSA
-            - ECC
-            - RSA_ECC
           context:
             $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorContext20/Context'
           tvMode:
@@ -12088,8 +11564,6 @@ components:
           name: SignatureSchemes
           namespace: http://ws.gematik.de/conn/SignatureService/v7.5
         enum:
-        - RSASSA-PSS
-        - RSASSA-PKCS1-v1_5
         - RSASSA-PSS
         - RSASSA-PKCS1-v1_5
       DocumentWithSignature:
@@ -12301,9 +11775,6 @@ components:
         - NONE
         - UNCONFIRMED
         - CONFIRMED
-        - NONE
-        - UNCONFIRMED
-        - CONFIRMED
       JobNumber:
         type: string
         pattern: '[A-Z][A-Z][A-Z]-[0-9][0-9][0-9]|[A-Z][A-Z][A-Z]-[0-9][0-9][0-9]'
@@ -12340,11 +11811,6 @@ components:
           name: SignatureForm
           namespace: http://ws.gematik.de/conn/SignatureService/v7.5
         enum:
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X
-        - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L
         - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES
         - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T
         - urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C
@@ -12622,19 +12088,12 @@ components:
             - VALID
             - INCONCLUSIVE
             - INVALID
-            - VALID
-            - INCONCLUSIVE
-            - INVALID
           timestampType:
             type: string
             xml:
               name: TimestampType
               namespace: http://ws.gematik.de/conn/SignatureService/v7.5
             enum:
-            - SIGNATURE_EMBEDDED_TIMESTAMP
-            - QUALIFIED_TIMESTAMP
-            - USER_DEFINED_TIMESTAMP
-            - SYSTEM_TIMESTAMP
             - SIGNATURE_EMBEDDED_TIMESTAMP
             - QUALIFIED_TIMESTAMP
             - USER_DEFINED_TIMESTAMP
@@ -12650,8 +12109,6 @@ components:
         enum:
         - PIN
         - COMFORT
-        - PIN
-        - COMFORT
       CountType:
         type: integer
         maximum: 250.0
@@ -12659,7 +12116,5 @@ components:
       ComfortSignatureStatusEnum:
         type: string
         enum:
-        - ENABLED
-        - DISABLED
         - ENABLED
         - DISABLED

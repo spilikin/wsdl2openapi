@@ -35,7 +35,7 @@ type Extension struct {
 
 type TrustServiceStatusList struct {
 	XMLName                  xml.Name                  `xml:"http://uri.etsi.org/02231/v2# TrustServiceStatusList"`
-	TSLTag                   string                    `xml:"TSLTag,attr"`
+	TSLTag                   TSLTagType                `xml:"TSLTag,attr"`
 	Id                       string                    `xml:"Id,attr,omitempty"`
 	SchemeInformation        SchemeInformation         `xml:"SchemeInformation"`
 	TrustServiceProviderList *TrustServiceProviderList `xml:"TrustServiceProviderList,omitempty"`
@@ -328,7 +328,7 @@ type INonEmptyURIListType interface {
 func (NonEmptyURIListType) IsEtsi022312NonEmptyURIListType() {}
 
 type TrustStatusListType struct {
-	TSLTag                   string                    `xml:"TSLTag,attr"`
+	TSLTag                   TSLTagType                `xml:"TSLTag,attr"`
 	Id                       string                    `xml:"Id,attr,omitempty"`
 	SchemeInformation        SchemeInformation         `xml:"http://uri.etsi.org/02231/v2# SchemeInformation"`
 	TrustServiceProviderList *TrustServiceProviderList `xml:"http://uri.etsi.org/02231/v2# TrustServiceProviderList,omitempty"`
@@ -342,6 +342,13 @@ type ITrustStatusListType interface {
 
 // The type itself implements ITrustStatusListType
 func (TrustStatusListType) IsEtsi022312TrustStatusListType() {}
+
+type TSLTagType string
+
+// Enum values for TSLTagType
+const (
+	TSLTagTypeHttpUriEtsiOrg02231TSLTag TSLTagType = "http://uri.etsi.org/02231/TSLTag"
+)
 
 type TrustServiceProviderListType struct {
 	TrustServiceProvider []TrustServiceProvider `xml:"http://uri.etsi.org/02231/v2# TrustServiceProvider"`

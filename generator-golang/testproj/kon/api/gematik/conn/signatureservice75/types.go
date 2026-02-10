@@ -16,7 +16,7 @@ type SignDocument struct {
 	CardHandle  string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
 	Crypt       string                     `xml:"Crypt,omitempty"`
 	Context     connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	TvMode      string                     `xml:"TvMode"`
+	TvMode      TvMode                     `xml:"TvMode"`
 	JobNumber   string                     `xml:"JobNumber,omitempty"`
 	SignRequest []SignRequest              `xml:"SignRequest"`
 }
@@ -42,6 +42,14 @@ type SignRequest struct {
 	Document              Document `xml:"Document"`
 	IncludeRevocationInfo bool     `xml:"IncludeRevocationInfo"`
 }
+
+type SignatureSchemes string
+
+// Enum values for SignatureSchemes
+const (
+	SignatureSchemesRsassaPss      SignatureSchemes = "RSASSA-PSS"
+	SignatureSchemesRSASSAPKCS1V15 SignatureSchemes = "RSASSA-PKCS1-v1_5"
+)
 
 type DocumentWithSignature struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 DocumentWithSignature"`
@@ -74,7 +82,7 @@ type SignResponse struct {
 type VerifyDocument struct {
 	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 VerifyDocument"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	TvMode         string                     `xml:"TvMode,omitempty"`
+	TvMode         TvMode                     `xml:"TvMode,omitempty"`
 	OptionalInputs *struct {
 		XMLName                  xml.Name                                     `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
 		VerifyManifests          string                                       `xml:"VerifyManifests,omitempty"`
@@ -124,9 +132,9 @@ type ExternalAuthenticate struct {
 	CardHandle     string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
 	OptionalInputs *struct {
-		XMLName          xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
-		SignatureType    string   `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
-		SignatureSchemes string   `xml:"SignatureSchemes,omitempty"`
+		XMLName          xml.Name         `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 OptionalInputs"`
+		SignatureType    string           `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
+		SignatureSchemes SignatureSchemes `xml:"SignatureSchemes,omitempty"`
 	} `xml:"OptionalInputs,omitempty"`
 	BinaryString BinaryString `xml:"BinaryString"`
 }
@@ -148,6 +156,15 @@ type StopSignatureResponse struct {
 	Status  connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
 }
 
+type TvMode string
+
+// Enum values for TvMode
+const (
+	TvModeNone        TvMode = "NONE"
+	TvModeUnconfirmed TvMode = "UNCONFIRMED"
+	TvModeConfirmed   TvMode = "CONFIRMED"
+)
+
 type ViewerInfo struct {
 	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ViewerInfo"`
 	XslStyleSheets *struct {
@@ -155,6 +172,17 @@ type ViewerInfo struct {
 		XslStylesheet []connectorcommon50.XslStylesheet `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 XslStylesheet"`
 	} `xml:"XslStyleSheets,omitempty"`
 }
+
+type SignatureForm string
+
+// Enum values for SignatureForm
+const (
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsBES  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsEST  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESC  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESX  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESXL SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L"
+)
 
 type Document struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 Document"`
@@ -202,7 +230,7 @@ type ActivateComfortSignature struct {
 type ActivateComfortSignatureResponse struct {
 	XMLName       xml.Name                 `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 ActivateComfortSignatureResponse"`
 	Status        connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	SignatureMode string                   `xml:"SignatureMode"`
+	SignatureMode SignatureMode            `xml:"SignatureMode"`
 }
 
 type DeactivateComfortSignature struct {
@@ -222,20 +250,28 @@ type GetSignatureMode struct {
 }
 
 type GetSignatureModeResponse struct {
-	XMLName                xml.Name                 `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 GetSignatureModeResponse"`
-	Status                 connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	ComfortSignatureStatus string                   `xml:"ComfortSignatureStatus"`
-	ComfortSignatureMax    int                      `xml:"ComfortSignatureMax"`
-	ComfortSignatureTimer  string                   `xml:"ComfortSignatureTimer"`
-	SessionInfo            *SessionInfo             `xml:"SessionInfo,omitempty"`
+	XMLName                xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 GetSignatureModeResponse"`
+	Status                 connectorcommon50.Status   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
+	ComfortSignatureStatus ComfortSignatureStatusEnum `xml:"ComfortSignatureStatus"`
+	ComfortSignatureMax    int                        `xml:"ComfortSignatureMax"`
+	ComfortSignatureTimer  string                     `xml:"ComfortSignatureTimer"`
+	SessionInfo            *SessionInfo               `xml:"SessionInfo,omitempty"`
 }
 
 type SessionInfo struct {
-	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SessionInfo"`
-	SignatureMode  string   `xml:"SignatureMode"`
-	CountRemaining int      `xml:"CountRemaining"`
-	TimeRemaining  string   `xml:"TimeRemaining"`
+	XMLName        xml.Name      `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 SessionInfo"`
+	SignatureMode  SignatureMode `xml:"SignatureMode"`
+	CountRemaining int           `xml:"CountRemaining"`
+	TimeRemaining  string        `xml:"TimeRemaining"`
 }
+
+type SignatureMode string
+
+// Enum values for SignatureMode
+const (
+	SignatureModePin     SignatureMode = "PIN"
+	SignatureModeComfort SignatureMode = "COMFORT"
+)
 
 type DocumentType struct {
 	Id         string                `xml:"ID,attr,omitempty"`
@@ -285,3 +321,19 @@ type VerificationResultType struct {
 	TimestampType   string `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 TimestampType"`
 	Timestamp       string `xml:"http://ws.gematik.de/conn/SignatureService/v7.5 Timestamp"`
 }
+
+type SignatureModeEnum string
+
+// Enum values for SignatureModeEnum
+const (
+	SignatureModeEnumPin     SignatureModeEnum = "PIN"
+	SignatureModeEnumComfort SignatureModeEnum = "COMFORT"
+)
+
+type ComfortSignatureStatusEnum string
+
+// Enum values for ComfortSignatureStatusEnum
+const (
+	ComfortSignatureStatusEnumEnabled  ComfortSignatureStatusEnum = "ENABLED"
+	ComfortSignatureStatusEnumDisabled ComfortSignatureStatusEnum = "DISABLED"
+)

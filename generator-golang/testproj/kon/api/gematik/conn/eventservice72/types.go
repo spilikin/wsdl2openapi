@@ -5,17 +5,18 @@ package eventservice72
 import (
 	"encoding/xml"
 	cardservice81 "github.com/test/testproj/kon/api/gematik/conn/cardservice81"
+	cardservicecommon20 "github.com/test/testproj/kon/api/gematik/conn/cardservicecommon20"
 	cardterminalinfo80 "github.com/test/testproj/kon/api/gematik/conn/cardterminalinfo80"
 	connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 	connectorcontext20 "github.com/test/testproj/kon/api/gematik/conn/connectorcontext20"
 )
 
 type Event struct {
-	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Event"`
-	Topic          string   `xml:"Topic"`
-	Type           string   `xml:"Type"`
-	Severity       string   `xml:"Severity"`
-	SubscriptionID string   `xml:"SubscriptionID"`
+	XMLName        xml.Name          `xml:"http://ws.gematik.de/conn/EventService/v7.2 Event"`
+	Topic          string            `xml:"Topic"`
+	Type           EventType         `xml:"Type"`
+	Severity       EventSeverityType `xml:"Severity"`
+	SubscriptionID string            `xml:"SubscriptionID"`
 	Message        struct {
 		XMLName   xml.Name `xml:"http://ws.gematik.de/conn/EventService/v7.2 Message"`
 		Parameter []struct {
@@ -91,12 +92,12 @@ type GetResourceInformationResponse struct {
 }
 
 type GetCards struct {
-	XMLName     xml.Name                   `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetCards"`
-	MandantWide bool                       `xml:"mandant-wide,attr,omitempty"`
-	Context     connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	CtId        string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId,omitempty"`
-	SlotId      int                        `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId,omitempty"`
-	CardType    string                     `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
+	XMLName     xml.Name                     `xml:"http://ws.gematik.de/conn/EventService/v7.2 GetCards"`
+	MandantWide bool                         `xml:"mandant-wide,attr,omitempty"`
+	Context     connectorcontext20.Context   `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
+	CtId        string                       `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CtId,omitempty"`
+	SlotId      int                          `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 SlotId,omitempty"`
+	CardType    cardservicecommon20.CardType `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 CardType,omitempty"`
 }
 
 type GetCardsResponse struct {
@@ -140,6 +141,27 @@ type RenewSubscriptionsResponse struct {
 		SubscriptionRenewal []SubscriptionRenewal `xml:"SubscriptionRenewal"`
 	} `xml:"SubscribeRenewals"`
 }
+
+type EventType string
+
+// Enum values for EventType
+const (
+	EventTypeOperation      EventType = "Operation"
+	EventTypeSecurity       EventType = "Security"
+	EventTypeInfrastructure EventType = "Infrastructure"
+	EventTypeBusiness       EventType = "Business"
+	EventTypeOther          EventType = "Other"
+)
+
+type EventSeverityType string
+
+// Enum values for EventSeverityType
+const (
+	EventSeverityTypeInfo    EventSeverityType = "Info"
+	EventSeverityTypeWarning EventSeverityType = "Warning"
+	EventSeverityTypeError   EventSeverityType = "Error"
+	EventSeverityTypeFatal   EventSeverityType = "Fatal"
+)
 
 type SubscriptionType struct {
 	SubscriptionID  string `xml:"http://ws.gematik.de/conn/EventService/v7.2 SubscriptionID,omitempty"`

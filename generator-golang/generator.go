@@ -160,7 +160,10 @@ func (g *Generator) generatePackageTypes(packageName string) error {
 				return fmt.Errorf("failed to render struct for type %s in schema %s: %w", typeName, packageName, err)
 			}
 		} else if typePtr.Type.IsPrimitive() {
-			// skip generating type definitions for primitive types, as they are directly used in the struct fields
+			if TypeHasFacets(typePtr.Type.GetType()) {
+				g.renderPrimitiveTypeWithFacets(jenFile, typeName, typePtr)
+			}
+			// skip pure primitive types without facets, as they are rendered inline
 		} else {
 			return fmt.Errorf("unsupported type definition for type %s in schema %s: %T", typeName, packageName, typePtr.Type)
 		}
@@ -173,11 +176,30 @@ func (g *Generator) generatePackageTypes(packageName string) error {
 	return nil
 }
 
+func (g *Generator) renderPrimitiveTypeWithFacets(jenFile *jen.File, typeName string, typePtr *TypePointer) {
+	primitiveTypeStmt, err := g.golangPrimitiveType(&typePtr.Type)
+	if err != nil {
+		jenFile.Comment(fmt.Sprintf("Failed to generate primitive type for %s: %v", typeName, err))
+		return
+	}
+
+	jenFile.Type().Id(typeName).Add(primitiveTypeStmt)
+
+	jenFile.Comment(fmt.Sprintf("Enum values for %s", typeName))
+	constDefs := []jen.Code{}
+	for _, enumVal := range typePtr.Type.GetType().Enum {
+		constName := g.NamingStrategy.EnumValueName(typeName, enumVal)
+		constDefs = append(constDefs, jen.Id(constName).Id(typeName).Op("=").Lit(enumVal))
+	}
+	jenFile.Const().Defs(constDefs...)
+
+}
+
 func (g *Generator) renderGlobalObject(jenFile *jen.File, typeName string, typePtr *TypePointer, typeDef *TypeObject) error {
 
 	fields, err := g.renderProperties(typePtr, typeDef)
 	if err != nil {
-		return fmt.Errorf("failed to render pr	operties for type %s in package %s: %w", typeName, typePtr.PackageName, err)
+		return fmt.Errorf("failed to render properties for type %s in package %s: %w", typeName, typePtr.PackageName, err)
 	}
 	jenFile.Type().Id(typeName).Struct(fields...)
 
@@ -284,7 +306,7 @@ func (g *Generator) renderPropertyTypeAndTags(stmt *jen.Statement, baseTypePtr, 
 		if propTypePtr.IsBase {
 			interfaceName := g.NamingStrategy.BaseTypeInterfaceName(propTypePtr.Qual.Name)
 			stmt = stmt.Qual(propTypePtr.Qual.Path, interfaceName)
-		} else if propType.IsPrimitive() {
+		} else if propType.IsPrimitive() && !TypeHasFacets(propType.GetType()) {
 			primitiveTypeStmt, err := g.golangPrimitiveType(&propType)
 			if err != nil {
 				return nil, err

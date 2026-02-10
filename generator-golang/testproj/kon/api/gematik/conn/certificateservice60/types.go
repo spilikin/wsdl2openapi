@@ -49,9 +49,9 @@ type VerifyCertificateResponse struct {
 	XMLName            xml.Name                 `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerifyCertificateResponse"`
 	Status             connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
 	VerificationStatus struct {
-		XMLName            xml.Name       `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerificationStatus"`
-		VerificationResult string         `xml:"VerificationResult"`
-		Error              *error20.Error `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
+		XMLName            xml.Name               `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 VerificationStatus"`
+		VerificationResult VerificationResultType `xml:"VerificationResult"`
+		Error              *error20.Error         `xml:"http://ws.gematik.de/tel/error/v2.0 Error,omitempty"`
 	} `xml:"VerificationStatus"`
 	RoleList struct {
 		XMLName xml.Name `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 RoleList"`
@@ -67,3 +67,12 @@ type CertificateExpirationType struct {
 	SerialNumber      string `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 serialNumber"`
 	Validity          string `xml:"http://ws.gematik.de/conn/CertificateService/v6.0 validity"`
 }
+
+type VerificationResultType string
+
+// Enum values for VerificationResultType
+const (
+	VerificationResultTypeValid        VerificationResultType = "VALID"
+	VerificationResultTypeInconclusive VerificationResultType = "INCONCLUSIVE"
+	VerificationResultTypeInvalid      VerificationResultType = "INVALID"
+)

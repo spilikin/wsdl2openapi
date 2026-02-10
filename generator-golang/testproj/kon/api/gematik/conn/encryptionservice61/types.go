@@ -20,7 +20,7 @@ type EncryptDocument struct {
 	Document       connectorcommon50.Document `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Document"`
 	OptionalInputs *struct {
 		XMLName               xml.Name               `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 OptionalInputs"`
-		EncryptionType        string                 `xml:"EncryptionType,omitempty"`
+		EncryptionType        EncryptionType         `xml:"EncryptionType,omitempty"`
 		Element               []Element              `xml:"Element"`
 		UnprotectedProperties *UnprotectedProperties `xml:"UnprotectedProperties,omitempty"`
 	} `xml:"OptionalInputs,omitempty"`
@@ -44,6 +44,15 @@ type PrivateKeyOnCard struct {
 	CardHandle   string   `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
 	KeyReference string   `xml:"KeyReference,omitempty"`
 }
+
+type EncryptionType string
+
+// Enum values for EncryptionType
+const (
+	EncryptionTypeHttpWwwW3OrgTRXmlencCore EncryptionType = "http://www.w3.org/TR/xmlenc-core/"
+	EncryptionTypeUrnIetfRfc5652           EncryptionType = "urn:ietf:rfc:5652"
+	EncryptionTypeUrnIetfRfc5751           EncryptionType = "urn:ietf:rfc:5751"
+)
 
 type Element struct {
 	XMLName  xml.Name `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 Element"`
@@ -70,6 +79,22 @@ type UnprotectedProperties struct {
 	XMLName  xml.Name             `xml:"http://ws.gematik.de/conn/EncryptionService/v6.1 UnprotectedProperties"`
 	Property []dss10core.Property `xml:"urn:oasis:names:tc:dss:1.0:core:schema Property"`
 }
+
+type CommonStepsEnum string
+
+// Enum values for CommonStepsEnum
+const (
+	CommonStepsEnumEncryptXMLData CommonStepsEnum = "EncryptXMLData"
+	CommonStepsEnumDecryptXMLData CommonStepsEnum = "DecryptXMLData"
+)
+
+type EncryptionStepResultEnum string
+
+// Enum values for EncryptionStepResultEnum
+const (
+	EncryptionStepResultEnumError EncryptionStepResultEnum = "ERROR"
+	EncryptionStepResultEnumOk    EncryptionStepResultEnum = "OK"
+)
 
 type KeyOnCardType struct {
 	CardHandle   string `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`

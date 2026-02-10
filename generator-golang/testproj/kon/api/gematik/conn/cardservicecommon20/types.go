@@ -4,9 +4,55 @@ package cardservicecommon20
 
 import connectorcommon50 "github.com/test/testproj/kon/api/gematik/conn/connectorcommon50"
 
+type CardType string
+
+// Enum values for CardType
+const (
+	CardTypeEgk     CardType = "EGK"
+	CardTypeHBAQSig CardType = "HBA-qSig"
+	CardTypeHba     CardType = "HBA"
+	CardTypeSmcB    CardType = "SMC-B"
+	CardTypeHsmB    CardType = "HSM-B"
+	CardTypeSmcKt   CardType = "SMC-KT"
+	CardTypeKvk     CardType = "KVK"
+	CardTypeZod20   CardType = "ZOD_2.0"
+	CardTypeUnknown CardType = "UNKNOWN"
+	CardTypeHBAx    CardType = "HBAx"
+	CardTypeSmB     CardType = "SM-B"
+)
+
+type PinResult string
+
+// Enum values for PinResult
+const (
+	PinResultError        PinResult = "ERROR"
+	PinResultOk           PinResult = "OK"
+	PinResultRejected     PinResult = "REJECTED"
+	PinResultWasblocked   PinResult = "WASBLOCKED"
+	PinResultNowblocked   PinResult = "NOWBLOCKED"
+	PinResultTransportPin PinResult = "TRANSPORT_PIN"
+)
+
+type CardTypeType string
+
+// Enum values for CardTypeType
+const (
+	CardTypeTypeEgk     CardTypeType = "EGK"
+	CardTypeTypeHBAQSig CardTypeType = "HBA-qSig"
+	CardTypeTypeHba     CardTypeType = "HBA"
+	CardTypeTypeSmcB    CardTypeType = "SMC-B"
+	CardTypeTypeHsmB    CardTypeType = "HSM-B"
+	CardTypeTypeSmcKt   CardTypeType = "SMC-KT"
+	CardTypeTypeKvk     CardTypeType = "KVK"
+	CardTypeTypeZod20   CardTypeType = "ZOD_2.0"
+	CardTypeTypeUnknown CardTypeType = "UNKNOWN"
+	CardTypeTypeHBAx    CardTypeType = "HBAx"
+	CardTypeTypeSmB     CardTypeType = "SM-B"
+)
+
 type PinResponseType struct {
 	Status    connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
-	PinResult string                   `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
+	PinResult PinResult                `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 PinResult"`
 	LeftTries int                      `xml:"http://ws.gematik.de/conn/CardServiceCommon/v2.0 LeftTries,omitempty"`
 }
 
@@ -17,3 +63,15 @@ type IPinResponseType interface {
 
 // The type itself implements IPinResponseType
 func (PinResponseType) IsCardServiceCommon20PinResponseType() {}
+
+type PinResultEnum string
+
+// Enum values for PinResultEnum
+const (
+	PinResultEnumError        PinResultEnum = "ERROR"
+	PinResultEnumOk           PinResultEnum = "OK"
+	PinResultEnumRejected     PinResultEnum = "REJECTED"
+	PinResultEnumWasblocked   PinResultEnum = "WASBLOCKED"
+	PinResultEnumNowblocked   PinResultEnum = "NOWBLOCKED"
+	PinResultEnumTransportPin PinResultEnum = "TRANSPORT_PIN"
+)

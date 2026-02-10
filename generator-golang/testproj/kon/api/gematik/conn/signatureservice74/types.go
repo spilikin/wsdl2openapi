@@ -15,7 +15,7 @@ type SignDocument struct {
 	XMLName     xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 SignDocument"`
 	CardHandle  string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
 	Context     connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	TvMode      string                     `xml:"TvMode"`
+	TvMode      TvMode                     `xml:"TvMode"`
 	JobNumber   string                     `xml:"JobNumber,omitempty"`
 	SignRequest []SignRequest              `xml:"SignRequest"`
 }
@@ -41,6 +41,14 @@ type SignRequest struct {
 	Document              Document `xml:"Document"`
 	IncludeRevocationInfo bool     `xml:"IncludeRevocationInfo"`
 }
+
+type SignatureSchemes string
+
+// Enum values for SignatureSchemes
+const (
+	SignatureSchemesRsassaPss      SignatureSchemes = "RSASSA-PSS"
+	SignatureSchemesRSASSAPKCS1V15 SignatureSchemes = "RSASSA-PKCS1-v1_5"
+)
 
 type DocumentWithSignature struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 DocumentWithSignature"`
@@ -73,7 +81,7 @@ type SignResponse struct {
 type VerifyDocument struct {
 	XMLName        xml.Name                   `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 VerifyDocument"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
-	TvMode         string                     `xml:"TvMode,omitempty"`
+	TvMode         TvMode                     `xml:"TvMode,omitempty"`
 	OptionalInputs *struct {
 		XMLName                  xml.Name                                     `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 OptionalInputs"`
 		VerifyManifests          string                                       `xml:"VerifyManifests,omitempty"`
@@ -123,9 +131,9 @@ type ExternalAuthenticate struct {
 	CardHandle     string                     `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 CardHandle"`
 	Context        connectorcontext20.Context `xml:"http://ws.gematik.de/conn/ConnectorContext/v2.0 Context"`
 	OptionalInputs *struct {
-		XMLName          xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 OptionalInputs"`
-		SignatureType    string   `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
-		SignatureSchemes string   `xml:"SignatureSchemes,omitempty"`
+		XMLName          xml.Name         `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 OptionalInputs"`
+		SignatureType    string           `xml:"urn:oasis:names:tc:dss:1.0:core:schema SignatureType,omitempty"`
+		SignatureSchemes SignatureSchemes `xml:"SignatureSchemes,omitempty"`
 	} `xml:"OptionalInputs,omitempty"`
 	BinaryString BinaryString `xml:"BinaryString"`
 }
@@ -147,6 +155,15 @@ type StopSignatureResponse struct {
 	Status  connectorcommon50.Status `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 Status"`
 }
 
+type TvMode string
+
+// Enum values for TvMode
+const (
+	TvModeNone        TvMode = "NONE"
+	TvModeUnconfirmed TvMode = "UNCONFIRMED"
+	TvModeConfirmed   TvMode = "CONFIRMED"
+)
+
 type ViewerInfo struct {
 	XMLName        xml.Name `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 ViewerInfo"`
 	XslStyleSheets *struct {
@@ -154,6 +171,17 @@ type ViewerInfo struct {
 		XslStylesheet []connectorcommon50.XslStylesheet `xml:"http://ws.gematik.de/conn/ConnectorCommon/v5.0 XslStylesheet"`
 	} `xml:"XslStyleSheets,omitempty"`
 }
+
+type SignatureForm string
+
+// Enum values for SignatureForm
+const (
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsBES  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:BES"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsEST  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-T"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESC  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-C"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESX  SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X"
+	SignatureFormUrnOasisNamesTcDss10ProfilesAdESFormsESXL SignatureForm = "urn:oasis:names:tc:dss:1.0:profiles:AdES:forms:ES-X-L"
+)
 
 type Document struct {
 	XMLName    xml.Name              `xml:"http://ws.gematik.de/conn/SignatureService/v7.4 Document"`

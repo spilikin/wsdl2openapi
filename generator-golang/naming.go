@@ -43,6 +43,11 @@ func (n NamingStrategy) NormalizePortName(portName string) string {
 }
 
 func (n NamingStrategy) PublicIdentifier(name string) string {
+	// If all uppercase, convert to lowercase first
+	if name == strings.ToUpper(name) && name != strings.ToLower(name) {
+		name = strings.ToLower(name)
+	}
+
 	name = strings.Map(func(r rune) rune {
 		if (r >= 'a' && r <= 'z') || (r >= 'A' && r <= 'Z') || (r >= '0' && r <= '9') {
 			return r
@@ -114,4 +119,8 @@ func (n NamingStrategy) FaultStructName(op *OperationDefinition) string {
 
 func (n NamingStrategy) OperationVarName(op *OperationDefinition) string {
 	return "Operation" + n.PublicIdentifier(op.Name)
+}
+
+func (n NamingStrategy) EnumValueName(enumName string, valueName string) string {
+	return n.PublicIdentifier(enumName) + n.PublicIdentifier(valueName)
 }

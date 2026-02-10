@@ -76,7 +76,9 @@ class SchemaFacetsVisitor:
     def visit_enumeration(self, enumeration: etree.Element, type_definition: Type):
         if type_definition.enum == msgspec.UNSET:
             type_definition.enum = []
-        type_definition.enum.append(enumeration.get("value"))
+        value = enumeration.get("value")
+        if value not in type_definition.enum:
+            type_definition.enum.append(value)
 
     def visit_pattern(self, pattern: etree.Element, type_definition: TypeString):
         pattern_value = pattern.get("value")

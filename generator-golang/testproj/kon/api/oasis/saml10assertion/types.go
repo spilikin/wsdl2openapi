@@ -106,12 +106,12 @@ type AuthorityBinding struct {
 }
 
 type AuthorizationDecisionStatement struct {
-	XMLName  xml.Name  `xml:"urn:oasis:names:tc:SAML:1.0:assertion AuthorizationDecisionStatement"`
-	Resource string    `xml:"Resource,attr"`
-	Decision string    `xml:"Decision,attr"`
-	Subject  Subject   `xml:"Subject"`
-	Action   []Action  `xml:"Action"`
-	Evidence *Evidence `xml:"Evidence,omitempty"`
+	XMLName  xml.Name     `xml:"urn:oasis:names:tc:SAML:1.0:assertion AuthorizationDecisionStatement"`
+	Resource string       `xml:"Resource,attr"`
+	Decision DecisionType `xml:"Decision,attr"`
+	Subject  Subject      `xml:"Subject"`
+	Action   []Action     `xml:"Action"`
+	Evidence *Evidence    `xml:"Evidence,omitempty"`
 }
 
 type Action struct {
@@ -144,6 +144,15 @@ type Attribute struct {
 	AttributeNamespace string   `xml:"AttributeNamespace,attr"`
 	AttributeValue     []string `xml:"AttributeValue"`
 }
+
+type DecisionType string
+
+// Enum values for DecisionType
+const (
+	DecisionTypePermit        DecisionType = "Permit"
+	DecisionTypeDeny          DecisionType = "Deny"
+	DecisionTypeIndeterminate DecisionType = "Indeterminate"
+)
 
 type AssertionType struct {
 	MajorVersion                   int                              `xml:"MajorVersion,attr"`
@@ -355,11 +364,11 @@ type IAuthorityBindingType interface {
 func (AuthorityBindingType) IsAssertionAuthorityBindingType() {}
 
 type AuthorizationDecisionStatementType struct {
-	Resource string    `xml:"Resource,attr"`
-	Decision string    `xml:"Decision,attr"`
-	Subject  Subject   `xml:"urn:oasis:names:tc:SAML:1.0:assertion Subject"`
-	Action   []Action  `xml:"urn:oasis:names:tc:SAML:1.0:assertion Action"`
-	Evidence *Evidence `xml:"urn:oasis:names:tc:SAML:1.0:assertion Evidence,omitempty"`
+	Resource string       `xml:"Resource,attr"`
+	Decision DecisionType `xml:"Decision,attr"`
+	Subject  Subject      `xml:"urn:oasis:names:tc:SAML:1.0:assertion Subject"`
+	Action   []Action     `xml:"urn:oasis:names:tc:SAML:1.0:assertion Action"`
+	Evidence *Evidence    `xml:"urn:oasis:names:tc:SAML:1.0:assertion Evidence,omitempty"`
 }
 
 // extends #/components/schemas/oasis.names.tc.SAML10.assertion/SubjectStatementAbstractType
