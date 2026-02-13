@@ -22,7 +22,7 @@ There are practically no tools to work with WSDL and SOAP for modern languages l
 
 ## Generated Examples
 
-- **TI-Konnektor (OPB6):** [JSON](konnektor-opb6.json) | [YAML](konnektor-opb6.yaml)
+- **TI-Konnektor (OPB6):** [JSON](Konnektor-OPB6.json) | [YAML](Konnektor-OPB6.yaml)
 - **EPA XDS Document Service:** [JSON](XDSDocumentService.json) | [YAML](XDSDocumentService.yaml)
 
 ## Output Format
