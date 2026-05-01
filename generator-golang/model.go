@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"strings"
 )
 
 type BindingType string
@@ -124,7 +125,24 @@ type Components struct {
 	Schemas Schemas `json:"schemas,omitempty"`
 }
 
-type Schemas = OrderedMap[OrderedMap[json.RawMessage]]
+type Schemas = OrderedMap[json.RawMessage]
+
+// SchemaKeySeparator separates the namespace identifier from the type name in
+// flat component schema keys. The last separator wins (so a key like
+// "de.gematik.ws.conn.SignatureService74.SignDocument" splits into the
+// namespace "de.gematik.ws.conn.SignatureService74" and the type "SignDocument").
+const SchemaKeySeparator = "."
+
+// SplitSchemaKey returns (namespace, typeName) for a flat schema key by
+// splitting on the last separator. If the separator is missing it returns
+// ("", key).
+func SplitSchemaKey(key string) (string, string) {
+	idx := strings.LastIndex(key, SchemaKeySeparator)
+	if idx < 0 {
+		return "", key
+	}
+	return key[:idx], key[idx+len(SchemaKeySeparator):]
+}
 
 type License struct {
 	Name       string `json:"name"`
@@ -216,6 +234,7 @@ type Type struct {
 type TypeObject struct {
 	Type
 	Properties OrderedMap[json.RawMessage] `json:"properties,omitempty"`
+	Required   []string                    `json:"required,omitempty"`
 }
 
 func (t TypeObject) GetType() Type {

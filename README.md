@@ -47,12 +47,12 @@ x-wsdl-services:
       soapAction: http://ws.gematik.de/conn/CardService/v8.1#VerifyPin
       style: document
       input:
-        soapBody: '#/components/schemas/de.gematik.ws.conn.CardService81/VerifyPin'
+        soapBody: '#/components/schemas/de.gematik.ws.conn.CardService81.VerifyPin'
       output:
-        soapBody: '#/components/schemas/de.gematik.ws.conn.CardService81/VerifyPinResponse'
+        soapBody: '#/components/schemas/de.gematik.ws.conn.CardService81.VerifyPinResponse'
       faults:
         FaultMessage:
-          soapBody: '#/components/schemas/de.gematik.ws.tel.error20/Error'
+          soapBody: '#/components/schemas/de.gematik.ws.tel.error20.Error'
 ```
 
 ### `x-extends` and `x-is-base` — Flattened type hierarchy
@@ -60,50 +60,32 @@ x-wsdl-services:
 Instead of using `allOf` composition, inherited properties are inlined directly into each type. The original inheritance chain is preserved as metadata in `x-extends` (inside the `xml` object), allowing code generators to reconstruct interfaces or marker traits if needed.
 
 ```yaml
-BinaryDocumentType:
+oasis.names.tc.dss10.core.BinaryDocumentType:
   type: object
   properties:
     id:                          # inherited from DocumentBaseType
       type: string
       xml: { name: ID, attribute: true }
     base64Data:
-      $ref: '#/components/schemas/oasis.names.tc.dss10.core/Base64Data'
+      $ref: '#/components/schemas/oasis.names.tc.dss10.core.Base64Data'
   xml:
     x-extends:
-    - '#/components/schemas/oasis.names.tc.dss10.core/DocumentBaseType'
+    - '#/components/schemas/oasis.names.tc.dss10.core.DocumentBaseType'
     x-is-base: true
 ```
 
 ### Schema organization — XSD complex type to OpenAPI
 
-Schemas are grouped by XML namespace under `components/schemas`. Each namespace becomes a key, and its types are nested beneath it. The original type hierarchy from WSDL/XSD is preserved and namespaces are mapped to component paths.
+Schemas are stored as a flat map under `components/schemas`, keyed by `<namespace-id>.<TypeName>` (the last dot separates namespace from type name). Optionality is expressed via the JSON Schema `required` array on the parent object — properties not listed there are optional. The converter does not emit `nullable: true`.
 
 **Input XSD**
 ```xml
 <complexType name="ContextType">
   <sequence>
-    <element ref="CONN:MandantId">
-      <annotation>
-        <documentation>Die ID des Mandanten.</documentation>
-      </annotation>
-    </element>
-    <element ref="CONN:ClientSystemId">
-      <annotation>
-        <documentation>Die ID des Clientsystems, von dem bzw. für das der Aufruf
-        des Konnektors erfolgt.</documentation>
-      </annotation>
-    </element>
-    <element ref="CONN:WorkplaceId">
-      <annotation>
-        <documentation>Die ID des Arbeitsplatzes, von dem bzw. für den der Aufruf
-        des Konnektors erfolgt.</documentation>
-      </annotation>
-    </element>
-    <element ref="CONN:UserId" minOccurs="0">
-      <annotation>
-        <documentation>Die ID des Nutzers im Primärsystem.</documentation>
-      </annotation>
-    </element>
+    <element ref="CONN:MandantId"/>
+    <element ref="CONN:ClientSystemId"/>
+    <element ref="CONN:WorkplaceId"/>
+    <element ref="CONN:UserId" minOccurs="0"/>
   </sequence>
 </complexType>
 <element name="Context" type="CCTX:ContextType"/>
@@ -111,24 +93,27 @@ Schemas are grouped by XML namespace under `components/schemas`. Each namespace 
 
 **Output OpenAPI (YAML)**
 ```yaml
-de.gematik.ws.conn.ConnectorContext20:
-  Context:
-    $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorContext20/ContextType'
-    xml:
-      name: Context
-      namespace: http://ws.gematik.de/conn/ConnectorContext/v2.0
-  ContextType:
-    type: object
-    properties:
-      mandantId:
-        $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/MandantId'
-      clientSystemId:
-        $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/ClientSystemId'
-      workplaceId:
-        $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/WorkplaceId'
-      userId:
-        $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50/UserId'
-        nullable: true
+de.gematik.ws.conn.ConnectorContext20.Context:
+  $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorContext20.ContextType'
+  xml:
+    name: Context
+    namespace: http://ws.gematik.de/conn/ConnectorContext/v2.0
+de.gematik.ws.conn.ConnectorContext20.ContextType:
+  type: object
+  properties:
+    mandantId:
+      $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50.MandantId'
+    clientSystemId:
+      $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50.ClientSystemId'
+    workplaceId:
+      $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50.WorkplaceId'
+    userId:
+      $ref: '#/components/schemas/de.gematik.ws.conn.ConnectorCommon50.UserId'
+  required:
+  - mandantId
+  - clientSystemId
+  - workplaceId
+  # `userId` is omitted from `required` because the source element has minOccurs="0"
 ```
 
 ## XSD to JSON Schema type mapping
@@ -191,6 +176,29 @@ go run ./cmd/wsdl2openapi2go \
   --output ./testproj/kon/api \
   --naming naming-kon.json
 ```
+
+## Linting the generated OpenAPI
+
+The Konnektor OpenAPI lints with [vacuum](https://quobix.com/vacuum/) directly:
+
+```bash
+vacuum lint konnektor-opb6.json
+```
+
+The conversion script excludes the SAML 1.0 / 2.0 namespaces (see `konnektor-opb6.py`) — they're reachable only via `dssx10.IdentifierType` in `SignDocument` / `VerifyDocument` responses, and the recursive `Assertion ⟷ Advice` / `Assertion ⟷ Evidence` cycles in those schemas otherwise stall vacuum's circular-reference detector. After exclusion the SAML identifier slots become opaque XML strings (`type: string, format: xml`) with their xml-binding preserved.
+
+To exclude additional namespaces in your own builds:
+
+```python
+builder.exclude_namespaces([
+    "urn:oasis:names:tc:SAML:1.0:assertion",
+    "urn:oasis:names:tc:SAML:2.0:assertion",
+])
+```
+
+Refs into excluded namespaces are rewritten to opaque XML; the namespace's own schemas are dropped. Property names, xml-binding, and parent `required` lists are preserved.
+
+One remaining cycle in the spec (`CertificatePathValidityType ↔ OCSPValidityType ↔ CRLValidityType` in dssx10 verificationreport) is reported as a single warning — it's intrinsic to the OASIS DSS-X profile and lives entirely in one namespace, so namespace exclusion can't break it.
 
 ## Running tests
 

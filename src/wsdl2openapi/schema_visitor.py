@@ -29,6 +29,7 @@ from .model import (
     TypeObject,
     TypeString,
     XmlExtension,
+    schema_key,
     to_yaml,
 )
 
@@ -77,30 +78,40 @@ class XmlSchemaVisitor:
             if str(global_type.qname) in self.global_types:
                 self.visit_global_type(global_type)
 
+        schemas = self.api.components.schemas
         for qname, type_declaration in self.components:
             id = self.naming_strategy.namespace_identifier(self.ctx, qname.namespace)
-            schema_dict = self.api.components.schema_dict([id])
             type_name = self.naming_strategy.format_type_name(qname.localname)
-            if type_name in schema_dict:
-                logging.debug(
-                    "Type already exists in schema %s: %s, overwriting existing type",
-                    id,
-                    type_name,
-                )
-
+            key = schema_key(id, type_name)
+            existing = schemas.get(key)
+            if existing is not None:
+                if isinstance(existing, TypeObject) and isinstance(
+                    type_declaration, TypeObject
+                ):
+                    # Same type defined in two XSDs of the same namespace
+                    # (e.g., different version snapshots): merge in any
+                    # properties the existing declaration is missing so we
+                    # don't silently drop fields like inline-typed elements.
+                    for prop_name, prop_type in type_declaration.properties.items():
+                        if prop_name not in existing.properties:
+                            existing.properties[prop_name] = prop_type
+                else:
+                    logging.debug(
+                        "Type already exists in schema %s: %s, keeping existing type",
+                        id,
+                        type_name,
+                    )
                 continue
-            schema_dict[self.naming_strategy.format_type_name(qname.localname)] = (
-                type_declaration
-            )
+            schemas[key] = type_declaration
 
         for base_qname in self.base_type_qnames:
             id = self.naming_strategy.namespace_identifier(
                 self.ctx, base_qname.namespace
             )
-            schema_dict = self.api.components.schema_dict([id])
             type_name = self.naming_strategy.format_type_name(base_qname.localname)
-            if type_name in schema_dict:
-                xml_ext = self.get_xml_ext_for_type(schema_dict[type_name])
+            key = schema_key(id, type_name)
+            if key in schemas:
+                xml_ext = self.get_xml_ext_for_type(schemas[key])
                 xml_ext.is_base = True
 
     @singledispatchmethod
@@ -171,7 +182,6 @@ class XmlSchemaVisitor:
         type_declaration = TypeString(
             xml=create_xml_extension(element.qname),
             format="xml",
-            description="This field can contain any XML content (xsd:anyType).",
         )
         self.components.append((element.qname, type_declaration))
 
@@ -204,7 +214,6 @@ class XmlSchemaVisitor:
     def _(self, any_type: AnyType) -> Type:
         return TypeString(
             format="xml",
-            description="This field can contain any XML content (xsd:anyType).",
         )
 
     @singledispatchmethod
@@ -248,17 +257,15 @@ class XmlSchemaVisitor:
         # collect properties from attributes
         for _, attr in complex_type.attributes:
             if isinstance(attr, AnyAttribute):
-                property_declaration = TypeString(
-                    format="xml",
-                    description="This field can contain any XML attributes (xsd:anyAttribute).",
-                    nullable=True,
-                )
+                property_declaration = TypeString(format="xml")
                 property_name = self.naming_strategy.unknown_attribute_property_name()
                 property_declaration.xml = XmlExtension(
                     name="anyAttribute",
                     attribute=True,
                 )
-                self.set_property_declaration(property_name, property_declaration)
+                self.set_property_declaration(
+                    property_name, property_declaration, optional=True
+                )
                 continue
 
             property_name = self.naming_strategy.format_property_name(
@@ -272,10 +279,9 @@ class XmlSchemaVisitor:
             if attr.qname.namespace:
                 property_declaration.xml.namespace = attr.qname.namespace
 
-            if not attr.required:
-                property_declaration.nullable = True
-
-            self.set_property_declaration(property_name, property_declaration)
+            self.set_property_declaration(
+                property_name, property_declaration, optional=not attr.required
+            )
 
         if len(complex_type.elements_nested) == 0:
             # complex type has no elements defined, only attributes
@@ -294,7 +300,9 @@ class XmlSchemaVisitor:
 
         self.visit_particle(particle)
 
-    def build_property_declaration(self, element: Element) -> Tuple[str, Type]:
+    def build_property_declaration(
+        self, element: Element
+    ) -> Tuple[str, Type, bool]:
         property_name = self.naming_strategy.format_property_name(
             str(element.qname.localname)
         )
@@ -312,12 +320,16 @@ class XmlSchemaVisitor:
         if is_multi_occurs(element.max_occurs):
             property_type = TypeArray(items=property_type)
 
-        if element.min_occurs == 0:
-            property_type.nullable = True
+        optional = element.min_occurs == 0
 
-        return property_name, property_type
+        return property_name, property_type, optional
 
-    def set_property_declaration(self, property_name: str, property_type: Type) -> None:
+    def set_property_declaration(
+        self,
+        property_name: str,
+        property_type: Type,
+        optional: bool = False,
+    ) -> None:
         type_declaration = self.current_type()
         if property_name in type_declaration.properties:
             # TODO: handle name clashes properly (especially cardinality differences)
@@ -329,6 +341,10 @@ class XmlSchemaVisitor:
             )
             return
         type_declaration.properties[property_name] = property_type
+        if not optional:
+            if type_declaration.required is msgspec.UNSET:
+                type_declaration.required = []
+            type_declaration.required.append(property_name)
 
     def visit_particle_group(self, particle: OrderIndicator):
         for _, el in particle.elements_nested:
@@ -336,14 +352,18 @@ class XmlSchemaVisitor:
                 logging.debug(
                     "Visiting element: %s, maxOccurs: %s", el.qname, el.max_occurs
                 )
-                property_name, property_type = self.build_property_declaration(el)
+                property_name, property_type, optional = (
+                    self.build_property_declaration(el)
+                )
                 if is_multi_occurs(particle.max_occurs) and not is_multi_occurs(
                     el.max_occurs
                 ):
                     property_type = TypeArray(items=property_type)
                 if el.min_occurs == 0:
-                    property_type.nullable = True
-                self.set_property_declaration(property_name, property_type)
+                    optional = True
+                self.set_property_declaration(
+                    property_name, property_type, optional=optional
+                )
             elif isinstance(el, Sequence):
                 self.visit_particle(el)
             elif isinstance(el, Choice):
@@ -352,9 +372,10 @@ class XmlSchemaVisitor:
                 property_name = self.naming_strategy.unknown_content_property_name()
                 property_type = TypeString(
                     format="xml",
-                    description="This field can contain any XML content (xsd:any).",
                 )
-                self.set_property_declaration(property_name, property_type)
+                self.set_property_declaration(
+                    property_name, property_type, optional=True
+                )
             else:
                 logging.error(
                     "Unsupported element type in: %s, Element: %s",

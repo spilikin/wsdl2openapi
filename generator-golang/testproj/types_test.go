@@ -1,11 +1,13 @@
 package testproj
 
 import (
+	"bytes"
 	"encoding/xml"
 	"testing"
 
 	"github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/query30"
 	"github.com/test/testproj/epa/soap/oasis/names/tc/ebxmlregrep/rim30"
+	"github.com/test/testproj/kon/api/gematik/conn/certificateservicecommon20"
 )
 
 func TestAdhocQueryRequest(t *testing.T) {
@@ -40,4 +42,33 @@ func TestAdhocQueryRequest(t *testing.T) {
 	}
 
 	t.Logf("Marshalled HeaderContent:\n%s", string(data))
+}
+
+func TestBase64BytesRoundTrip(t *testing.T) {
+	raw := []byte("hello world")
+
+	in := &certificateservicecommon20.X509DataInfoListTypeX509DataInfoX509Data{
+		X509IssuerSerial: certificateservicecommon20.X509DataInfoListTypeX509DataInfoX509DataX509IssuerSerial{
+			X509IssuerName:   "CN=Test",
+			X509SerialNumber: "1",
+		},
+		X509SubjectName: "CN=Subject",
+		X509Certificate: certificateservicecommon20.Base64Bytes(raw),
+	}
+
+	encoded, err := xml.Marshal(in)
+	if err != nil {
+		t.Fatalf("marshal: %v", err)
+	}
+	if !bytes.Contains(encoded, []byte("aGVsbG8gd29ybGQ=")) {
+		t.Fatalf("expected base64 of %q in output, got: %s", raw, encoded)
+	}
+
+	var out certificateservicecommon20.X509DataInfoListTypeX509DataInfoX509Data
+	if err := xml.Unmarshal(encoded, &out); err != nil {
+		t.Fatalf("unmarshal: %v", err)
+	}
+	if !bytes.Equal(out.X509Certificate, raw) {
+		t.Fatalf("round-trip mismatch: got %q, want %q", out.X509Certificate, raw)
+	}
 }

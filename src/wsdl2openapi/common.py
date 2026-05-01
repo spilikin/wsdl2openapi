@@ -120,10 +120,11 @@ class NamingStrategy:
 
     def reference_to_type(self, ctx: Context, qname: QName) -> str:
         """Return the schema reference for a given QName."""
-        id = self.namespace_identifier(ctx, qname.namespace)
+        from .model import schema_key
 
-        return (
-            "#/components/schemas/" + id + "/" + self.format_type_name(qname.localname)
+        id = self.namespace_identifier(ctx, qname.namespace)
+        return "#/components/schemas/" + schema_key(
+            id, self.format_type_name(qname.localname)
         )
 
     def unknown_content_property_name(self) -> str:

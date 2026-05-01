@@ -15,7 +15,7 @@ wsdl_list = [
     "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService.wsdl",
     "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_1_1.wsdl",
     "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_1_2.wsdl",
-    # "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_2_0.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_2_0.wsdl",
     # Card Terminal Service
     "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardTerminalService.wsdl",
     # Certificate Services
@@ -39,6 +39,20 @@ builder.api.info.description = "Conversion of the WSDL to OpenAPI 3.1"
 
 for wsdl in wsdl_list:
     builder.add_wsdl(wsdl, use_connector_conventions=True)
+
+# SAML is reachable only via dssx10 VerificationReport.IdentifierType in
+# SignDocument/VerifyDocument outputs. Excluding it drops 100+ self-referential
+# schemas and removes the SAML cycles that cause vacuum to hang. The SAML
+# identifier slots become opaque XML — consumers who need them can parse the
+# inner XML themselves.
+builder.exclude_namespaces([
+    "urn:oasis:names:tc:SAML:1.0:assertion",
+    "urn:oasis:names:tc:SAML:2.0:assertion",
+])
+
+# Most upstream XSDs ship without xs:annotation, so synthesize provenance-aware
+# descriptions for every component schema (uses the source XML namespace URI).
+builder.synthesize_descriptions()
 
 with open("konnektor-opb6.yaml", "w") as file:
     file.write(to_yaml(builder.api))

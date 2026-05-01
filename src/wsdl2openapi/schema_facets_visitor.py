@@ -7,7 +7,15 @@ from lxml import etree
 from lxml.etree import QName
 from zeep.transports import Transport
 
-from wsdl2openapi.model import Api, Type, TypeArray, TypeNumber, TypeObject, TypeString
+from wsdl2openapi.model import (
+    Api,
+    Type,
+    TypeArray,
+    TypeNumber,
+    TypeObject,
+    TypeString,
+    schema_key,
+)
 
 from .common import Context, NamingStrategy
 
@@ -91,17 +99,16 @@ class SchemaFacetsVisitor:
         namespace_id = self.naming_strategy.namespace_identifier(
             self.ctx, target_namespace
         )
-        if namespace_id in self.api.components.schemas:
-            type_name = self.naming_strategy.format_type_name(localname)
-            if type_name in self.api.components.schemas[namespace_id]:
-                return self.api.components.schemas[namespace_id][type_name]
+        type_name = self.naming_strategy.format_type_name(localname)
+        key = schema_key(namespace_id, type_name)
+        if key in self.api.components.schemas:
+            return self.api.components.schemas[key]
 
         # if type not found in global types, traverse properties of all types to find it
-        for schema_types in self.api.components.schemas.values():
-            for t in schema_types.values():
-                found = find_property(t, QName(f"{{{target_namespace}}}{localname}"))
-                if found is not None:
-                    return found
+        for t in self.api.components.schemas.values():
+            found = find_property(t, QName(f"{{{target_namespace}}}{localname}"))
+            if found is not None:
+                return found
 
         return None
 

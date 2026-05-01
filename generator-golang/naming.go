@@ -81,16 +81,19 @@ func (n NamingStrategy) BuildPackagePath(packageName string) string {
 }
 
 func (n NamingStrategy) BaseTypeFuncName(ref string) string {
-	parts := strings.Split(ref, "/")
-	if len(parts) < 2 {
+	const prefix = "#/components/schemas/"
+	if !strings.HasPrefix(ref, prefix) {
 		return "IsUnknownType"
 	}
-	packages := strings.Split(parts[len(parts)-2], ".")
-	packageName := packages[len(packages)-1]
-	packageName = strings.ToUpper(packageName[:1]) + packageName[1:]
-	typeName := parts[len(parts)-1]
+	pkgFull, typeName := SplitSchemaKey(ref[len(prefix):])
+	if pkgFull == "" || typeName == "" {
+		return "IsUnknownType"
+	}
+	pkgParts := strings.Split(pkgFull, ".")
+	pkg := pkgParts[len(pkgParts)-1]
+	pkg = strings.ToUpper(pkg[:1]) + pkg[1:]
 
-	return "Is" + packageName + typeName
+	return "Is" + pkg + typeName
 }
 
 func (n NamingStrategy) BaseTypeInterfaceName(typeName string) string {

@@ -50,19 +50,28 @@ class WebService(msgspec.Struct):
     ports: List[WebServicePort] = msgspec.field(default_factory=list)
 
 
-class Components(msgspec.Struct):
-    schemas: OrderedDict[str, "OrderedDict[str, Type | ReferenceObject]"] = (
-        msgspec.field(default_factory=OrderedDict)
-    )
+SCHEMA_KEY_SEPARATOR = "."
 
-    def schema_dict(self, path: List[str]) -> OrderedDict:
-        """Return the dictionary for a given path in the components, creates the necessary structure if it doesn't exist."""
-        current = self.schemas
-        for part in path:
-            if part not in current:
-                current[part] = OrderedDict()
-            current = current[part]
-        return current
+
+def schema_key(namespace_id: str, type_name: str) -> str:
+    """Build a flat component schema key from namespace + type name.
+
+    The last dot separates namespace from type name."""
+    return f"{namespace_id}{SCHEMA_KEY_SEPARATOR}{type_name}"
+
+
+def split_schema_key(key: str) -> tuple[str, str]:
+    """Split a flat component schema key into (namespace_id, type_name) on the last dot."""
+    idx = key.rfind(SCHEMA_KEY_SEPARATOR)
+    if idx < 0:
+        return "", key
+    return key[:idx], key[idx + len(SCHEMA_KEY_SEPARATOR) :]
+
+
+class Components(msgspec.Struct):
+    schemas: OrderedDict[str, "Type | ReferenceObject"] = msgspec.field(
+        default_factory=OrderedDict
+    )
 
 
 class License:
@@ -151,6 +160,7 @@ class TypeObject(Type, tag="object"):
     properties: OrderedDict[str, Type | ReferenceObject] = msgspec.field(
         default_factory=OrderedDict
     )
+    required: Optional[List[str]] = msgspec.field(default=msgspec.UNSET)
 
 
 class TypeString(Type, tag="string"):

@@ -2,7 +2,6 @@ package generator
 
 import (
 	"encoding/json"
-	"fmt"
 )
 
 // ExtractInlineObjects is a pre-processing step that walks all schema types and
@@ -12,23 +11,20 @@ import (
 //
 // Must be called before Validate/GenerateTypes.
 func (g *Generator) ExtractInlineObjects() {
-	for _, packageName := range g.Api.Components.Schemas.Keys {
-		schema := g.Api.Components.Schemas.Entries[packageName]
+	schemas := &g.Api.Components.Schemas
 
-		// Use index-based iteration so newly appended types also get processed.
-		processed := 0
-		for processed < len(schema.Keys) {
-			typeName := schema.Keys[processed]
-			typeRaw := schema.Entries[typeName]
+	// Use index-based iteration so newly appended types also get processed.
+	processed := 0
+	for processed < len(schemas.Keys) {
+		key := schemas.Keys[processed]
+		typeRaw := schemas.Entries[key]
+		packageName, typeName := SplitSchemaKey(key)
 
-			if updated := g.extractInlineProps(packageName, typeName, typeRaw, &schema); updated != nil {
-				schema.Entries[typeName] = updated
-			}
-
-			processed++
+		if updated := g.extractInlineProps(packageName, typeName, typeRaw, schemas); updated != nil {
+			schemas.Entries[key] = updated
 		}
 
-		g.Api.Components.Schemas.Entries[packageName] = schema
+		processed++
 	}
 }
 
@@ -75,28 +71,21 @@ func (g *Generator) extractInlineProps(packageName, parentTypeName string, typeR
 				continue
 			}
 			newTypeName := parentTypeName + g.NamingStrategy.PublicIdentifier(propName)
-			ref := fmt.Sprintf("#/components/schemas/%s/%s", packageName, newTypeName)
+			newKey := packageName + SchemaKeySeparator + newTypeName
+			ref := "#/components/schemas/" + newKey
 
-			// New global type: everything except nullable
-			newType := make(map[string]json.RawMessage, len(propObj))
-			for k, v := range propObj {
-				if k != "nullable" {
-					newType[k] = v
-				}
-			}
-			newTypeJSON, _ := json.Marshal(newType)
-			schema.Keys = append(schema.Keys, newTypeName)
-			schema.Entries[newTypeName] = json.RawMessage(newTypeJSON)
+			newTypeJSON, _ := json.Marshal(propObj)
+			schema.Keys = append(schema.Keys, newKey)
+			schema.Entries[newKey] = json.RawMessage(newTypeJSON)
 
-			// Replacement $ref property: preserve xml and nullable
+			// Replacement $ref property: preserve xml from the inline definition.
+			// Optionality is unchanged — the parent's `required` list still
+			// governs whether this property is required.
 			replacement := map[string]json.RawMessage{
 				"$ref": mustMarshalJSON(ref),
 			}
 			if v, ok := propObj["xml"]; ok {
 				replacement["xml"] = v
-			}
-			if v, ok := propObj["nullable"]; ok {
-				replacement["nullable"] = v
 			}
 			replacementJSON, _ := json.Marshal(replacement)
 			props.Entries[propName] = json.RawMessage(replacementJSON)
@@ -123,18 +112,12 @@ func (g *Generator) extractInlineProps(packageName, parentTypeName string, typeR
 			}
 
 			newTypeName := parentTypeName + g.NamingStrategy.PublicIdentifier(propName)
-			ref := fmt.Sprintf("#/components/schemas/%s/%s", packageName, newTypeName)
+			newKey := packageName + SchemaKeySeparator + newTypeName
+			ref := "#/components/schemas/" + newKey
 
-			// New global type from items (without nullable)
-			newType := make(map[string]json.RawMessage, len(itemsObj))
-			for k, v := range itemsObj {
-				if k != "nullable" {
-					newType[k] = v
-				}
-			}
-			newTypeJSON, _ := json.Marshal(newType)
-			schema.Keys = append(schema.Keys, newTypeName)
-			schema.Entries[newTypeName] = json.RawMessage(newTypeJSON)
+			newTypeJSON, _ := json.Marshal(itemsObj)
+			schema.Keys = append(schema.Keys, newKey)
+			schema.Entries[newKey] = json.RawMessage(newTypeJSON)
 
 			// Replace items with $ref
 			newItemsJSON, _ := json.Marshal(map[string]json.RawMessage{
