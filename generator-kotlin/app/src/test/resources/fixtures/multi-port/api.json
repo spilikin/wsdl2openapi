@@ -1,0 +1,62 @@
+{
+  "openapi": "3.0.0",
+  "x-wsdl-services": [
+    {
+      "name": "EchoService",
+      "targetNamespace": "urn:demo:echo:v1",
+      "targetPackage": "demo.echo",
+      "ports": [
+        {
+          "name": "Soap11Port",
+          "bindingType": "soap11",
+          "operations": [
+            {
+              "name": "Echo",
+              "soapAction": "urn:demo:echo:v1#Echo",
+              "input":  { "soapBody": "#/components/schemas/demo.echo.Echo" },
+              "output": { "soapBody": "#/components/schemas/demo.echo.EchoResponse" }
+            }
+          ]
+        },
+        {
+          "name": "Soap12Port",
+          "bindingType": "soap12",
+          "operations": [
+            {
+              "name": "Echo",
+              "soapAction": "urn:demo:echo:v1#Echo",
+              "input":  { "soapBody": "#/components/schemas/demo.echo.Echo" },
+              "output": { "soapBody": "#/components/schemas/demo.echo.EchoResponse" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "demo.echo.Echo": {
+        "type": "object",
+        "xml": { "name": "Echo", "namespace": "urn:demo:echo:v1" },
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "xml": { "name": "Text", "namespace": "urn:demo:echo:v1" }
+          }
+        }
+      },
+      "demo.echo.EchoResponse": {
+        "type": "object",
+        "xml": { "name": "EchoResponse", "namespace": "urn:demo:echo:v1" },
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "xml": { "name": "Text", "namespace": "urn:demo:echo:v1" }
+          }
+        }
+      }
+    }
+  }
+}

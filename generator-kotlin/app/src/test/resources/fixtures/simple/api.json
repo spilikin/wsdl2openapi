@@ -1,0 +1,49 @@
+{
+  "openapi": "3.0.0",
+  "x-wsdl-services": [
+    {
+      "name": "GreetingService",
+      "targetNamespace": "urn:demo:greeting:v1",
+      "targetPackage": "demo.greeting",
+      "ports": [
+        {
+          "name": "GreetingPort",
+          "bindingType": "soap11",
+          "operations": [
+            {
+              "name": "Hello",
+              "soapAction": "urn:demo:greeting:v1#Hello",
+              "input":  { "soapBody": "#/components/schemas/demo.greeting.Hello" },
+              "output": { "soapBody": "#/components/schemas/demo.greeting.HelloResponse" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "demo.greeting.Hello": {
+        "type": "object",
+        "xml": { "name": "Hello", "namespace": "urn:demo:greeting:v1" },
+        "required": ["name"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "xml": { "name": "Name", "namespace": "urn:demo:greeting:v1" }
+          }
+        }
+      },
+      "demo.greeting.HelloResponse": {
+        "type": "object",
+        "xml": { "name": "HelloResponse", "namespace": "urn:demo:greeting:v1" },
+        "properties": {
+          "message": {
+            "type": "string",
+            "xml": { "name": "Message", "namespace": "urn:demo:greeting:v1" }
+          }
+        }
+      }
+    }
+  }
+}

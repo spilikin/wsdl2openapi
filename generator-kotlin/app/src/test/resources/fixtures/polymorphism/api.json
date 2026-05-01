@@ -1,0 +1,66 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "demo.shapes.Shape": {
+        "type": "object",
+        "xml": { "name": "Shape", "namespace": "urn:demo:shapes:v1", "x-is-base": true },
+        "properties": {
+          "id": {
+            "type": "string",
+            "xml": { "name": "id", "attribute": true }
+          }
+        }
+      },
+      "demo.shapes.Circle": {
+        "type": "object",
+        "xml": {
+          "name": "Circle",
+          "namespace": "urn:demo:shapes:v1",
+          "x-extends": ["#/components/schemas/demo.shapes.Shape"]
+        },
+        "required": ["radius"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "xml": { "name": "id", "attribute": true }
+          },
+          "radius": {
+            "type": "number",
+            "xml": { "name": "radius", "namespace": "urn:demo:shapes:v1" }
+          }
+        }
+      },
+      "demo.shapes.Square": {
+        "type": "object",
+        "xml": {
+          "name": "Square",
+          "namespace": "urn:demo:shapes:v1",
+          "x-extends": ["#/components/schemas/demo.shapes.Shape"]
+        },
+        "required": ["side"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "xml": { "name": "id", "attribute": true }
+          },
+          "side": {
+            "type": "number",
+            "xml": { "name": "side", "namespace": "urn:demo:shapes:v1" }
+          }
+        }
+      },
+      "demo.shapes.Drawing": {
+        "type": "object",
+        "xml": { "name": "Drawing", "namespace": "urn:demo:shapes:v1" },
+        "required": ["root"],
+        "properties": {
+          "root": {
+            "$ref": "#/components/schemas/demo.shapes.Shape",
+            "xml": { "name": "Shape", "namespace": "urn:demo:shapes:v1", "x-is-base": true }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "demo.docs.Document": {
+        "type": "object",
+        "xml": { "name": "Document", "namespace": "urn:demo:docs:v1" },
+        "required": ["body"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "xml": { "name": "id", "attribute": true }
+          },
+          "version": {
+            "type": "integer",
+            "xml": { "name": "version", "attribute": true }
+          },
+          "body": {
+            "type": "string",
+            "xml": { "name": "Body", "namespace": "urn:demo:docs:v1" }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "xml": { "name": "Tag", "namespace": "urn:demo:docs:v1" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

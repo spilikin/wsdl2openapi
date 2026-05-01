@@ -1,0 +1,23 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "demo.colors.Color": {
+        "type": "string",
+        "xml": { "name": "Color", "namespace": "urn:demo:colors:v1" },
+        "enum": ["RED", "green-ish", "Blue"]
+      },
+      "demo.colors.Sample": {
+        "type": "object",
+        "xml": { "name": "Sample", "namespace": "urn:demo:colors:v1" },
+        "required": ["color"],
+        "properties": {
+          "color": {
+            "$ref": "#/components/schemas/demo.colors.Color",
+            "xml": { "name": "Color", "namespace": "urn:demo:colors:v1" }
+          }
+        }
+      }
+    }
+  }
+}
