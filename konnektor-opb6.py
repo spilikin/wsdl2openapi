@@ -1,6 +1,7 @@
 import logging
 
 from wsdl2openapi.builder import Builder
+from wsdl2openapi.common import NamingStrategy
 from wsdl2openapi.model import to_json, to_yaml
 
 logging.basicConfig(level=logging.INFO)
@@ -31,7 +32,23 @@ wsdl_list = [
     "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/SignatureService_V7_5_6.wsdl",
     "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/SignatureService_V7_5_7.wsdl",
 ]
-builder = Builder()
+naming = NamingStrategy(
+    property_name_overrides={
+        # "EContent" in the Konnektor schemas stands for "enveloped content".
+        # Expand it so the JSON property name carries the meaning.
+        "IncludeEContent": "includeEnvelopedContent",
+        # OASIS DSS InlineXMLType: "PIs" is "Processing Instructions" plural.
+        # The XSD already ships in lowerCamelCase, so we expand for clarity.
+        "ignorePIs": "ignoreProcessingInstructions",
+        # VPN connection status fields: "TI" = Telematikinfrastruktur,
+        # "SIS" = Sicherer Internet Service. The default acronym splitter
+        # yields "vpntiStatus" / "vpnsisStatus" which blur the boundaries;
+        # treat each acronym as its own word.
+        "VPNTIStatus": "vpnTiStatus",
+        "VPNSISStatus": "vpnSisStatus",
+    },
+)
+builder = Builder(naming_strategy=naming)
 
 builder.api.info.title = "Konnektor OPB6"
 builder.api.info.version = "OPB6"
@@ -49,10 +66,6 @@ builder.exclude_namespaces([
     "urn:oasis:names:tc:SAML:1.0:assertion",
     "urn:oasis:names:tc:SAML:2.0:assertion",
 ])
-
-# Most upstream XSDs ship without xs:annotation, so synthesize provenance-aware
-# descriptions for every component schema (uses the source XML namespace URI).
-builder.synthesize_descriptions()
 
 with open("konnektor-opb6.yaml", "w") as file:
     file.write(to_yaml(builder.api))

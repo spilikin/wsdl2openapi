@@ -14,38 +14,14 @@ from .common import Context, NamingStrategy, load_xml_document
 from .model import (
     Api,
     ReferenceObject,
-    Type,
     TypeArray,
     TypeObject,
     TypeString,
-    split_schema_key,
 )
 from .schema_visitor import XmlSchemaVisitor
 
 soap_settings = Settings()
 soap_settings.forbid_entities = False
-
-
-def _find_namespace_uri(schema) -> str | None:
-    """Return the first non-empty `xml.namespace` reachable in this schema.
-
-    Looks at the schema's own xml metadata first, then walks one level into
-    properties (or array items). The converter sets xml.namespace on virtually
-    every named element/attribute so this resolves for nearly all types.
-    """
-    xml = getattr(schema, "xml", msgspec.UNSET)
-    if xml is not msgspec.UNSET and xml is not None:
-        ns = getattr(xml, "namespace", msgspec.UNSET)
-        if ns is not msgspec.UNSET and ns:
-            return ns
-    if isinstance(schema, TypeObject):
-        for prop in schema.properties.values():
-            ns = _find_namespace_uri(prop)
-            if ns:
-                return ns
-    elif isinstance(schema, TypeArray):
-        return _find_namespace_uri(schema.items)
-    return None
 
 
 # Upstream WSDL/XSD documents from gematik occasionally ship with bugs that
@@ -222,56 +198,6 @@ class Builder:
                                     label,
                                     body,
                                 )
-
-    def synthesize_descriptions(self) -> None:
-        """Fill in ``description`` on every top-level component schema that
-        doesn't already have one. The synthesized description carries
-        provenance — the source XML namespace URI and (when known) the source
-        WSDL/XSD file — so spec consumers can trace each type back to where it
-        came from. Existing descriptions are not overwritten.
-        """
-        schemas = self.api.components.schemas
-
-        # Recover namespace-id → namespace-URI by inspecting any xml.namespace
-        # set on the schema itself or on its properties. The converter records
-        # xml metadata for nearly every type, so this lookup covers the
-        # typical case; fallback below handles the remainder.
-        ns_uri_for_id: dict[str, str] = {}
-        for key, schema in schemas.items():
-            ns_id, _ = split_schema_key(key)
-            if ns_id in ns_uri_for_id:
-                continue
-            uri = _find_namespace_uri(schema)
-            if uri:
-                ns_uri_for_id[ns_id] = uri
-
-        # Recover namespace-id → source document URL via x-wsdl-services. This
-        # gives us the WSDL each Konnektor service comes from for the subset of
-        # types whose namespace matches a service's targetNamespace.
-        wsdl_for_ns: dict[str, str] = {}
-        services = self.api.wsdl_services
-        if services is not msgspec.UNSET and services:
-            for svc in services:
-                if svc.targetPackage and svc.targetNamespace:
-                    wsdl_for_ns.setdefault(svc.targetPackage, svc.targetNamespace)
-
-        for key, schema in schemas.items():
-            if not isinstance(schema, (Type, ReferenceObject)):
-                continue
-            existing = getattr(schema, "description", msgspec.UNSET)
-            if existing is not msgspec.UNSET and existing:
-                continue
-            ns_id, type_name = split_schema_key(key)
-            ns_uri = ns_uri_for_id.get(ns_id) or wsdl_for_ns.get(ns_id)
-            if ns_uri:
-                schema.description = (
-                    f"`{type_name}` from XML namespace `{ns_uri}` "
-                    f"(package `{ns_id}`)."
-                )
-            else:
-                schema.description = (
-                    f"`{type_name}` from package `{ns_id}`."
-                )
 
     def add_xsd(self, xsd_location):
         logging.info("Adding XSD: %s", xsd_location)

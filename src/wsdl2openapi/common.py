@@ -1,7 +1,7 @@
 import re
 import urllib
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from lxml import etree
 from lxml.etree import QName
@@ -86,9 +86,36 @@ class DefaultNamespaceNaming(NamespaceNamingStrategy):
         return ".".join(parts)
 
 
+_WORD_BOUNDARY_LOWER_UPPER = re.compile(r"([a-z0-9])([A-Z])")
+_WORD_BOUNDARY_ACRONYM = re.compile(r"([A-Z]+)([A-Z][a-z])")
+_SEPARATOR = re.compile(r"[-_]+")
+
+
+def split_identifier_words(name: str) -> list[str]:
+    """Split a name into its constituent words, treating runs of uppercase
+    letters as acronyms.
+
+    Examples:
+        ``CRLRefs``        -> ``["CRL", "Refs"]``
+        ``MessageID``      -> ``["Message", "ID"]``
+        ``IPV4Address``    -> ``["IPV4", "Address"]``
+        ``IS_PHYSICAL``    -> ``["IS", "PHYSICAL"]``
+        ``RFC3161Token``   -> ``["RFC3161", "Token"]``
+    """
+    s = _SEPARATOR.sub(" ", name)
+    s = _WORD_BOUNDARY_LOWER_UPPER.sub(r"\1 \2", s)
+    s = _WORD_BOUNDARY_ACRONYM.sub(r"\1 \2", s)
+    return [w for w in s.split() if w]
+
+
 @dataclass
 class NamingStrategy:
     namespace_naming: list[NamespaceNamingStrategy] = (DefaultNamespaceNaming(),)
+    # Map XML element/attribute localname -> JSON property name. Highest
+    # priority: bypasses the camelCase algorithm. Useful for expanding
+    # opaque acronyms (e.g. ``IncludeEContent`` -> ``includeEnvelopedContent``)
+    # or preserving casing the algorithm would otherwise normalize away.
+    property_name_overrides: dict[str, str] = field(default_factory=dict)
 
     def namespace_identifier(self, ctx: Context, target_namespace: str) -> str:
         for strategy in self.namespace_naming:
@@ -101,16 +128,24 @@ class NamingStrategy:
         return "charData"
 
     def format_property_name(self, name: str) -> str:
-        """Convert a name to a valid json property name lower camelCase convention."""
-        if name.isupper():
-            return name.lower()
-        parts = name.replace("-", "_").split("_")
-        if len(parts) == 1:
-            new_name = parts[0]
-        else:
-            new_name = "".join(part.capitalize() for part in parts)
-        new_name = new_name[0].lower() + new_name[1:]  # Lowercase the first character
-        return new_name
+        """Convert an XML name to a lowerCamelCase JSON property name.
+
+        Runs of consecutive uppercase letters are treated as acronyms and
+        normalized to TitleCase, so ``CRLRefs`` becomes ``crlRefs`` rather
+        than the previous ``cRLRefs``. Callers can supply
+        ``property_name_overrides`` to bypass the algorithm for specific
+        XML names.
+        """
+        if name in self.property_name_overrides:
+            return self.property_name_overrides[name]
+
+        words = split_identifier_words(name)
+        if not words:
+            return name
+
+        first = words[0].lower()
+        rest = [w[:1].upper() + w[1:].lower() for w in words[1:]]
+        return first + "".join(rest)
 
     def format_type_name(self, name: str) -> str:
         """Convert a name to a valid type name UpperCamelCase convention."""
