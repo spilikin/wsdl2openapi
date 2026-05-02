@@ -15,7 +15,4 @@ data class Shape(
   @XmlElement(false)
   @XmlSerialName("id")
   val id: String? = null,
-) : IShape
-
-@Serializable
-sealed interface IShape
+)

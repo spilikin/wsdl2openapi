@@ -19,4 +19,4 @@ data class Square(
   @XmlElement(true)
   @XmlSerialName("side")
   val side: Double,
-) : IShape
+)

@@ -13,5 +13,5 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 data class Drawing(
   @XmlElement(true)
   @XmlSerialName("Shape")
-  val root: IShape,
+  val root: Shape,
 )

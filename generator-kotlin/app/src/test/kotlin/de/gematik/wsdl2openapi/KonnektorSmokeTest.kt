@@ -38,8 +38,8 @@ class KonnektorSmokeTest {
             assertTrue(generatedFiles.size > 500, "expected many generated files, got ${generatedFiles.size}")
 
             // Spot-check a few representative files exist (covers types,
-            // enums-with-facets, polymorphism, SOAP envelopes, the shared
-            // SoapEnvelope contract, and per-port service interfaces).
+            // enums-with-facets, SOAP envelopes, the shared SoapEnvelope
+            // contract, and per-port service interfaces).
             val byName = generatedFiles.groupBy { it.name }
             for (expected in listOf(
                 "ReadCardCertificate.kt",
@@ -51,10 +51,6 @@ class KonnektorSmokeTest {
             )) {
                 assertTrue(expected in byName, "expected generated file $expected not found")
             }
-
-            // Sealed marker interfaces emitted for x-is-base types.
-            val sealedFiles = generatedFiles.count { it.readText().contains("sealed interface I") }
-            assertTrue(sealedFiles > 0, "no sealed marker interfaces emitted")
 
             // Every envelope class should implement the shared SoapEnvelope.
             val envelopeFiles = generatedFiles.filter {

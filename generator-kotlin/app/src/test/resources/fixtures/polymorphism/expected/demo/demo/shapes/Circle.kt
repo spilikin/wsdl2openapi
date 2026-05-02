@@ -19,4 +19,4 @@ data class Circle(
   @XmlElement(true)
   @XmlSerialName("radius")
   val radius: Double,
-) : IShape
+)

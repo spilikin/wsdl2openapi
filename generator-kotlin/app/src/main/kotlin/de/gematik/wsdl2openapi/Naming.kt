@@ -80,8 +80,6 @@ data class NamingStrategy(
     fun faultStructName(op: OperationDefinition): String = publicIdentifier(op.name) + "Fault"
     fun operationVarName(op: OperationDefinition): String = "Operation" + publicIdentifier(op.name)
 
-    fun baseTypeInterfaceName(typeName: String): String = "I$typeName"
-
     /**
      * Marker function name for a base-type interface. Mirrors Go's `IsXxxYyy` —
      * derived from the schema ref `#/components/schemas/<pkg>.<TypeName>`.
