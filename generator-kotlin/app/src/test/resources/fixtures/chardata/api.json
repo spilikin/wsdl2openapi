@@ -1,0 +1,25 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "demo.dss.Base64Data": {
+        "type": "object",
+        "xml": {
+          "name": "Base64Data",
+          "namespace": "urn:oasis:names:tc:dss:1.0:core:schema"
+        },
+        "required": ["charData"],
+        "properties": {
+          "mimeType": {
+            "type": "string",
+            "xml": { "name": "MimeType", "attribute": true }
+          },
+          "charData": {
+            "type": "string",
+            "format": "chardata"
+          }
+        }
+      }
+    }
+  }
+}

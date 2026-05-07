@@ -167,12 +167,20 @@ class Generator(
             ownerPtr.xml?.namespace == xmlExt?.namespace
 
         val isAttribute = xmlExt?.attribute == true
-        annotations += AnnotationSpec.builder(ClassName("nl.adaptivity.xmlutil.serialization", "XmlElement"))
-            .addMember(if (isAttribute) "false" else "true").build()
+        val isChardata = elementPtr.view.format == "chardata"
 
-        if (xmlExt != null && xmlExt.name.isNotEmpty()) {
-            val ns = if (!sameNamespace) xmlExt.namespace else ""
-            annotations += xmlSerialNameAnnotation(xmlExt.name, ns, xmlExt.prefix)
+        if (isChardata) {
+            // xmlutil serializes/parses this as the parent element's text content.
+            annotations += AnnotationSpec.builder(ClassName("nl.adaptivity.xmlutil.serialization", "XmlValue"))
+                .addMember("true").build()
+        } else {
+            annotations += AnnotationSpec.builder(ClassName("nl.adaptivity.xmlutil.serialization", "XmlElement"))
+                .addMember(if (isAttribute) "false" else "true").build()
+
+            if (xmlExt != null && xmlExt.name.isNotEmpty()) {
+                val ns = if (!sameNamespace) xmlExt.namespace else ""
+                annotations += xmlSerialNameAnnotation(xmlExt.name, ns, xmlExt.prefix)
+            }
         }
 
         val paramBuilder = ParameterSpec.builder(fieldName, finalType)
