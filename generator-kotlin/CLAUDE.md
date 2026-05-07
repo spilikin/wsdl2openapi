@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Status
 
-Working Kotlin port of `../generator-golang/`. CLI flags (`-f` / `-o` / `-n`) match the Go binary. Output is idiomatic Kotlin: one top-level type per file, no explicit `public` modifier, kotlinx.serialization + xmlutil annotations only (no SOAP framework dependency), and `@Serializable sealed interface` markers for `x-is-base` / `x-extends` polymorphism.
+Working Kotlin port of `../generator-golang/`. CLI flags (`-f` / `-o` / `-n`) match the Go binary. Output is idiomatic Kotlin: schema types for each package grouped in a single `Schemas.kt`, no explicit `public` modifier, kotlinx.serialization + xmlutil annotations only (no SOAP framework dependency), and `@Serializable sealed interface` markers for `x-is-base` / `x-extends` polymorphism.
 
 For the overall pipeline (Python WSDL→OpenAPI converter, x-wsdl extensions, naming configs) see `../CLAUDE.md`. Both this generator and `../generator-golang/` consume the same OpenAPI JSON (e.g. `../konnektor-opb6.json`).
 
@@ -30,10 +30,11 @@ For the overall pipeline (Python WSDL→OpenAPI converter, x-wsdl extensions, na
 | `Model.kt` | kotlinx.serialization data classes for `Api` / `WebService` / `OperationDefinition`; `TypeView` is a thin wrapper over the raw `JsonObject` so insertion order is preserved |
 | `Naming.kt` | Regex-based namespace→package mapping. `buildPackagePath` tolerates Go-style `basePackage` values (slashes, hyphens) so the same `naming-kon.json` works for both generators |
 | `Extract.kt` | Lifts inline `type: object` / array-items into named top-level schemas with `$ref` placeholders — mirrors `generator_extract.go` |
-| `TypeGenerator.kt` | The whole emitter: parses `TypePtr`s, drives kotlinpoet to write one `<TypeName>.kt` per schema, plus `Operations.kt` + per-operation `<Op>Envelope.kt` / `<Op>ResponseEnvelope.kt` per port. `stripDefaultPublic` post-processes kotlinpoet 2.x output (which always emits `public`) |
+| `TypeGenerator.kt` | The whole emitter: parses `TypePtr`s, drives kotlinpoet to write one `Schemas.kt` per package (all schema types grouped), plus `Operations.kt` + a single `Envelopes.kt` (all request/response envelopes for the port) per port. `stripDefaultPublic` post-processes kotlinpoet 2.x output (which always emits `public`) |
 
 Key choices specific to this generator:
-- **One file per top-level type** (idiomatic Kotlin), not a single `Types.kt` per package like the Go side.
+- **One `Schemas.kt` per package** — all schema data classes / enums for a package are emitted into a single file (Kotlin analogue of the Go side's `types.go`).
+- **One `Envelopes.kt` per port** — all request/response envelope classes for a port are grouped into a single file. The per-port service interface (`<PortName>.kt`) and `Operations.kt` remain one-file-per-unit.
 - **Sealed interfaces for polymorphism** — `x-is-base` emits `@Serializable sealed interface IFoo`; subtypes (`x-extends`) implement it. Combined with `@XmlSerialName` on each impl, xmlutil dispatches on element name.
 - **Shared `SoapEnvelope` contract** — single `<basePackage>.soap.SoapEnvelope.kt` declares `interface SoapEnvelope { fun isFault(): Boolean }` and the `SoapOperation` data class. Every generated envelope `: SoapEnvelope`, so consumers can poll fault state without knowing the concrete operation type. This is polymorphism that the Go generator cannot express — Go uses duck-typed `IsFault()` methods.
 - **Per-port service interface** — `<PortName>.kt` declares one typed function per operation (`fun foo(request: Foo): FooResponse`). Gives consumers a real Kotlin contract to implement (e.g., for an HTTP-backed transport) or to mock in tests.

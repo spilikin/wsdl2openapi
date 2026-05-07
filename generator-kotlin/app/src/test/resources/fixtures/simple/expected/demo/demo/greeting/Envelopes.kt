@@ -30,3 +30,27 @@ data class HelloEnvelope(
     val hello: Hello? = null,
   )
 }
+
+@Serializable
+@XmlSerialName(
+  "Envelope",
+  namespace = "http://schemas.xmlsoap.org/soap/envelope/",
+  prefix = "SOAP-ENV",
+)
+data class HelloResponseEnvelope(
+  @XmlElement(true)
+  @XmlSerialName(
+    "Body",
+    namespace = "http://schemas.xmlsoap.org/soap/envelope/",
+    prefix = "SOAP-ENV",
+  )
+  val body: Body,
+) : SoapEnvelope {
+  override fun isFault(): Boolean = false
+
+  @Serializable
+  data class Body(
+    @XmlElement(true)
+    val helloResponse: HelloResponse? = null,
+  )
+}

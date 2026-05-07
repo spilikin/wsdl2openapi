@@ -35,32 +35,42 @@ class KonnektorSmokeTest {
             Generator(outDir.path, naming, api).generate()
 
             val generatedFiles = outDir.walkTopDown().filter { it.isFile && it.extension == "kt" }.toList()
-            assertTrue(generatedFiles.size > 500, "expected many generated files, got ${generatedFiles.size}")
+            assertTrue(generatedFiles.size > 50, "expected many generated files, got ${generatedFiles.size}")
 
-            // Spot-check a few representative files exist (covers types,
-            // enums-with-facets, SOAP envelopes, the shared SoapEnvelope
-            // contract, and per-port service interfaces).
+            // Spot-check a few representative files exist (covers per-port
+            // grouped envelopes, the shared SoapEnvelope contract, per-port
+            // service interfaces, and per-package grouped schemas).
             val byName = generatedFiles.groupBy { it.name }
             for (expected in listOf(
-                "ReadCardCertificate.kt",
-                "ReadCardCertificateEnvelope.kt",
-                "VerificationResultType.kt",
+                "Envelopes.kt",
                 "Operations.kt",
                 "SoapEnvelope.kt",
                 "AuthSignatureServicePort.kt",
+                "Schemas.kt",
             )) {
                 assertTrue(expected in byName, "expected generated file $expected not found")
             }
 
-            // Every envelope class should implement the shared SoapEnvelope.
-            val envelopeFiles = generatedFiles.filter {
-                it.name.endsWith("Envelope.kt") && it.name != "SoapEnvelope.kt"
-            }
-            assertTrue(envelopeFiles.isNotEmpty(), "no envelope files generated")
-            for (f in envelopeFiles) {
+            // Schema types now live inside per-package Schemas.kt — confirm
+            // representative request/enum types are emitted somewhere.
+            val schemasContent = (byName["Schemas.kt"] ?: emptyList())
+                .joinToString("\n") { it.readText() }
+            for (expected in listOf("ReadCardCertificate", "VerificationResultType")) {
                 assertTrue(
-                    f.readText().contains(": SoapEnvelope"),
-                    "${f.name} does not implement the shared SoapEnvelope interface"
+                    schemasContent.contains(expected),
+                    "expected type $expected not found in any Schemas.kt"
+                )
+            }
+
+            // Every envelope class declared inside Envelopes.kt should implement
+            // the shared SoapEnvelope contract.
+            val envelopeFiles = byName["Envelopes.kt"] ?: emptyList()
+            assertTrue(envelopeFiles.isNotEmpty(), "no Envelopes.kt files generated")
+            for (f in envelopeFiles) {
+                val text = f.readText()
+                assertTrue(
+                    text.contains(": SoapEnvelope"),
+                    "${f.parentFile.name}/${f.name} has no class implementing SoapEnvelope"
                 )
             }
         } finally {

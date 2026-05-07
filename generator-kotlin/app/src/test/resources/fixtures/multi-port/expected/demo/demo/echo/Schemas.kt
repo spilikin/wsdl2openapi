@@ -8,6 +8,17 @@ import nl.adaptivity.xmlutil.serialization.XmlSerialName
 
 @Serializable
 @XmlSerialName(
+  "Echo",
+  namespace = "urn:demo:echo:v1",
+)
+data class Echo(
+  @XmlElement(true)
+  @XmlSerialName("Text")
+  val text: String,
+)
+
+@Serializable
+@XmlSerialName(
   "EchoResponse",
   namespace = "urn:demo:echo:v1",
 )

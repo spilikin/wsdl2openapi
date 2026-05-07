@@ -16,3 +16,14 @@ data class Hello(
   @XmlSerialName("Name")
   val name: String,
 )
+
+@Serializable
+@XmlSerialName(
+  "HelloResponse",
+  namespace = "urn:demo:greeting:v1",
+)
+data class HelloResponse(
+  @XmlElement(true)
+  @XmlSerialName("Message")
+  val message: String? = null,
+)
