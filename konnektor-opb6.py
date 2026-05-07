@@ -10,27 +10,27 @@ logging.getLogger("zeep").setLevel(logging.ERROR)
 
 wsdl_list = [
     # Authentication and Signature Services
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/AuthSignatureService.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/AuthSignatureService_v7_4_1.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/AuthSignatureService.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/AuthSignatureService_v7_4_1.wsdl",
     # Card Services
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_1_1.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_1_2.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardService_v8_2_0.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CardService.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CardService_v8_1_1.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CardService_v8_1_2.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CardService_v8_2_1.wsdl",
     # Card Terminal Service
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CardTerminalService.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CardTerminalService.wsdl",
     # Certificate Services
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CertificateService.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/CertificateService_v6_0_1.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CertificateService.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/CertificateService_v6_0_2.wsdl",
     # Encryption Services
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/EncryptionService.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/EncryptionService_v6_1_1.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/EncryptionService.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/EncryptionService_v6_1_1.wsdl",
     # Event Service
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/EventService.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/EventService.wsdl",
     # Signature Services
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/SignatureService_V7_4_3.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/SignatureService_V7_5_6.wsdl",
-    "https://raw.githubusercontent.com/gematik/api-telematik/OPB5/conn/SignatureService_V7_5_7.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/SignatureService_V7_4_3.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/SignatureService_V7_5_6.wsdl",
+    "https://raw.githubusercontent.com/gematik/api-telematik/refs/tags/ebk_6.0.1/conn/SignatureService_V7_5_7.wsdl",
 ]
 naming = NamingStrategy(
     property_name_overrides={
