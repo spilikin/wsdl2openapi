@@ -107,7 +107,7 @@ class Generator(
             .addAnnotation(serializableAnnotation())
 
         ptr.xml?.takeIf { it.name.isNotEmpty() }?.let { x ->
-            classBuilder.addAnnotation(xmlSerialNameAnnotation(x.name, x.namespace, x.prefix))
+            classBuilder.addAnnotation(xmlSerialNameAnnotation(x.name, x.namespace.ifEmpty { null }, x.prefix))
         }
 
         val ctor = FunSpec.constructorBuilder()
@@ -182,7 +182,16 @@ class Generator(
                 .addMember(if (isAttribute) "false" else "true").build()
 
             if (xmlExt != null && xmlExt.name.isNotEmpty()) {
-                val ns = if (!sameNamespace) xmlExt.namespace else ""
+                // Same namespace as the owner: omit it and let xmlutil inherit. A *different* one:
+                // spell it out. None at all (an unqualified local element, which is what an XSD with
+                // elementFormDefault="unqualified" produces): say `namespace = ""`, because omitting
+                // it would inherit the owner's and then nothing on the wire matches.
+                val ns = when {
+                    sameNamespace -> null
+                    xmlExt.namespace.isNotEmpty() -> xmlExt.namespace
+                    isAttribute -> null
+                    else -> ""
+                }
                 annotations += xmlSerialNameAnnotation(xmlExt.name, ns, xmlExt.prefix)
             }
         }
@@ -421,6 +430,14 @@ class Generator(
         return ptr.copy(qualPackage = naming.buildPackagePath(pkg), qualName = name)
     }
 
+    /** A SOAP 1.1 fault member: an element of its own, explicitly in no namespace. */
+    private fun faultMember(name: String, type: TypeName, xmlElementAnnot: AnnotationSpec): PropertySpec =
+        PropertySpec.builder(name, type)
+            .initializer(name)
+            .addAnnotation(xmlElementAnnot)
+            .addAnnotation(xmlSerialNameAnnotation(name, namespace = "", prefix = ""))
+            .build()
+
     private fun buildEnvelopeClass(envelopePkg: String, envelopeName: String, body: TypePtr, fault: TypePtr?): TypeSpec {
         val envelopeNs = "http://schemas.xmlsoap.org/soap/envelope/"
         val cls = TypeSpec.classBuilder(envelopeName)
@@ -472,9 +489,11 @@ class Generator(
         bodyClassBuilder.primaryConstructor(bodyCtor.build())
         cls.addType(bodyClassBuilder.build())
 
-        // Fault
+        // Fault. SOAP 1.1 puts faultcode / faultstring / faultactor / detail in *no* namespace
+        // (SOAP 1.2 differs), so each one says so explicitly — without that they inherit SOAP-ENV
+        // from the enclosing Fault element and nothing on the wire ever matches them.
         if (fault != null) {
-            val detailType = ClassName(fault.qualPackage!!, fault.qualName!!).copy(nullable = true)
+            val detailCn = enclosingCn.nestedClass("Detail")
             cls.addType(
                 TypeSpec.classBuilder("Fault")
                     .addModifiers(KModifier.DATA)
@@ -484,13 +503,37 @@ class Generator(
                             .addParameter(ParameterSpec.builder("faultcode", STRING).defaultValue("\"\"").build())
                             .addParameter(ParameterSpec.builder("faultstring", STRING).defaultValue("\"\"").build())
                             .addParameter(ParameterSpec.builder("faultactor", STRING.copy(nullable = true)).defaultValue("null").build())
-                            .addParameter(ParameterSpec.builder("detail", detailType).defaultValue("null").build())
+                            .addParameter(ParameterSpec.builder("detail", detailCn.copy(nullable = true)).defaultValue("null").build())
                             .build()
                     )
-                    .addProperty(PropertySpec.builder("faultcode", STRING).initializer("faultcode").addAnnotation(xmlElementAnnot).build())
-                    .addProperty(PropertySpec.builder("faultstring", STRING).initializer("faultstring").addAnnotation(xmlElementAnnot).build())
-                    .addProperty(PropertySpec.builder("faultactor", STRING.copy(nullable = true)).initializer("faultactor").addAnnotation(xmlElementAnnot).build())
-                    .addProperty(PropertySpec.builder("detail", detailType).initializer("detail").addAnnotation(xmlElementAnnot).build())
+                    .addProperty(faultMember("faultcode", STRING, xmlElementAnnot))
+                    .addProperty(faultMember("faultstring", STRING, xmlElementAnnot))
+                    .addProperty(faultMember("faultactor", STRING.copy(nullable = true), xmlElementAnnot))
+                    .addProperty(faultMember("detail", detailCn.copy(nullable = true), xmlElementAnnot))
+                    .build()
+            )
+
+            // <detail> is a wrapper: the WSDL's fault message is an element *inside* it, not the
+            // content of <detail> itself. Inlining the payload here would look for the payload's
+            // own children directly under <detail> and find nothing.
+            val payloadCn = ClassName(fault.qualPackage!!, fault.qualName!!).copy(nullable = true)
+            val payloadName = decapitalize(fault.qualName)
+            val payloadProp = PropertySpec.builder(payloadName, payloadCn)
+                .initializer(payloadName)
+                .addAnnotation(xmlElementAnnot)
+            fault.xml?.takeIf { it.name.isNotEmpty() }?.let { x ->
+                payloadProp.addAnnotation(xmlSerialNameAnnotation(x.name, x.namespace.ifEmpty { null }, x.prefix))
+            }
+            cls.addType(
+                TypeSpec.classBuilder("Detail")
+                    .addModifiers(KModifier.DATA)
+                    .addAnnotation(serializableAnnotation())
+                    .primaryConstructor(
+                        FunSpec.constructorBuilder()
+                            .addParameter(ParameterSpec.builder(payloadName, payloadCn).defaultValue("null").build())
+                            .build()
+                    )
+                    .addProperty(payloadProp.build())
                     .build()
             )
         }
@@ -525,10 +568,15 @@ class Generator(
     private fun serializableAnnotation(): AnnotationSpec =
         AnnotationSpec.builder(ClassName("kotlinx.serialization", "Serializable")).build()
 
-    private fun xmlSerialNameAnnotation(name: String, namespace: String, prefix: String): AnnotationSpec {
+    /**
+     * [namespace] `null` omits the argument, which makes xmlutil resolve the element against its
+     * parent's namespace; `""` emits an explicit `namespace = ""`, which is how an element that is
+     * genuinely unqualified — a SOAP 1.1 fault's children, say — has to be declared.
+     */
+    private fun xmlSerialNameAnnotation(name: String, namespace: String?, prefix: String): AnnotationSpec {
         val b = AnnotationSpec.builder(ClassName("nl.adaptivity.xmlutil.serialization", "XmlSerialName"))
             .addMember("%S", name)
-        if (namespace.isNotEmpty()) b.addMember("namespace = %S", namespace)
+        if (namespace != null) b.addMember("namespace = %S", namespace)
         if (prefix.isNotEmpty()) b.addMember("prefix = %S", prefix)
         return b.build()
     }
