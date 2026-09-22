@@ -36,6 +36,18 @@ go run ./cmd/wsdl2openapi2go --file ../konnektor-opb6.json --output ./testproj/k
 
 The Go generator has a separate `go.mod`. The `testproj/` and `soap/` subdirectories each have their own `go.mod` as well.
 
+### Rust (generator-rust/ — OpenAPI-to-Rust generator)
+
+```bash
+cd generator-rust
+cargo test                         # Unit + golden tests (inputs shared with generator-kotlin fixtures)
+just generate                      # Regenerate testproj/src/{kon,edge}
+just test                          # Generator tests + testproj round-trip tests
+just lint                          # fmt --check, clippy -D warnings on generator and generated code
+```
+
+See `generator-rust/CLAUDE.md` for its design (module-tree output, quick-xml namespace handling, SOAP types).
+
 ## Architecture
 
 ### Python Converter (`src/wsdl2openapi/`)
@@ -68,6 +80,10 @@ Key patterns:
 - **Polymorphism via interfaces** — types with `x-is-base: true` generate interfaces with `Is{Type}()` marker methods
 - **Two-phase generation** — types first (`GenerateTypes()`), then SOAP envelopes (`GenerateSoap()`) that reference those types
 - **Naming configs** — regex-based package mappings in JSON files (e.g., `naming-kon.json`, `naming-epa.json`) transform namespace URIs like `de.gematik.ws.*` into Go package paths
+
+### Rust Generator (`generator-rust/`)
+
+Emits a module tree (mounted with `mod name;`) of serde structs/enums plus typed SOAP 1.1 envelopes and an async trait per port. Generated code depends only on `serde` + `quick-xml` (and `base64` when needed). Built with `quote`/`syn`/`prettyplease`; `testproj/` mounts the generated Konnektor tree for round-trip tests.
 
 ### Conversion Scripts (root)
 

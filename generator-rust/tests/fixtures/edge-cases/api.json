@@ -1,0 +1,55 @@
+{
+  "openapi": "3.0.0",
+  "components": {
+    "schemas": {
+      "urn.demo.tree.Node": {
+        "type": "object",
+        "xml": { "name": "Node", "namespace": "urn:demo:tree" },
+        "required": ["type"],
+        "properties": {
+          "type": { "type": "string", "xml": { "name": "type", "attribute": true } },
+          "self": { "type": "string", "xml": { "name": "Self", "namespace": "urn:demo:tree" } },
+          "parent": { "$ref": "#/components/schemas/urn.demo.tree.Node", "xml": { "name": "Parent", "namespace": "urn:demo:tree" } },
+          "children": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/urn.demo.tree.Node", "xml": { "name": "Child", "namespace": "urn:demo:tree" } }
+          },
+          "link": { "$ref": "#/components/schemas/urn.demo.tree.Link" }
+        }
+      },
+      "urn.demo.tree.Link": {
+        "type": "object",
+        "xml": { "name": "Link", "namespace": "urn:demo:tree" },
+        "required": ["target"],
+        "properties": {
+          "target": { "$ref": "#/components/schemas/urn.demo.tree.Node", "xml": { "name": "Target", "namespace": "urn:demo:tree" } },
+          "lang": { "type": "string", "xml": { "name": "lang", "namespace": "http://www.w3.org/XML/1998/namespace", "attribute": true } }
+        }
+      },
+      "urn.demo.tree.Option": {
+        "type": "object",
+        "xml": { "name": "Option", "namespace": "urn:demo:tree" },
+        "properties": {
+          "values": { "type": "array", "items": { "type": "string", "xml": { "name": "Value", "namespace": "urn:demo:tree" } } },
+          "version": { "$ref": "#/components/schemas/urn.demo.tree.Version" },
+          "payload": { "type": "string", "format": "byte", "xml": { "name": "Payload", "namespace": "urn:demo:tree" } },
+          "extension": { "type": "string", "format": "xml", "xml": { "name": "Extension", "namespace": "urn:demo:tree" } },
+          "count": { "type": "integer", "format": "int32", "xml": { "name": "Count", "namespace": "urn:demo:tree" } }
+        }
+      },
+      "urn.demo.tree.Version": {
+        "type": "string",
+        "xml": { "name": "Version", "namespace": "urn:demo:tree" },
+        "enum": ["1.0", "1.1", "latest", "LATEST"]
+      },
+      "urn.demo.tree.Root": {
+        "$ref": "#/components/schemas/urn.demo.tree.Node",
+        "xml": { "name": "Root", "namespace": "urn:demo:tree" }
+      },
+      "urn.demo.tree.Identifier": {
+        "type": "string",
+        "maxLength": 32
+      }
+    }
+  }
+}

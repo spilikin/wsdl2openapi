@@ -1,0 +1,5 @@
+{
+  "packageMappings": [
+    { "pattern": "urn\\.demo\\.(.*)", "replacement": "demo.$1" }
+  ]
+}
