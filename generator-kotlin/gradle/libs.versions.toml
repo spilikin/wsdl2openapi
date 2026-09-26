@@ -1,7 +1,7 @@
 [versions]
 kotlin = "2.3.0"
 kotlinx-serialization = "1.7.3"
-xmlutil = "0.91.1"
+xmlutil = "1.0.2.1"
 kotlinpoet = "2.2.0"
 clikt = "5.0.3"
 junit-jupiter = "5.11.4"
