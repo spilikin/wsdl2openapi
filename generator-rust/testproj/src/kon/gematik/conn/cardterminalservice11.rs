@@ -131,6 +131,9 @@ impl crate::kon::soap::SoapRequest for RequestCardInput {
         name: "RequestCard",
         soap_action: "http://ws.gematik.de/conn/CardTerminalService/v1.1#RequestCard",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = RequestCardOutput;
 }
@@ -189,6 +192,9 @@ impl crate::kon::soap::BodyContent for RequestCardOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for RequestCardOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -239,6 +245,9 @@ impl crate::kon::soap::SoapRequest for EjectCardInput {
         name: "EjectCard",
         soap_action: "http://ws.gematik.de/conn/CardTerminalService/v1.1#EjectCard",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = EjectCardOutput;
 }
@@ -296,6 +305,9 @@ impl crate::kon::soap::BodyContent for EjectCardOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for EjectCardOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

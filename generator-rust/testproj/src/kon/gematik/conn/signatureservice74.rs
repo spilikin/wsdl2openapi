@@ -818,6 +818,9 @@ impl crate::kon::soap::SoapRequest for VerifyDocumentInput {
         name: "VerifyDocument",
         soap_action: "http://ws.gematik.de/conn/SignatureService/v7.4#VerifyDocument",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = VerifyDocumentOutput;
 }
@@ -879,6 +882,9 @@ impl crate::kon::soap::BodyContent for VerifyDocumentOutput {
             "urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema#",
         ),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for VerifyDocumentOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -939,6 +945,9 @@ impl crate::kon::soap::SoapRequest for SignDocumentInput {
         name: "SignDocument",
         soap_action: "http://ws.gematik.de/conn/SignatureService/v7.4#SignDocument",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = SignDocumentOutput;
 }
@@ -1001,6 +1010,9 @@ impl crate::kon::soap::BodyContent for SignDocumentOutput {
             "urn:oasis:names:tc:dss-x:1.0:profiles:verificationreport:schema#",
         ),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for SignDocumentOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1047,6 +1059,9 @@ impl crate::kon::soap::SoapRequest for GetJobNumberInput {
         name: "GetJobNumber",
         soap_action: "http://ws.gematik.de/conn/SignatureService/v7.4#GetJobNumber",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = GetJobNumberOutput;
 }
@@ -1097,6 +1112,9 @@ impl crate::kon::soap::BodyContent for GetJobNumberOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:signatureservice74", "http://ws.gematik.de/conn/SignatureService/v7.4"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for GetJobNumberOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1143,6 +1161,9 @@ impl crate::kon::soap::SoapRequest for StopSignatureInput {
         name: "StopSignature",
         soap_action: "http://ws.gematik.de/conn/SignatureService/v7.4#StopSignature",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = StopSignatureOutput;
 }
@@ -1196,6 +1217,9 @@ impl crate::kon::soap::BodyContent for StopSignatureOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:signatureservice74", "http://ws.gematik.de/conn/SignatureService/v7.4"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for StopSignatureOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

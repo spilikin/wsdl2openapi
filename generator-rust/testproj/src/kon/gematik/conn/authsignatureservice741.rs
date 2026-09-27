@@ -30,6 +30,9 @@ impl crate::kon::soap::SoapRequest for ExternalAuthenticateInput {
         name: "ExternalAuthenticate",
         soap_action: "http://ws.gematik.de/conn/SignatureService/v7.4#ExternalAuthenticate",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = ExternalAuthenticateOutput;
 }
@@ -93,6 +96,9 @@ impl crate::kon::soap::BodyContent for ExternalAuthenticateOutput {
         ("@xmlns:ns-xmldsig", "http://www.w3.org/2000/09/xmldsig#"),
         ("@xmlns:signatureservice74", "http://ws.gematik.de/conn/SignatureService/v7.4"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for ExternalAuthenticateOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

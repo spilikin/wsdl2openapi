@@ -484,6 +484,9 @@ impl crate::kon::soap::SoapRequest for SubscribeInput {
         name: "Subscribe",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#Subscribe",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = SubscribeOutput;
 }
@@ -534,6 +537,9 @@ impl crate::kon::soap::BodyContent for SubscribeOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:eventservice72", "http://ws.gematik.de/conn/EventService/v7.2"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for SubscribeOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -577,6 +583,9 @@ impl crate::kon::soap::SoapRequest for UnsubscribeInput {
         name: "Unsubscribe",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#Unsubscribe",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = UnsubscribeOutput;
 }
@@ -627,6 +636,9 @@ impl crate::kon::soap::BodyContent for UnsubscribeOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:eventservice72", "http://ws.gematik.de/conn/EventService/v7.2"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for UnsubscribeOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -673,6 +685,9 @@ impl crate::kon::soap::SoapRequest for GetSubscriptionInput {
         name: "GetSubscription",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#GetSubscription",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = GetSubscriptionOutput;
 }
@@ -726,6 +741,9 @@ impl crate::kon::soap::BodyContent for GetSubscriptionOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:eventservice72", "http://ws.gematik.de/conn/EventService/v7.2"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for GetSubscriptionOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -784,6 +802,9 @@ impl crate::kon::soap::SoapRequest for GetResourceInformationInput {
         name: "GetResourceInformation",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#GetResourceInformation",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = GetResourceInformationOutput;
 }
@@ -848,6 +869,9 @@ impl crate::kon::soap::BodyContent for GetResourceInformationOutput {
             "http://ws.gematik.de/int/version/ProductInformation/v1.1",
         ),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for GetResourceInformationOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -907,6 +931,9 @@ impl crate::kon::soap::SoapRequest for GetCardTerminalsInput {
         name: "GetCardTerminals",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#GetCardTerminals",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = GetCardTerminalsOutput;
 }
@@ -969,6 +996,9 @@ impl crate::kon::soap::BodyContent for GetCardTerminalsOutput {
             "http://ws.gematik.de/int/version/ProductInformation/v1.1",
         ),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for GetCardTerminalsOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1017,6 +1047,9 @@ impl crate::kon::soap::SoapRequest for GetCardsInput {
         name: "GetCards",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#GetCards",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = GetCardsOutput;
 }
@@ -1072,6 +1105,9 @@ impl crate::kon::soap::BodyContent for GetCardsOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:eventservice72", "http://ws.gematik.de/conn/EventService/v7.2"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for GetCardsOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1118,6 +1154,9 @@ impl crate::kon::soap::SoapRequest for RenewSubscriptionsInput {
         name: "RenewSubscriptions",
         soap_action: "http://ws.gematik.de/conn/EventService/v7.2#RenewSubscriptions",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = RenewSubscriptionsOutput;
 }
@@ -1171,6 +1210,9 @@ impl crate::kon::soap::BodyContent for RenewSubscriptionsOutput {
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
         ("@xmlns:eventservice72", "http://ws.gematik.de/conn/EventService/v7.2"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for RenewSubscriptionsOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

@@ -677,6 +677,9 @@ impl crate::kon::soap::SoapRequest for VerifyPinInput {
         name: "VerifyPin",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#VerifyPin",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = VerifyPinOutput;
 }
@@ -731,6 +734,9 @@ impl crate::kon::soap::BodyContent for VerifyPinOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for VerifyPinOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -776,6 +782,9 @@ impl crate::kon::soap::SoapRequest for ChangePinInput {
         name: "ChangePin",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#ChangePin",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = ChangePinOutput;
 }
@@ -830,6 +839,9 @@ impl crate::kon::soap::BodyContent for ChangePinOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for ChangePinOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -875,6 +887,9 @@ impl crate::kon::soap::SoapRequest for UnblockPinInput {
         name: "UnblockPin",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#UnblockPin",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = UnblockPinOutput;
 }
@@ -929,6 +944,9 @@ impl crate::kon::soap::BodyContent for UnblockPinOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for UnblockPinOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -976,6 +994,9 @@ impl crate::kon::soap::SoapRequest for GetPinStatusInput {
         name: "GetPinStatus",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#GetPinStatus",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = GetPinStatusOutput;
 }
@@ -1030,6 +1051,9 @@ impl crate::kon::soap::BodyContent for GetPinStatusOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for GetPinStatusOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1075,6 +1099,9 @@ impl crate::kon::soap::SoapRequest for EnablePinInput {
         name: "EnablePin",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#EnablePin",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = EnablePinOutput;
 }
@@ -1129,6 +1156,9 @@ impl crate::kon::soap::BodyContent for EnablePinOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for EnablePinOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1174,6 +1204,9 @@ impl crate::kon::soap::SoapRequest for DisablePinInput {
         name: "DisablePin",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#DisablePin",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = DisablePinOutput;
 }
@@ -1228,6 +1261,9 @@ impl crate::kon::soap::BodyContent for DisablePinOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for DisablePinOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1273,6 +1309,9 @@ impl crate::kon::soap::SoapRequest for SecureSendApduInput {
         name: "SecureSendAPDU",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#SecureSendAPDU",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = SecureSendApduOutput;
 }
@@ -1325,6 +1364,9 @@ impl crate::kon::soap::BodyContent for SecureSendApduOutput {
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for SecureSendApduOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1373,6 +1415,9 @@ impl crate::kon::soap::SoapRequest for StartCardSessionInput {
         name: "StartCardSession",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#StartCardSession",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = StartCardSessionOutput;
 }
@@ -1426,6 +1471,9 @@ impl crate::kon::soap::BodyContent for StartCardSessionOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for StartCardSessionOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -1473,6 +1521,9 @@ impl crate::kon::soap::SoapRequest for StopCardSessionInput {
         name: "StopCardSession",
         soap_action: "http://ws.gematik.de/conn/CardService/v8.2#StopCardSession",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = StopCardSessionOutput;
 }
@@ -1525,6 +1576,9 @@ impl crate::kon::soap::BodyContent for StopCardSessionOutput {
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for StopCardSessionOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

@@ -369,6 +369,9 @@ impl crate::kon::soap::SoapRequest for EncryptDocumentInput {
         name: "EncryptDocument",
         soap_action: "http://ws.gematik.de/conn/EncryptionService/v6.1#EncryptDocument",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = EncryptDocumentOutput;
 }
@@ -426,6 +429,9 @@ impl crate::kon::soap::BodyContent for EncryptDocumentOutput {
         ),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for EncryptDocumentOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -478,6 +484,9 @@ impl crate::kon::soap::SoapRequest for DecryptDocumentInput {
         name: "DecryptDocument",
         soap_action: "http://ws.gematik.de/conn/crypt/EncryptionService/v6.1#DecryptDocument",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = DecryptDocumentOutput;
 }
@@ -535,6 +544,9 @@ impl crate::kon::soap::BodyContent for DecryptDocumentOutput {
         ),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for DecryptDocumentOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

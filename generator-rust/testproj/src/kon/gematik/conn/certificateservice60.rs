@@ -250,6 +250,9 @@ impl crate::kon::soap::SoapRequest for CheckCertificateExpirationInput {
         name: "CheckCertificateExpiration",
         soap_action: "http://ws.gematik.de/conn/CertificateService/v6.0#CheckCertificateExpiration",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = CheckCertificateExpirationOutput;
 }
@@ -307,6 +310,9 @@ impl crate::kon::soap::BodyContent for CheckCertificateExpirationOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for CheckCertificateExpirationOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -364,6 +370,9 @@ impl crate::kon::soap::SoapRequest for ReadCardCertificateInput {
         name: "ReadCardCertificate",
         soap_action: "http://ws.gematik.de/conn/CertificateService/v6.0#ReadCardCertificate",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = ReadCardCertificateOutput;
 }
@@ -424,6 +433,9 @@ impl crate::kon::soap::BodyContent for ReadCardCertificateOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for ReadCardCertificateOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
@@ -481,6 +493,9 @@ impl crate::kon::soap::SoapRequest for VerifyCertificateInput {
         name: "VerifyCertificate",
         soap_action: "http://ws.gematik.de/conn/CertificateService/v6.0#VerifyCertificate",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::kon::soap::Timeout::Short,
     };
     type Response = VerifyCertificateOutput;
 }
@@ -541,6 +556,9 @@ impl crate::kon::soap::BodyContent for VerifyCertificateOutput {
         ("@xmlns:connectorcontext20", "http://ws.gematik.de/conn/ConnectorContext/v2.0"),
         ("@xmlns:error20", "http://ws.gematik.de/tel/error/v2.0"),
     ];
+}
+
+impl crate::kon::soap::SoapResponse for VerifyCertificateOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }
