@@ -1,0 +1,112 @@
+{
+  "openapi": "3.1.0",
+  "x-wsdl-services": [
+    {
+      "name": "CardService",
+      "targetNamespace": "urn:demo:card:v1",
+      "targetPackage": "demo.card",
+      "ports": [
+        {
+          "name": "CardServicePort",
+          "bindingType": "soap11",
+          "operations": [
+            {
+              "name": "GetCards",
+              "soapAction": "urn:demo:card:v1#GetCards",
+              "input": { "soapBody": "#/components/schemas/demo.card.GetCards" },
+              "output": { "soapBody": "#/components/schemas/demo.card.GetCardsResponse" },
+              "faults": { "Error": { "soapBody": "#/components/schemas/demo.card.Error" } }
+            },
+            {
+              "name": "EjectCard",
+              "soapAction": "urn:demo:card:v1#EjectCard",
+              "input": { "soapBody": "#/components/schemas/demo.card.EjectCard" },
+              "output": { "soapBody": "#/components/schemas/demo.card.EjectCardResponse" }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "demo.card.Context": {
+        "type": "object",
+        "xml": { "name": "Context", "namespace": "urn:demo:common:v1" },
+        "required": ["mandant"],
+        "properties": {
+          "mandant": { "type": "string", "xml": { "name": "MandantId", "namespace": "urn:demo:common:v1" } }
+        }
+      },
+      "demo.card.CardType": {
+        "type": "string",
+        "xml": { "name": "CardType", "namespace": "urn:demo:card:v1" },
+        "enum": ["SMC-B", "HBA"]
+      },
+      "demo.card.GetCards": {
+        "type": "object",
+        "xml": { "name": "GetCards", "namespace": "urn:demo:card:v1" },
+        "required": ["context"],
+        "properties": {
+          "context": { "$ref": "#/components/schemas/demo.card.Context" },
+          "cardType": { "$ref": "#/components/schemas/demo.card.CardType" }
+        }
+      },
+      "demo.card.Card": {
+        "type": "object",
+        "xml": { "name": "Card", "namespace": "urn:demo:card:v1" },
+        "required": ["handle", "cardType"],
+        "properties": {
+          "handle": { "type": "string", "xml": { "name": "CardHandle", "namespace": "urn:demo:card:v1" } },
+          "cardType": { "$ref": "#/components/schemas/demo.card.CardType" },
+          "signature": { "$ref": "#/components/schemas/demo.card.Base64Signature" }
+        }
+      },
+      "demo.card.Base64Signature": {
+        "type": "object",
+        "xml": { "name": "Base64Signature", "namespace": "urn:demo:card:v1" },
+        "required": ["charData"],
+        "properties": {
+          "type": { "type": "string", "xml": { "name": "Type", "attribute": true } },
+          "charData": { "type": "string", "format": "chardata" }
+        }
+      },
+      "demo.card.GetCardsResponse": {
+        "type": "object",
+        "xml": { "name": "GetCardsResponse", "namespace": "urn:demo:card:v1" },
+        "properties": {
+          "cards": { "type": "array", "items": { "$ref": "#/components/schemas/demo.card.Card" } }
+        }
+      },
+      "demo.card.Error": {
+        "type": "object",
+        "xml": { "name": "Error", "namespace": "urn:demo:error:v1" },
+        "properties": {
+          "code": { "type": "integer", "format": "int32", "xml": { "name": "Code", "namespace": "urn:demo:error:v1" } }
+        }
+      },
+      "demo.card.EjectCard": {
+        "type": "object",
+        "xml": { "name": "EjectCard", "namespace": "urn:demo:card:v1" },
+        "required": ["handle"],
+        "properties": {
+          "handle": { "type": "string", "xml": { "name": "CardHandle", "namespace": "urn:demo:card:v1" } }
+        }
+      },
+      "demo.card.EjectCardResponse": {
+        "type": "object",
+        "xml": { "name": "EjectCardResponse", "namespace": "urn:demo:card:v1" },
+        "properties": {
+          "ok": { "type": "boolean", "xml": { "name": "Ok", "namespace": "urn:demo:card:v1" } }
+        }
+      },
+      "demo.card.Unused": {
+        "type": "object",
+        "xml": { "name": "Unused", "namespace": "urn:demo:card:v1" },
+        "properties": {
+          "value": { "type": "string", "xml": { "name": "Value", "namespace": "urn:demo:card:v1" } }
+        }
+      }
+    }
+  }
+}

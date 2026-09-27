@@ -1,0 +1,11 @@
+{
+  "ports": false,
+  "services": [
+    {
+      "module": "demo.card",
+      "service": "CardService",
+      "version": "1.0",
+      "operations": { "GetCards": "short" }
+    }
+  ]
+}

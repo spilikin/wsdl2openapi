@@ -177,6 +177,36 @@ go run ./cmd/wsdl2openapi2go \
   --naming naming-kon.json
 ```
 
+### Rust code generator (OpenAPI to Rust)
+
+The `generator-rust/` directory contains a generator that emits a Rust module tree: serde structs and enums with quick-xml renames, typed SOAP 1.1 envelopes and faults, and an async trait per port. Generated code needs only `serde` and `quick-xml` (plus `base64` for `xsd:base64Binary`).
+
+```bash
+cd generator-rust
+cargo run -- \
+  --file ../Konnektor-OPB6.json \
+  --output ../my-crate/src/kon \
+  --naming naming-kon.json \
+  --module-root crate::kon
+```
+
+Mount the output with `mod kon;` and depend on:
+
+```toml
+serde = { version = "1", features = ["derive"] }
+quick-xml = { version = "0.42", features = ["serialize", "overlapped-lists"] }
+base64 = "0.23"
+```
+
+```rust
+use kon::gematik::conn::eventservice72::{GetCards, GetCardsEnvelope, GetCardsResponseEnvelope};
+
+let request: GetCardsEnvelope = GetCards { /* ... */ }.into();
+let body = request.to_xml()?;                     // POST it; SOAPAction is GetCardsInput::OPERATION.soap_action
+let response = GetCardsResponseEnvelope::from_xml(&reply)?;
+let cards = response.into_content().into_result()?; // Err carries the typed soap::Fault
+```
+
 ## Linting the generated OpenAPI
 
 The Konnektor OpenAPI lints with [vacuum](https://quobix.com/vacuum/) directly:
@@ -208,4 +238,7 @@ uv run pytest tests/
 
 # Go generator + integration tests
 cd generator-golang && go test ./...
+
+# Rust generator + integration tests
+cd generator-rust && just test
 ```
