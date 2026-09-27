@@ -518,18 +518,6 @@ pub enum SubscribeOutput {
     Fault(crate::kon::soap::Fault<SubscribeFaultDetail>),
 }
 
-impl SubscribeOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<SubscribeResponse, crate::kon::soap::Fault<SubscribeFaultDetail>> {
-        match self {
-            Self::SubscribeResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for SubscribeOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -540,8 +528,19 @@ impl crate::kon::soap::BodyContent for SubscribeOutput {
 }
 
 impl crate::kon::soap::SoapResponse for SubscribeOutput {
+    type Success = SubscribeResponse;
+    type Detail = SubscribeFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<SubscribeResponse, crate::kon::soap::Fault<SubscribeFaultDetail>> {
+        match self {
+            Self::SubscribeResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -617,18 +616,6 @@ pub enum UnsubscribeOutput {
     Fault(crate::kon::soap::Fault<UnsubscribeFaultDetail>),
 }
 
-impl UnsubscribeOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<UnsubscribeResponse, crate::kon::soap::Fault<UnsubscribeFaultDetail>> {
-        match self {
-            Self::UnsubscribeResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for UnsubscribeOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -639,8 +626,19 @@ impl crate::kon::soap::BodyContent for UnsubscribeOutput {
 }
 
 impl crate::kon::soap::SoapResponse for UnsubscribeOutput {
+    type Success = UnsubscribeResponse;
+    type Detail = UnsubscribeFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<UnsubscribeResponse, crate::kon::soap::Fault<UnsubscribeFaultDetail>> {
+        match self {
+            Self::UnsubscribeResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -719,21 +717,6 @@ pub enum GetSubscriptionOutput {
     Fault(crate::kon::soap::Fault<GetSubscriptionFaultDetail>),
 }
 
-impl GetSubscriptionOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        GetSubscriptionResponse,
-        crate::kon::soap::Fault<GetSubscriptionFaultDetail>,
-    > {
-        match self {
-            Self::GetSubscriptionResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for GetSubscriptionOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -744,8 +727,22 @@ impl crate::kon::soap::BodyContent for GetSubscriptionOutput {
 }
 
 impl crate::kon::soap::SoapResponse for GetSubscriptionOutput {
+    type Success = GetSubscriptionResponse;
+    type Detail = GetSubscriptionFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        GetSubscriptionResponse,
+        crate::kon::soap::Fault<GetSubscriptionFaultDetail>,
+    > {
+        match self {
+            Self::GetSubscriptionResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -837,21 +834,6 @@ pub enum GetResourceInformationOutput {
     Fault(crate::kon::soap::Fault<GetResourceInformationFaultDetail>),
 }
 
-impl GetResourceInformationOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        GetResourceInformationResponse,
-        crate::kon::soap::Fault<GetResourceInformationFaultDetail>,
-    > {
-        match self {
-            Self::GetResourceInformationResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for GetResourceInformationOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice81", "http://ws.gematik.de/conn/CardService/v8.1"),
@@ -872,8 +854,22 @@ impl crate::kon::soap::BodyContent for GetResourceInformationOutput {
 }
 
 impl crate::kon::soap::SoapResponse for GetResourceInformationOutput {
+    type Success = GetResourceInformationResponse;
+    type Detail = GetResourceInformationFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        GetResourceInformationResponse,
+        crate::kon::soap::Fault<GetResourceInformationFaultDetail>,
+    > {
+        match self {
+            Self::GetResourceInformationResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -965,21 +961,6 @@ pub enum GetCardTerminalsOutput {
     Fault(crate::kon::soap::Fault<GetCardTerminalsFaultDetail>),
 }
 
-impl GetCardTerminalsOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        GetCardTerminalsResponse,
-        crate::kon::soap::Fault<GetCardTerminalsFaultDetail>,
-    > {
-        match self {
-            Self::GetCardTerminalsResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for GetCardTerminalsOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         (
@@ -999,8 +980,22 @@ impl crate::kon::soap::BodyContent for GetCardTerminalsOutput {
 }
 
 impl crate::kon::soap::SoapResponse for GetCardTerminalsOutput {
+    type Success = GetCardTerminalsResponse;
+    type Detail = GetCardTerminalsFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        GetCardTerminalsResponse,
+        crate::kon::soap::Fault<GetCardTerminalsFaultDetail>,
+    > {
+        match self {
+            Self::GetCardTerminalsResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1081,18 +1076,6 @@ pub enum GetCardsOutput {
     Fault(crate::kon::soap::Fault<GetCardsFaultDetail>),
 }
 
-impl GetCardsOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<GetCardsResponse, crate::kon::soap::Fault<GetCardsFaultDetail>> {
-        match self {
-            Self::GetCardsResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for GetCardsOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice81", "http://ws.gematik.de/conn/CardService/v8.1"),
@@ -1108,8 +1091,19 @@ impl crate::kon::soap::BodyContent for GetCardsOutput {
 }
 
 impl crate::kon::soap::SoapResponse for GetCardsOutput {
+    type Success = GetCardsResponse;
+    type Detail = GetCardsFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<GetCardsResponse, crate::kon::soap::Fault<GetCardsFaultDetail>> {
+        match self {
+            Self::GetCardsResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1188,21 +1182,6 @@ pub enum RenewSubscriptionsOutput {
     Fault(crate::kon::soap::Fault<RenewSubscriptionsFaultDetail>),
 }
 
-impl RenewSubscriptionsOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        RenewSubscriptionsResponse,
-        crate::kon::soap::Fault<RenewSubscriptionsFaultDetail>,
-    > {
-        match self {
-            Self::RenewSubscriptionsResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for RenewSubscriptionsOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -1213,8 +1192,22 @@ impl crate::kon::soap::BodyContent for RenewSubscriptionsOutput {
 }
 
 impl crate::kon::soap::SoapResponse for RenewSubscriptionsOutput {
+    type Success = RenewSubscriptionsResponse;
+    type Detail = RenewSubscriptionsFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        RenewSubscriptionsResponse,
+        crate::kon::soap::Fault<RenewSubscriptionsFaultDetail>,
+    > {
+        match self {
+            Self::RenewSubscriptionsResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

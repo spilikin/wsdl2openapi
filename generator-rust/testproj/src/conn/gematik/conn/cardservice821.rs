@@ -113,9 +113,14 @@ pub enum SecureSendApduOutput {
     Fault(crate::conn::soap::Fault<SecureSendApduFaultDetail>),
 }
 
-impl SecureSendApduOutput {
+impl crate::conn::soap::SoapResponse for SecureSendApduOutput {
+    type Success = SecureSendApduResponse;
+    type Detail = SecureSendApduFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         SecureSendApduResponse,
@@ -125,12 +130,6 @@ impl SecureSendApduOutput {
             Self::SecureSendApduResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for SecureSendApduOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -197,9 +196,14 @@ pub enum StartCardSessionOutput {
     Fault(crate::conn::soap::Fault<StartCardSessionFaultDetail>),
 }
 
-impl StartCardSessionOutput {
+impl crate::conn::soap::SoapResponse for StartCardSessionOutput {
+    type Success = StartCardSessionResponse;
+    type Detail = StartCardSessionFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         StartCardSessionResponse,
@@ -209,12 +213,6 @@ impl StartCardSessionOutput {
             Self::StartCardSessionResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for StartCardSessionOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -280,9 +278,14 @@ pub enum StopCardSessionOutput {
     Fault(crate::conn::soap::Fault<StopCardSessionFaultDetail>),
 }
 
-impl StopCardSessionOutput {
+impl crate::conn::soap::SoapResponse for StopCardSessionOutput {
+    type Success = StopCardSessionResponse;
+    type Detail = StopCardSessionFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         StopCardSessionResponse,
@@ -292,12 +295,6 @@ impl StopCardSessionOutput {
             Self::StopCardSessionResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for StopCardSessionOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

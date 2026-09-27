@@ -62,7 +62,12 @@ fn envelope() -> TokenStream {
 
         /// Content of `SOAP-ENV:Body` that is read: a result or a fault.
         pub trait SoapResponse {
+            /// The operation's response element.
+            type Success;
+            /// The typed content of the fault's `detail`.
+            type Detail;
             fn is_fault(&self) -> bool;
+            fn into_result(self) -> ::std::result::Result<Self::Success, Fault<Self::Detail>>;
         }
 
         /// A request body, tied to its operation and the body of its response,

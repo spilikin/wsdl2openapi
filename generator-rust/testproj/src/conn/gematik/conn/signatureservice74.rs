@@ -583,9 +583,14 @@ pub enum VerifyDocumentOutput {
     Fault(crate::conn::soap::Fault<VerifyDocumentFaultDetail>),
 }
 
-impl VerifyDocumentOutput {
+impl crate::conn::soap::SoapResponse for VerifyDocumentOutput {
+    type Success = VerifyDocumentResponse;
+    type Detail = VerifyDocumentFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         VerifyDocumentResponse,
@@ -595,12 +600,6 @@ impl VerifyDocumentOutput {
             Self::VerifyDocumentResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for VerifyDocumentOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -679,9 +678,14 @@ pub enum SignDocumentOutput {
     Fault(crate::conn::soap::Fault<SignDocumentFaultDetail>),
 }
 
-impl SignDocumentOutput {
+impl crate::conn::soap::SoapResponse for SignDocumentOutput {
+    type Success = SignDocumentResponse;
+    type Detail = SignDocumentFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         SignDocumentResponse,
@@ -691,12 +695,6 @@ impl SignDocumentOutput {
             Self::SignDocumentResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for SignDocumentOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -761,9 +759,14 @@ pub enum GetJobNumberOutput {
     Fault(crate::conn::soap::Fault<GetJobNumberFaultDetail>),
 }
 
-impl GetJobNumberOutput {
+impl crate::conn::soap::SoapResponse for GetJobNumberOutput {
+    type Success = GetJobNumberResponse;
+    type Detail = GetJobNumberFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         GetJobNumberResponse,
@@ -773,12 +776,6 @@ impl GetJobNumberOutput {
             Self::GetJobNumberResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for GetJobNumberOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -843,9 +840,14 @@ pub enum StopSignatureOutput {
     Fault(crate::conn::soap::Fault<StopSignatureFaultDetail>),
 }
 
-impl StopSignatureOutput {
+impl crate::conn::soap::SoapResponse for StopSignatureOutput {
+    type Success = StopSignatureResponse;
+    type Detail = StopSignatureFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         StopSignatureResponse,
@@ -855,12 +857,6 @@ impl StopSignatureOutput {
             Self::StopSignatureResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for StopSignatureOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

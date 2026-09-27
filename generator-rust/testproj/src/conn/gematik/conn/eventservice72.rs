@@ -139,9 +139,14 @@ pub enum GetResourceInformationOutput {
     Fault(crate::conn::soap::Fault<GetResourceInformationFaultDetail>),
 }
 
-impl GetResourceInformationOutput {
+impl crate::conn::soap::SoapResponse for GetResourceInformationOutput {
+    type Success = GetResourceInformationResponse;
+    type Detail = GetResourceInformationFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         GetResourceInformationResponse,
@@ -151,12 +156,6 @@ impl GetResourceInformationOutput {
             Self::GetResourceInformationResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for GetResourceInformationOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -230,21 +229,20 @@ pub enum GetCardsOutput {
     Fault(crate::conn::soap::Fault<GetCardsFaultDetail>),
 }
 
-impl GetCardsOutput {
+impl crate::conn::soap::SoapResponse for GetCardsOutput {
+    type Success = GetCardsResponse;
+    type Detail = GetCardsFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<GetCardsResponse, crate::conn::soap::Fault<GetCardsFaultDetail>> {
         match self {
             Self::GetCardsResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for GetCardsOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

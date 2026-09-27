@@ -165,18 +165,6 @@ pub enum RequestCardOutput {
     Fault(crate::kon::soap::Fault<RequestCardFaultDetail>),
 }
 
-impl RequestCardOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<RequestCardResponse, crate::kon::soap::Fault<RequestCardFaultDetail>> {
-        match self {
-            Self::RequestCardResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for RequestCardOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice81", "http://ws.gematik.de/conn/CardService/v8.1"),
@@ -195,8 +183,19 @@ impl crate::kon::soap::BodyContent for RequestCardOutput {
 }
 
 impl crate::kon::soap::SoapResponse for RequestCardOutput {
+    type Success = RequestCardResponse;
+    type Detail = RequestCardFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<RequestCardResponse, crate::kon::soap::Fault<RequestCardFaultDetail>> {
+        match self {
+            Self::RequestCardResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -279,18 +278,6 @@ pub enum EjectCardOutput {
     Fault(crate::kon::soap::Fault<EjectCardFaultDetail>),
 }
 
-impl EjectCardOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<EjectCardResponse, crate::kon::soap::Fault<EjectCardFaultDetail>> {
-        match self {
-            Self::EjectCardResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for EjectCardOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         (
@@ -308,8 +295,19 @@ impl crate::kon::soap::BodyContent for EjectCardOutput {
 }
 
 impl crate::kon::soap::SoapResponse for EjectCardOutput {
+    type Success = EjectCardResponse;
+    type Detail = EjectCardFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<EjectCardResponse, crate::kon::soap::Fault<EjectCardFaultDetail>> {
+        match self {
+            Self::EjectCardResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

@@ -852,21 +852,6 @@ pub enum VerifyDocumentOutput {
     Fault(crate::kon::soap::Fault<VerifyDocumentFaultDetail>),
 }
 
-impl VerifyDocumentOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        VerifyDocumentResponse,
-        crate::kon::soap::Fault<VerifyDocumentFaultDetail>,
-    > {
-        match self {
-            Self::VerifyDocumentResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for VerifyDocumentOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -885,8 +870,22 @@ impl crate::kon::soap::BodyContent for VerifyDocumentOutput {
 }
 
 impl crate::kon::soap::SoapResponse for VerifyDocumentOutput {
+    type Success = VerifyDocumentResponse;
+    type Detail = VerifyDocumentFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        VerifyDocumentResponse,
+        crate::kon::soap::Fault<VerifyDocumentFaultDetail>,
+    > {
+        match self {
+            Self::VerifyDocumentResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -979,18 +978,6 @@ pub enum SignDocumentOutput {
     Fault(crate::kon::soap::Fault<SignDocumentFaultDetail>),
 }
 
-impl SignDocumentOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<SignDocumentResponse, crate::kon::soap::Fault<SignDocumentFaultDetail>> {
-        match self {
-            Self::SignDocumentResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for SignDocumentOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -1013,8 +1000,19 @@ impl crate::kon::soap::BodyContent for SignDocumentOutput {
 }
 
 impl crate::kon::soap::SoapResponse for SignDocumentOutput {
+    type Success = SignDocumentResponse;
+    type Detail = SignDocumentFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<SignDocumentResponse, crate::kon::soap::Fault<SignDocumentFaultDetail>> {
+        match self {
+            Self::SignDocumentResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1093,18 +1091,6 @@ pub enum GetJobNumberOutput {
     Fault(crate::kon::soap::Fault<GetJobNumberFaultDetail>),
 }
 
-impl GetJobNumberOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<GetJobNumberResponse, crate::kon::soap::Fault<GetJobNumberFaultDetail>> {
-        match self {
-            Self::GetJobNumberResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for GetJobNumberOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -1115,8 +1101,19 @@ impl crate::kon::soap::BodyContent for GetJobNumberOutput {
 }
 
 impl crate::kon::soap::SoapResponse for GetJobNumberOutput {
+    type Success = GetJobNumberResponse;
+    type Detail = GetJobNumberFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<GetJobNumberResponse, crate::kon::soap::Fault<GetJobNumberFaultDetail>> {
+        match self {
+            Self::GetJobNumberResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1195,21 +1192,6 @@ pub enum StopSignatureOutput {
     Fault(crate::kon::soap::Fault<StopSignatureFaultDetail>),
 }
 
-impl StopSignatureOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        StopSignatureResponse,
-        crate::kon::soap::Fault<StopSignatureFaultDetail>,
-    > {
-        match self {
-            Self::StopSignatureResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for StopSignatureOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -1220,8 +1202,22 @@ impl crate::kon::soap::BodyContent for StopSignatureOutput {
 }
 
 impl crate::kon::soap::SoapResponse for StopSignatureOutput {
+    type Success = StopSignatureResponse;
+    type Detail = StopSignatureFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        StopSignatureResponse,
+        crate::kon::soap::Fault<StopSignatureFaultDetail>,
+    > {
+        match self {
+            Self::StopSignatureResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

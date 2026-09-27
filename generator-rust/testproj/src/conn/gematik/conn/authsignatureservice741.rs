@@ -62,9 +62,14 @@ pub enum ExternalAuthenticateOutput {
     Fault(crate::conn::soap::Fault<ExternalAuthenticateFaultDetail>),
 }
 
-impl ExternalAuthenticateOutput {
+impl crate::conn::soap::SoapResponse for ExternalAuthenticateOutput {
+    type Success = crate::conn::gematik::conn::signatureservice74::ExternalAuthenticateResponse;
+    type Detail = ExternalAuthenticateFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         crate::conn::gematik::conn::signatureservice74::ExternalAuthenticateResponse,
@@ -74,12 +79,6 @@ impl ExternalAuthenticateOutput {
             Self::ExternalAuthenticateResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for ExternalAuthenticateOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

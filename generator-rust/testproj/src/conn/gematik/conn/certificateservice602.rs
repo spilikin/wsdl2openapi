@@ -267,9 +267,14 @@ pub enum CheckCertificateExpirationOutput {
     Fault(crate::conn::soap::Fault<CheckCertificateExpirationFaultDetail>),
 }
 
-impl CheckCertificateExpirationOutput {
+impl crate::conn::soap::SoapResponse for CheckCertificateExpirationOutput {
+    type Success = CheckCertificateExpirationResponse;
+    type Detail = CheckCertificateExpirationFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         CheckCertificateExpirationResponse,
@@ -279,12 +284,6 @@ impl CheckCertificateExpirationOutput {
             Self::CheckCertificateExpirationResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for CheckCertificateExpirationOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -361,9 +360,14 @@ pub enum ReadCardCertificateOutput {
     Fault(crate::conn::soap::Fault<ReadCardCertificateFaultDetail>),
 }
 
-impl ReadCardCertificateOutput {
+impl crate::conn::soap::SoapResponse for ReadCardCertificateOutput {
+    type Success = ReadCardCertificateResponse;
+    type Detail = ReadCardCertificateFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         ReadCardCertificateResponse,
@@ -373,12 +377,6 @@ impl ReadCardCertificateOutput {
             Self::ReadCardCertificateResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for ReadCardCertificateOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -454,9 +452,14 @@ pub enum VerifyCertificateOutput {
     Fault(crate::conn::soap::Fault<VerifyCertificateFaultDetail>),
 }
 
-impl VerifyCertificateOutput {
+impl crate::conn::soap::SoapResponse for VerifyCertificateOutput {
+    type Success = VerifyCertificateResponse;
+    type Detail = VerifyCertificateFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         VerifyCertificateResponse,
@@ -466,12 +469,6 @@ impl VerifyCertificateOutput {
             Self::VerifyCertificateResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for VerifyCertificateOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

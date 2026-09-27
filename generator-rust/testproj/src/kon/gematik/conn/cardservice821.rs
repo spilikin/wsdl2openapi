@@ -711,18 +711,6 @@ pub enum VerifyPinOutput {
     Fault(crate::kon::soap::Fault<VerifyPinFaultDetail>),
 }
 
-impl VerifyPinOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<VerifyPinResponse, crate::kon::soap::Fault<VerifyPinFaultDetail>> {
-        match self {
-            Self::VerifyPinResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for VerifyPinOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -737,8 +725,19 @@ impl crate::kon::soap::BodyContent for VerifyPinOutput {
 }
 
 impl crate::kon::soap::SoapResponse for VerifyPinOutput {
+    type Success = VerifyPinResponse;
+    type Detail = VerifyPinFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<VerifyPinResponse, crate::kon::soap::Fault<VerifyPinFaultDetail>> {
+        match self {
+            Self::VerifyPinResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -816,18 +815,6 @@ pub enum ChangePinOutput {
     Fault(crate::kon::soap::Fault<ChangePinFaultDetail>),
 }
 
-impl ChangePinOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<ChangePinResponse, crate::kon::soap::Fault<ChangePinFaultDetail>> {
-        match self {
-            Self::ChangePinResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for ChangePinOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -842,8 +829,19 @@ impl crate::kon::soap::BodyContent for ChangePinOutput {
 }
 
 impl crate::kon::soap::SoapResponse for ChangePinOutput {
+    type Success = ChangePinResponse;
+    type Detail = ChangePinFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<ChangePinResponse, crate::kon::soap::Fault<ChangePinFaultDetail>> {
+        match self {
+            Self::ChangePinResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -921,18 +919,6 @@ pub enum UnblockPinOutput {
     Fault(crate::kon::soap::Fault<UnblockPinFaultDetail>),
 }
 
-impl UnblockPinOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<UnblockPinResponse, crate::kon::soap::Fault<UnblockPinFaultDetail>> {
-        match self {
-            Self::UnblockPinResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for UnblockPinOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -947,8 +933,19 @@ impl crate::kon::soap::BodyContent for UnblockPinOutput {
 }
 
 impl crate::kon::soap::SoapResponse for UnblockPinOutput {
+    type Success = UnblockPinResponse;
+    type Detail = UnblockPinFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<UnblockPinResponse, crate::kon::soap::Fault<UnblockPinFaultDetail>> {
+        match self {
+            Self::UnblockPinResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1028,18 +1025,6 @@ pub enum GetPinStatusOutput {
     Fault(crate::kon::soap::Fault<GetPinStatusFaultDetail>),
 }
 
-impl GetPinStatusOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<GetPinStatusResponse, crate::kon::soap::Fault<GetPinStatusFaultDetail>> {
-        match self {
-            Self::GetPinStatusResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for GetPinStatusOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -1054,8 +1039,19 @@ impl crate::kon::soap::BodyContent for GetPinStatusOutput {
 }
 
 impl crate::kon::soap::SoapResponse for GetPinStatusOutput {
+    type Success = GetPinStatusResponse;
+    type Detail = GetPinStatusFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<GetPinStatusResponse, crate::kon::soap::Fault<GetPinStatusFaultDetail>> {
+        match self {
+            Self::GetPinStatusResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1133,18 +1129,6 @@ pub enum EnablePinOutput {
     Fault(crate::kon::soap::Fault<EnablePinFaultDetail>),
 }
 
-impl EnablePinOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<EnablePinResponse, crate::kon::soap::Fault<EnablePinFaultDetail>> {
-        match self {
-            Self::EnablePinResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for EnablePinOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -1159,8 +1143,19 @@ impl crate::kon::soap::BodyContent for EnablePinOutput {
 }
 
 impl crate::kon::soap::SoapResponse for EnablePinOutput {
+    type Success = EnablePinResponse;
+    type Detail = EnablePinFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<EnablePinResponse, crate::kon::soap::Fault<EnablePinFaultDetail>> {
+        match self {
+            Self::EnablePinResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1238,18 +1233,6 @@ pub enum DisablePinOutput {
     Fault(crate::kon::soap::Fault<DisablePinFaultDetail>),
 }
 
-impl DisablePinOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<DisablePinResponse, crate::kon::soap::Fault<DisablePinFaultDetail>> {
-        match self {
-            Self::DisablePinResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for DisablePinOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -1264,8 +1247,19 @@ impl crate::kon::soap::BodyContent for DisablePinOutput {
 }
 
 impl crate::kon::soap::SoapResponse for DisablePinOutput {
+    type Success = DisablePinResponse;
+    type Detail = DisablePinFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<DisablePinResponse, crate::kon::soap::Fault<DisablePinFaultDetail>> {
+        match self {
+            Self::DisablePinResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1343,21 +1337,6 @@ pub enum SecureSendApduOutput {
     Fault(crate::kon::soap::Fault<SecureSendApduFaultDetail>),
 }
 
-impl SecureSendApduOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        SecureSendApduResponse,
-        crate::kon::soap::Fault<SecureSendApduFaultDetail>,
-    > {
-        match self {
-            Self::SecureSendApduResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for SecureSendApduOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -1367,8 +1346,22 @@ impl crate::kon::soap::BodyContent for SecureSendApduOutput {
 }
 
 impl crate::kon::soap::SoapResponse for SecureSendApduOutput {
+    type Success = SecureSendApduResponse;
+    type Detail = SecureSendApduFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        SecureSendApduResponse,
+        crate::kon::soap::Fault<SecureSendApduFaultDetail>,
+    > {
+        match self {
+            Self::SecureSendApduResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1449,21 +1442,6 @@ pub enum StartCardSessionOutput {
     Fault(crate::kon::soap::Fault<StartCardSessionFaultDetail>),
 }
 
-impl StartCardSessionOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        StartCardSessionResponse,
-        crate::kon::soap::Fault<StartCardSessionFaultDetail>,
-    > {
-        match self {
-            Self::StartCardSessionResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for StartCardSessionOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -1474,8 +1452,22 @@ impl crate::kon::soap::BodyContent for StartCardSessionOutput {
 }
 
 impl crate::kon::soap::SoapResponse for StartCardSessionOutput {
+    type Success = StartCardSessionResponse;
+    type Detail = StartCardSessionFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        StartCardSessionResponse,
+        crate::kon::soap::Fault<StartCardSessionFaultDetail>,
+    > {
+        match self {
+            Self::StartCardSessionResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -1555,21 +1547,6 @@ pub enum StopCardSessionOutput {
     Fault(crate::kon::soap::Fault<StopCardSessionFaultDetail>),
 }
 
-impl StopCardSessionOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        StopCardSessionResponse,
-        crate::kon::soap::Fault<StopCardSessionFaultDetail>,
-    > {
-        match self {
-            Self::StopCardSessionResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for StopCardSessionOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:cardservice821", "http://ws.gematik.de/conn/CardService/v8.2"),
@@ -1579,8 +1556,22 @@ impl crate::kon::soap::BodyContent for StopCardSessionOutput {
 }
 
 impl crate::kon::soap::SoapResponse for StopCardSessionOutput {
+    type Success = StopCardSessionResponse;
+    type Detail = StopCardSessionFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        StopCardSessionResponse,
+        crate::kon::soap::Fault<StopCardSessionFaultDetail>,
+    > {
+        match self {
+            Self::StopCardSessionResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

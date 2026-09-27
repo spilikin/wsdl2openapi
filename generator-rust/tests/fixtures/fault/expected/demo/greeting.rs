@@ -64,18 +64,6 @@ pub enum HelloOutput {
     Fault(crate::soap::Fault<HelloFaultDetail>),
 }
 
-impl HelloOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<HelloResponse, crate::soap::Fault<HelloFaultDetail>> {
-        match self {
-            Self::HelloResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::soap::BodyContent for HelloOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:errors", "urn:demo:errors:v1"),
@@ -84,8 +72,17 @@ impl crate::soap::BodyContent for HelloOutput {
 }
 
 impl crate::soap::SoapResponse for HelloOutput {
+    type Success = HelloResponse;
+    type Detail = HelloFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(self) -> Result<HelloResponse, crate::soap::Fault<HelloFaultDetail>> {
+        match self {
+            Self::HelloResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

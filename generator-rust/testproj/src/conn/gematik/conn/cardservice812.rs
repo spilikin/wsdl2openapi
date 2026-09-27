@@ -156,21 +156,20 @@ pub enum VerifyPinOutput {
     Fault(crate::conn::soap::Fault<VerifyPinFaultDetail>),
 }
 
-impl VerifyPinOutput {
+impl crate::conn::soap::SoapResponse for VerifyPinOutput {
+    type Success = VerifyPinResponse;
+    type Detail = VerifyPinFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<VerifyPinResponse, crate::conn::soap::Fault<VerifyPinFaultDetail>> {
         match self {
             Self::VerifyPinResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for VerifyPinOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -239,21 +238,20 @@ pub enum ChangePinOutput {
     Fault(crate::conn::soap::Fault<ChangePinFaultDetail>),
 }
 
-impl ChangePinOutput {
+impl crate::conn::soap::SoapResponse for ChangePinOutput {
+    type Success = ChangePinResponse;
+    type Detail = ChangePinFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<ChangePinResponse, crate::conn::soap::Fault<ChangePinFaultDetail>> {
         match self {
             Self::ChangePinResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for ChangePinOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -322,9 +320,14 @@ pub enum GetPinStatusOutput {
     Fault(crate::conn::soap::Fault<GetPinStatusFaultDetail>),
 }
 
-impl GetPinStatusOutput {
+impl crate::conn::soap::SoapResponse for GetPinStatusOutput {
+    type Success = GetPinStatusResponse;
+    type Detail = GetPinStatusFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         GetPinStatusResponse,
@@ -334,12 +337,6 @@ impl GetPinStatusOutput {
             Self::GetPinStatusResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for GetPinStatusOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

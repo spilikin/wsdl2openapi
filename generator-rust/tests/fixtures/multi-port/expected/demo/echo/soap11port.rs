@@ -47,9 +47,20 @@ pub enum EchoOutput {
     Fault(crate::soap::Fault<crate::soap::NoDetail>),
 }
 
-impl EchoOutput {
+impl crate::soap::BodyContent for EchoOutput {
+    const NAMESPACES: &'static [(&'static str, &'static str)] = &[
+        ("@xmlns:echo", "urn:demo:echo:v1"),
+    ];
+}
+
+impl crate::soap::SoapResponse for EchoOutput {
+    type Success = crate::demo::echo::EchoResponse;
+    type Detail = crate::soap::NoDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         crate::demo::echo::EchoResponse,
@@ -59,18 +70,6 @@ impl EchoOutput {
             Self::EchoResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::soap::BodyContent for EchoOutput {
-    const NAMESPACES: &'static [(&'static str, &'static str)] = &[
-        ("@xmlns:echo", "urn:demo:echo:v1"),
-    ];
-}
-
-impl crate::soap::SoapResponse for EchoOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

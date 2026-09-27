@@ -201,21 +201,20 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
             Fault(#soap::Fault<#detail_type>),
         }
 
-        impl #output {
+        #output_body_content
+
+        impl #soap::SoapResponse for #output {
+            type Success = #response_type;
+            type Detail = #detail_type;
+            fn is_fault(&self) -> bool {
+                matches!(self, Self::Fault(_))
+            }
             #[allow(clippy::result_large_err)]
-            pub fn into_result(self) -> #result<#response_type, #soap::Fault<#detail_type>> {
+            fn into_result(self) -> #result<#response_type, #soap::Fault<#detail_type>> {
                 match self {
                     Self::#response_variant(response) => Ok(response),
                     Self::Fault(fault) => Err(fault),
                 }
-            }
-        }
-
-        #output_body_content
-
-        impl #soap::SoapResponse for #output {
-            fn is_fault(&self) -> bool {
-                matches!(self, Self::Fault(_))
             }
         }
 

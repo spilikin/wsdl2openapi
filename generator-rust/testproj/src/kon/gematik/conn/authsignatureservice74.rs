@@ -72,21 +72,6 @@ pub enum ExternalAuthenticateOutput {
     Fault(crate::kon::soap::Fault<ExternalAuthenticateFaultDetail>),
 }
 
-impl ExternalAuthenticateOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        crate::kon::gematik::conn::signatureservice74::ExternalAuthenticateResponse,
-        crate::kon::soap::Fault<ExternalAuthenticateFaultDetail>,
-    > {
-        match self {
-            Self::ExternalAuthenticateResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for ExternalAuthenticateOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -99,8 +84,22 @@ impl crate::kon::soap::BodyContent for ExternalAuthenticateOutput {
 }
 
 impl crate::kon::soap::SoapResponse for ExternalAuthenticateOutput {
+    type Success = crate::kon::gematik::conn::signatureservice74::ExternalAuthenticateResponse;
+    type Detail = ExternalAuthenticateFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        crate::kon::gematik::conn::signatureservice74::ExternalAuthenticateResponse,
+        crate::kon::soap::Fault<ExternalAuthenticateFaultDetail>,
+    > {
+        match self {
+            Self::ExternalAuthenticateResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

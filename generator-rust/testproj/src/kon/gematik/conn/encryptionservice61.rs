@@ -403,21 +403,6 @@ pub enum EncryptDocumentOutput {
     Fault(crate::kon::soap::Fault<EncryptDocumentFaultDetail>),
 }
 
-impl EncryptDocumentOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        EncryptDocumentResponse,
-        crate::kon::soap::Fault<EncryptDocumentFaultDetail>,
-    > {
-        match self {
-            Self::EncryptDocumentResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for EncryptDocumentOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -432,8 +417,22 @@ impl crate::kon::soap::BodyContent for EncryptDocumentOutput {
 }
 
 impl crate::kon::soap::SoapResponse for EncryptDocumentOutput {
+    type Success = EncryptDocumentResponse;
+    type Detail = EncryptDocumentFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        EncryptDocumentResponse,
+        crate::kon::soap::Fault<EncryptDocumentFaultDetail>,
+    > {
+        match self {
+            Self::EncryptDocumentResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -518,21 +517,6 @@ pub enum DecryptDocumentOutput {
     Fault(crate::kon::soap::Fault<DecryptDocumentFaultDetail>),
 }
 
-impl DecryptDocumentOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        DecryptDocumentResponse,
-        crate::kon::soap::Fault<DecryptDocumentFaultDetail>,
-    > {
-        match self {
-            Self::DecryptDocumentResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for DecryptDocumentOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:connectorcommon50", "http://ws.gematik.de/conn/ConnectorCommon/v5.0"),
@@ -547,8 +531,22 @@ impl crate::kon::soap::BodyContent for DecryptDocumentOutput {
 }
 
 impl crate::kon::soap::SoapResponse for DecryptDocumentOutput {
+    type Success = DecryptDocumentResponse;
+    type Detail = DecryptDocumentFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        DecryptDocumentResponse,
+        crate::kon::soap::Fault<DecryptDocumentFaultDetail>,
+    > {
+        match self {
+            Self::DecryptDocumentResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

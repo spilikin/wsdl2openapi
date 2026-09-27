@@ -352,21 +352,6 @@ pub enum CheckCertificateExpirationOutput {
     Fault(crate::kon::soap::Fault<CheckCertificateExpirationFaultDetail>),
 }
 
-impl CheckCertificateExpirationOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        CheckCertificateExpirationResponse,
-        crate::kon::soap::Fault<CheckCertificateExpirationFaultDetail>,
-    > {
-        match self {
-            Self::CheckCertificateExpirationResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for CheckCertificateExpirationOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         (
@@ -380,8 +365,22 @@ impl crate::kon::soap::BodyContent for CheckCertificateExpirationOutput {
 }
 
 impl crate::kon::soap::SoapResponse for CheckCertificateExpirationOutput {
+    type Success = CheckCertificateExpirationResponse;
+    type Detail = CheckCertificateExpirationFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        CheckCertificateExpirationResponse,
+        crate::kon::soap::Fault<CheckCertificateExpirationFaultDetail>,
+    > {
+        match self {
+            Self::CheckCertificateExpirationResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -471,21 +470,6 @@ pub enum ReadCardCertificateOutput {
     Fault(crate::kon::soap::Fault<ReadCardCertificateFaultDetail>),
 }
 
-impl ReadCardCertificateOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        ReadCardCertificateResponse,
-        crate::kon::soap::Fault<ReadCardCertificateFaultDetail>,
-    > {
-        match self {
-            Self::ReadCardCertificateResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for ReadCardCertificateOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         (
@@ -503,8 +487,22 @@ impl crate::kon::soap::BodyContent for ReadCardCertificateOutput {
 }
 
 impl crate::kon::soap::SoapResponse for ReadCardCertificateOutput {
+    type Success = ReadCardCertificateResponse;
+    type Detail = ReadCardCertificateFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        ReadCardCertificateResponse,
+        crate::kon::soap::Fault<ReadCardCertificateFaultDetail>,
+    > {
+        match self {
+            Self::ReadCardCertificateResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 
@@ -594,21 +592,6 @@ pub enum VerifyCertificateOutput {
     Fault(crate::kon::soap::Fault<VerifyCertificateFaultDetail>),
 }
 
-impl VerifyCertificateOutput {
-    #[allow(clippy::result_large_err)]
-    pub fn into_result(
-        self,
-    ) -> Result<
-        VerifyCertificateResponse,
-        crate::kon::soap::Fault<VerifyCertificateFaultDetail>,
-    > {
-        match self {
-            Self::VerifyCertificateResponse(response) => Ok(response),
-            Self::Fault(fault) => Err(fault),
-        }
-    }
-}
-
 impl crate::kon::soap::BodyContent for VerifyCertificateOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         (
@@ -626,8 +609,22 @@ impl crate::kon::soap::BodyContent for VerifyCertificateOutput {
 }
 
 impl crate::kon::soap::SoapResponse for VerifyCertificateOutput {
+    type Success = VerifyCertificateResponse;
+    type Detail = VerifyCertificateFaultDetail;
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
+    }
+    #[allow(clippy::result_large_err)]
+    fn into_result(
+        self,
+    ) -> Result<
+        VerifyCertificateResponse,
+        crate::kon::soap::Fault<VerifyCertificateFaultDetail>,
+    > {
+        match self {
+            Self::VerifyCertificateResponse(response) => Ok(response),
+            Self::Fault(fault) => Err(fault),
+        }
     }
 }
 

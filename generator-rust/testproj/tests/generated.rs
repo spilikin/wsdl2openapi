@@ -5,6 +5,7 @@ use std::task::{Context as TaskContext, Poll, Waker};
 use quick_xml::NsReader;
 use quick_xml::events::Event;
 use quick_xml::name::ResolveResult;
+use testproj::kon::soap::SoapResponse as _;
 
 use testproj::kon::gematik::conn::cardservice81::{CardInfoType, Cards};
 use testproj::kon::gematik::conn::cardservicecommon20::CardTypeType;

@@ -233,9 +233,14 @@ pub enum EncryptDocumentOutput {
     Fault(crate::conn::soap::Fault<EncryptDocumentFaultDetail>),
 }
 
-impl EncryptDocumentOutput {
+impl crate::conn::soap::SoapResponse for EncryptDocumentOutput {
+    type Success = EncryptDocumentResponse;
+    type Detail = EncryptDocumentFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         EncryptDocumentResponse,
@@ -245,12 +250,6 @@ impl EncryptDocumentOutput {
             Self::EncryptDocumentResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for EncryptDocumentOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 
@@ -321,9 +320,14 @@ pub enum DecryptDocumentOutput {
     Fault(crate::conn::soap::Fault<DecryptDocumentFaultDetail>),
 }
 
-impl DecryptDocumentOutput {
+impl crate::conn::soap::SoapResponse for DecryptDocumentOutput {
+    type Success = DecryptDocumentResponse;
+    type Detail = DecryptDocumentFaultDetail;
+    fn is_fault(&self) -> bool {
+        matches!(self, Self::Fault(_))
+    }
     #[allow(clippy::result_large_err)]
-    pub fn into_result(
+    fn into_result(
         self,
     ) -> Result<
         DecryptDocumentResponse,
@@ -333,12 +337,6 @@ impl DecryptDocumentOutput {
             Self::DecryptDocumentResponse(response) => Ok(response),
             Self::Fault(fault) => Err(fault),
         }
-    }
-}
-
-impl crate::conn::soap::SoapResponse for DecryptDocumentOutput {
-    fn is_fault(&self) -> bool {
-        matches!(self, Self::Fault(_))
     }
 }
 

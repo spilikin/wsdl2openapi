@@ -5,6 +5,7 @@
 use quick_xml::NsReader;
 use quick_xml::events::Event;
 use quick_xml::name::ResolveResult;
+use testproj::conn::soap::SoapResponse as _;
 
 use testproj::conn::gematik::conn::authsignatureservice741::ExternalAuthenticateInput;
 use testproj::conn::gematik::conn::cardservice821::{
