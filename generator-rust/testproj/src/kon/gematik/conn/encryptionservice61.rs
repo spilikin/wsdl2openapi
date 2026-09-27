@@ -111,7 +111,7 @@ impl<'de> ::serde::Deserialize<'de> for EncryptionType {
 pub struct Element {
     #[serde(rename = "@Type")]
     pub r#type: String,
-    #[serde(rename = "$text")]
+    #[serde(rename = "$text", default)]
     pub char_data: String,
 }
 
