@@ -34,6 +34,9 @@ impl crate::soap::SoapRequest for HelloInput {
         name: "Hello",
         soap_action: "urn:demo:greeting:v1#Hello",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::soap::Timeout::Short,
     };
     type Response = HelloOutput;
 }
@@ -76,6 +79,9 @@ impl crate::soap::BodyContent for HelloOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:greeting", "urn:demo:greeting:v1"),
     ];
+}
+
+impl crate::soap::SoapResponse for HelloOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

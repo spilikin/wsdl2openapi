@@ -33,30 +33,43 @@ fn envelope() -> TokenStream {
         /// Namespace of SOAP 1.1 envelopes.
         pub const ENVELOPE_NAMESPACE: &str = "http://schemas.xmlsoap.org/soap/envelope/";
 
-        /// Static description of a WSDL operation.
+        /// How long an operation may take: `Short` for lookups, `Long` for
+        /// anything that waits for the card terminal or does card cryptography.
+        #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+        pub enum Timeout {
+            Short,
+            Long,
+        }
+
+        /// Static description of a WSDL operation: how to call it, and where it
+        /// sits in a service directory (empty for unselected generation).
         #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
         pub struct SoapOperation {
             pub name: &'static str,
             pub soap_action: &'static str,
             pub binding_type: &'static str,
+            pub service: &'static str,
+            pub version: &'static str,
+            pub timeout: Timeout,
         }
 
-        /// The content of `SOAP-ENV:Body` for one direction of one operation.
+        /// Content of `SOAP-ENV:Body` that is written: the namespaces it needs.
         pub trait BodyContent: ::serde::Serialize {
             /// `@xmlns:prefix` attribute names and namespace URIs to declare on
             /// the envelope, covering every element the content can contain.
             const NAMESPACES: &'static [(&'static str, &'static str)];
+        }
 
-            fn is_fault(&self) -> bool {
-                false
-            }
+        /// Content of `SOAP-ENV:Body` that is read: a result or a fault.
+        pub trait SoapResponse {
+            fn is_fault(&self) -> bool;
         }
 
         /// A request body, tied to its operation and the body of its response,
         /// so a transport can be written once for every operation.
         pub trait SoapRequest: BodyContent {
             const OPERATION: SoapOperation;
-            type Response: BodyContent + ::serde::de::DeserializeOwned;
+            type Response: SoapResponse + ::serde::de::DeserializeOwned;
         }
 
         /// A SOAP 1.1 envelope. Serializes with the `SOAP-ENV` prefix and the
@@ -84,11 +97,13 @@ fn envelope() -> TokenStream {
             }
         }
 
-        impl<C: BodyContent> Envelope<C> {
+        impl<C: SoapResponse> Envelope<C> {
             pub fn is_fault(&self) -> bool {
                 self.body.content.is_fault()
             }
+        }
 
+        impl<C: BodyContent> Envelope<C> {
             pub fn to_xml(&self) -> Result<String, ::quick_xml::SeError> {
                 ::quick_xml::se::to_string_with_root("SOAP-ENV:Envelope", self)
             }

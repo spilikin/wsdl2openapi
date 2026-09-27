@@ -18,6 +18,9 @@ impl crate::soap::SoapRequest for EchoInput {
         name: "Echo",
         soap_action: "urn:demo:echo:v1#Echo",
         binding_type: "soap11",
+        service: "",
+        version: "",
+        timeout: crate::soap::Timeout::Short,
     };
     type Response = EchoOutput;
 }
@@ -63,6 +66,9 @@ impl crate::soap::BodyContent for EchoOutput {
     const NAMESPACES: &'static [(&'static str, &'static str)] = &[
         ("@xmlns:echo", "urn:demo:echo:v1"),
     ];
+}
+
+impl crate::soap::SoapResponse for EchoOutput {
     fn is_fault(&self) -> bool {
         matches!(self, Self::Fault(_))
     }

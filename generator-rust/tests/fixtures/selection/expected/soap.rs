@@ -123,3 +123,18 @@ impl<D> ::std::fmt::Display for Fault<D> {
 }
 
 impl<D: ::std::fmt::Debug> ::std::error::Error for Fault<D> {}
+
+/// A string that is not one of an enumeration's values.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct UnknownEnumValue {
+    pub type_name: &'static str,
+    pub value: String,
+}
+
+impl ::std::fmt::Display for UnknownEnumValue {
+    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+        write!(f, "unknown {} value {:?}", self.type_name, self.value)
+    }
+}
+
+impl ::std::error::Error for UnknownEnumValue {}

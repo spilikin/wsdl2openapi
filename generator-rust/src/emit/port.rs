@@ -6,6 +6,16 @@ use quote::quote;
 use super::{Emitter, doc, ident};
 use crate::ir::{Field, FieldType, Occurs, Operation, Payload, Port, XmlNode};
 use crate::naming::{field_ident, type_ident};
+use crate::select::{Timeout, Usage};
+
+const READ: Usage = Usage {
+    read: true,
+    write: false,
+};
+const WRITE: Usage = Usage {
+    read: false,
+    write: true,
+};
 
 struct OperationNames {
     input: String,
@@ -46,7 +56,10 @@ pub fn emit_port(emitter: &Emitter, port: &Port) -> TokenStream {
         .operations
         .iter()
         .map(|op| emit_operation(emitter, port, op));
-    let port_trait = emit_trait(emitter, port);
+    let port_trait = emitter
+        .program
+        .ports_as_traits
+        .then(|| emit_trait(emitter, port));
     quote!(#(#operations)* #port_trait)
 }
 
@@ -59,6 +72,15 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
     let envelope = ident(&names.envelope);
     let response_envelope = ident(&names.response_envelope);
     let result = emitter.prelude(module, "Result");
+    // After a selection, requests are only written and responses only read.
+    let split = emitter.program.split();
+    let (request_usage, response_usage) = if split {
+        (WRITE, READ)
+    } else {
+        (Usage::BOTH, Usage::BOTH)
+    };
+    let request_derives = super::serde_derives(request_usage);
+    let response_derives = super::serde_derives(response_usage);
 
     let namespaces = emitter
         .namespaces
@@ -72,10 +94,16 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
 
     let request_type = emitter.type_ref(&op.input.key, module);
     let request_variant = ident(&type_ident(&op.input.element.local));
-    let request_rename = emitter.rename(&XmlNode::Element(op.input.element.clone()));
+    let request_rename = emitter.rename(&XmlNode::Element(op.input.element.clone()), request_usage);
     let response_type = emitter.type_ref(&op.output.key, module);
     let response_variant = ident(&type_ident(&op.output.element.local));
-    let response_rename = emitter.rename(&XmlNode::Element(op.output.element.clone()));
+    let response_rename =
+        emitter.rename(&XmlNode::Element(op.output.element.clone()), response_usage);
+    let fault_rename = if split {
+        quote!(rename = "Fault")
+    } else {
+        quote!(rename(serialize = "SOAP-ENV:Fault", deserialize = "Fault"))
+    };
 
     let (detail_type, detail_struct) = if op.faults.is_empty() {
         (quote!(#soap::NoDetail), None)
@@ -84,12 +112,12 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
         let mut taken = HashSet::new();
         let fields = op.faults.iter().map(|fault| {
             let field = detail_field(fault, &mut taken);
-            emitter.field(&field, module)
+            emitter.field(&field, module, response_usage)
         });
         let description = doc(&format!("Typed `detail` content of a `{}` fault.", op.name));
         let detail = quote! {
             #description
-            #[derive(Debug, Clone, PartialEq, ::serde::Serialize, ::serde::Deserialize)]
+            #[derive(Debug, Clone, PartialEq, #response_derives)]
             pub struct #name {
                 #(#fields,)*
             }
@@ -100,6 +128,22 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
     let op_name = &op.name;
     let soap_action = &op.soap_action;
     let binding = op.binding.as_str();
+    let (service, version, timeout) = match &op.meta {
+        Some(meta) => (meta.service.as_str(), meta.version.as_str(), meta.timeout),
+        None => ("", "", Timeout::Short),
+    };
+    let timeout = match timeout {
+        Timeout::Short => quote!(#soap::Timeout::Short),
+        Timeout::Long => quote!(#soap::Timeout::Long),
+    };
+    // Written outputs (full generation) round-trip and so declare namespaces too.
+    let output_body_content = (!split).then(|| {
+        quote! {
+            impl #soap::BodyContent for #output {
+                const NAMESPACES: &'static [(&'static str, &'static str)] = #namespaces;
+            }
+        }
+    });
     let input_doc = doc(&format!(
         "`SOAP-ENV:Body` content of a `{}` request.",
         op.name
@@ -113,7 +157,7 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
 
     quote! {
         #input_doc
-        #[derive(Debug, Clone, PartialEq, ::serde::Serialize, ::serde::Deserialize)]
+        #[derive(Debug, Clone, PartialEq, #request_derives)]
         pub enum #input {
             #[serde(#request_rename)]
             #request_variant(#request_type),
@@ -128,6 +172,9 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
                 name: #op_name,
                 soap_action: #soap_action,
                 binding_type: #binding,
+                service: #service,
+                version: #version,
+                timeout: #timeout,
             };
             type Response = #output;
         }
@@ -145,12 +192,12 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
         }
 
         #output_doc
-        #[derive(Debug, Clone, PartialEq, ::serde::Serialize, ::serde::Deserialize)]
+        #[derive(Debug, Clone, PartialEq, #response_derives)]
         #[allow(clippy::large_enum_variant)]
         pub enum #output {
             #[serde(#response_rename)]
             #response_variant(#response_type),
-            #[serde(rename(serialize = "SOAP-ENV:Fault", deserialize = "Fault"))]
+            #[serde(#fault_rename)]
             Fault(#soap::Fault<#detail_type>),
         }
 
@@ -164,9 +211,9 @@ fn emit_operation(emitter: &Emitter, port: &Port, op: &Operation) -> TokenStream
             }
         }
 
-        impl #soap::BodyContent for #output {
-            const NAMESPACES: &'static [(&'static str, &'static str)] = #namespaces;
+        #output_body_content
 
+        impl #soap::SoapResponse for #output {
             fn is_fault(&self) -> bool {
                 matches!(self, Self::Fault(_))
             }

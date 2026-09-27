@@ -1,7 +1,8 @@
 //! Generates every fixture and compares the output with the checked-in tree
 //! under `tests/fixtures/<name>/expected`. Fixture inputs come from the
 //! Kotlin generator's fixtures, so both generators are pinned by the same
-//! documents; Rust-only fixtures carry their own `api.json`/`naming.json`.
+//! documents; Rust-only fixtures carry their own `api.json`/`naming.json`, and a
+//! `select.json` generates only the operations it names.
 //!
 //! Run with `UPDATE_GOLDEN=1` to rewrite the expected trees.
 
@@ -65,8 +66,14 @@ fn generated_trees_match_expected() {
             Ok(json) => NamingStrategy::from_json(&json).unwrap(),
             Err(_) => NamingStrategy::default(),
         };
-        let files =
-            generate(api, &naming, &Options::default()).unwrap_or_else(|e| panic!("{name}: {e:#}"));
+        let selection = fs::read_to_string(input.join("select.json"))
+            .ok()
+            .map(|json| serde_json::from_str(&json).unwrap());
+        let options = Options {
+            selection,
+            ..Options::default()
+        };
+        let files = generate(api, &naming, &options).unwrap_or_else(|e| panic!("{name}: {e:#}"));
         let expected_dir = Path::new(env!("CARGO_MANIFEST_DIR"))
             .join(RUST_FIXTURES)
             .join(&name)

@@ -27,6 +27,11 @@ struct Cli {
     /// Module path the output is mounted at, used for cross-module references.
     #[arg(long, default_value = "crate")]
     module_root: String,
+
+    /// Selection JSON: generate only these operations (with service directory name,
+    /// version and timeout class) and the types they reach.
+    #[arg(short, long)]
+    select: Option<PathBuf>,
 }
 
 fn main() -> Result<()> {
@@ -45,11 +50,23 @@ fn main() -> Result<()> {
         None => NamingStrategy::default(),
     };
 
+    let selection = match &cli.select {
+        Some(path) => {
+            let json =
+                fs::read_to_string(path).with_context(|| format!("reading {}", path.display()))?;
+            Some(
+                serde_json::from_str(&json)
+                    .with_context(|| format!("parsing {}", path.display()))?,
+            )
+        }
+        None => None,
+    };
     let files = generate(
         api,
         &naming,
         &Options {
             module_root: cli.module_root,
+            selection,
         },
     )?;
     write_files(&cli.output, &files)?;

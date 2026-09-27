@@ -1,22 +1,25 @@
 use proc_macro2::TokenStream;
 use quote::quote;
 
-use super::{Emitter, ident};
+use super::{Emitter, ident, serde_derives};
 use crate::ir::{Item, ItemKind, Variant};
+use crate::select::Usage;
 
-pub fn emit_item(emitter: &Emitter, item: &Item) -> TokenStream {
+pub fn emit_item(emitter: &Emitter, key: &str, item: &Item) -> TokenStream {
     let name = ident(&item.ident);
+    let usage = emitter.program.usage(key);
     match &item.kind {
         ItemKind::Struct(fields) => {
-            let fields = fields.iter().map(|f| emitter.field(f, &item.module));
+            let fields = fields.iter().map(|f| emitter.field(f, &item.module, usage));
+            let derives = serde_derives(usage);
             quote! {
-                #[derive(Debug, Clone, PartialEq, ::serde::Serialize, ::serde::Deserialize)]
+                #[derive(Debug, Clone, PartialEq, #derives)]
                 pub struct #name {
                     #(#fields,)*
                 }
             }
         }
-        ItemKind::Enum(variants) => emit_enum(emitter, item, variants),
+        ItemKind::Enum(variants) => emit_enum(emitter, item, variants, usage),
         ItemKind::Alias(target) => {
             let target = emitter.type_ref(target, &item.module);
             quote!(pub type #name = #target;)
@@ -27,7 +30,7 @@ pub fn emit_item(emitter: &Emitter, item: &Item) -> TokenStream {
 /// Enumerations (de)serialize through their string value rather than serde's
 /// derived enum representation, which quick-xml would read as a choice of
 /// child elements inside lists.
-fn emit_enum(emitter: &Emitter, item: &Item, variants: &[Variant]) -> TokenStream {
+fn emit_enum(emitter: &Emitter, item: &Item, variants: &[Variant], usage: Usage) -> TokenStream {
     let name = ident(&item.ident);
     let type_name = &item.ident;
     let soap = emitter.soap();
@@ -35,6 +38,25 @@ fn emit_enum(emitter: &Emitter, item: &Item, variants: &[Variant]) -> TokenStrea
     let result = emitter.prelude(&item.module, "Result");
     let idents: Vec<_> = variants.iter().map(|v| ident(&v.ident)).collect();
     let values: Vec<_> = variants.iter().map(|v| &v.value).collect();
+    let serialize = usage.write.then(|| {
+        quote! {
+            impl ::serde::Serialize for #name {
+                fn serialize<S: ::serde::Serializer>(&self, serializer: S) -> #result<S::Ok, S::Error> {
+                    serializer.serialize_str(self.as_str())
+                }
+            }
+        }
+    });
+    let deserialize = usage.read.then(|| {
+        quote! {
+            impl<'de> ::serde::Deserialize<'de> for #name {
+                fn deserialize<D: ::serde::Deserializer<'de>>(deserializer: D) -> #result<Self, D::Error> {
+                    let value = <#string as ::serde::Deserialize>::deserialize(deserializer)?;
+                    value.parse().map_err(::serde::de::Error::custom)
+                }
+            }
+        }
+    });
     quote! {
         #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
         pub enum #name {
@@ -69,17 +91,7 @@ fn emit_enum(emitter: &Emitter, item: &Item, variants: &[Variant]) -> TokenStrea
             }
         }
 
-        impl ::serde::Serialize for #name {
-            fn serialize<S: ::serde::Serializer>(&self, serializer: S) -> #result<S::Ok, S::Error> {
-                serializer.serialize_str(self.as_str())
-            }
-        }
-
-        impl<'de> ::serde::Deserialize<'de> for #name {
-            fn deserialize<D: ::serde::Deserializer<'de>>(deserializer: D) -> #result<Self, D::Error> {
-                let value = <#string as ::serde::Deserialize>::deserialize(deserializer)?;
-                value.parse().map_err(::serde::de::Error::custom)
-            }
-        }
+        #serialize
+        #deserialize
     }
 }

@@ -11,6 +11,7 @@ use crate::model::{
     Api, BindingType, OperationDefinition, Schema, XmlExtension, ref_key, split_schema_key,
 };
 use crate::naming::{NamingStrategy, field_ident, type_ident, variant_ident};
+use crate::select::{OperationMeta, Usage};
 
 pub type ModulePath = Vec<String>;
 
@@ -94,6 +95,8 @@ pub struct Operation {
     pub input: Payload,
     pub output: Payload,
     pub faults: Vec<Payload>,
+    /// Service directory name, version and timeout class, for selected operations.
+    pub meta: Option<OperationMeta>,
 }
 
 #[derive(Debug, Clone)]
@@ -108,9 +111,27 @@ pub struct Program {
     /// Generated items keyed by schema key, in input order.
     pub items: IndexMap<String, Item>,
     pub ports: Vec<Port>,
+    /// The direction each item travels in, after an operation selection; `None`
+    /// generates every item for both directions.
+    pub usage: Option<HashMap<String, Usage>>,
+    /// Emit a port trait per port.
+    pub ports_as_traits: bool,
 }
 
 impl Program {
+    /// The directions `key` travels in.
+    pub fn usage(&self, key: &str) -> Usage {
+        self.usage
+            .as_ref()
+            .and_then(|usage| usage.get(key).copied())
+            .unwrap_or(Usage::BOTH)
+    }
+
+    /// Whether requests and responses are generated one-way (after a selection).
+    pub fn split(&self) -> bool {
+        self.usage.is_some()
+    }
+
     pub fn build(api: &Api, naming: &NamingStrategy) -> Result<Self> {
         let builder = Builder {
             schemas: &api.components.schemas,
@@ -119,6 +140,8 @@ impl Program {
         let mut program = Self {
             items: builder.declare_items()?,
             ports: Vec::new(),
+            usage: None,
+            ports_as_traits: true,
         };
         let generated: HashSet<String> = program.items.keys().cloned().collect();
         for (key, item) in &mut program.items {
@@ -385,6 +408,7 @@ impl<'a> Builder<'a> {
             input: self.payload(&op.input.soap_body, generated)?,
             output,
             faults,
+            meta: None,
         })
     }
 

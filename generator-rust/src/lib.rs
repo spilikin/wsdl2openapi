@@ -11,6 +11,7 @@ pub mod extract;
 pub mod ir;
 pub mod model;
 pub mod naming;
+pub mod select;
 pub mod writer;
 
 use anyhow::{Result, ensure};
@@ -26,12 +27,15 @@ pub use crate::writer::{GeneratedFile, write_files};
 pub struct Options {
     /// Path of the module the output is mounted at, e.g. `crate::kon`.
     pub module_root: String,
+    /// Generate only these operations and the types they reach.
+    pub selection: Option<select::Selection>,
 }
 
 impl Default for Options {
     fn default() -> Self {
         Self {
             module_root: "crate".to_owned(),
+            selection: None,
         }
     }
 }
@@ -43,13 +47,16 @@ pub fn generate(
 ) -> Result<Vec<GeneratedFile>> {
     extract::extract_inline_objects(&mut api.components.schemas);
     let mut program = Program::build(&api, naming)?;
+    if let Some(selection) = &options.selection {
+        select::apply(&mut program, selection)?;
+    }
     analysis::box_recursive_fields(&mut program);
     let namespaces = Namespaces::build(&program);
     let emitter = Emitter::new(&program, &namespaces, &options.module_root)?;
 
     let mut tree = writer::ModuleTree::default();
-    for item in program.items.values() {
-        tree.push(&item.module, emit::emit_item(&emitter, item));
+    for (key, item) in &program.items {
+        tree.push(&item.module, emit::emit_item(&emitter, key, item));
     }
     for port in &program.ports {
         tree.push(&port.module, emit::emit_port(&emitter, port));

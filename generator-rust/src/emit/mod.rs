@@ -10,6 +10,7 @@ use quote::quote;
 
 use crate::analysis::Namespaces;
 use crate::ir::{Field, FieldType, ModulePath, Occurs, Program, XmlNode};
+use crate::select::Usage;
 
 pub use port::emit_port;
 pub use soap::{SoapFeatures, emit_soap_module};
@@ -113,8 +114,9 @@ impl<'a> Emitter<'a> {
 
     /// The `rename` part of a field's `#[serde(...)]` attribute. Qualified
     /// names are written with their prefix and matched by local name, which
-    /// is all quick-xml's deserializer compares.
-    pub fn rename(&self, node: &XmlNode) -> TokenStream {
+    /// is all quick-xml's deserializer compares. A one-way type only carries
+    /// the name for its direction.
+    pub fn rename(&self, node: &XmlNode, usage: Usage) -> TokenStream {
         let (marker, qname) = match node {
             XmlNode::Text => return quote!(rename = "$text"),
             XmlNode::Element(q) => ("", q),
@@ -127,18 +129,18 @@ impl<'a> Emitter<'a> {
                 let prefix = self.namespaces.prefix(ns);
                 let qualified = format!("{marker}{prefix}:{}", qname.local);
                 // quick-xml keeps the `xml:` prefix when deserializing attributes.
-                if prefix == "xml" {
-                    quote!(rename = #qualified)
-                } else {
-                    quote!(rename(serialize = #qualified, deserialize = #local))
+                match (prefix, usage.read, usage.write) {
+                    ("xml", _, _) | (_, false, _) => quote!(rename = #qualified),
+                    (_, true, false) => quote!(rename = #local),
+                    (_, true, true) => quote!(rename(serialize = #qualified, deserialize = #local)),
                 }
             }
         }
     }
 
-    pub fn field(&self, field: &Field, from: &ModulePath) -> TokenStream {
+    pub fn field(&self, field: &Field, from: &ModulePath, usage: Usage) -> TokenStream {
         let name = ident(&field.ident);
-        let rename = self.rename(&field.node);
+        let rename = self.rename(&field.node, usage);
         let base = match &field.ty {
             FieldType::String => self.prelude(from, "String"),
             FieldType::I32 => quote!(i32),
@@ -184,6 +186,15 @@ impl<'a> Emitter<'a> {
             #[serde(#rename #extra)]
             pub #name: #ty
         }
+    }
+}
+
+/// The serde derives for a type travelling in `usage`'s directions.
+pub fn serde_derives(usage: Usage) -> TokenStream {
+    match (usage.read, usage.write) {
+        (true, true) => quote!(::serde::Serialize, ::serde::Deserialize),
+        (true, false) => quote!(::serde::Deserialize),
+        (false, _) => quote!(::serde::Serialize),
     }
 }
 
