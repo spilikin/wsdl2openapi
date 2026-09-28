@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Working Kotlin port of `../generator-golang/`. CLI flags (`-f` / `-o` / `-n`) match the Go binary. Output is idiomatic Kotlin: schema types for each package grouped in a single `Schemas.kt`, no explicit `public` modifier, kotlinx.serialization + xmlutil annotations only (no SOAP framework dependency), and `@Serializable sealed interface` markers for `x-is-base` / `x-extends` polymorphism.
 
-For the overall pipeline (Python WSDL→OpenAPI converter, x-wsdl extensions, naming configs) see `../CLAUDE.md`. Both this generator and `../generator-golang/` consume the same OpenAPI JSON (e.g. `../konnektor-opb6.json`).
+For the overall pipeline (Python WSDL→OpenAPI converter, x-wsdl extensions, naming configs) see `../CLAUDE.md`. Both this generator and `../generator-golang/` consume the same OpenAPI JSON (e.g. `../konnektor-6.0.1.json`).
 
 ## Build & Test
 
@@ -15,7 +15,7 @@ For the overall pipeline (Python WSDL→OpenAPI converter, x-wsdl extensions, na
 ./gradlew :app:test --tests "de.gematik.wsdl2openapi.NamingStrategyTest"
 ./gradlew :app:test -Dgolden.update=true   # Rematerialise golden trees
 ./gradlew :app:shadowJar                # Builds app/build/libs/wsdl2openapi2kotlin.jar
-./gradlew :app:run --args="--file ../konnektor-opb6.json --output /tmp/out --naming naming-kon.json"
+./gradlew :app:run --args="--file ../konnektor-6.0.1.json --output /tmp/out --naming naming-kon.json"
 ```
 
 - Toolchain: **JDK 21**, Kotlin **2.3.0**, Gradle **9.4.1**.
@@ -46,4 +46,4 @@ Key choices specific to this generator:
 - `NamingStrategyTest` — regex mappings, `basePackage` handling (incl. Go-style), keyword escaping, port mappings.
 - `ExtractTest` — inline-object lifting, array items, xml-extension preservation on `$ref` placeholders.
 - `GoldenTest` — TestFactory-driven, runs each fixture under `app/src/test/resources/fixtures/<name>/{api.json,naming.json}` and diffs the generated tree against `<name>/expected/`. Fixtures cover: `simple` (1 port + envelope), `enum` (`@SerialName` per value), `polymorphism` (sealed interface + impls), `attributes` (xml `attribute: true` and array elements), `multi-port` (per-port subpackage + soap12 skipped), `fault` (unqualified fault members, the `Detail` wrapper, and an unqualified element inside a qualified type). Update with `-Dgolden.update=true`.
-- `KonnektorSmokeTest` — runs the generator end-to-end against `../konnektor-opb6.json`, asserts file count and presence of representative outputs (auto-skipped if the input is not present).
+- `KonnektorSmokeTest` — runs the generator end-to-end against `../konnektor-6.0.1.json`, asserts file count and presence of representative outputs (auto-skipped if the input is not present).

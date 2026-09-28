@@ -16,8 +16,8 @@ just update-golden                  # rewrite tests/fixtures/*/expected
 just generate                       # regenerate testproj/src/{kon,edge}
 just test                           # generator tests + testproj round-trip tests
 just lint                           # fmt --check, clippy -D warnings (generator and generated code)
-cargo run -- -f ../Konnektor-OPB6.json -o /tmp/out -n naming-kon.json --module-root crate::kon
-cargo run -- -f ../Konnektor-OPB6.json -o /tmp/out -n naming-kon.json --module-root crate::conn \
+cargo run -- -f ../konnektor-6.0.1.json -o /tmp/out -n naming-kon.json --module-root crate::kon
+cargo run -- -f ../konnektor-6.0.1.json -o /tmp/out -n naming-kon.json --module-root crate::conn \
     --select testproj/select-konnektor.json   # only the selected operations
 ```
 

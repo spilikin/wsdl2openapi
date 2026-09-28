@@ -7,7 +7,7 @@ import java.nio.file.Files
 import kotlin.test.assertTrue
 
 /**
- * End-to-end smoke test against the real `../konnektor-opb6.json` shipped in
+ * End-to-end smoke test against the real `../konnektor-6.0.1.json` shipped in
  * the repo. The fixture is gigantic (700+ schemas, 15 services), so this is
  * a structural check — does the generator complete, and does it produce the
  * top-level files we expect?
@@ -17,16 +17,16 @@ import kotlin.test.assertTrue
  */
 class KonnektorSmokeTest {
 
-    @Test fun `generates without errors against konnektor-opb6`() {
+    @Test fun `generates without errors against konnektor`() {
         // Test JVM's `user.dir` is `<repo>/generator-kotlin/app`. The OpenAPI
         // input lives at the top-level repo root; the naming JSON lives one
         // level up alongside the build files.
         val moduleRoot = File(System.getProperty("user.dir")).parentFile  // generator-kotlin
         val repoRoot = moduleRoot.parentFile                              // wsdl2openapi
-        val apiFile = File(repoRoot, "konnektor-opb6.json")
+        val apiFile = File(repoRoot, "konnektor-6.0.1.json")
         val namingFile = File(moduleRoot, "naming-kon.json")
         assumeTrue(apiFile.exists() && namingFile.exists(),
-            "konnektor-opb6.json or naming-kon.json missing from repo root — skipping")
+            "konnektor-6.0.1.json or naming-kon.json missing from repo root — skipping")
 
         val outDir = Files.createTempDirectory("konnektor-smoke-").toFile()
         try {

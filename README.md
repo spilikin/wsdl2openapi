@@ -22,7 +22,7 @@ There are practically no tools to work with WSDL and SOAP for modern languages l
 
 ## Generated Examples
 
-- **TI-Konnektor (OPB6):** [JSON](Konnektor-OPB6.json) | [YAML](Konnektor-OPB6.yaml)
+- **TI-Konnektor (6.0.1):** [JSON](konnektor-6.0.1.json) | [YAML](konnektor-6.0.1.yaml)
 - **EPA XDS Document Service:** [JSON](XDSDocumentService.json) | [YAML](XDSDocumentService.yaml)
 
 ## Output Format
@@ -145,10 +145,10 @@ Requires Python 3.13+ and [uv](https://docs.astral.sh/uv/).
 
 ```bash
 uv sync
-uv run python konnektor-opb6.py
+uv run python konnektor-6.0.1.py
 ```
 
-This fetches Konnektor WSDLs and produces `konnektor-opb6.json` and `konnektor-opb6.yaml`.
+This fetches Konnektor WSDLs and produces `konnektor-6.0.1.json` and `konnektor-6.0.1.yaml`.
 
 Programmatic usage:
 
@@ -172,7 +172,7 @@ The `generator-golang/` directory contains a code generator that reads the OpenA
 ```bash
 cd generator-golang
 go run ./cmd/wsdl2openapi2go \
-  --file ../konnektor-opb6.json \
+  --file ../konnektor-6.0.1.json \
   --output ./testproj/kon/api \
   --naming naming-kon.json
 ```
@@ -184,7 +184,7 @@ The `generator-rust/` directory contains a generator that emits a Rust module tr
 ```bash
 cd generator-rust
 cargo run -- \
-  --file ../Konnektor-OPB6.json \
+  --file ../konnektor-6.0.1.json \
   --output ../my-crate/src/kon \
   --naming naming-kon.json \
   --module-root crate::kon
@@ -212,10 +212,10 @@ let cards = response.into_content().into_result()?; // Err carries the typed soa
 The Konnektor OpenAPI lints with [vacuum](https://quobix.com/vacuum/) directly:
 
 ```bash
-vacuum lint konnektor-opb6.json
+vacuum lint konnektor-6.0.1.json
 ```
 
-The conversion script excludes the SAML 1.0 / 2.0 namespaces (see `konnektor-opb6.py`) — they're reachable only via `dssx10.IdentifierType` in `SignDocument` / `VerifyDocument` responses, and the recursive `Assertion ⟷ Advice` / `Assertion ⟷ Evidence` cycles in those schemas otherwise stall vacuum's circular-reference detector. After exclusion the SAML identifier slots become opaque XML strings (`type: string, format: xml`) with their xml-binding preserved.
+The conversion script excludes the SAML 1.0 / 2.0 namespaces (see `konnektor-6.0.1.py`) — they're reachable only via `dssx10.IdentifierType` in `SignDocument` / `VerifyDocument` responses, and the recursive `Assertion ⟷ Advice` / `Assertion ⟷ Evidence` cycles in those schemas otherwise stall vacuum's circular-reference detector. After exclusion the SAML identifier slots become opaque XML strings (`type: string, format: xml`) with their xml-binding preserved.
 
 To exclude additional namespaces in your own builds:
 

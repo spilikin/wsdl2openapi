@@ -18,7 +18,7 @@ WSDL/XSD files → [Python converter] → OpenAPI JSON (with x-wsdl-* extensions
 uv sync                           # Install dependencies (Python 3.13+, uses uv)
 uv run pytest tests/              # Run all Python tests
 uv run pytest tests/test_soap.py  # Run a single test file
-uv run python konnektor-opb6.py   # Convert Konnektor WSDLs → OpenAPI JSON/YAML
+uv run python konnektor-6.0.1.py  # Convert Konnektor WSDLs → OpenAPI JSON/YAML
 ```
 
 pytest is configured with `--maxfail=1 -s` in `pyproject.toml`.
@@ -31,7 +31,7 @@ just generate-kon                  # Generate Go code from Konnektor OpenAPI spe
 go test ./...                      # Run all Go tests (generator + testproj)
 go test -v ./testproj              # Run integration tests on generated code
 go test -run TestFoo ./testproj    # Run a single test
-go run ./cmd/wsdl2openapi2go --file ../konnektor-opb6.json --output ./testproj/kon/api --naming naming-kon.json
+go run ./cmd/wsdl2openapi2go --file ../konnektor-6.0.1.json --output ./testproj/kon/api --naming naming-kon.json
 ```
 
 The Go generator has a separate `go.mod`. The `testproj/` and `soap/` subdirectories each have their own `go.mod` as well.
@@ -87,7 +87,7 @@ Emits a module tree (mounted with `mod name;`) of serde structs/enums plus typed
 
 ### Conversion Scripts (root)
 
-- `konnektor-opb6.py` — fetches Konnektor WSDLs from GitHub, produces `konnektor-opb6.json` / `.yaml`
+- `konnektor-6.0.1.py` — fetches Konnektor WSDLs from GitHub, produces `konnektor-6.0.1.json` / `.yaml`
 - `XDSDocumentService.json` / `.yaml` — EPA service OpenAPI output
 
 ## SOAP Support

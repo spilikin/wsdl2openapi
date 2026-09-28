@@ -5,8 +5,8 @@ info:
 # regenerate the module trees mounted by testproj
 generate:
     rm -rf testproj/src/kon testproj/src/edge testproj/src/conn
-    cargo run -- --file ../Konnektor-OPB6.json --output testproj/src/kon --naming naming-kon.json --module-root crate::kon
-    cargo run -- --file ../Konnektor-OPB6.json --output testproj/src/conn --naming naming-kon.json --module-root crate::conn --select testproj/select-konnektor.json
+    cargo run -- --file ../konnektor-6.0.1.json --output testproj/src/kon --naming naming-kon.json --module-root crate::kon
+    cargo run -- --file ../konnektor-6.0.1.json --output testproj/src/conn --naming naming-kon.json --module-root crate::conn --select testproj/select-konnektor.json
     cargo run -- --file tests/fixtures/edge-cases/api.json --output testproj/src/edge --naming tests/fixtures/edge-cases/naming.json --module-root crate::edge
 
 # rewrite the golden trees under tests/fixtures/*/expected
