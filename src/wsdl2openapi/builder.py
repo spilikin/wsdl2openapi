@@ -54,7 +54,19 @@ class Builder:
     api: Api = field(default_factory=Api)
     naming_strategy: NamingStrategy = field(default_factory=NamingStrategy)
 
-    def add_wsdl(self, wsdl_location, use_connector_conventions: bool = False):
+    def add_wsdl(
+        self,
+        wsdl_location,
+        use_connector_conventions: bool = False,
+        service_version: str | None = None,
+    ):
+        """Convert one WSDL and the schemas it imports into the api.
+
+        ``service_version`` (e.g. ``"3.0.0"``) names the service's package after its full version,
+        as the connector conventions do for ``*_v3_0_0.wsdl`` file names. It is for WSDLs whose
+        file name carries no version but whose namespace another version of the same service
+        already uses; without it both would land in one package.
+        """
         logging.info("Adding WSDL: %s", wsdl_location)
         client = Client(
             wsdl=str(wsdl_location),
@@ -66,10 +78,12 @@ class Builder:
 
         ctx = Context()
 
-        if use_connector_conventions:
+        if use_connector_conventions or service_version is not None:
             ctx.use_connector_conventions = True
             version_match = re.search(r"_v(\d+)_(\d+)_(\d+)\.wsdl$", wsdl_location)
-            if version_match:
+            if service_version is not None:
+                ctx.connector_service_version = service_version
+            elif version_match:
                 major, minor, patch = version_match.groups()
                 ctx.connector_service_version = (
                     f"{int(major)}.{int(minor)}.{int(patch)}"
