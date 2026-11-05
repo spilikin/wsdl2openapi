@@ -2,8 +2,8 @@
 //! documents produced by the wsdl2openapi converter.
 //!
 //! The output is a module tree meant to be mounted with `mod name;`. It
-//! depends on `serde` and `quick-xml` only (plus `base64` when a schema uses
-//! `xs:base64Binary`).
+//! depends on `serde` and `quick-xml` only (plus `base64ct`, with its `alloc`
+//! feature, when a schema uses `xs:base64Binary`).
 
 pub mod analysis;
 pub mod emit;
