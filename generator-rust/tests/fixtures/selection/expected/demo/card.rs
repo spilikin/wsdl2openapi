@@ -91,7 +91,7 @@ pub struct Card {
 pub struct Base64Signature {
     #[serde(rename = "@Type", default, skip_serializing_if = "Option::is_none")]
     pub r#type: Option<String>,
-    #[serde(rename = "$text")]
+    #[serde(rename = "$text", default)]
     pub char_data: String,
 }
 

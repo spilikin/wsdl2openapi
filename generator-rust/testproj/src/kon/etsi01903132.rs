@@ -107,7 +107,7 @@ pub struct ObjectIdentifierType {
 pub struct IdentifierType {
     #[serde(rename = "@Qualifier", default, skip_serializing_if = "Option::is_none")]
     pub qualifier: Option<QualifierType>,
-    #[serde(rename = "$text")]
+    #[serde(rename = "$text", default)]
     pub char_data: String,
 }
 
@@ -185,7 +185,7 @@ pub struct EncapsulatedPkiDataType {
     pub id: Option<String>,
     #[serde(rename = "@Encoding", default, skip_serializing_if = "Option::is_none")]
     pub encoding: Option<String>,
-    #[serde(rename = "$text")]
+    #[serde(rename = "$text", default)]
     pub char_data: String,
 }
 

@@ -261,3 +261,15 @@ fn card_sessions_round_trip() {
     };
     assert_eq!(started.session_id, "session-42");
 }
+
+#[test]
+fn empty_text_content_reads_as_empty() {
+    // A Konnektor returns the document of a detached CAdES signature this way.
+    let data: Base64Data =
+        quick_xml::de::from_str(r#"<Base64Data MimeType="text/plain; charset=iso-8859-15"/>"#)
+            .unwrap();
+    assert_eq!(
+        (data.mime_type.as_deref(), data.char_data.as_str()),
+        (Some("text/plain; charset=iso-8859-15"), "")
+    );
+}

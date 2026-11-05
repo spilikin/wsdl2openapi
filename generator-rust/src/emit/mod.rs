@@ -163,7 +163,12 @@ impl<'a> Emitter<'a> {
         } else {
             base
         };
+        // An empty element is valid for string and base64 content (a Konnektor sends
+        // `<Base64Data MimeType="…"/>` for a detached signature's document).
+        let empty_text = matches!(field.node, XmlNode::Text)
+            && matches!(field.ty, FieldType::String | FieldType::Base64);
         let (ty, extra) = match field.occurs {
+            Occurs::Required if empty_text => (base, quote!(, default)),
             Occurs::Required => (base, quote!()),
             Occurs::Optional => {
                 let option = self.prelude(from, "Option");
